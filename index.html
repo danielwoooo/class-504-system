@@ -184,6 +184,8 @@
   .subj-score-table th, .subj-score-table td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; }
   .subj-score-table th { background: #f1f5f9; font-size: 1.05rem; font-weight: 900; position: sticky; top: 0; z-index: 10; }
   .subj-tag-btn { padding: 4px 10px; font-size: 0.85rem; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
+  /* 新增扣分按鈕樣式 */
+  .subj-tag-btn.minus { background: #f3f4f6; color: #4b5563; margin-left: 2px; }
 
   .points-split { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; flex: 1; min-height: 0; }
   .leaderboard-panel { background: white; border-radius: 14px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden; }
@@ -337,7 +339,7 @@
       <div style="background:white; border-radius:14px; padding:14px; box-shadow:0 2px 6px rgba(0,0,0,0.06); display:flex; flex-direction:column; overflow-y:auto;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
           <strong style="font-size:1.1rem; color:#1e293b;">📊 國語、數學、社會 獨立累計與即時加分表</strong>
-          <span style="font-size:0.85rem; color:var(--gray);">點擊「+1」直接加分並同步雲端</span>
+          <span style="font-size:0.85rem; color:var(--gray);">點擊「+1」或「-1」直接加分/扣分並同步雲端</span>
         </div>
         <table class="subj-score-table">
           <thead>
@@ -494,8 +496,8 @@
 </div>
 
 <script>
-// 您剛剛提供的最新雲端同步網址
-const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbwvMZLJZbbrMFQebBOra28xRBSWz8p91wNO5jAqXeO1dC_kBAfgyFttdIAaLinoogZVmg/exec";
+// 寫入您的 API 網址
+const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbyD-quLq2HtVM-F-aHjI8blhZG9X4eJ2vXWE-aNTWWx-QSFJJxWGyh2JT0Ly-t-4ey7KQ/exec";
 const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
 
 const INITIAL_STUDENTS = [
@@ -508,7 +510,6 @@ const INITIAL_STUDENTS = [
   { id: "19", name: "王呈翎" }, { id: "20", name: "陳雨禾" }, { id: "21", name: "王藝璇" }
 ];
 
-// 座位表（講台面向學生：第五直排 至 第一直排）
 const SEATING_LAYOUT = [
   { colName: "第五直排", ids: ["20", "14", "13", "10"] },
   { colName: "第四直排", ids: ["19", "11", "02", "17"] },
@@ -658,7 +659,7 @@ function addLog(category, detail) {
   saveDB();
 }
 
-// 💡 【重要修正】只保證每日聯絡簿存在，不會再自動強制產生國語/數學/社會空表格
+// 💡 僅保證每日聯絡簿存在，不會再自動強制產生國語/數學/社會空表格
 function ensureContactBookOnly(dateStr) {
   const hasContactBook = db.homeworks.some(h => h.date === dateStr && h.isContactBook);
   if (!hasContactBook) {
@@ -870,7 +871,7 @@ function handleGridBoxClick(hwId, stuId) {
 function deleteHwColumn(hwId) {
   const hw = db.homeworks.find(h => h.id === hwId);
   if (!hw) return;
-  if (!confirm(`確定要永久刪除這項作業嗎？`)) return;
+  if (!confirm(`確定要永久刪除【${hw.title}】這項作業嗎？`)) return;
   
   db.homeworks = db.homeworks.filter(h => h.id !== hwId);
   addLog("作業", `教師刪除作業欄位：【${hw.title}】`);
@@ -884,9 +885,10 @@ function setRankMode(mode) {
   renderPointsAndLeaderboard();
 }
 
+// 包含加分與扣分功能
 function quickAddSubjectPoint(stuId, subj, delta) {
   if (!isTeacherMode) {
-    alert("🔒 加分僅限在「教師管理模式」下操作！請先在右上角輸入密碼解鎖。");
+    alert("🔒 加減分僅限在「教師管理模式」下操作！請先在右上角輸入密碼解鎖。");
     return;
   }
   const stu = db.students.find(s => s.id === stuId);
@@ -902,7 +904,8 @@ function quickAddSubjectPoint(stuId, subj, delta) {
   stu.subjectPoints[subj] = (stu.subjectPoints[subj] || 0) + delta;
   stu.dailySubjectPoints[currentPointDate][subj] = (stu.dailySubjectPoints[currentPointDate][subj] || 0) + delta;
 
-  addLog("積分", `${stu.id} ${stu.name}【${subj}】快速 +${delta} 分（累計：${stu.subjectPoints[subj]}）`);
+  const actionText = delta > 0 ? `+${delta}` : `${delta}`;
+  addLog("積分", `${stu.id} ${stu.name}【${subj}】快速 ${actionText} 分（累計：${stu.subjectPoints[subj]}）`);
   renderPointsAndLeaderboard();
 }
 
@@ -943,7 +946,7 @@ function renderPointsAndLeaderboard() {
     seatingGrid.appendChild(colBox);
   });
 
-  // 2. 國語、數學、社會 獨立加分表
+  // 2. 國語、數學、社會 獨立加分表 (新增 -1 按鈕)
   const subjTableBody = document.getElementById('subjScoreTableBody');
   subjTableBody.innerHTML = "";
   db.students.forEach(stu => {
@@ -960,16 +963,25 @@ function renderPointsAndLeaderboard() {
       <td><span class="seat-num">${stu.id}</span></td>
       <td><b style="font-size:1.1rem;">${stu.name}</b></td>
       <td>
-        <span style="font-weight:bold; color:#b91c1c; font-size:1.05rem;">${chiDaily > 0 ? '+' + chiDaily : chiDaily} / <b>${chiTotal}</b></span>
-        ${isTeacherMode ? `<button class="subj-tag-btn" style="background:#fee2e2; color:#b91c1c; margin-left:6px;" onclick="quickAddSubjectPoint('${stu.id}', '國語', 1)">+1</button>` : ''}
+        <span style="font-weight:bold; color:#b91c1c; font-size:1.05rem; display:inline-block; width:55px;">${chiDaily > 0 ? '+' + chiDaily : chiDaily} / <b>${chiTotal}</b></span>
+        ${isTeacherMode ? `
+          <button class="subj-tag-btn" style="background:#fee2e2; color:#b91c1c; margin-left:6px;" onclick="quickAddSubjectPoint('${stu.id}', '國語', 1)">+1</button>
+          <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '國語', -1)">-1</button>
+        ` : ''}
       </td>
       <td>
-        <span style="font-weight:bold; color:#1d4ed8; font-size:1.05rem;">${mathDaily > 0 ? '+' + mathDaily : mathDaily} / <b>${mathTotal}</b></span>
-        ${isTeacherMode ? `<button class="subj-tag-btn" style="background:#dbeafe; color:#1d4ed8; margin-left:6px;" onclick="quickAddSubjectPoint('${stu.id}', '數學', 1)">+1</button>` : ''}
+        <span style="font-weight:bold; color:#1d4ed8; font-size:1.05rem; display:inline-block; width:55px;">${mathDaily > 0 ? '+' + mathDaily : mathDaily} / <b>${mathTotal}</b></span>
+        ${isTeacherMode ? `
+          <button class="subj-tag-btn" style="background:#dbeafe; color:#1d4ed8; margin-left:6px;" onclick="quickAddSubjectPoint('${stu.id}', '數學', 1)">+1</button>
+          <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '數學', -1)">-1</button>
+        ` : ''}
       </td>
       <td>
-        <span style="font-weight:bold; color:#047857; font-size:1.05rem;">${socDaily > 0 ? '+' + socDaily : socDaily} / <b>${socTotal}</b></span>
-        ${isTeacherMode ? `<button class="subj-tag-btn" style="background:#dcfce7; color:#047857; margin-left:6px;" onclick="quickAddSubjectPoint('${stu.id}', '社會', 1)">+1</button>` : ''}
+        <span style="font-weight:bold; color:#047857; font-size:1.05rem; display:inline-block; width:55px;">${socDaily > 0 ? '+' + socDaily : socDaily} / <b>${socTotal}</b></span>
+        ${isTeacherMode ? `
+          <button class="subj-tag-btn" style="background:#dcfce7; color:#047857; margin-left:6px;" onclick="quickAddSubjectPoint('${stu.id}', '社會', 1)">+1</button>
+          <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '社會', -1)">-1</button>
+        ` : ''}
       </td>
     `;
     subjTableBody.appendChild(tr);
@@ -1139,7 +1151,7 @@ function askStudentConfirm(stu, actionTitle, callback) {
   document.getElementById('confirmModal').classList.add('active');
 }
 
-// ==================== 出缺席打卡（嚴格鎖定上課日） ====================
+// 出缺席打卡（嚴格鎖定上課日）
 function onAttDateChange(val) {
   const checked = normalizeToSchoolDay(val);
   if (checked !== val) {
