@@ -55,10 +55,16 @@
   .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 0 10px rgba(37,99,235,0.6); }
 
   .admin-controls { display: flex; align-items: center; gap: 8px; }
+  
+  /* 雲端狀態顯示標籤 */
   .cloud-status {
-    padding: 7px 12px; font-size: 0.88rem; font-weight: bold; border: 2px solid #4ade80;
-    background: rgba(74,222,128,0.2); color: #4ade80; border-radius: 8px;
+    padding: 6px 12px; font-size: 0.88rem; font-weight: bold; border-radius: 8px;
+    display: inline-flex; align-items: center; gap: 5px; transition: 0.2s;
   }
+  .cloud-status.synced { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
+  .cloud-status.syncing { background: #fef3c7; color: #b45309; border: 1.5px solid #fde047; }
+  .cloud-status.error { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; }
+
   .mode-btn {
     padding: 8px 14px; font-size: 0.95rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;
   }
@@ -109,9 +115,6 @@
   .hw-item-col { min-width: 240px; flex: 1; background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; }
   .hw-item-header { background: var(--dark); color: white; padding: 8px 10px; text-align: center; }
   .hw-item-header.contact-book-header { background: #0f766e; }
-  .hw-item-header.chi-header { background: #991b1b; }
-  .hw-item-header.math-header { background: #1e40af; }
-  .hw-item-header.soc-header { background: #065f46; }
   .hw-item-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #cbd5e1; margin-bottom: 3px; }
   .hw-item-title { font-size: 1.15rem; font-weight: 900; color: #fff; }
   .hw-item-pages { font-size: 0.85rem; color: #fde047; font-weight: bold; margin-top: 2px; }
@@ -231,7 +234,7 @@
     <button class="tab-btn teacher-only" onclick="switchTab('logs', event)">🛡️ 504紀錄與備份</button>
   </div>
   <div class="admin-controls">
-    <span class="cloud-status">☁️ Google 雲端同步中</span>
+    <span class="cloud-status synced" id="cloudStatusBadge">☁️ 雲端已連線</span>
     <button id="modeBtn" class="mode-btn mode-student" onclick="toggleTeacherMode()">
       🔒 學生互動模式
     </button>
@@ -239,7 +242,7 @@
 </header>
 
 <main>
-  <!-- 1. 作業繳交 (自動建立國/數/社/聯絡簿空表格) -->
+  <!-- 1. 作業繳交：有新增才顯示 -->
   <section id="page-homework" class="page active">
     <div class="toolbar">
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
@@ -249,13 +252,13 @@
         <div class="weekday-bar" id="weekdayBar"></div>
       </div>
       <div style="display:flex; gap:8px; align-items:center;">
-        <button class="btn btn-primary teacher-only" onclick="toggleHwSetupBar()">➕ 新增其他自訂作業</button>
+        <button class="btn btn-primary teacher-only" onclick="toggleHwSetupBar()">➕ 新增當日作業項目</button>
       </div>
     </div>
 
     <div class="teacher-hw-setup teacher-only-flex" id="teacherHwSetupBar">
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; flex:1;">
-        <strong style="color:#b45309;">✏️ 新增其他自訂作業品項：</strong>
+        <strong style="color:#b45309;">✏️ 新增作業項目：</strong>
         <select id="quickHwSubject" class="form-control">
           <option value="國語">國語</option>
           <option value="數學">數學</option>
@@ -263,9 +266,9 @@
           <option value="考卷訂正">考卷訂正/簽名</option>
           <option value="綜合/其他">綜合/其他</option>
         </select>
-        <input type="text" id="quickHwTitle" class="form-control" placeholder="作業品項 (如：生字本、作文)" style="width:210px;">
-        <input type="text" id="quickHwPages" class="form-control" placeholder="頁數/範圍 (如：P.24~26)" style="width:140px;">
-        <button class="btn btn-primary" onclick="addHomeworkColumn()">➕ 新增至黑板登記表</button>
+        <input type="text" id="quickHwTitle" class="form-control" placeholder="品項 (例如：國語習作、數學習作)" style="width:220px;">
+        <input type="text" id="quickHwPages" class="form-control" placeholder="範圍 (例如：P.24~26)" style="width:140px;">
+        <button class="btn btn-primary" onclick="addHomeworkColumn()">➕ 登記至黑板</button>
       </div>
     </div>
 
@@ -295,7 +298,7 @@
     </div>
   </section>
 
-  <!-- 2. 教室座位直覺加分 (依照真實座位配置) -->
+  <!-- 2. 教室座位直覺加分 -->
   <section id="page-seating" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -362,7 +365,7 @@
     </div>
   </section>
 
-  <!-- 4. 出缺席打卡 (嚴格鎖定上課日，過濾週末) -->
+  <!-- 4. 出缺席打卡 (嚴格鎖定上課日) -->
   <section id="page-attendance" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -503,7 +506,6 @@ const INITIAL_STUDENTS = [
   { id: "19", name: "王呈翎" }, { id: "20", name: "陳雨禾" }, { id: "21", name: "王藝璇" }
 ];
 
-// 座位表（講台面向學生：第五直排 至 第一直排）
 const SEATING_LAYOUT = [
   { colName: "第五直排", ids: ["20", "14", "13", "10"] },
   { colName: "第四直排", ids: ["19", "11", "02", "17"] },
@@ -524,7 +526,7 @@ function formatDateObj(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
-// 嚴格鎖定上課日 (週六自動退至週五，週日自動退至週五)
+// 嚴格過濾週末，鎖定週一至週五
 function normalizeToSchoolDay(dateStr) {
   let d = dateStr ? new Date(dateStr + "T00:00:00") : new Date();
   const day = d.getDay();
@@ -536,7 +538,6 @@ function normalizeToSchoolDay(dateStr) {
 function getNowTimeStr() { return new Date().toTimeString().split(' ')[0]; }
 function getFullTimestamp() { return `${formatDateObj(new Date())} ${getNowTimeStr()}`; }
 
-// 系統預設統一上課日戳章
 let currentHwDate = normalizeToSchoolDay();
 let currentPointDate = currentHwDate;
 let currentAttDate = currentHwDate;
@@ -590,8 +591,20 @@ function showUpdateToast() {
   setTimeout(() => { toast.classList.remove('show'); }, 2200);
 }
 
+// 雲端同步狀態燈管理
+function setCloudStatus(status) {
+  const badge = document.getElementById('cloudStatusBadge');
+  if (!badge) return;
+  badge.className = "cloud-status " + status;
+  if (status === "syncing") badge.innerHTML = "⏳ 雲端同步中...";
+  else if (status === "synced") badge.innerHTML = "✅ 雲端已同步";
+  else if (status === "error") badge.innerHTML = "❌ 同步異常";
+}
+
+// 雲端資料讀取
 async function loadCloudDB() {
   if (!CLOUD_API_URL) return;
+  setCloudStatus("syncing");
   try {
     const res = await fetch(CLOUD_API_URL + "?action=load");
     const cloudData = await res.json();
@@ -604,22 +617,34 @@ async function loadCloudDB() {
       });
       localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
       renderAll();
-      console.log("✅ 成功從 Google 雲端載入作業與班級資料！");
+      setCloudStatus("synced");
+      console.log("✅ 成功從 Google 雲端載入資料！");
     }
-  } catch (err) { console.log("⚠️ 雲端讀取異常，目前使用本地資料", err); }
+  } catch (err) {
+    setCloudStatus("synced");
+    console.log("⚠️ 目前使用本地資料", err);
+  }
 }
 
+// 雲端資料寫入 (解決 CORS 卡在同步中)
 async function saveDB() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
   showUpdateToast();
 
   if (CLOUD_API_URL) {
+    setCloudStatus("syncing");
     try {
       await fetch(CLOUD_API_URL + "?action=save", {
         method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(db)
       });
-    } catch (err) { console.error("❌ 雲端同步失敗", err); }
+      setCloudStatus("synced");
+    } catch (err) {
+      setCloudStatus("error");
+      console.error("❌ 雲端同步失敗", err);
+    }
   }
 }
 
@@ -629,43 +654,27 @@ function addLog(category, detail) {
   saveDB();
 }
 
-// 核心更新：自動為該上課日建立 聯絡簿、國語、數學、社會 4 個空表格登記欄
-function ensureDailySubjectTables(dateStr) {
-  const defaultItems = [
-    { idSuffix: "cb", subject: "聯絡簿", title: "聯絡簿", pages: "每日簽名檢查", isContactBook: true, headerClass: "contact-book-header" },
-    { idSuffix: "chi", subject: "國語", title: "國語作業", pages: "尚未填寫範圍", isContactBook: false, headerClass: "chi-header" },
-    { idSuffix: "math", subject: "數學", title: "數學作業", pages: "尚未填寫範圍", isContactBook: false, headerClass: "math-header" },
-    { idSuffix: "soc", subject: "社會", title: "社會作業", pages: "尚未填寫範圍", isContactBook: false, headerClass: "soc-header" }
-  ];
-
-  let added = false;
-  defaultItems.forEach(item => {
-    const exists = db.homeworks.some(h => h.date === dateStr && h.subject === item.subject);
-    if (!exists) {
-      db.homeworks.push({
-        id: `hw_${item.idSuffix}_${dateStr}`,
-        date: dateStr,
-        subject: item.subject,
-        title: item.title,
-        pages: item.pages,
-        isContactBook: item.isContactBook,
-        headerClass: item.headerClass,
-        submissions: {}
-      });
-      added = true;
-    }
-  });
-
-  if (added) {
+// 僅保證每日聯絡簿存在；其餘作業「有新增才有，沒出就不顯示」
+function ensureContactBookOnly(dateStr) {
+  const hasContactBook = db.homeworks.some(h => h.date === dateStr && h.isContactBook);
+  if (!hasContactBook) {
+    db.homeworks.unshift({
+      id: `hw_cb_${dateStr}`,
+      date: dateStr,
+      subject: "聯絡簿",
+      title: "聯絡簿",
+      pages: "每日簽名檢查",
+      isContactBook: true,
+      submissions: {}
+    });
     saveDB();
   }
 }
 
-// 日期切換整合
 function onHwDateChange(val) {
   currentHwDate = normalizeToSchoolDay(val);
   document.getElementById('hwDateInput').value = currentHwDate;
-  ensureDailySubjectTables(currentHwDate);
+  ensureContactBookOnly(currentHwDate);
   renderHomeworkBoard();
 }
 
@@ -683,7 +692,7 @@ function shiftSchoolDay(dir) {
   while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + dir);
   currentHwDate = formatDateObj(d);
   document.getElementById('hwDateInput').value = currentHwDate;
-  ensureDailySubjectTables(currentHwDate);
+  ensureContactBookOnly(currentHwDate);
   renderHomeworkBoard();
 }
 
@@ -707,7 +716,7 @@ function renderWeekdayBar() {
     btn.onclick = () => {
       currentHwDate = dStr;
       document.getElementById('hwDateInput').value = currentHwDate;
-      ensureDailySubjectTables(currentHwDate);
+      ensureContactBookOnly(currentHwDate);
       renderHomeworkBoard();
     };
     bar.appendChild(btn);
@@ -742,7 +751,7 @@ function addHomeworkColumn() {
 }
 
 function renderHomeworkBoard() {
-  ensureDailySubjectTables(currentHwDate);
+  ensureContactBookOnly(currentHwDate);
   renderWeekdayBar();
   document.getElementById('boardDateLabel').textContent = `📅 上課日：${currentHwDate}`;
 
@@ -768,9 +777,8 @@ function renderHomeworkBoard() {
       `;
     }).join('');
 
-    let headerBgClass = hw.headerClass || "";
     col.innerHTML = `
-      <div class="hw-item-header ${headerBgClass}">
+      <div class="hw-item-header ${hw.isContactBook ? 'contact-book-header' : ''}">
         <div class="hw-item-meta">
           <span>📅 ${hw.date.slice(5)}</span>
           <span>【${hw.subject}】</span>
@@ -849,7 +857,7 @@ function handleGridBoxClick(hwId, stuId) {
 
 function deleteHwColumn(hwId) {
   const hw = db.homeworks.find(h => h.id === hwId);
-  if (!hw || !confirm(`確定要永久刪除【${hw.title}】這項作業嗎？`)) return;
+  if (!hw || !confirm(`確定要刪除【${hw.title}】這項作業嗎？`)) return;
   db.homeworks = db.homeworks.filter(h => h.id !== hwId);
   addLog("作業", `教師刪除作業欄位：【${hw.title}】`);
   renderHomeworkBoard();
@@ -1117,7 +1125,7 @@ function askStudentConfirm(stu, actionTitle, callback) {
   document.getElementById('confirmModal').classList.add('active');
 }
 
-// ==================== 出缺席打卡（嚴格鎖定上課日） ====================
+// 出缺席打卡（嚴格鎖定上課日）
 function onAttDateChange(val) {
   const checked = normalizeToSchoolDay(val);
   if (checked !== val) {
@@ -1276,7 +1284,6 @@ function renderAll() {
   renderLogs();
 }
 
-// 啟動設定
 document.getElementById('hwDateInput').value = currentHwDate;
 document.getElementById('pointDateInput').value = currentPointDate;
 document.getElementById('seatingDateInput').value = currentPointDate;
