@@ -55,8 +55,6 @@
   .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 0 10px rgba(37,99,235,0.6); }
 
   .admin-controls { display: flex; align-items: center; gap: 8px; }
-  
-  /* 雲端狀態顯示標籤 */
   .cloud-status {
     padding: 6px 12px; font-size: 0.88rem; font-weight: bold; border-radius: 8px;
     display: inline-flex; align-items: center; gap: 5px; transition: 0.2s;
@@ -113,8 +111,11 @@
   .hw-checklist-panel { background: white; border-radius: 14px; padding: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden; }
   .hw-columns-wrapper { display: flex; gap: 10px; overflow-x: auto; flex: 1; padding-bottom: 4px; }
   .hw-item-col { min-width: 240px; flex: 1; background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; }
-  .hw-item-header { background: var(--dark); color: white; padding: 8px 10px; text-align: center; }
+  .hw-item-header { background: var(--dark); color: white; padding: 8px 10px; text-align: center; position: relative; }
   .hw-item-header.contact-book-header { background: #0f766e; }
+  .hw-item-header.chi-header { background: #991b1b; }
+  .hw-item-header.math-header { background: #1e40af; }
+  .hw-item-header.soc-header { background: #065f46; }
   .hw-item-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #cbd5e1; margin-bottom: 3px; }
   .hw-item-title { font-size: 1.15rem; font-weight: 900; color: #fff; }
   .hw-item-pages { font-size: 0.85rem; color: #fde047; font-weight: bold; margin-top: 2px; }
@@ -181,7 +182,7 @@
   /* 國數社專屬加分表 */
   .subj-score-table { width: 100%; border-collapse: collapse; text-align: center; }
   .subj-score-table th, .subj-score-table td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; }
-  .subj-score-table th { background: #f1f5f9; font-size: 1.05rem; font-weight: 900; position: sticky; top: 0; }
+  .subj-score-table th { background: #f1f5f9; font-size: 1.05rem; font-weight: 900; position: sticky; top: 0; z-index: 10; }
   .subj-tag-btn { padding: 4px 10px; font-size: 0.85rem; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
 
   .points-split { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; flex: 1; min-height: 0; }
@@ -234,7 +235,7 @@
     <button class="tab-btn teacher-only" onclick="switchTab('logs', event)">🛡️ 504紀錄與備份</button>
   </div>
   <div class="admin-controls">
-    <span class="cloud-status synced" id="cloudStatusBadge">☁️ 雲端已連線</span>
+    <span class="cloud-status synced" id="cloudStatusBadge">☁️ 雲端連線中</span>
     <button id="modeBtn" class="mode-btn mode-student" onclick="toggleTeacherMode()">
       🔒 學生互動模式
     </button>
@@ -242,7 +243,7 @@
 </header>
 
 <main>
-  <!-- 1. 作業繳交：有新增才顯示 -->
+  <!-- 1. 作業繳交：僅保留聯絡簿，其餘有新增才顯示 -->
   <section id="page-homework" class="page active">
     <div class="toolbar">
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
@@ -365,7 +366,7 @@
     </div>
   </section>
 
-  <!-- 4. 出缺席打卡 (嚴格鎖定上課日) -->
+  <!-- 4. 出缺席打卡 (嚴格鎖定上課日，過濾週末) -->
   <section id="page-attendance" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -493,7 +494,8 @@
 </div>
 
 <script>
-const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxLYrVS3qejkBiEszUsBZH9-WhZBB-tmWENbZ0tJFFuVSNaK--btCej4S1r46gQxlnoyg/exec";
+// 您剛剛提供的最新雲端同步網址
+const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbwvMZLJZbbrMFQebBOra28xRBSWz8p91wNO5jAqXeO1dC_kBAfgyFttdIAaLinoogZVmg/exec";
 const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
 
 const INITIAL_STUDENTS = [
@@ -506,6 +508,7 @@ const INITIAL_STUDENTS = [
   { id: "19", name: "王呈翎" }, { id: "20", name: "陳雨禾" }, { id: "21", name: "王藝璇" }
 ];
 
+// 座位表（講台面向學生：第五直排 至 第一直排）
 const SEATING_LAYOUT = [
   { colName: "第五直排", ids: ["20", "14", "13", "10"] },
   { colName: "第四直排", ids: ["19", "11", "02", "17"] },
@@ -567,6 +570,7 @@ let db = existingCache ? JSON.parse(existingCache) : {
   logs: []
 };
 
+// 確保資料結構完整
 db.students.forEach(s => {
   if (!s.dailyPoints) s.dailyPoints = {};
   if (!s.subjectPoints) s.subjectPoints = { "國語": 0, "數學": 0, "社會": 0 };
@@ -626,7 +630,7 @@ async function loadCloudDB() {
   }
 }
 
-// 雲端資料寫入 (解決 CORS 卡在同步中)
+// 雲端資料寫入 (改用 no-cors 避免 302 跨域報錯卡住)
 async function saveDB() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
   showUpdateToast();
@@ -654,7 +658,7 @@ function addLog(category, detail) {
   saveDB();
 }
 
-// 僅保證每日聯絡簿存在；其餘作業「有新增才有，沒出就不顯示」
+// 💡 【重要修正】只保證每日聯絡簿存在，不會再自動強制產生國語/數學/社會空表格
 function ensureContactBookOnly(dateStr) {
   const hasContactBook = db.homeworks.some(h => h.date === dateStr && h.isContactBook);
   if (!hasContactBook) {
@@ -665,6 +669,7 @@ function ensureContactBookOnly(dateStr) {
       title: "聯絡簿",
       pages: "每日簽名檢查",
       isContactBook: true,
+      headerClass: "contact-book-header",
       submissions: {}
     });
     saveDB();
@@ -735,6 +740,11 @@ function addHomeworkColumn() {
   const pages = document.getElementById('quickHwPages').value.trim() || "全";
   if (!title) { alert("請輸入作業品項名稱！"); return; }
 
+  let hClass = "";
+  if(subject === "國語") hClass = "chi-header";
+  if(subject === "數學") hClass = "math-header";
+  if(subject === "社會") hClass = "soc-header";
+
   db.homeworks.push({
     id: "hw_" + Date.now(),
     date: currentHwDate,
@@ -742,6 +752,7 @@ function addHomeworkColumn() {
     title,
     pages,
     isContactBook: false,
+    headerClass: hClass,
     submissions: {}
   });
   addLog("作業", `教師新增作業欄：【${subject}】${title}`);
@@ -777,8 +788,9 @@ function renderHomeworkBoard() {
       `;
     }).join('');
 
+    let headerBgClass = hw.headerClass || "";
     col.innerHTML = `
-      <div class="hw-item-header ${hw.isContactBook ? 'contact-book-header' : ''}">
+      <div class="hw-item-header ${headerBgClass}">
         <div class="hw-item-meta">
           <span>📅 ${hw.date.slice(5)}</span>
           <span>【${hw.subject}】</span>
@@ -857,7 +869,9 @@ function handleGridBoxClick(hwId, stuId) {
 
 function deleteHwColumn(hwId) {
   const hw = db.homeworks.find(h => h.id === hwId);
-  if (!hw || !confirm(`確定要刪除【${hw.title}】這項作業嗎？`)) return;
+  if (!hw) return;
+  if (!confirm(`確定要永久刪除這項作業嗎？`)) return;
+  
   db.homeworks = db.homeworks.filter(h => h.id !== hwId);
   addLog("作業", `教師刪除作業欄位：【${hw.title}】`);
   renderHomeworkBoard();
@@ -1125,7 +1139,7 @@ function askStudentConfirm(stu, actionTitle, callback) {
   document.getElementById('confirmModal').classList.add('active');
 }
 
-// 出缺席打卡（嚴格鎖定上課日）
+// ==================== 出缺席打卡（嚴格鎖定上課日） ====================
 function onAttDateChange(val) {
   const checked = normalizeToSchoolDay(val);
   if (checked !== val) {
@@ -1284,6 +1298,7 @@ function renderAll() {
   renderLogs();
 }
 
+// 啟動設定
 document.getElementById('hwDateInput').value = currentHwDate;
 document.getElementById('pointDateInput').value = currentPointDate;
 document.getElementById('seatingDateInput').value = currentPointDate;
