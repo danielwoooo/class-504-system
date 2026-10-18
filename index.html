@@ -36,7 +36,16 @@
   .brand { display: flex; align-items: center; gap: 10px; }
   .class-badge { background: var(--primary); color: white; font-weight: 900; font-size: 1.35rem; padding: 4px 12px; border-radius: 8px; }
   .brand h1 { margin: 0; font-size: 1.3rem; }
+  .clock-box { display: flex; align-items: center; gap: 10px; }
   .clock { font-size: 1rem; background: rgba(255,255,255,0.12); padding: 5px 10px; border-radius: 6px; font-weight: bold; font-variant-numeric: tabular-nums; }
+  
+  /* 即時 Update 提示燈 */
+  #updateToast {
+    background: #16a34a; color: white; font-size: 0.85rem; font-weight: bold;
+    padding: 4px 10px; border-radius: 20px; opacity: 0; transition: opacity 0.3s ease;
+    display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px rgba(22,163,74,0.4);
+  }
+  #updateToast.show { opacity: 1; }
 
   .nav-tabs { display: flex; gap: 6px; }
   .tab-btn {
@@ -213,6 +222,7 @@
     background: white; border-radius: 12px; padding: 10px 12px; border: 2px solid #cbd5e1;
     cursor: pointer; transition: 0.15s; display: flex; flex-direction: column; justify-content: space-between;
   }
+  .point-stu-card.row-3-card { border-color: #38bdf8; background: #f0fdf4; } /* 3號專屬高亮樣板 */
   .point-stu-card:active { transform: scale(0.97); }
   .dual-score-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
   .score-box { border-radius: 8px; padding: 4px 6px; text-align: center; }
@@ -241,8 +251,10 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 3px solid #e2e8f0;
     cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; min-height: 118px;
   }
+  .student-card.row-3-card { border-color: #38bdf8; background: #f0fdf4; }
   .student-header { display: flex; justify-content: space-between; align-items: center; }
   .seat-num { background: var(--dark); color: white; font-weight: 900; font-size: 1.05rem; padding: 2px 8px; border-radius: 6px; }
+  .seat-num.row-3-tag { background: #0284c7; } /* 3號專屬標籤顏色 */
   .student-name { font-size: 1.3rem; font-weight: 900; margin: 4px 0; }
   .card-checked-in { border-color: var(--success); background: #f0fdf4; }
   .card-checked-out { border-color: var(--primary); background: #eff6ff; }
@@ -273,7 +285,10 @@
   <div class="brand">
     <span class="class-badge">504班</span>
     <h1>班級經營互動系統</h1>
-    <div class="clock" id="liveClock">00:00:00</div>
+    <div class="clock-box">
+      <div id="updateToast">💾 已自動儲存更新</div>
+      <div class="clock" id="liveClock">00:00:00</div>
+    </div>
   </div>
   <div class="nav-tabs">
     <button class="tab-btn active" onclick="switchTab('homework', event)">📋 作業方格登記與黑板</button>
@@ -504,7 +519,7 @@
 <script>
 const STORAGE_KEY = "CLASS_504_SYSTEM_DB_V4";
 const INITIAL_STUDENTS = [
-  { id: "01", name: "簡逸森" }, { id: "02", name: "吳承修" }, { id: "03", name: "呂鴻恩" },
+  { id: "01", name: "簡逸森" }, { id: "02", name: "吳承修" }, { id: "03", name: "呂鴻恩", row: "第三排" },
   { id: "04", name: "劉秉芮" }, { id: "05", name: "吳承憲" }, { id: "06", name: "莊逸杰" },
   { id: "07", name: "黃釩睿" }, { id: "08", name: "陳韋安" }, { id: "09", name: "蕭正喆" },
   { id: "10", name: "宋柚星" }, { id: "11", name: "楊承勳" }, { id: "12", name: "江妍霏" },
@@ -557,10 +572,19 @@ let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
 db.students.forEach(s => {
   if (!s.dailyPoints) s.dailyPoints = {};
   if (!s.subjectPoints) s.subjectPoints = {};
+  if (s.id === "03") s.row = "第三排"; // 確保3號固定對應第三排座位樣板
 });
 
 function getStudentDailyPoints(stu, dateStr) {
   return (stu.dailyPoints && stu.dailyPoints[dateStr]) ? stu.dailyPoints[dateStr] : 0;
+}
+
+function showUpdateToast() {
+  const toast = document.getElementById('updateToast');
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2000);
 }
 
 function ensureContactBookForDate(dateStr) {
@@ -670,6 +694,7 @@ async function autoWriteToFolder() {
 function saveDB() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
   autoWriteToFolder();
+  showUpdateToast(); // 觸發畫面上自動更新提示燈
 }
 
 function addLog(category, detail) {
@@ -768,10 +793,11 @@ function renderHomeworkBoard() {
     col.className = "hw-item-col";
     const boxesHtml = db.students.map(stu => {
       const isSub = Boolean(hw.submissions[stu.id]);
+      const isRow3 = (stu.id === "03");
       return `
-        <div class="seat-box ${isSub ? 'submitted' : 'unsubmitted'}" onclick="handleGridBoxClick('${hw.id}', '${stu.id}')">
-          <span class="s-num">${isSub ? '✓ ' + stu.id : stu.id}</span>
-          <span class="s-name">${stu.name}</span>
+        <div class="seat-box ${isSub ? 'submitted' : 'unsubmitted'} ${isRow3 ? 'row-3-card' : ''}" onclick="handleGridBoxClick('${hw.id}', '${stu.id}')">
+          <span class="s-num ${isRow3 ? 'row-3-tag' : ''}">${isSub ? '✓ ' + stu.id : stu.id}</span>
+          <span class="s-name">${stu.name} ${isRow3 ? '⭐' : ''}</span>
         </div>
       `;
     }).join('');
@@ -793,7 +819,7 @@ function renderHomeworkBoard() {
     const chalkRow = document.createElement('div');
     chalkRow.className = "chalk-row";
     let missingNumsHtml = missingStudents.length === 0 ? `<span style="color:var(--chalk-green); font-weight:900;">🎉 全班已交齊！</span>` : missingStudents.map(stu => `
-      <span class="chalk-num-chip" onclick="handleGridBoxClick('${hw.id}', '${stu.id}')">${stu.id}號 (${stu.name})</span>
+      <span class="chalk-num-chip" onclick="handleGridBoxClick('${hw.id}', '${stu.id}')">${stu.id}號 (${stu.name} ${stu.id==='03'?'⭐第三排':''})</span>
     `).join('');
 
     chalkRow.innerHTML = `
@@ -882,14 +908,15 @@ function renderPointsAndLeaderboard() {
   db.students.forEach(stu => {
     const dailyPts = getStudentDailyPoints(stu, currentPointDate);
     const totalPts = stu.totalPoints || 0;
+    const isRow3 = (stu.id === "03"); // 3號呂鴻恩 (第三排) 樣板
 
     const card = document.createElement('div');
-    card.className = "point-stu-card";
+    card.className = `point-stu-card ${isRow3 ? 'row-3-card' : ''}`;
     card.onclick = () => openStudentPointModal(stu);
     card.innerHTML = `
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span class="seat-num">${stu.id}</span>
-        <strong style="font-size:1.25rem;">${stu.name}</strong>
+        <span class="seat-num ${isRow3 ? 'row-3-tag' : ''}">${stu.id}</span>
+        <strong style="font-size:1.25rem;">${stu.name} ${isRow3 ? '<span style="font-size:0.8rem; color:#0284c7;">(第三排)</span>' : ''}</strong>
       </div>
       <div class="dual-score-row">
         <div class="score-box daily"><span class="score-label">🔥 當日</span><span class="score-val">${dailyPts > 0 ? '+' + dailyPts : dailyPts}</span></div>
@@ -911,11 +938,12 @@ function renderPointsAndLeaderboard() {
     const score = rankMode === 'daily' ? getStudentDailyPoints(stu, currentPointDate) : (stu.totalPoints || 0);
     let rankClass = idx === 0 ? "top-1" : idx === 1 ? "top-2" : idx === 2 ? "top-3" : "";
     let medal = idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : `${idx + 1}`;
+    const isRow3 = (stu.id === "03");
 
     const item = document.createElement('div');
-    item.className = `rank-item ${rankClass}`;
+    item.className = `rank-item ${rankClass} ${isRow3 ? 'row-3-card' : ''}`;
     item.innerHTML = `
-      <div style="display:flex; align-items:center; gap:10px;"><span class="rank-medal">${medal}</span><span class="seat-num">${stu.id}</span><span>${stu.name}</span></div>
+      <div style="display:flex; align-items:center; gap:10px;"><span class="rank-medal">${medal}</span><span class="seat-num ${isRow3 ? 'row-3-tag' : ''}">${stu.id}</span><span>${stu.name} ${isRow3 ? '⭐' : ''}</span></div>
       <span style="font-weight:900; color:${rankMode === 'daily' ? '#c2410c' : 'var(--primary)'};">${rankMode === 'daily' && score > 0 ? '+' + score : score} 分</span>
     `;
     rankContainer.appendChild(item);
@@ -926,7 +954,8 @@ function openStudentPointModal(stu) {
   if (!isTeacherMode) return;
   isBatchPointMode = false;
   activeStudentId = stu.id;
-  document.getElementById('pointModalTitle').textContent = `⭐ ${stu.id} ${stu.name} （當日：${getStudentDailyPoints(stu, currentPointDate)} ｜ 總積分：${stu.totalPoints}）`;
+  const isRow3 = (stu.id === "03");
+  document.getElementById('pointModalTitle').textContent = `⭐ ${stu.id} ${stu.name} ${isRow3?'(第三排)':''} （當日：${getStudentDailyPoints(stu, currentPointDate)} ｜ 總積分：${stu.totalPoints}）`;
   document.getElementById('pointReason').value = "";
   document.getElementById('modalRedeemSection').style.display = "block";
   renderStudentRewardButtons(stu);
@@ -1055,7 +1084,10 @@ function renderAttendance() {
     if (rec.outTime) outCount++;
     if (rec.status === 'leave') leaveCount++;
 
+    const isRow3 = (stu.id === "03");
     let cardClass = rec.status === 'leave' ? "card-leave" : (currentAttStage === 'in' && rec.inTime) ? "card-checked-in" : (currentAttStage === 'out' && rec.outTime) ? "card-checked-out" : "";
+    if (isRow3 && !cardClass) cardClass = "row-3-card";
+    
     let statusBadge = rec.status === 'leave' ? "請假" : (currentAttStage === 'in' && rec.inTime) ? "✅ 已入班" : (currentAttStage === 'out' && rec.outTime) ? "🏠 已放學" : "未打卡";
 
     const card = document.createElement('div');
@@ -1070,7 +1102,7 @@ function renderAttendance() {
       });
     };
     card.innerHTML = `
-      <div><div class="student-header"><span class="seat-num">${stu.id}</span><b>${statusBadge}</b></div><div class="student-name">${stu.name}</div></div>
+      <div><div class="student-header"><span class="seat-num ${isRow3?'row-3-tag':''}">${stu.id}</span><b>${statusBadge}</b></div><div class="student-name">${stu.name} ${isRow3?'⭐':''}</div></div>
       <div class="time-stamp">☀️ ${rec.inTime || '--:--'} | 🌙 ${rec.outTime || '--:--'}</div>
     `;
     grid.appendChild(card);
