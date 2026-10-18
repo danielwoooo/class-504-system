@@ -109,6 +109,9 @@
   .hw-item-col { min-width: 240px; flex: 1; background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; }
   .hw-item-header { background: var(--dark); color: white; padding: 8px 10px; text-align: center; }
   .hw-item-header.contact-book-header { background: #0f766e; }
+  .hw-item-header.chi-header { background: #991b1b; }
+  .hw-item-header.math-header { background: #1e40af; }
+  .hw-item-header.soc-header { background: #065f46; }
   .hw-item-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #cbd5e1; margin-bottom: 3px; }
   .hw-item-title { font-size: 1.15rem; font-weight: 900; color: #fff; }
   .hw-item-pages { font-size: 0.85rem; color: #fde047; font-weight: bold; margin-top: 2px; }
@@ -236,7 +239,7 @@
 </header>
 
 <main>
-  <!-- 1. 作業繳交 (已移除英語、自然) -->
+  <!-- 1. 作業繳交 (自動建立國/數/社/聯絡簿空表格) -->
   <section id="page-homework" class="page active">
     <div class="toolbar">
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
@@ -246,13 +249,13 @@
         <div class="weekday-bar" id="weekdayBar"></div>
       </div>
       <div style="display:flex; gap:8px; align-items:center;">
-        <button class="btn btn-primary teacher-only" onclick="toggleHwSetupBar()">➕ 新增/設定當日作業品項</button>
+        <button class="btn btn-primary teacher-only" onclick="toggleHwSetupBar()">➕ 新增其他自訂作業</button>
       </div>
     </div>
 
     <div class="teacher-hw-setup teacher-only-flex" id="teacherHwSetupBar">
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; flex:1;">
-        <strong style="color:#b45309;">✏️ 設定作業品項：</strong>
+        <strong style="color:#b45309;">✏️ 新增其他自訂作業品項：</strong>
         <select id="quickHwSubject" class="form-control">
           <option value="國語">國語</option>
           <option value="數學">數學</option>
@@ -260,9 +263,9 @@
           <option value="考卷訂正">考卷訂正/簽名</option>
           <option value="綜合/其他">綜合/其他</option>
         </select>
-        <input type="text" id="quickHwTitle" class="form-control" placeholder="作業品項 (如：國習、數作)" style="width:210px;">
+        <input type="text" id="quickHwTitle" class="form-control" placeholder="作業品項 (如：生字本、作文)" style="width:210px;">
         <input type="text" id="quickHwPages" class="form-control" placeholder="頁數/範圍 (如：P.24~26)" style="width:140px;">
-        <button class="btn btn-primary" onclick="addHomeworkColumn()">➕ 新增登記表欄位</button>
+        <button class="btn btn-primary" onclick="addHomeworkColumn()">➕ 新增至黑板登記表</button>
       </div>
     </div>
 
@@ -292,14 +295,14 @@
     </div>
   </section>
 
-  <!-- 2. 獨立主分頁：教室座位加分模式 (直覺呈現5直排真實座位) -->
+  <!-- 2. 教室座位直覺加分 (依照真實座位配置) -->
   <section id="page-seating" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
         <span style="font-weight:900; font-size:1.2rem; color:#1e293b;">🪑 504班 教室座位直覺加分看板</span>
-        <label style="font-weight:bold; color:var(--gray);">計分日期：</label>
-        <input type="date" id="seatingDateInput" class="form-control" onchange="onPointDateChange(this.value)">
-        <span style="color:var(--gray); font-size:0.9rem;">（直接點擊學生課桌即可加分；上方可點擊「整排+1」）</span>
+        <label style="font-weight:bold; color:var(--gray);">上課日戳章：</label>
+        <input type="date" id="seatingDateInput" class="form-control" onchange="onCommonDateChange(this.value)">
+        <span style="color:var(--gray); font-size:0.9rem;">（點擊課桌單獨加分；點擊上方「⚡整排+1」小組加分）</span>
       </div>
       <div class="teacher-only" style="gap:8px;">
         <button class="btn btn-success" onclick="openBatchPointsModal()">✨ 全班同步加分</button>
@@ -312,13 +315,13 @@
     </div>
   </section>
 
-  <!-- 3. 國/數/社 專科積分表與排行榜 (已移除英語、自然) -->
+  <!-- 3. 國/數/社 專科積分表與排行榜 -->
   <section id="page-points" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
         <span style="font-weight:900; font-size:1.15rem;">🏆 國語、數學、社會 專科積分表</span>
-        <label style="font-weight:bold; color:var(--gray);">計分日期：</label>
-        <input type="date" id="pointDateInput" class="form-control" onchange="onPointDateChange(this.value)">
+        <label style="font-weight:bold; color:var(--gray);">上課日戳章：</label>
+        <input type="date" id="pointDateInput" class="form-control" onchange="onCommonDateChange(this.value)">
       </div>
       <div class="teacher-only" style="gap:8px;">
         <button class="btn btn-success" onclick="openBatchPointsModal()">✨ 全班同步加減分</button>
@@ -327,7 +330,6 @@
     </div>
 
     <div class="points-split">
-      <!-- 國語、數學、社會 獨立加分表 -->
       <div style="background:white; border-radius:14px; padding:14px; box-shadow:0 2px 6px rgba(0,0,0,0.06); display:flex; flex-direction:column; overflow-y:auto;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
           <strong style="font-size:1.1rem; color:#1e293b;">📊 國語、數學、社會 獨立累計與即時加分表</strong>
@@ -347,7 +349,6 @@
         </table>
       </div>
 
-      <!-- 右側：雙榜榮譽排行榜 -->
       <div class="leaderboard-panel">
         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #f1f5f9; padding-bottom:10px;">
           <h3 style="margin:0; font-size:1.25rem;">👑 504班 榮譽排行榜</h3>
@@ -361,11 +362,14 @@
     </div>
   </section>
 
-  <!-- 4. 出缺席打卡 -->
+  <!-- 4. 出缺席打卡 (嚴格鎖定上課日，過濾週末) -->
   <section id="page-attendance" class="page">
     <div class="toolbar">
-      <div style="display:flex; gap:10px; align-items:center;">
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <label style="font-weight:900;">上課日戳章：</label>
+        <button class="btn btn-outline" onclick="shiftAttDay(-1)">◀ 前一上課日</button>
         <input type="date" id="attDate" class="form-control" onchange="onAttDateChange(this.value)">
+        <button class="btn btn-outline" onclick="shiftAttDay(1)">下一上課日 ▶</button>
         <button class="btn btn-outline active" id="stageInBtn" onclick="setAttStage('in')">☀️ 早自習入班打卡</button>
         <button class="btn btn-outline" id="stageOutBtn" onclick="setAttStage('out')">🌙 放學離校打卡</button>
       </div>
@@ -429,7 +433,6 @@
   </div>
 </div>
 
-<!-- 加分彈出視窗：已移除英語、自然 -->
 <div class="modal-overlay" id="pointModal">
   <div class="modal">
     <div class="modal-header">
@@ -521,6 +524,7 @@ function formatDateObj(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
+// 嚴格鎖定上課日 (週六自動退至週五，週日自動退至週五)
 function normalizeToSchoolDay(dateStr) {
   let d = dateStr ? new Date(dateStr + "T00:00:00") : new Date();
   const day = d.getDay();
@@ -532,8 +536,10 @@ function normalizeToSchoolDay(dateStr) {
 function getNowTimeStr() { return new Date().toTimeString().split(' ')[0]; }
 function getFullTimestamp() { return `${formatDateObj(new Date())} ${getNowTimeStr()}`; }
 
+// 系統預設統一上課日戳章
 let currentHwDate = normalizeToSchoolDay();
 let currentPointDate = currentHwDate;
+let currentAttDate = currentHwDate;
 
 let existingCache = localStorage.getItem(STORAGE_KEY) 
   || localStorage.getItem("CLASS_504_SYSTEM_DB_V5")
@@ -623,27 +629,52 @@ function addLog(category, detail) {
   saveDB();
 }
 
-function ensureContactBookForDate(dateStr) {
-  const hasContactBook = db.homeworks.some(h => h.date === dateStr && h.isContactBook);
-  if (!hasContactBook) {
-    db.homeworks.unshift({
-      id: `hw_cb_${dateStr}`,
-      date: dateStr,
-      subject: "聯絡簿",
-      title: "聯絡簿",
-      pages: "每日簽名檢查",
-      isContactBook: true,
-      submissions: {}
-    });
+// 核心更新：自動為該上課日建立 聯絡簿、國語、數學、社會 4 個空表格登記欄
+function ensureDailySubjectTables(dateStr) {
+  const defaultItems = [
+    { idSuffix: "cb", subject: "聯絡簿", title: "聯絡簿", pages: "每日簽名檢查", isContactBook: true, headerClass: "contact-book-header" },
+    { idSuffix: "chi", subject: "國語", title: "國語作業", pages: "尚未填寫範圍", isContactBook: false, headerClass: "chi-header" },
+    { idSuffix: "math", subject: "數學", title: "數學作業", pages: "尚未填寫範圍", isContactBook: false, headerClass: "math-header" },
+    { idSuffix: "soc", subject: "社會", title: "社會作業", pages: "尚未填寫範圍", isContactBook: false, headerClass: "soc-header" }
+  ];
+
+  let added = false;
+  defaultItems.forEach(item => {
+    const exists = db.homeworks.some(h => h.date === dateStr && h.subject === item.subject);
+    if (!exists) {
+      db.homeworks.push({
+        id: `hw_${item.idSuffix}_${dateStr}`,
+        date: dateStr,
+        subject: item.subject,
+        title: item.title,
+        pages: item.pages,
+        isContactBook: item.isContactBook,
+        headerClass: item.headerClass,
+        submissions: {}
+      });
+      added = true;
+    }
+  });
+
+  if (added) {
     saveDB();
   }
 }
 
+// 日期切換整合
 function onHwDateChange(val) {
   currentHwDate = normalizeToSchoolDay(val);
   document.getElementById('hwDateInput').value = currentHwDate;
-  ensureContactBookForDate(currentHwDate);
+  ensureDailySubjectTables(currentHwDate);
   renderHomeworkBoard();
+}
+
+function onCommonDateChange(val) {
+  const checked = normalizeToSchoolDay(val);
+  currentPointDate = checked;
+  document.getElementById('pointDateInput').value = currentPointDate;
+  document.getElementById('seatingDateInput').value = currentPointDate;
+  renderPointsAndLeaderboard();
 }
 
 function shiftSchoolDay(dir) {
@@ -652,7 +683,7 @@ function shiftSchoolDay(dir) {
   while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + dir);
   currentHwDate = formatDateObj(d);
   document.getElementById('hwDateInput').value = currentHwDate;
-  ensureContactBookForDate(currentHwDate);
+  ensureDailySubjectTables(currentHwDate);
   renderHomeworkBoard();
 }
 
@@ -676,7 +707,7 @@ function renderWeekdayBar() {
     btn.onclick = () => {
       currentHwDate = dStr;
       document.getElementById('hwDateInput').value = currentHwDate;
-      ensureContactBookForDate(currentHwDate);
+      ensureDailySubjectTables(currentHwDate);
       renderHomeworkBoard();
     };
     bar.appendChild(btn);
@@ -711,9 +742,9 @@ function addHomeworkColumn() {
 }
 
 function renderHomeworkBoard() {
-  ensureContactBookForDate(currentHwDate);
+  ensureDailySubjectTables(currentHwDate);
   renderWeekdayBar();
-  document.getElementById('boardDateLabel').textContent = `📅 日期：${currentHwDate}`;
+  document.getElementById('boardDateLabel').textContent = `📅 上課日：${currentHwDate}`;
 
   const wrapper = document.getElementById('hwColumnsWrapper');
   const chalkList = document.getElementById('chalkBoardList');
@@ -737,8 +768,9 @@ function renderHomeworkBoard() {
       `;
     }).join('');
 
+    let headerBgClass = hw.headerClass || "";
     col.innerHTML = `
-      <div class="hw-item-header ${hw.isContactBook ? 'contact-book-header' : ''}">
+      <div class="hw-item-header ${headerBgClass}">
         <div class="hw-item-meta">
           <span>📅 ${hw.date.slice(5)}</span>
           <span>【${hw.subject}】</span>
@@ -823,13 +855,6 @@ function deleteHwColumn(hwId) {
   renderHomeworkBoard();
 }
 
-function onPointDateChange(val) {
-  currentPointDate = normalizeToSchoolDay(val);
-  document.getElementById('pointDateInput').value = currentPointDate;
-  document.getElementById('seatingDateInput').value = currentPointDate;
-  renderPointsAndLeaderboard();
-}
-
 function setRankMode(mode) {
   rankMode = mode;
   document.getElementById('rankDailyBtn').classList.toggle('active', mode === 'daily');
@@ -860,7 +885,7 @@ function quickAddSubjectPoint(stuId, subj, delta) {
 }
 
 function renderPointsAndLeaderboard() {
-  // 1. 渲染真實教室 5 直排座位加分看板
+  // 1. 教室座位看板
   const seatingGrid = document.getElementById('seatingGrid');
   seatingGrid.innerHTML = "";
 
@@ -896,7 +921,7 @@ function renderPointsAndLeaderboard() {
     seatingGrid.appendChild(colBox);
   });
 
-  // 2. 渲染 國語、數學、社會 獨立加分表
+  // 2. 國語、數學、社會 獨立加分表
   const subjTableBody = document.getElementById('subjScoreTableBody');
   subjTableBody.innerHTML = "";
   db.students.forEach(stu => {
@@ -928,7 +953,7 @@ function renderPointsAndLeaderboard() {
     subjTableBody.appendChild(tr);
   });
 
-  // 3. 渲染排行榜
+  // 3. 排行榜
   const rankContainer = document.getElementById('leaderboardList');
   rankContainer.innerHTML = "";
   const sorted = [...db.students].sort((a, b) => {
@@ -1092,7 +1117,26 @@ function askStudentConfirm(stu, actionTitle, callback) {
   document.getElementById('confirmModal').classList.add('active');
 }
 
-function onAttDateChange(val) { renderAttendance(); }
+// ==================== 出缺席打卡（嚴格鎖定上課日） ====================
+function onAttDateChange(val) {
+  const checked = normalizeToSchoolDay(val);
+  if (checked !== val) {
+    alert("📅 提醒：週六與週日非上課日，系統已自動調整至最近的上課日（週五）！");
+  }
+  currentAttDate = checked;
+  document.getElementById('attDate').value = currentAttDate;
+  renderAttendance();
+}
+
+function shiftAttDay(dir) {
+  let d = new Date(currentAttDate + "T00:00:00");
+  d.setDate(d.getDate() + dir);
+  while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + dir);
+  currentAttDate = formatDateObj(d);
+  document.getElementById('attDate').value = currentAttDate;
+  renderAttendance();
+}
+
 function setAttStage(stage) {
   currentAttStage = stage;
   document.getElementById('stageInBtn').classList.toggle('active', stage === 'in');
@@ -1101,7 +1145,7 @@ function setAttStage(stage) {
 }
 
 function renderAttendance() {
-  const dateStr = document.getElementById('attDate').value || currentHwDate;
+  const dateStr = currentAttDate;
   if (!db.attendance[dateStr]) db.attendance[dateStr] = {};
   const dayRecord = db.attendance[dateStr];
   let inCount = 0, outCount = 0, leaveCount = 0;
@@ -1121,10 +1165,10 @@ function renderAttendance() {
     card.className = `student-card ${cardClass}`;
     card.onclick = () => {
       if (!db.attendance[dateStr][stu.id]) db.attendance[dateStr][stu.id] = { status: 'uncheck', inTime: null, outTime: null };
-      askStudentConfirm(stu, currentAttStage === 'in' ? "早自習入班打卡" : "放學離校打卡", () => {
+      askStudentConfirm(stu, currentAttStage === 'in' ? `[${dateStr}] 早自習入班打卡` : `[${dateStr}] 放學離校打卡`, () => {
         if (currentAttStage === 'in') db.attendance[dateStr][stu.id].inTime = getNowTimeStr();
         else db.attendance[dateStr][stu.id].outTime = getNowTimeStr();
-        addLog("出缺席", `${stu.id} ${stu.name} 打卡`);
+        addLog("出缺席", `${stu.id} ${stu.name} [${dateStr}] 打卡`);
         renderAttendance();
       });
     };
@@ -1138,7 +1182,7 @@ function renderAttendance() {
 }
 
 function batchCheckIn() {
-  const dateStr = document.getElementById('attDate').value || currentHwDate;
+  const dateStr = currentAttDate;
   if (!db.attendance[dateStr]) db.attendance[dateStr] = {};
   const t = getNowTimeStr();
   db.students.forEach(stu => {
@@ -1146,7 +1190,7 @@ function batchCheckIn() {
     if (currentAttStage === 'in') db.attendance[dateStr][stu.id].inTime = t;
     else db.attendance[dateStr][stu.id].outTime = t;
   });
-  addLog("出缺席", "全班一鍵打卡");
+  addLog("出缺席", `[${dateStr}] 全班一鍵打卡`);
   renderAttendance();
 }
 
@@ -1232,10 +1276,11 @@ function renderAll() {
   renderLogs();
 }
 
+// 啟動設定
 document.getElementById('hwDateInput').value = currentHwDate;
 document.getElementById('pointDateInput').value = currentPointDate;
 document.getElementById('seatingDateInput').value = currentPointDate;
-document.getElementById('attDate').value = currentHwDate;
+document.getElementById('attDate').value = currentAttDate;
 
 loadCloudDB();
 renderAll();
