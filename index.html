@@ -184,7 +184,6 @@
   .subj-score-table th, .subj-score-table td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; }
   .subj-score-table th { background: #f1f5f9; font-size: 1.05rem; font-weight: 900; position: sticky; top: 0; z-index: 10; }
   .subj-tag-btn { padding: 4px 10px; font-size: 0.85rem; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
-  /* 新增扣分按鈕樣式 */
   .subj-tag-btn.minus { background: #f3f4f6; color: #4b5563; margin-left: 2px; }
 
   .points-split { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; flex: 1; min-height: 0; }
@@ -245,7 +244,7 @@
 </header>
 
 <main>
-  <!-- 1. 作業繳交：僅保留聯絡簿，其餘有新增才顯示 -->
+  <!-- 1. 作業繳交 -->
   <section id="page-homework" class="page active">
     <div class="toolbar">
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
@@ -368,7 +367,7 @@
     </div>
   </section>
 
-  <!-- 4. 出缺席打卡 (嚴格鎖定上課日，過濾週末) -->
+  <!-- 4. 出缺席打卡 (包含防誤觸取消機制) -->
   <section id="page-attendance" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -1151,7 +1150,7 @@ function askStudentConfirm(stu, actionTitle, callback) {
   document.getElementById('confirmModal').classList.add('active');
 }
 
-// 出缺席打卡（嚴格鎖定上課日）
+// 出缺席打卡（嚴格鎖定上課日，含取消打卡防呆機制）
 function onAttDateChange(val) {
   const checked = normalizeToSchoolDay(val);
   if (checked !== val) {
@@ -1197,15 +1196,36 @@ function renderAttendance() {
 
     const card = document.createElement('div');
     card.className = `student-card ${cardClass}`;
+    
     card.onclick = () => {
       if (!db.attendance[dateStr][stu.id]) db.attendance[dateStr][stu.id] = { status: 'uncheck', inTime: null, outTime: null };
-      askStudentConfirm(stu, currentAttStage === 'in' ? `[${dateStr}] 早自習入班打卡` : `[${dateStr}] 放學離校打卡`, () => {
-        if (currentAttStage === 'in') db.attendance[dateStr][stu.id].inTime = getNowTimeStr();
-        else db.attendance[dateStr][stu.id].outTime = getNowTimeStr();
-        addLog("出缺席", `${stu.id} ${stu.name} [${dateStr}] 打卡`);
-        renderAttendance();
-      });
+      
+      const isAlreadyChecked = currentAttStage === 'in' ? !!db.attendance[dateStr][stu.id].inTime : !!db.attendance[dateStr][stu.id].outTime;
+
+      if (!isAlreadyChecked) {
+        // 尚未打卡 -> 進行打卡確認
+        askStudentConfirm(stu, currentAttStage === 'in' ? `[${dateStr}] 早自習入班打卡` : `[${dateStr}] 放學離校打卡`, () => {
+          if (currentAttStage === 'in') db.attendance[dateStr][stu.id].inTime = getNowTimeStr();
+          else db.attendance[dateStr][stu.id].outTime = getNowTimeStr();
+          addLog("出缺席", `${stu.id} ${stu.name} [${dateStr}] 打卡`);
+          renderAttendance();
+        });
+      } else {
+        // 已經打卡 -> 教師可取消，學生跳警告
+        if (isTeacherMode) {
+          const actionName = currentAttStage === 'in' ? '入班打卡' : '放學打卡';
+          if (confirm(`確定要取消 ${stu.id} ${stu.name} 的【${actionName}】紀錄嗎？`)) {
+            if (currentAttStage === 'in') db.attendance[dateStr][stu.id].inTime = null;
+            else db.attendance[dateStr][stu.id].outTime = null;
+            addLog("出缺席", `教師取消 ${stu.id} ${stu.name} [${dateStr}] ${actionName}`);
+            renderAttendance();
+          }
+        } else {
+          alert(`⚠️ ${stu.name} 已經完成${currentAttStage === 'in' ? '入班' : '放學'}打卡囉！\n若不小心誤觸，請請老師輸入密碼切換至「教師管理模式」來取消。`);
+        }
+      }
     };
+    
     card.innerHTML = `
       <div><div class="student-header"><span class="seat-num">${stu.id}</span><b>${statusBadge}</b></div><div class="student-name">${stu.name}</div></div>
       <div class="time-stamp">☀️ ${rec.inTime || '--:--'} | 🌙 ${rec.outTime || '--:--'}</div>
