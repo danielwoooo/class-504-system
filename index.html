@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>504班 班級經營互動系統</title>
+<style>
+  :root {
+    --board-bg: #1b4332;
+    --board-dark: #081c15;
+    --board-border: #a47148;
+    --chalk-white: #f8f9fa;
+    --chalk-yellow: #ffd166;
+    --chalk-red: #ff6b6b;
+    --chalk-green: #74c69d;
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --success: #16a34a;
+    --success-light: #dcfce7;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --dark: #0f172a;
+    --gray: #64748b;
+    --bg: #e2e8f0;
+  }
+  * { box-sizing: border-box; font-family: "Microsoft JhengHei", "PingFang TC", sans-serif; user-select: none; }
+  body { margin: 0; background: var(--bg); color: var(--dark); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+  header {
+    background: var(--dark); color: white; padding: 8px 18px;
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 20;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .class-badge { background: var(--primary); color: white; font-weight: 900; font-size: 1.35rem; padding: 4px 12px; border-radius: 8px; }
+  .brand h1 { margin: 0; font-size: 1.3rem; }
+  .clock { font-size: 1rem; background: rgba(255,255,255,0.12); padding: 5px 10px; border-radius: 6px; font-weight: bold; font-variant-numeric: tabular-nums; }
+
+  .nav-tabs { display: flex; gap: 6px; }
+  .tab-btn {
+    background: rgba(255,255,255,0.1); color: #cbd5e1; border: none;
+    padding: 9px 16px; font-size: 1rem; font-weight: bold; border-radius: 8px;
+    cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px;
+  }
+  .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 0 10px rgba(37,99,235,0.6); }
+
+  .admin-controls { display: flex; align-items: center; gap: 8px; }
+  .folder-status {
+    padding: 7px 12px; font-size: 0.88rem; font-weight: bold; border: 2px solid #38bdf8;
+    background: rgba(56,189,248,0.15); color: #38bdf8; border-radius: 8px; cursor: pointer;
+  }
+  .folder-status.connected { border-color: #4ade80; background: rgba(74,222,128,0.2); color: #4ade80; }
+  .mode-btn {
+    padding: 8px 14px; font-size: 0.95rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;
+  }
+  .mode-student { background: var(--warning); color: white; }
+  .mode-teacher { background: var(--danger); color: white; box-shadow: 0 0 12px rgba(220,38,38,0.7); }
+
+  .teacher-only { display: none !important; }
+  body.is-teacher .teacher-only { display: inline-flex !important; }
+  body.is-teacher .teacher-only-flex { display: flex !important; }
+
+  main { flex: 1; overflow-y: auto; padding: 12px 16px; display: flex; flex-direction: column; }
+  .page { display: none; height: 100%; flex-direction: column; gap: 10px; }
+  .page.active { display: flex; }
+
+  .toolbar {
+    background: white; padding: 8px 14px; border-radius: 12px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+  }
+  .weekday-bar { display: flex; gap: 5px; align-items: center; }
+  .day-pill {
+    padding: 6px 11px; border-radius: 8px; font-weight: 900; font-size: 0.92rem;
+    border: 2px solid #cbd5e1; background: #f8fafc; cursor: pointer; color: var(--dark);
+  }
+  .day-pill.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+  .btn {
+    padding: 7px 13px; border-radius: 8px; font-size: 0.95rem; font-weight: bold;
+    border: none; cursor: pointer; transition: 0.15s; display: inline-flex; align-items: center; gap: 5px;
+  }
+  .btn:active { transform: scale(0.96); }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-success { background: var(--success); color: white; }
+  .btn-danger { background: var(--danger); color: white; }
+  .btn-warning { background: var(--warning); color: white; }
+  .btn-outline { background: white; border: 2px solid #cbd5e1; color: var(--dark); }
+  .btn-outline.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+  .form-control { padding: 6px 10px; font-size: 0.95rem; border: 2px solid #cbd5e1; border-radius: 8px; font-weight: bold; }
+
+  .teacher-hw-setup {
+    display: none; background: #fffbeb; border: 2px solid #f59e0b; border-radius: 12px;
+    padding: 8px 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  }
+
+  .hw-main-split {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 14px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .hw-checklist-panel {
+    background: white;
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .hw-columns-wrapper {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    flex: 1;
+    padding-bottom: 4px;
+  }
+  .hw-item-col {
+    min-width: 240px;
+    flex: 1;
+    background: #f8fafc;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .hw-item-header {
+    background: var(--dark);
+    color: white;
+    padding: 8px 10px;
+    text-align: center;
+  }
+  .hw-item-header.contact-book-header { background: #0f766e; }
+  .hw-item-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem; color: #cbd5e1; margin-bottom: 3px;
+  }
+  .hw-item-title { font-size: 1.15rem; font-weight: 900; color: #fff; }
+  .hw-item-pages { font-size: 0.85rem; color: #fde047; font-weight: bold; margin-top: 2px; }
+
+  .seat-boxes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 8px;
+    overflow-y: auto;
+    flex: 1;
+    align-content: start;
+  }
+  .seat-box {
+    border-radius: 8px;
+    padding: 7px 4px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.12s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #cbd5e1;
+    background: white;
+    min-height: 50px;
+  }
+  .seat-box:active { transform: scale(0.93); }
+  .seat-box .s-num { font-size: 1.15rem; font-weight: 900; line-height: 1; }
+  .seat-box .s-name { font-size: 0.85rem; font-weight: bold; margin-top: 2px; }
+  
+  .seat-box.unsubmitted { background: #fff1f2; border-color: #fca5a5; color: #be123c; }
+  .seat-box.submitted { background: var(--success-light); border-color: var(--success); color: var(--success); }
+
+  .blackboard-panel {
+    background: var(--board-bg);
+    border: 9px solid var(--board-border);
+    border-radius: 16px;
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.45), 0 4px 10px rgba(0,0,0,0.12);
+    padding: 14px 16px;
+    color: var(--chalk-white);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    gap: 12px;
+  }
+  .chalk-header {
+    font-size: 1.3rem; font-weight: 900; color: var(--chalk-yellow);
+    border-bottom: 2px dashed rgba(255,255,255,0.3); padding-bottom: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .chalk-row {
+    background: rgba(0,0,0,0.22); border-left: 5px solid var(--chalk-yellow);
+    border-radius: 8px; padding: 10px 12px;
+  }
+  .chalk-row-title {
+    font-size: 1.15rem; font-weight: 900; color: #fff; margin-bottom: 6px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .chalk-numbers-wrap { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .chalk-num-chip {
+    background: rgba(255, 107, 107, 0.25); border: 2px solid var(--chalk-red);
+    color: #fff; font-weight: 900; font-size: 1.05rem; padding: 3px 9px;
+    border-radius: 6px; cursor: pointer; transition: 0.12s;
+  }
+  .chalk-num-chip:hover { background: var(--chalk-red); }
+
+  .points-split { display: grid; grid-template-columns: 1.55fr 1fr; gap: 14px; flex: 1; min-height: 0; }
+  .points-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; overflow-y: auto; padding-right: 4px; align-content: start; }
+  .point-stu-card {
+    background: white; border-radius: 12px; padding: 10px 12px; border: 2px solid #cbd5e1;
+    cursor: pointer; transition: 0.15s; display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .point-stu-card:active { transform: scale(0.97); }
+  .dual-score-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+  .score-box { border-radius: 8px; padding: 4px 6px; text-align: center; }
+  .score-box.daily { background: #fff7ed; border: 1px solid #fed7aa; color: #c2410c; }
+  .score-box.total { background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; }
+  .score-label { font-size: 0.72rem; font-weight: bold; display: block; }
+  .score-val { font-size: 1.2rem; font-weight: 900; }
+
+  .leaderboard-panel {
+    background: white; border-radius: 14px; padding: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden;
+  }
+  .rank-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 7px; margin-top: 10px; }
+  .rank-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 12px; border-radius: 10px; background: #f8fafc; border: 1px solid #e2e8f0; font-weight: bold;
+  }
+  .rank-item.top-1 { background: #fef9c3; border: 2px solid #eab308; }
+  .rank-item.top-2 { background: #f1f5f9; border: 2px solid #94a3b8; }
+  .rank-item.top-3 { background: #ffedd5; border: 2px solid #f97316; }
+  .rank-medal { font-size: 1.25rem; width: 32px; text-align: center; font-weight: 900; }
+
+  .student-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; padding-bottom: 12px; }
+  .student-card {
+    background: white; border-radius: 12px; padding: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 3px solid #e2e8f0;
+    cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; min-height: 118px;
+  }
+  .student-header { display: flex; justify-content: space-between; align-items: center; }
+  .seat-num { background: var(--dark); color: white; font-weight: 900; font-size: 1.05rem; padding: 2px 8px; border-radius: 6px; }
+  .student-name { font-size: 1.3rem; font-weight: 900; margin: 4px 0; }
+  .card-checked-in { border-color: var(--success); background: #f0fdf4; }
+  .card-checked-out { border-color: var(--primary); background: #eff6ff; }
+  .card-leave { border-color: var(--warning); background: #fffbeb; opacity: 0.8; }
+  .time-stamp { font-size: 0.82rem; color: var(--gray); font-weight: bold; }
+
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(15,23,42,0.68);
+    display: none; justify-content: center; align-items: center; z-index: 100; padding: 18px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: white; border-radius: 18px; width: 100%; max-width: 640px;
+    padding: 22px; box-shadow: 0 25px 30px -5px rgba(0,0,0,0.3); max-height: 92vh; overflow-y: auto;
+  }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+  .modal-header h2 { margin: 0; font-size: 1.45rem; }
+  .close-btn { background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--gray); }
+
+  .log-table { width: 100%; border-collapse: collapse; background: white; }
+  .log-table th, .log-table td { padding: 9px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+  .log-table th { background: #f8fafc; position: sticky; top: 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="class-badge">504班</span>
+    <h1>班級經營互動系統</h1>
+    <div class="clock" id="liveClock">00:00:00</div>
+  </div>
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('homework', event)">📋 作業方格登記與黑板</button>
+    <button class="tab-btn" onclick="switchTab('points', event)">🏆 當日/總積分與排行榜</button>
+    <button class="tab-btn" onclick="switchTab('attendance', event)">👋 入班/放學打卡</button>
+    <button class="tab-btn teacher-only" onclick="switchTab('logs', event)">🛡️ 504紀錄與備份</button>
+  </div>
+  <div class="admin-controls">
+    <button id="folderBtn" class="folder-status" onclick="setupAutoBackupFolder()" title="授權本機『504班級』資料夾自動存檔">
+      📁 授權「504班級」資料夾自動存檔
+    </button>
+    <button id="modeBtn" class="mode-btn mode-student" onclick="toggleTeacherMode()">
+      🔒 學生互動模式
+    </button>
+  </div>
+</header>
+
+<main>
+  <section id="page-homework" class="page active">
+    <div class="toolbar">
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <button class="btn btn-outline" onclick="shiftSchoolDay(-1)">◀ 前一上課日</button>
+        <input type="date" id="hwDateInput" class="form-control" onchange="onHwDateChange(this.value)">
+        <button class="btn btn-outline" onclick="shiftSchoolDay(1)">下一上課日 ▶</button>
+        <div class="weekday-bar" id="weekdayBar"></div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button class="btn btn-primary teacher-only" onclick="toggleHwSetupBar()">➕ 新增/設定當日作業品項</button>
+      </div>
+    </div>
+
+    <div class="teacher-hw-setup teacher-only-flex" id="teacherHwSetupBar">
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; flex:1;">
+        <strong style="color:#b45309;">✏️ 設定作業品項：</strong>
+        <select id="quickHwSubject" class="form-control">
+          <option value="國語">國語</option>
+          <option value="數學">數學</option>
+          <option value="英語">英語</option>
+          <option value="社會">社會</option>
+          <option value="自然">自然</option>
+          <option value="考卷訂正">考卷訂正/簽名</option>
+          <option value="綜合/其他">綜合/其他</option>
+        </select>
+        <input type="text" id="quickHwTitle" class="form-control" placeholder="作業品項 (如：國習第四課、數作)" style="width:210px;">
+        <input type="text" id="quickHwPages" class="form-control" placeholder="頁數/範圍 (如：P.24~26)" style="width:140px;">
+        <button class="btn btn-primary" onclick="addHomeworkColumn()">➕ 新增登記表欄位</button>
+      </div>
+    </div>
+
+    <div class="hw-main-split">
+      <div class="hw-checklist-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding-bottom:6px; border-bottom:2px solid #f1f5f9;">
+          <strong style="font-size:1.1rem;">📝 504班 作業繳交方格登記表</strong>
+          <span style="font-size:0.85rem; color:var(--gray); font-weight:bold;">🟥 紅格＝未交 ｜ 🟩 綠格＝已交</span>
+        </div>
+        <div class="hw-columns-wrapper" id="hwColumnsWrapper"></div>
+      </div>
+
+      <div class="blackboard-panel">
+        <div class="chalk-header">
+          <span>📋 黑板未繳交名單看板</span>
+          <span id="boardDateLabel" style="font-size:0.95rem; color:#d8f3dc;"></span>
+        </div>
+        <div id="chalkBoardList" style="display:flex; flex-direction:column; gap:10px;"></div>
+
+        <div id="chalkOverdueSection" style="margin-top:8px; border-top:2px dashed rgba(255,255,255,0.3); padding-top:10px; display:none;">
+          <div style="color:#ff8fa3; font-weight:900; font-size:1.1rem; margin-bottom:8px;">
+            📌 跨日作業尚未補交名單（點擊座號可補登）：
+          </div>
+          <div id="chalkOverdueList" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="page-points" class="page">
+    <div class="toolbar">
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <span style="font-weight:900; font-size:1.15rem;">🏆 504班 積分管理</span>
+        <label style="font-weight:bold; color:var(--gray);">計分日期：</label>
+        <input type="date" id="pointDateInput" class="form-control" onchange="onPointDateChange(this.value)">
+      </div>
+      <div class="teacher-only" style="gap:8px;">
+        <button class="btn btn-success" onclick="openBatchPointsModal()">✨ 全班同步加減分</button>
+        <button class="btn btn-primary" onclick="openShopModal()">🎁 設定兌換商城項目</button>
+      </div>
+    </div>
+
+    <div class="points-split">
+      <div class="points-grid" id="pointsGrid"></div>
+      <div class="leaderboard-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #f1f5f9; padding-bottom:10px;">
+          <h3 style="margin:0; font-size:1.25rem;">👑 504班 榮譽排行榜</h3>
+          <div style="display:flex; gap:6px;">
+            <button class="btn btn-outline active" id="rankDailyBtn" onclick="setRankMode('daily')" style="padding:5px 10px; font-size:0.88rem;">🔥 當日積分榜</button>
+            <button class="btn btn-outline" id="rankTotalBtn" onclick="setRankMode('total')" style="padding:5px 10px; font-size:0.88rem;">💎 總積分榜</button>
+          </div>
+        </div>
+        <div class="rank-list" id="leaderboardList"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="page-attendance" class="page">
+    <div class="toolbar">
+      <div style="display:flex; gap:10px; align-items:center;">
+        <input type="date" id="attDate" class="form-control" onchange="onAttDateChange(this.value)">
+        <button class="btn btn-outline active" id="stageInBtn" onclick="setAttStage('in')">☀️ 早自習入班打卡</button>
+        <button class="btn btn-outline" id="stageOutBtn" onclick="setAttStage('out')">🌙 放學離校打卡</button>
+      </div>
+      <div style="display:flex; gap:8px;" id="attStats"></div>
+      <div class="teacher-only" style="gap:8px;">
+        <button class="btn btn-primary" onclick="batchCheckIn()">⚡ 全班一鍵打卡</button>
+      </div>
+    </div>
+    <div class="student-grid" id="attGrid"></div>
+  </section>
+
+  <section id="page-logs" class="page">
+    <div class="toolbar">
+      <div style="display:flex; gap:12px; align-items:center;">
+        <h3 style="margin:0;">🛡️ 504班 時間戳章稽核紀錄</h3>
+        <select id="logFilter" class="form-control" onchange="renderLogs()">
+          <option value="ALL">全部紀錄</option>
+          <option value="作業">作業與補交</option>
+          <option value="積分">課程加減分</option>
+          <option value="兌換">獎勵兌換</option>
+          <option value="出缺席">出缺席打卡</option>
+          <option value="系統">系統安全</option>
+        </select>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-success" onclick="exportCSV()">📊 匯出 Excel 報表 (.csv)</button>
+        <button class="btn btn-primary" onclick="exportData()">💾 下載完整備份 (.json)</button>
+        <label class="btn btn-outline" style="margin:0;">
+          📂 載入備份 <input type="file" accept=".json" style="display:none;" onchange="importData(event)">
+        </label>
+        <button class="btn btn-outline" onclick="changePin()">🔑 修改教師密碼</button>
+      </div>
+    </div>
+    <div style="background:white; border-radius:12px; flex:1; overflow-y:auto;">
+      <table class="log-table">
+        <thead>
+          <tr>
+            <th style="width:180px;">精確時間戳章</th>
+            <th style="width:100px;">類別</th>
+            <th style="width:120px;">操作身分</th>
+            <th>詳細內容</th>
+          </tr>
+        </thead>
+        <tbody id="logTableBody"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal" style="max-width:500px; text-align:center;">
+    <h2 style="margin:0; font-size:1.55rem;">🛡️ 防誤觸本人確認</h2>
+    <p style="color:var(--gray); font-weight:bold; margin:6px 0;">請確認以下是否為你的座號與姓名：</p>
+    <div id="confirmStudentBadge" style="display:inline-block; background:var(--primary-light); color:var(--primary); font-size:2.4rem; font-weight:900; padding:12px 28px; border-radius:14px; border:3px solid var(--primary); margin:10px 0;">01 簡逸森</div>
+    <div id="confirmActionDesc" style="font-size:1.2rem; font-weight:900; color:var(--success); margin-bottom:18px;"></div>
+    <div style="display:grid; grid-template-columns:1fr 1.3fr; gap:12px;">
+      <button class="btn btn-outline" style="justify-content:center; padding:15px; font-size:1.2rem;" onclick="closeModal('confirmModal')">❌ 點錯了，取消</button>
+      <button class="btn btn-success" style="justify-content:center; padding:15px; font-size:1.25rem;" id="confirmYesBtn">✅ 是我本人，確定！</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="pointModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="pointModalTitle">學生積分與兌換操作</h2>
+      <button class="close-btn" onclick="closeModal('pointModal')">&times;</button>
+    </div>
+    <div style="margin-bottom:12px;">
+      <label style="font-weight:bold; display:block; margin-bottom:8px;">選擇對應科目 / 類別：</label>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;" id="subjectBtns">
+        <button class="btn btn-outline active" onclick="selectSubject(this, '國語')">國語</button>
+        <button class="btn btn-outline" onclick="selectSubject(this, '數學')">數學</button>
+        <button class="btn btn-outline" onclick="selectSubject(this, '社會')">社會</button>
+        <button class="btn btn-outline" onclick="selectSubject(this, '自然')">自然</button>
+        <button class="btn btn-outline" onclick="selectSubject(this, '英語')">英語</button>
+        <button class="btn btn-outline" onclick="selectSubject(this, '綜合')">綜合</button>
+        <button class="btn btn-outline" onclick="selectSubject(this, '班級常規')">班級常規</button>
+      </div>
+    </div>
+    <div style="margin-bottom:14px;">
+      <label style="font-weight:bold; display:block; margin-bottom:6px;">加扣分事由備註（選填）：</label>
+      <input type="text" id="pointReason" class="form-control" style="width:100%;" placeholder="例如：主動幫忙、上課發表、作業優異">
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-bottom:18px;">
+      <button class="btn btn-success" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(1)">+1 分</button>
+      <button class="btn btn-success" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(2)">+2 分</button>
+      <button class="btn btn-success" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(5)">+5 分</button>
+      <button class="btn btn-danger" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(-1)">-1 分</button>
+      <button class="btn btn-danger" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(-2)">-2 分</button>
+      <button class="btn btn-danger" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(-5)">-5 分</button>
+    </div>
+
+    <div id="modalRedeemSection" style="border-top:2px solid #e2e8f0; padding-top:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h4 style="margin:0; font-size:1.1rem;">🎁 教師核准兌換獎勵</h4>
+      </div>
+      <div id="studentRewardList" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="shopModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>🎁 504班 獎勵兌換項目設定</h2>
+      <button class="close-btn" onclick="closeModal('shopModal')">&times;</button>
+    </div>
+    <div style="background:#f8fafc; padding:14px; border-radius:12px; margin-bottom:16px; border:2px solid #e2e8f0;">
+      <h4 style="margin:0 0 10px 0;">➕ 新增兌換品項</h4>
+      <div style="display:flex; gap:10px;">
+        <input type="text" id="newRewardName" class="form-control" placeholder="獎勵名稱" style="flex:1;">
+        <input type="number" id="newRewardCost" class="form-control" placeholder="點數" style="width:120px;">
+        <button class="btn btn-primary" onclick="addRewardItem()">新增項目</button>
+      </div>
+    </div>
+    <div id="shopItemsContainer" style="display:flex; flex-direction:column; gap:10px;"></div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = "CLASS_504_SYSTEM_DB_V4";
+const INITIAL_STUDENTS = [
+  { id: "01", name: "簡逸森" }, { id: "02", name: "吳承修" }, { id: "03", name: "呂鴻恩" },
+  { id: "04", name: "劉秉芮" }, { id: "05", name: "吳承憲" }, { id: "06", name: "莊逸杰" },
+  { id: "07", name: "黃釩睿" }, { id: "08", name: "陳韋安" }, { id: "09", name: "蕭正喆" },
+  { id: "10", name: "宋柚星" }, { id: "11", name: "楊承勳" }, { id: "12", name: "江妍霏" },
+  { id: "13", name: "張勻薰" }, { id: "14", name: "黃詩庭" }, { id: "15", name: "杜佑姿" },
+  { id: "16", name: "邱子庭" }, { id: "17", name: "曾琇雯" }, { id: "18", name: "陳瑾慧" },
+  { id: "19", name: "王呈翎" }, { id: "20", name: "陳雨禾" }, { id: "21", name: "王藝璇" }
+];
+
+let isTeacherMode = false;
+let currentAttStage = 'in';
+let activeStudentId = null;
+let selectedSubject = '國語';
+let isBatchPointMode = false;
+let rankMode = 'daily';
+let classSubDirHandle = null;
+
+function formatDateObj(d) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function normalizeToSchoolDay(dateStr) {
+  let d = dateStr ? new Date(dateStr + "T00:00:00") : new Date();
+  const day = d.getDay();
+  if (day === 6) d.setDate(d.getDate() - 1);
+  if (day === 0) d.setDate(d.getDate() - 2);
+  return formatDateObj(d);
+}
+
+function getNowTimeStr() { return new Date().toTimeString().split(' ')[0]; }
+function getFullTimestamp() { return `${formatDateObj(new Date())} ${getNowTimeStr()}`; }
+
+let currentHwDate = normalizeToSchoolDay();
+let currentPointDate = currentHwDate;
+
+let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+  className: "504",
+  pin: "0000",
+  students: INITIAL_STUDENTS.map(s => ({ ...s, totalPoints: 0, dailyPoints: {}, subjectPoints: {} })),
+  attendance: {},
+  homeworks: [],
+  rewards: [
+    { id: "rw_1", name: "🎯 優先選位子特權一天", cost: 15 },
+    { id: "rw_2", name: "✏️ 免寫圈詞乙次券", cost: 25 },
+    { id: "rw_3", name: "🎁 神秘文具抽獎乙次", cost: 30 },
+    { id: "rw_4", name: "👑 下課優先使用教室桌遊", cost: 40 }
+  ],
+  logs: []
+};
+
+db.students.forEach(s => {
+  if (!s.dailyPoints) s.dailyPoints = {};
+  if (!s.subjectPoints) s.subjectPoints = {};
+});
+
+function getStudentDailyPoints(stu, dateStr) {
+  return (stu.dailyPoints && stu.dailyPoints[dateStr]) ? stu.dailyPoints[dateStr] : 0;
+}
+
+function ensureContactBookForDate(dateStr) {
+  const hasContactBook = db.homeworks.some(h => h.date === dateStr && h.isContactBook);
+  if (!hasContactBook) {
+    db.homeworks.unshift({
+      id: `hw_cb_${dateStr}`,
+      date: dateStr,
+      subject: "聯絡簿",
+      title: "聯絡簿",
+      pages: "每日簽名檢查",
+      isContactBook: true,
+      submissions: {}
+    });
+    if (db.homeworks.filter(h => h.date === dateStr).length === 1 && db.logs.length === 0) {
+      db.homeworks.push(
+        { id: `hw_init_1_${dateStr}`, date: dateStr, subject: "國語", title: "國語習作", pages: "P.24~27", submissions: {} },
+        { id: `hw_init_2_${dateStr}`, date: dateStr, subject: "數學", title: "數學習作", pages: "P.30~32", submissions: {} }
+      );
+    }
+    saveDB();
+  }
+}
+
+async function openHandleDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open("Class504_AutoFolder_V4", 1);
+    req.onupgradeneeded = e => e.target.result.createObjectStore("handles");
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror = e => reject(e);
+  });
+}
+
+async function saveFolderHandleToIDB(handle) {
+  const idb = await openHandleDB();
+  const tx = idb.transaction("handles", "readwrite");
+  tx.objectStore("handles").put(handle, "dir504");
+}
+
+async function restoreFolderHandleFromIDB() {
+  try {
+    const idb = await openHandleDB();
+    const tx = idb.transaction("handles", "readonly");
+    const req = tx.objectStore("handles").get("dir504");
+    req.onsuccess = async () => {
+      if (req.result) {
+        classSubDirHandle = req.result;
+        const perm = await classSubDirHandle.queryPermission({ mode: 'readwrite' });
+        if (perm === 'granted') {
+          markFolderConnected();
+          autoWriteToFolder();
+        }
+      }
+    };
+  } catch (e) {}
+}
+
+async function setupAutoBackupFolder() {
+  if (!window.showDirectoryPicker) {
+    alert("⚠️ 請使用 Chrome 或 Edge 瀏覽器！");
+    return;
+  }
+  try {
+    if (classSubDirHandle) {
+      const perm = await classSubDirHandle.requestPermission({ mode: 'readwrite' });
+      if (perm === 'granted') {
+        markFolderConnected();
+        await autoWriteToFolder();
+        return;
+      }
+    }
+    const pickedHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+    if (pickedHandle.name === "504班級") {
+      classSubDirHandle = pickedHandle;
+    } else {
+      classSubDirHandle = await pickedHandle.getDirectoryHandle("504班級", { create: true });
+    }
+    await saveFolderHandleToIDB(classSubDirHandle);
+    markFolderConnected();
+    addLog("系統", `綁定【504班級】資料夾成功`);
+    await autoWriteToFolder();
+    alert(`🎉 已成功綁定【504班級】資料夾！`);
+  } catch (err) {}
+}
+
+function markFolderConnected() {
+  const btn = document.getElementById('folderBtn');
+  btn.classList.add('connected');
+  btn.innerHTML = `✅ 自動記錄中：/504班級`;
+}
+
+async function autoWriteToFolder() {
+  if (!classSubDirHandle) return;
+  try {
+    const jsonFile = await classSubDirHandle.getFileHandle(`504班級_即時總資料庫.json`, { create: true });
+    const wJson = await jsonFile.createWritable();
+    await wJson.write(JSON.stringify(db, null, 2));
+    await wJson.close();
+
+    const csvFile = await classSubDirHandle.getFileHandle(`504班級_歷史紀錄_${currentHwDate}.csv`, { create: true });
+    const wCsv = await csvFile.createWritable();
+    await wCsv.write("\uFEFF" + generateCSVString());
+    await wCsv.close();
+  } catch (e) {}
+}
+
+function saveDB() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+  autoWriteToFolder();
+}
+
+function addLog(category, detail) {
+  db.logs.unshift({ time: getFullTimestamp(), category, actor: isTeacherMode ? "👩‍🏫 教師模式" : "🧒 學生確認", detail });
+  if (db.logs.length > 3000) db.logs.pop();
+  saveDB();
+}
+
+function onHwDateChange(val) {
+  currentHwDate = normalizeToSchoolDay(val);
+  document.getElementById('hwDateInput').value = currentHwDate;
+  ensureContactBookForDate(currentHwDate);
+  renderHomeworkBoard();
+}
+
+function shiftSchoolDay(dir) {
+  let d = new Date(currentHwDate + "T00:00:00");
+  d.setDate(d.getDate() + dir);
+  while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + dir);
+  currentHwDate = formatDateObj(d);
+  document.getElementById('hwDateInput').value = currentHwDate;
+  ensureContactBookForDate(currentHwDate);
+  renderHomeworkBoard();
+}
+
+function renderWeekdayBar() {
+  const bar = document.getElementById('weekdayBar');
+  bar.innerHTML = "";
+  const d = new Date(currentHwDate + "T00:00:00");
+  const dayOfWeek = d.getDay();
+  const monday = new Date(d);
+  monday.setDate(d.getDate() - (dayOfWeek - 1));
+
+  const labels = ["週一", "週二", "週三", "週四", "週五"];
+  for (let i = 0; i < 5; i++) {
+    const temp = new Date(monday);
+    temp.setDate(monday.getDate() + i);
+    const dStr = formatDateObj(temp);
+    const mmdd = `${temp.getMonth() + 1}/${temp.getDate()}`;
+    const btn = document.createElement('button');
+    btn.className = `day-pill ${dStr === currentHwDate ? 'active' : ''}`;
+    btn.textContent = `${labels[i]} (${mmdd})`;
+    btn.onclick = () => {
+      currentHwDate = dStr;
+      document.getElementById('hwDateInput').value = currentHwDate;
+      ensureContactBookForDate(currentHwDate);
+      renderHomeworkBoard();
+    };
+    bar.appendChild(btn);
+  }
+}
+
+function toggleHwSetupBar() {
+  const bar = document.getElementById('teacherHwSetupBar');
+  bar.style.display = bar.style.display === 'none' ? 'flex' : 'none';
+}
+
+function addHomeworkColumn() {
+  if (!isTeacherMode) return;
+  const subject = document.getElementById('quickHwSubject').value;
+  const title = document.getElementById('quickHwTitle').value.trim();
+  const pages = document.getElementById('quickHwPages').value.trim() || "全";
+  if (!title) { alert("請輸入作業品項名稱！"); return; }
+
+  db.homeworks.push({
+    id: "hw_" + Date.now(),
+    date: currentHwDate,
+    subject,
+    title,
+    pages,
+    isContactBook: false,
+    submissions: {}
+  });
+  addLog("作業", `教師新增作業欄：【${subject}】${title}`);
+  document.getElementById('quickHwTitle').value = "";
+  document.getElementById('quickHwPages').value = "";
+  renderHomeworkBoard();
+}
+
+function renderHomeworkBoard() {
+  ensureContactBookForDate(currentHwDate);
+  renderWeekdayBar();
+  document.getElementById('boardDateLabel').textContent = `📅 日期：${currentHwDate}`;
+
+  const wrapper = document.getElementById('hwColumnsWrapper');
+  const chalkList = document.getElementById('chalkBoardList');
+  wrapper.innerHTML = "";
+  chalkList.innerHTML = "";
+
+  const dayHws = db.homeworks.filter(h => h.date === currentHwDate);
+
+  dayHws.forEach(hw => {
+    const missingStudents = db.students.filter(stu => !hw.submissions[stu.id]);
+
+    const col = document.createElement('div');
+    col.className = "hw-item-col";
+    const boxesHtml = db.students.map(stu => {
+      const isSub = Boolean(hw.submissions[stu.id]);
+      return `
+        <div class="seat-box ${isSub ? 'submitted' : 'unsubmitted'}" onclick="handleGridBoxClick('${hw.id}', '${stu.id}')">
+          <span class="s-num">${isSub ? '✓ ' + stu.id : stu.id}</span>
+          <span class="s-name">${stu.name}</span>
+        </div>
+      `;
+    }).join('');
+
+    col.innerHTML = `
+      <div class="hw-item-header ${hw.isContactBook ? 'contact-book-header' : ''}">
+        <div class="hw-item-meta">
+          <span>📅 ${hw.date.slice(5)}</span>
+          <span>【${hw.subject}】</span>
+          ${isTeacherMode && !hw.isContactBook ? `<span style="cursor:pointer; color:#fca5a5;" onclick="deleteHwColumn('${hw.id}')">🗑️</span>` : `<span>已交 ${21 - missingStudents.length}/21</span>`}
+        </div>
+        <div class="hw-item-title">${hw.title}</div>
+        <div class="hw-item-pages">${hw.pages}</div>
+      </div>
+      <div class="seat-boxes-grid">${boxesHtml}</div>
+    `;
+    wrapper.appendChild(col);
+
+    const chalkRow = document.createElement('div');
+    chalkRow.className = "chalk-row";
+    let missingNumsHtml = missingStudents.length === 0 ? `<span style="color:var(--chalk-green); font-weight:900;">🎉 全班已交齊！</span>` : missingStudents.map(stu => `
+      <span class="chalk-num-chip" onclick="handleGridBoxClick('${hw.id}', '${stu.id}')">${stu.id}號 (${stu.name})</span>
+    `).join('');
+
+    chalkRow.innerHTML = `
+      <div class="chalk-row-title">
+        <span>📌 【${hw.subject}】${hw.title} (${hw.pages}) ：</span>
+        <span style="font-size:0.9rem; color:${missingStudents.length === 0 ? '#74c69d' : '#ff8fa3'};">${missingStudents.length === 0 ? '全齊' : `共 ${missingStudents.length} 人未繳`}</span>
+      </div>
+      <div class="chalk-numbers-wrap">${missingNumsHtml}</div>
+    `;
+    chalkList.appendChild(chalkRow);
+  });
+
+  const overdueHws = db.homeworks.filter(h => h.date < currentHwDate && !h.isContactBook);
+  const overdueSection = document.getElementById('chalkOverdueSection');
+  const overdueList = document.getElementById('chalkOverdueList');
+  overdueList.innerHTML = "";
+  let hasAnyOverdue = false;
+
+  overdueHws.forEach(hw => {
+    const missingStus = db.students.filter(stu => !hw.submissions[stu.id]);
+    if (missingStus.length > 0) {
+      hasAnyOverdue = true;
+      const row = document.createElement('div');
+      row.className = "chalk-row";
+      row.style.borderLeftColor = "#ff6b6b";
+      const chips = missingStus.map(stu => `<span class="chalk-num-chip" onclick="handleGridBoxClick('${hw.id}', '${stu.id}')">${stu.id}號 (${stu.name})</span>`).join('');
+      row.innerHTML = `
+        <div class="chalk-row-title">
+          <span style="color:#ffd166;">⏳ [${hw.date.slice(5)} 補交] 【${hw.subject}】${hw.title} ：</span>
+          <span style="font-size:0.85rem; color:#ff8fa3;">尚有 ${missingStus.length} 人未補交</span>
+        </div>
+        <div class="chalk-numbers-wrap">${chips}</div>
+      `;
+      overdueList.appendChild(row);
+    }
+  });
+  overdueSection.style.display = hasAnyOverdue ? "block" : "none";
+}
+
+function handleGridBoxClick(hwId, stuId) {
+  const hw = db.homeworks.find(h => h.id === hwId);
+  const stu = db.students.find(s => s.id === stuId);
+  if (!hw || !stu) return;
+
+  const isSub = Boolean(hw.submissions[stu.id]);
+  const isMakeup = hw.date < normalizeToSchoolDay() && !hw.isContactBook;
+
+  if (!isSub) {
+    askStudentConfirm(stu, `確認登記${isMakeup ? '補交' : '繳交'}：【${hw.subject} - ${hw.title}】`, () => {
+      hw.submissions[stu.id] = isMakeup ? `補交(${getFullTimestamp()})` : getNowTimeStr();
+      addLog("作業", `${stu.id} ${stu.name} 繳交【${hw.subject} - ${hw.title}】`);
+      renderHomeworkBoard();
+    });
+  } else if (isTeacherMode && confirm(`取消 ${stu.id} ${stu.name} 的【${hw.title}】繳交狀態？`)) {
+    delete hw.submissions[stu.id];
+    addLog("作業", `教師取消 ${stu.id} ${stu.name} 的【${hw.title}】`);
+    renderHomeworkBoard();
+  }
+}
+
+function deleteHwColumn(hwId) {
+  const hw = db.homeworks.find(h => h.id === hwId);
+  if (!hw || !confirm(`刪除【${hw.title}】？`)) return;
+  db.homeworks = db.homeworks.filter(h => h.id !== hwId);
+  addLog("作業", `教師刪除作業欄位：【${hw.title}】`);
+  renderHomeworkBoard();
+}
+
+function onPointDateChange(val) {
+  currentPointDate = normalizeToSchoolDay(val);
+  document.getElementById('pointDateInput').value = currentPointDate;
+  renderPointsAndLeaderboard();
+}
+
+function setRankMode(mode) {
+  rankMode = mode;
+  document.getElementById('rankDailyBtn').classList.toggle('active', mode === 'daily');
+  document.getElementById('rankTotalBtn').classList.toggle('active', mode === 'total');
+  renderPointsAndLeaderboard();
+}
+
+function renderPointsAndLeaderboard() {
+  const grid = document.getElementById('pointsGrid');
+  grid.innerHTML = "";
+
+  db.students.forEach(stu => {
+    const dailyPts = getStudentDailyPoints(stu, currentPointDate);
+    const totalPts = stu.totalPoints || 0;
+
+    const card = document.createElement('div');
+    card.className = "point-stu-card";
+    card.onclick = () => openStudentPointModal(stu);
+    card.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span class="seat-num">${stu.id}</span>
+        <strong style="font-size:1.25rem;">${stu.name}</strong>
+      </div>
+      <div class="dual-score-row">
+        <div class="score-box daily"><span class="score-label">🔥 當日</span><span class="score-val">${dailyPts > 0 ? '+' + dailyPts : dailyPts}</span></div>
+        <div class="score-box total"><span class="score-label">💎 總分</span><span class="score-val">${totalPts}</span></div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  const rankContainer = document.getElementById('leaderboardList');
+  rankContainer.innerHTML = "";
+  const sorted = [...db.students].sort((a, b) => {
+    const valA = rankMode === 'daily' ? getStudentDailyPoints(a, currentPointDate) : (a.totalPoints || 0);
+    const valB = rankMode === 'daily' ? getStudentDailyPoints(b, currentPointDate) : (b.totalPoints || 0);
+    return valB !== valA ? valB - valA : a.id.localeCompare(b.id);
+  });
+
+  sorted.forEach((stu, idx) => {
+    const score = rankMode === 'daily' ? getStudentDailyPoints(stu, currentPointDate) : (stu.totalPoints || 0);
+    let rankClass = idx === 0 ? "top-1" : idx === 1 ? "top-2" : idx === 2 ? "top-3" : "";
+    let medal = idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : `${idx + 1}`;
+
+    const item = document.createElement('div');
+    item.className = `rank-item ${rankClass}`;
+    item.innerHTML = `
+      <div style="display:flex; align-items:center; gap:10px;"><span class="rank-medal">${medal}</span><span class="seat-num">${stu.id}</span><span>${stu.name}</span></div>
+      <span style="font-weight:900; color:${rankMode === 'daily' ? '#c2410c' : 'var(--primary)'};">${rankMode === 'daily' && score > 0 ? '+' + score : score} 分</span>
+    `;
+    rankContainer.appendChild(item);
+  });
+}
+
+function openStudentPointModal(stu) {
+  if (!isTeacherMode) return;
+  isBatchPointMode = false;
+  activeStudentId = stu.id;
+  document.getElementById('pointModalTitle').textContent = `⭐ ${stu.id} ${stu.name} （當日：${getStudentDailyPoints(stu, currentPointDate)} ｜ 總積分：${stu.totalPoints}）`;
+  document.getElementById('pointReason').value = "";
+  document.getElementById('modalRedeemSection').style.display = "block";
+  renderStudentRewardButtons(stu);
+  document.getElementById('pointModal').classList.add('active');
+}
+
+function openBatchPointsModal() {
+  if (!isTeacherMode) return;
+  isBatchPointMode = true;
+  activeStudentId = null;
+  document.getElementById('pointModalTitle').textContent = `✨ 504班 全班同步加減分`;
+  document.getElementById('pointReason').value = "";
+  document.getElementById('modalRedeemSection').style.display = "none";
+  document.getElementById('pointModal').classList.add('active');
+}
+
+function selectSubject(btn, subj) {
+  selectedSubject = subj;
+  document.querySelectorAll('#subjectBtns .btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function applyPoints(delta) {
+  if (!isTeacherMode) return;
+  const reason = document.getElementById('pointReason').value.trim();
+  const noteStr = reason ? `（事由：${reason}）` : '';
+
+  if (isBatchPointMode) {
+    db.students.forEach(stu => {
+      if (!stu.dailyPoints) stu.dailyPoints = {};
+      stu.dailyPoints[currentPointDate] = (stu.dailyPoints[currentPointDate] || 0) + delta;
+      stu.totalPoints += delta;
+      stu.subjectPoints[selectedSubject] = (stu.subjectPoints[selectedSubject] || 0) + delta;
+    });
+    addLog("積分", `全班【${selectedSubject}】${delta > 0 ? '+' + delta : delta} 分 ${noteStr}`);
+  } else {
+    const stu = db.students.find(s => s.id === activeStudentId);
+    if (!stu) return;
+    if (!stu.dailyPoints) stu.dailyPoints = {};
+    stu.dailyPoints[currentPointDate] = (stu.dailyPoints[currentPointDate] || 0) + delta;
+    stu.totalPoints += delta;
+    stu.subjectPoints[selectedSubject] = (stu.subjectPoints[selectedSubject] || 0) + delta;
+    addLog("積分", `${stu.id} ${stu.name}【${selectedSubject}】${delta > 0 ? '+' + delta : delta} 分 ${noteStr}`);
+  }
+  closeModal('pointModal');
+  renderPointsAndLeaderboard();
+}
+
+function renderStudentRewardButtons(stu) {
+  const container = document.getElementById('studentRewardList');
+  container.innerHTML = "";
+  db.rewards.forEach(rw => {
+    const canAfford = stu.totalPoints >= rw.cost;
+    const btn = document.createElement('button');
+    btn.className = `btn ${canAfford ? 'btn-primary' : 'btn-outline'}`;
+    btn.style.justifyContent = "space-between";
+    btn.disabled = !canAfford;
+    btn.innerHTML = `<span>${rw.name}</span> <span>-${rw.cost}點</span>`;
+    btn.onclick = () => {
+      if (confirm(`確定幫 ${stu.name} 兌換「${rw.name}」？`)) {
+        stu.totalPoints -= rw.cost;
+        addLog("兌換", `${stu.id} ${stu.name} 兌換【${rw.name}】(-${rw.cost}點)`);
+        closeModal('pointModal');
+        renderPointsAndLeaderboard();
+      }
+    };
+    container.appendChild(btn);
+  });
+}
+
+function openShopModal() {
+  if (!isTeacherMode) return;
+  const container = document.getElementById('shopItemsContainer');
+  container.innerHTML = "";
+  db.rewards.forEach((rw, idx) => {
+    const row = document.createElement('div');
+    row.style.cssText = "display:flex; gap:10px; align-items:center; background:#fff; padding:8px 12px; border-radius:10px; border:1px solid #cbd5e1;";
+    row.innerHTML = `
+      <input type="text" class="form-control" style="flex:1;" value="${rw.name}" onchange="db.rewards[${idx}].name=this.value; saveDB();">
+      <input type="number" class="form-control" style="width:95px;" value="${rw.cost}" onchange="db.rewards[${idx}].cost=parseInt(this.value)||10; saveDB();">
+      <button class="btn btn-danger" onclick="db.rewards.splice(${idx},1); saveDB(); openShopModal();">🗑️</button>
+    `;
+    container.appendChild(row);
+  });
+  document.getElementById('shopModal').classList.add('active');
+}
+
+function addRewardItem() {
+  const name = document.getElementById('newRewardName').value.trim();
+  const cost = parseInt(document.getElementById('newRewardCost').value, 10);
+  if (!name || isNaN(cost)) return;
+  db.rewards.push({ id: "rw_" + Date.now(), name, cost });
+  saveDB();
+  document.getElementById('newRewardName').value = "";
+  document.getElementById('newRewardCost').value = "";
+  openShopModal();
+}
+
+function askStudentConfirm(stu, actionTitle, callback) {
+  if (isTeacherMode) { callback(); return; }
+  document.getElementById('confirmStudentBadge').textContent = `${stu.id} ${stu.name}`;
+  document.getElementById('confirmActionDesc').textContent = actionTitle;
+  document.getElementById('confirmYesBtn').onclick = () => { closeModal('confirmModal'); callback(); };
+  document.getElementById('confirmModal').classList.add('active');
+}
+
+function onAttDateChange(val) { renderAttendance(); }
+function setAttStage(stage) {
+  currentAttStage = stage;
+  document.getElementById('stageInBtn').classList.toggle('active', stage === 'in');
+  document.getElementById('stageOutBtn').classList.toggle('active', stage === 'out');
+  renderAttendance();
+}
+
+function renderAttendance() {
+  const dateStr = document.getElementById('attDate').value || currentHwDate;
+  if (!db.attendance[dateStr]) db.attendance[dateStr] = {};
+  const dayRecord = db.attendance[dateStr];
+  let inCount = 0, outCount = 0, leaveCount = 0;
+  const grid = document.getElementById('attGrid');
+  grid.innerHTML = "";
+
+  db.students.forEach(stu => {
+    const rec = dayRecord[stu.id] || { status: 'uncheck', inTime: null, outTime: null };
+    if (rec.inTime) inCount++;
+    if (rec.outTime) outCount++;
+    if (rec.status === 'leave') leaveCount++;
+
+    let cardClass = rec.status === 'leave' ? "card-leave" : (currentAttStage === 'in' && rec.inTime) ? "card-checked-in" : (currentAttStage === 'out' && rec.outTime) ? "card-checked-out" : "";
+    let statusBadge = rec.status === 'leave' ? "請假" : (currentAttStage === 'in' && rec.inTime) ? "✅ 已入班" : (currentAttStage === 'out' && rec.outTime) ? "🏠 已放學" : "未打卡";
+
+    const card = document.createElement('div');
+    card.className = `student-card ${cardClass}`;
+    card.onclick = () => {
+      if (!db.attendance[dateStr][stu.id]) db.attendance[dateStr][stu.id] = { status: 'uncheck', inTime: null, outTime: null };
+      askStudentConfirm(stu, currentAttStage === 'in' ? "早自習入班打卡" : "放學離校打卡", () => {
+        if (currentAttStage === 'in') db.attendance[dateStr][stu.id].inTime = getNowTimeStr();
+        else db.attendance[dateStr][stu.id].outTime = getNowTimeStr();
+        addLog("出缺席", `${stu.id} ${stu.name} 打卡`);
+        renderAttendance();
+      });
+    };
+    card.innerHTML = `
+      <div><div class="student-header"><span class="seat-num">${stu.id}</span><b>${statusBadge}</b></div><div class="student-name">${stu.name}</div></div>
+      <div class="time-stamp">☀️ ${rec.inTime || '--:--'} | 🌙 ${rec.outTime || '--:--'}</div>
+    `;
+    grid.appendChild(card);
+  });
+  document.getElementById('attStats').innerHTML = `<span class="btn btn-outline">應到：21</span><span class="btn btn-success">入班：${inCount}</span><span class="btn btn-primary">放學：${outCount}</span>`;
+}
+
+function batchCheckIn() {
+  const dateStr = document.getElementById('attDate').value || currentHwDate;
+  if (!db.attendance[dateStr]) db.attendance[dateStr] = {};
+  const t = getNowTimeStr();
+  db.students.forEach(stu => {
+    if (!db.attendance[dateStr][stu.id]) db.attendance[dateStr][stu.id] = { status: 'uncheck', inTime: null, outTime: null };
+    if (currentAttStage === 'in') db.attendance[dateStr][stu.id].inTime = t;
+    else db.attendance[dateStr][stu.id].outTime = t;
+  });
+  addLog("出缺席", "全班一鍵打卡");
+  renderAttendance();
+}
+
+setInterval(() => { document.getElementById('liveClock').textContent = getFullTimestamp(); }, 1000);
+document.getElementById('liveClock').textContent = getFullTimestamp();
+
+function toggleTeacherMode() {
+  if (isTeacherMode) {
+    isTeacherMode = false;
+    document.body.classList.remove('is-teacher');
+    document.getElementById('modeBtn').className = "mode-btn mode-student";
+    document.getElementById('modeBtn').innerHTML = "🔒 學生互動模式";
+  } else {
+    const inputPin = prompt("請輸入教師密碼（預設 0000）：");
+    if (inputPin === db.pin) {
+      isTeacherMode = true;
+      document.body.classList.add('is-teacher');
+      document.getElementById('modeBtn').className = "mode-btn mode-teacher";
+      document.getElementById('modeBtn').innerHTML = "🔓 教師管理模式";
+    } else if (inputPin !== null) { alert("密碼錯誤！"); }
+  }
+  renderAll();
+}
+
+function switchTab(tabId, evt) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`page-${tabId}`).classList.add('active');
+  if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+  renderAll();
+}
+
+function renderLogs() {
+  const filter = document.getElementById('logFilter').value;
+  const tbody = document.getElementById('logTableBody');
+  tbody.innerHTML = "";
+  (filter === 'ALL' ? db.logs : db.logs.filter(l => l.category === filter)).forEach(log => {
+    tbody.innerHTML += `<tr><td style="font-family:monospace;">${log.time}</td><td><b>${log.category}</b></td><td>${log.actor}</td><td><b>${log.detail}</b></td></tr>`;
+  });
+}
+
+function generateCSVString() {
+  let rows = [["時間戳章", "類別", "操作身分", "詳細內容"]];
+  db.logs.forEach(l => rows.push([`"${l.time}"`, `"${l.category}"`, `"${l.actor}"`, `"${l.detail.replace(/"/g, '""')}"`]));
+  return rows.map(r => r.join(",")).join("\n");
+}
+
+function exportCSV() {
+  const blob = new Blob(["\uFEFF" + generateCSVString()], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `504班級_歷史紀錄_${currentHwDate}.csv`; a.click();
+}
+
+function exportData() {
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
+  const a = document.createElement('a'); a.href = dataStr; a.download = `504班級_總資料庫_${currentHwDate}.json`; a.click();
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      db = JSON.parse(e.target.result);
+      saveDB();
+      renderAll();
+      alert("✅ 還原成功！");
+    } catch (err) { alert("❌ 格式錯誤"); }
+  };
+  reader.readAsText(file);
+}
+
+function changePin() {
+  const newPin = prompt("請輸入新密碼：", db.pin);
+  if (newPin) { db.pin = newPin.trim(); saveDB(); alert("✅ 密碼已更新"); }
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+function renderAll() {
+  renderHomeworkBoard();
+  renderPointsAndLeaderboard();
+  renderAttendance();
+  renderLogs();
+}
+
+document.getElementById('hwDateInput').value = currentHwDate;
+document.getElementById('pointDateInput').value = currentPointDate;
+document.getElementById('attDate').value = currentHwDate;
+restoreFolderHandleFromIDB();
+renderAll();
+</script>
+</body>
+</html>
