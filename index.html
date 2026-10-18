@@ -229,7 +229,7 @@
           <option value="考卷訂正">考卷訂正/簽名</option>
           <option value="綜合/其他">綜合/其他</option>
         </select>
-        <input type="text" id="quickHwTitle" class="form-control" placeholder="作業品項 (如：國習第四課、數作)" style="width:210px;">
+        <input type="text" id="quickHwTitle" class="form-control" placeholder="作業品項 (如：國習、數作)" style="width:210px;">
         <input type="text" id="quickHwPages" class="form-control" placeholder="頁數/範圍 (如：P.24~26)" style="width:140px;">
         <button class="btn btn-primary" onclick="addHomeworkColumn()">➕ 新增登記表欄位</button>
       </div>
@@ -414,10 +414,11 @@
 </div>
 
 <script>
-// 已填入你的 Google Apps Script 雲端同步網址
 const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxLYrVS3qejkBiEszUsBZH9-WhZBB-tmWENbZ0tJFFuVSNaK--btCej4S1r46gQxlnoyg/exec";
 
-const STORAGE_KEY = "CLASS_504_SYSTEM_DB_V5";
+// 永久固定的本機與雲端唯一 Key，絕不再因為改版重設
+const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
+
 const INITIAL_STUDENTS = [
   { id: "01", name: "簡逸森" }, { id: "02", name: "吳承修" }, { id: "03", name: "呂鴻恩" },
   { id: "04", name: "劉秉芮" }, { id: "05", name: "吳承憲" }, { id: "06", name: "莊逸杰" },
@@ -453,7 +454,12 @@ function getFullTimestamp() { return `${formatDateObj(new Date())} ${getNowTimeS
 let currentHwDate = normalizeToSchoolDay();
 let currentPointDate = currentHwDate;
 
-let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+// 優先嘗試遷移舊版本快取，避免升級後資料遺失
+let existingCache = localStorage.getItem(STORAGE_KEY) 
+  || localStorage.getItem("CLASS_504_SYSTEM_DB_V5")
+  || localStorage.getItem("CLASS_504_SYSTEM_DB_V4");
+
+let db = existingCache ? JSON.parse(existingCache) : {
   className: "504",
   pin: "0000",
   students: INITIAL_STUDENTS.map(s => ({ ...s, totalPoints: 0, dailyPoints: {}, subjectPoints: {} })),
@@ -471,6 +477,7 @@ let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
 db.students.forEach(s => {
   if (!s.dailyPoints) s.dailyPoints = {};
   if (!s.subjectPoints) s.subjectPoints = {};
+  delete s.row; // 徹底清理舊有特定標籤
 });
 
 function getStudentDailyPoints(stu, dateStr) {
@@ -493,9 +500,9 @@ async function loadCloudDB() {
       db = cloudData;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
       renderAll();
-      console.log("✅ 成功從 Google 雲端同步全部資料！");
+      console.log("✅ 成功從 Google 雲端載入作業與班級資料！");
     }
-  } catch (err) { console.log("⚠️ 無法連線至 Google 雲端，目前使用本地快取", err); }
+  } catch (err) { console.log("⚠️ 雲端讀取異常，目前使用本地資料", err); }
 }
 
 async function saveDB() {
@@ -518,6 +525,7 @@ function addLog(category, detail) {
   saveDB();
 }
 
+// 僅保證聯絡簿存在，徹底移除「自動塞入範例作業」的邏輯！你刪除的作業絕不再次出現
 function ensureContactBookForDate(dateStr) {
   const hasContactBook = db.homeworks.some(h => h.date === dateStr && h.isContactBook);
   if (!hasContactBook) {
@@ -530,12 +538,6 @@ function ensureContactBookForDate(dateStr) {
       isContactBook: true,
       submissions: {}
     });
-    if (db.homeworks.filter(h => h.date === dateStr).length === 1 && db.logs.length === 0) {
-      db.homeworks.push(
-        { id: `hw_init_1_${dateStr}`, date: dateStr, subject: "國語", title: "國語習作", pages: "P.24~27", submissions: {} },
-        { id: `hw_init_2_${dateStr}`, date: dateStr, subject: "數學", title: "數學習作", pages: "P.30~32", submissions: {} }
-      );
-    }
     saveDB();
   }
 }
@@ -643,7 +645,7 @@ function renderHomeworkBoard() {
         <div class="hw-item-meta">
           <span>📅 ${hw.date.slice(5)}</span>
           <span>【${hw.subject}】</span>
-          ${isTeacherMode && !hw.isContactBook ? `<span style="cursor:pointer; color:#fca5a5;" onclick="deleteHwColumn('${hw.id}')">🗑️</span>` : `<span>已交 ${21 - missingStudents.length}/21</span>`}
+          ${isTeacherMode && !hw.isContactBook ? `<span style="cursor:pointer; color:#fca5a5;" onclick="deleteHwColumn('${hw.id}')" title="刪除此欄">🗑️</span>` : `<span>已交 ${21 - missingStudents.length}/21</span>`}
         </div>
         <div class="hw-item-title">${hw.title}</div>
         <div class="hw-item-pages">${hw.pages}</div>
@@ -718,7 +720,7 @@ function handleGridBoxClick(hwId, stuId) {
 
 function deleteHwColumn(hwId) {
   const hw = db.homeworks.find(h => h.id === hwId);
-  if (!hw || !confirm(`刪除【${hw.title}】？`)) return;
+  if (!hw || !confirm(`確定要永久刪除【${hw.title}】這項作業嗎？`)) return;
   db.homeworks = db.homeworks.filter(h => h.id !== hwId);
   addLog("作業", `教師刪除作業欄位：【${hw.title}】`);
   renderHomeworkBoard();
@@ -1039,7 +1041,6 @@ document.getElementById('hwDateInput').value = currentHwDate;
 document.getElementById('pointDateInput').value = currentPointDate;
 document.getElementById('attDate').value = currentHwDate;
 
-// 啟動時自動從 Google 雲端抓取全部資料
 loadCloudDB();
 renderAll();
 </script>
