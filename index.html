@@ -39,7 +39,6 @@
   .clock-box { display: flex; align-items: center; gap: 10px; }
   .clock { font-size: 1rem; background: rgba(255,255,255,0.12); padding: 5px 10px; border-radius: 6px; font-weight: bold; font-variant-numeric: tabular-nums; }
   
-  /* 即時 Update 提示燈 */
   #updateToast {
     background: #16a34a; color: white; font-size: 0.85rem; font-weight: bold;
     padding: 4px 10px; border-radius: 20px; opacity: 0; transition: opacity 0.3s ease;
@@ -56,11 +55,10 @@
   .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 0 10px rgba(37,99,235,0.6); }
 
   .admin-controls { display: flex; align-items: center; gap: 8px; }
-  .folder-status {
-    padding: 7px 12px; font-size: 0.88rem; font-weight: bold; border: 2px solid #38bdf8;
-    background: rgba(56,189,248,0.15); color: #38bdf8; border-radius: 8px; cursor: pointer;
+  .cloud-status {
+    padding: 7px 12px; font-size: 0.88rem; font-weight: bold; border: 2px solid #4ade80;
+    background: rgba(74,222,128,0.2); color: #4ade80; border-radius: 8px;
   }
-  .folder-status.connected { border-color: #4ade80; background: rgba(74,222,128,0.2); color: #4ade80; }
   .mode-btn {
     padding: 8px 14px; font-size: 0.95rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;
   }
@@ -105,125 +103,44 @@
     padding: 8px 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
   }
 
-  .hw-main-split {
-    display: grid;
-    grid-template-columns: 1.55fr 1fr;
-    gap: 14px;
-    flex: 1;
-    min-height: 0;
-  }
-
-  .hw-checklist-panel {
-    background: white;
-    border-radius: 14px;
-    padding: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  .hw-columns-wrapper {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    flex: 1;
-    padding-bottom: 4px;
-  }
-  .hw-item-col {
-    min-width: 240px;
-    flex: 1;
-    background: #f8fafc;
-    border: 2px solid #cbd5e1;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  .hw-item-header {
-    background: var(--dark);
-    color: white;
-    padding: 8px 10px;
-    text-align: center;
-  }
+  .hw-main-split { display: grid; grid-template-columns: 1.55fr 1fr; gap: 14px; flex: 1; min-height: 0; }
+  .hw-checklist-panel { background: white; border-radius: 14px; padding: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden; }
+  .hw-columns-wrapper { display: flex; gap: 10px; overflow-x: auto; flex: 1; padding-bottom: 4px; }
+  .hw-item-col { min-width: 240px; flex: 1; background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; }
+  .hw-item-header { background: var(--dark); color: white; padding: 8px 10px; text-align: center; }
   .hw-item-header.contact-book-header { background: #0f766e; }
-  .hw-item-meta {
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 0.8rem; color: #cbd5e1; margin-bottom: 3px;
-  }
+  .hw-item-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #cbd5e1; margin-bottom: 3px; }
   .hw-item-title { font-size: 1.15rem; font-weight: 900; color: #fff; }
   .hw-item-pages { font-size: 0.85rem; color: #fde047; font-weight: bold; margin-top: 2px; }
 
-  .seat-boxes-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    padding: 8px;
-    overflow-y: auto;
-    flex: 1;
-    align-content: start;
-  }
+  .seat-boxes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 8px; overflow-y: auto; flex: 1; align-content: start; }
   .seat-box {
-    border-radius: 8px;
-    padding: 7px 4px;
-    text-align: center;
-    cursor: pointer;
-    transition: 0.12s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #cbd5e1;
-    background: white;
-    min-height: 50px;
+    border-radius: 8px; padding: 7px 4px; text-align: center; cursor: pointer; transition: 0.12s;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid #cbd5e1; background: white; min-height: 50px;
   }
   .seat-box:active { transform: scale(0.93); }
   .seat-box .s-num { font-size: 1.15rem; font-weight: 900; line-height: 1; }
   .seat-box .s-name { font-size: 0.85rem; font-weight: bold; margin-top: 2px; }
-  
   .seat-box.unsubmitted { background: #fff1f2; border-color: #fca5a5; color: #be123c; }
   .seat-box.submitted { background: var(--success-light); border-color: var(--success); color: var(--success); }
 
   .blackboard-panel {
-    background: var(--board-bg);
-    border: 9px solid var(--board-border);
-    border-radius: 16px;
-    box-shadow: inset 0 0 25px rgba(0,0,0,0.45), 0 4px 10px rgba(0,0,0,0.12);
-    padding: 14px 16px;
-    color: var(--chalk-white);
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    gap: 12px;
+    background: var(--board-bg); border: 9px solid var(--board-border); border-radius: 16px;
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.45), 0 4px 10px rgba(0,0,0,0.12); padding: 14px 16px;
+    color: var(--chalk-white); display: flex; flex-direction: column; overflow-y: auto; gap: 12px;
   }
-  .chalk-header {
-    font-size: 1.3rem; font-weight: 900; color: var(--chalk-yellow);
-    border-bottom: 2px dashed rgba(255,255,255,0.3); padding-bottom: 8px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .chalk-row {
-    background: rgba(0,0,0,0.22); border-left: 5px solid var(--chalk-yellow);
-    border-radius: 8px; padding: 10px 12px;
-  }
-  .chalk-row-title {
-    font-size: 1.15rem; font-weight: 900; color: #fff; margin-bottom: 6px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
+  .chalk-header { font-size: 1.3rem; font-weight: 900; color: var(--chalk-yellow); border-bottom: 2px dashed rgba(255,255,255,0.3); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+  .chalk-row { background: rgba(0,0,0,0.22); border-left: 5px solid var(--chalk-yellow); border-radius: 8px; padding: 10px 12px; }
+  .chalk-row-title { font-size: 1.15rem; font-weight: 900; color: #fff; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
   .chalk-numbers-wrap { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .chalk-num-chip {
-    background: rgba(255, 107, 107, 0.25); border: 2px solid var(--chalk-red);
-    color: #fff; font-weight: 900; font-size: 1.05rem; padding: 3px 9px;
-    border-radius: 6px; cursor: pointer; transition: 0.12s;
+    background: rgba(255, 107, 107, 0.25); border: 2px solid var(--chalk-red); color: #fff; font-weight: 900; font-size: 1.05rem; padding: 3px 9px; border-radius: 6px; cursor: pointer; transition: 0.12s;
   }
   .chalk-num-chip:hover { background: var(--chalk-red); }
 
   .points-split { display: grid; grid-template-columns: 1.55fr 1fr; gap: 14px; flex: 1; min-height: 0; }
   .points-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; overflow-y: auto; padding-right: 4px; align-content: start; }
-  .point-stu-card {
-    background: white; border-radius: 12px; padding: 10px 12px; border: 2px solid #cbd5e1;
-    cursor: pointer; transition: 0.15s; display: flex; flex-direction: column; justify-content: space-between;
-  }
-  .point-stu-card.row-3-card { border-color: #38bdf8; background: #f0fdf4; } /* 3號專屬高亮樣板 */
-  .point-stu-card:active { transform: scale(0.97); }
+  .point-stu-card { background: white; border-radius: 12px; padding: 10px 12px; border: 2px solid #cbd5e1; cursor: pointer; transition: 0.15s; display: flex; flex-direction: column; justify-content: space-between; }
   .dual-score-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
   .score-box { border-radius: 8px; padding: 4px 6px; text-align: center; }
   .score-box.daily { background: #fff7ed; border: 1px solid #fed7aa; color: #c2410c; }
@@ -231,45 +148,27 @@
   .score-label { font-size: 0.72rem; font-weight: bold; display: block; }
   .score-val { font-size: 1.2rem; font-weight: 900; }
 
-  .leaderboard-panel {
-    background: white; border-radius: 14px; padding: 14px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden;
-  }
+  .leaderboard-panel { background: white; border-radius: 14px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden; }
   .rank-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 7px; margin-top: 10px; }
-  .rank-item {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 8px 12px; border-radius: 10px; background: #f8fafc; border: 1px solid #e2e8f0; font-weight: bold;
-  }
+  .rank-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 10px; background: #f8fafc; border: 1px solid #e2e8f0; font-weight: bold; }
   .rank-item.top-1 { background: #fef9c3; border: 2px solid #eab308; }
   .rank-item.top-2 { background: #f1f5f9; border: 2px solid #94a3b8; }
   .rank-item.top-3 { background: #ffedd5; border: 2px solid #f97316; }
   .rank-medal { font-size: 1.25rem; width: 32px; text-align: center; font-weight: 900; }
 
   .student-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; padding-bottom: 12px; }
-  .student-card {
-    background: white; border-radius: 12px; padding: 12px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 3px solid #e2e8f0;
-    cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; min-height: 118px;
-  }
-  .student-card.row-3-card { border-color: #38bdf8; background: #f0fdf4; }
+  .student-card { background: white; border-radius: 12px; padding: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 3px solid #e2e8f0; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; min-height: 118px; }
   .student-header { display: flex; justify-content: space-between; align-items: center; }
   .seat-num { background: var(--dark); color: white; font-weight: 900; font-size: 1.05rem; padding: 2px 8px; border-radius: 6px; }
-  .seat-num.row-3-tag { background: #0284c7; } /* 3號專屬標籤顏色 */
   .student-name { font-size: 1.3rem; font-weight: 900; margin: 4px 0; }
   .card-checked-in { border-color: var(--success); background: #f0fdf4; }
   .card-checked-out { border-color: var(--primary); background: #eff6ff; }
   .card-leave { border-color: var(--warning); background: #fffbeb; opacity: 0.8; }
   .time-stamp { font-size: 0.82rem; color: var(--gray); font-weight: bold; }
 
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(15,23,42,0.68);
-    display: none; justify-content: center; align-items: center; z-index: 100; padding: 18px;
-  }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.68); display: none; justify-content: center; align-items: center; z-index: 100; padding: 18px; }
   .modal-overlay.active { display: flex; }
-  .modal {
-    background: white; border-radius: 18px; width: 100%; max-width: 640px;
-    padding: 22px; box-shadow: 0 25px 30px -5px rgba(0,0,0,0.3); max-height: 92vh; overflow-y: auto;
-  }
+  .modal { background: white; border-radius: 18px; width: 100%; max-width: 640px; padding: 22px; box-shadow: 0 25px 30px -5px rgba(0,0,0,0.3); max-height: 92vh; overflow-y: auto; }
   .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
   .modal-header h2 { margin: 0; font-size: 1.45rem; }
   .close-btn { background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--gray); }
@@ -286,7 +185,7 @@
     <span class="class-badge">504班</span>
     <h1>班級經營互動系統</h1>
     <div class="clock-box">
-      <div id="updateToast">💾 已自動儲存更新</div>
+      <div id="updateToast">💾 雲端自動同步更新</div>
       <div class="clock" id="liveClock">00:00:00</div>
     </div>
   </div>
@@ -297,9 +196,7 @@
     <button class="tab-btn teacher-only" onclick="switchTab('logs', event)">🛡️ 504紀錄與備份</button>
   </div>
   <div class="admin-controls">
-    <button id="folderBtn" class="folder-status" onclick="setupAutoBackupFolder()" title="授權本機『504班級』資料夾自動存檔">
-      📁 授權「504班級」資料夾自動存檔
-    </button>
+    <span class="cloud-status">☁️ Google 雲端同步中</span>
     <button id="modeBtn" class="mode-btn mode-student" onclick="toggleTeacherMode()">
       🔒 學生互動模式
     </button>
@@ -517,7 +414,10 @@
 </div>
 
 <script>
-const STORAGE_KEY = "CLASS_504_SYSTEM_DB_V4";
+// 已填入你的 Google Apps Script 雲端同步網址
+const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxLYrVS3qejkBiEszUsBZH9-WhZBB-tmWENbZ0tJFFuVSNaK--btCej4S1r46gQxlnoyg/exec";
+
+const STORAGE_KEY = "CLASS_504_SYSTEM_DB_V5";
 const INITIAL_STUDENTS = [
   { id: "01", name: "簡逸森" }, { id: "02", name: "吳承修" }, { id: "03", name: "呂鴻恩" },
   { id: "04", name: "劉秉芮" }, { id: "05", name: "吳承憲" }, { id: "06", name: "莊逸杰" },
@@ -534,7 +434,6 @@ let activeStudentId = null;
 let selectedSubject = '國語';
 let isBatchPointMode = false;
 let rankMode = 'daily';
-let classSubDirHandle = null;
 
 function formatDateObj(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -572,7 +471,6 @@ let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
 db.students.forEach(s => {
   if (!s.dailyPoints) s.dailyPoints = {};
   if (!s.subjectPoints) s.subjectPoints = {};
-  if (s.id === "03") s.row = "第三排"; // 確保3號固定對應第三排座位樣板
 });
 
 function getStudentDailyPoints(stu, dateStr) {
@@ -582,9 +480,42 @@ function getStudentDailyPoints(stu, dateStr) {
 function showUpdateToast() {
   const toast = document.getElementById('updateToast');
   toast.classList.add('show');
-  setTimeout(() => {
-    toast.classList.remove('show');
-  }, 2000);
+  setTimeout(() => { toast.classList.remove('show'); }, 2200);
+}
+
+// 雲端資料讀取與寫入
+async function loadCloudDB() {
+  if (!CLOUD_API_URL) return;
+  try {
+    const res = await fetch(CLOUD_API_URL + "?action=load");
+    const cloudData = await res.json();
+    if (cloudData && cloudData.students) {
+      db = cloudData;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+      renderAll();
+      console.log("✅ 成功從 Google 雲端同步全部資料！");
+    }
+  } catch (err) { console.log("⚠️ 無法連線至 Google 雲端，目前使用本地快取", err); }
+}
+
+async function saveDB() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+  showUpdateToast();
+
+  if (CLOUD_API_URL) {
+    try {
+      await fetch(CLOUD_API_URL + "?action=save", {
+        method: "POST",
+        body: JSON.stringify(db)
+      });
+    } catch (err) { console.error("❌ 雲端同步失敗", err); }
+  }
+}
+
+function addLog(category, detail) {
+  db.logs.unshift({ time: getFullTimestamp(), category, actor: isTeacherMode ? "👩‍🏫 教師模式" : "🧒 學生確認", detail });
+  if (db.logs.length > 3000) db.logs.pop();
+  saveDB();
 }
 
 function ensureContactBookForDate(dateStr) {
@@ -607,100 +538,6 @@ function ensureContactBookForDate(dateStr) {
     }
     saveDB();
   }
-}
-
-async function openHandleDB() {
-  return new Promise((resolve, reject) => {
-    const req = indexedDB.open("Class504_AutoFolder_V4", 1);
-    req.onupgradeneeded = e => e.target.result.createObjectStore("handles");
-    req.onsuccess = e => resolve(e.target.result);
-    req.onerror = e => reject(e);
-  });
-}
-
-async function saveFolderHandleToIDB(handle) {
-  const idb = await openHandleDB();
-  const tx = idb.transaction("handles", "readwrite");
-  tx.objectStore("handles").put(handle, "dir504");
-}
-
-async function restoreFolderHandleFromIDB() {
-  try {
-    const idb = await openHandleDB();
-    const tx = idb.transaction("handles", "readonly");
-    const req = tx.objectStore("handles").get("dir504");
-    req.onsuccess = async () => {
-      if (req.result) {
-        classSubDirHandle = req.result;
-        const perm = await classSubDirHandle.queryPermission({ mode: 'readwrite' });
-        if (perm === 'granted') {
-          markFolderConnected();
-          autoWriteToFolder();
-        }
-      }
-    };
-  } catch (e) {}
-}
-
-async function setupAutoBackupFolder() {
-  if (!window.showDirectoryPicker) {
-    alert("⚠️ 請使用 Chrome 或 Edge 瀏覽器！");
-    return;
-  }
-  try {
-    if (classSubDirHandle) {
-      const perm = await classSubDirHandle.requestPermission({ mode: 'readwrite' });
-      if (perm === 'granted') {
-        markFolderConnected();
-        await autoWriteToFolder();
-        return;
-      }
-    }
-    const pickedHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
-    if (pickedHandle.name === "504班級") {
-      classSubDirHandle = pickedHandle;
-    } else {
-      classSubDirHandle = await pickedHandle.getDirectoryHandle("504班級", { create: true });
-    }
-    await saveFolderHandleToIDB(classSubDirHandle);
-    markFolderConnected();
-    addLog("系統", `綁定【504班級】資料夾成功`);
-    await autoWriteToFolder();
-    alert(`🎉 已成功綁定【504班級】資料夾！`);
-  } catch (err) {}
-}
-
-function markFolderConnected() {
-  const btn = document.getElementById('folderBtn');
-  btn.classList.add('connected');
-  btn.innerHTML = `✅ 自動記錄中：/504班級`;
-}
-
-async function autoWriteToFolder() {
-  if (!classSubDirHandle) return;
-  try {
-    const jsonFile = await classSubDirHandle.getFileHandle(`504班級_即時總資料庫.json`, { create: true });
-    const wJson = await jsonFile.createWritable();
-    await wJson.write(JSON.stringify(db, null, 2));
-    await wJson.close();
-
-    const csvFile = await classSubDirHandle.getFileHandle(`504班級_歷史紀錄_${currentHwDate}.csv`, { create: true });
-    const wCsv = await csvFile.createWritable();
-    await wCsv.write("\uFEFF" + generateCSVString());
-    await wCsv.close();
-  } catch (e) {}
-}
-
-function saveDB() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-  autoWriteToFolder();
-  showUpdateToast(); // 觸發畫面上自動更新提示燈
-}
-
-function addLog(category, detail) {
-  db.logs.unshift({ time: getFullTimestamp(), category, actor: isTeacherMode ? "👩‍🏫 教師模式" : "🧒 學生確認", detail });
-  if (db.logs.length > 3000) db.logs.pop();
-  saveDB();
 }
 
 function onHwDateChange(val) {
@@ -793,11 +630,10 @@ function renderHomeworkBoard() {
     col.className = "hw-item-col";
     const boxesHtml = db.students.map(stu => {
       const isSub = Boolean(hw.submissions[stu.id]);
-      const isRow3 = (stu.id === "03");
       return `
-        <div class="seat-box ${isSub ? 'submitted' : 'unsubmitted'} ${isRow3 ? 'row-3-card' : ''}" onclick="handleGridBoxClick('${hw.id}', '${stu.id}')">
-          <span class="s-num ${isRow3 ? 'row-3-tag' : ''}">${isSub ? '✓ ' + stu.id : stu.id}</span>
-          <span class="s-name">${stu.name} ${isRow3 ? '⭐' : ''}</span>
+        <div class="seat-box ${isSub ? 'submitted' : 'unsubmitted'}" onclick="handleGridBoxClick('${hw.id}', '${stu.id}')">
+          <span class="s-num">${isSub ? '✓ ' + stu.id : stu.id}</span>
+          <span class="s-name">${stu.name}</span>
         </div>
       `;
     }).join('');
@@ -819,7 +655,7 @@ function renderHomeworkBoard() {
     const chalkRow = document.createElement('div');
     chalkRow.className = "chalk-row";
     let missingNumsHtml = missingStudents.length === 0 ? `<span style="color:var(--chalk-green); font-weight:900;">🎉 全班已交齊！</span>` : missingStudents.map(stu => `
-      <span class="chalk-num-chip" onclick="handleGridBoxClick('${hw.id}', '${stu.id}')">${stu.id}號 (${stu.name} ${stu.id==='03'?'⭐第三排':''})</span>
+      <span class="chalk-num-chip" onclick="handleGridBoxClick('${hw.id}', '${stu.id}')">${stu.id}號 (${stu.name})</span>
     `).join('');
 
     chalkRow.innerHTML = `
@@ -908,15 +744,14 @@ function renderPointsAndLeaderboard() {
   db.students.forEach(stu => {
     const dailyPts = getStudentDailyPoints(stu, currentPointDate);
     const totalPts = stu.totalPoints || 0;
-    const isRow3 = (stu.id === "03"); // 3號呂鴻恩 (第三排) 樣板
 
     const card = document.createElement('div');
-    card.className = `point-stu-card ${isRow3 ? 'row-3-card' : ''}`;
+    card.className = "point-stu-card";
     card.onclick = () => openStudentPointModal(stu);
     card.innerHTML = `
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span class="seat-num ${isRow3 ? 'row-3-tag' : ''}">${stu.id}</span>
-        <strong style="font-size:1.25rem;">${stu.name} ${isRow3 ? '<span style="font-size:0.8rem; color:#0284c7;">(第三排)</span>' : ''}</strong>
+        <span class="seat-num">${stu.id}</span>
+        <strong style="font-size:1.25rem;">${stu.name}</strong>
       </div>
       <div class="dual-score-row">
         <div class="score-box daily"><span class="score-label">🔥 當日</span><span class="score-val">${dailyPts > 0 ? '+' + dailyPts : dailyPts}</span></div>
@@ -938,12 +773,11 @@ function renderPointsAndLeaderboard() {
     const score = rankMode === 'daily' ? getStudentDailyPoints(stu, currentPointDate) : (stu.totalPoints || 0);
     let rankClass = idx === 0 ? "top-1" : idx === 1 ? "top-2" : idx === 2 ? "top-3" : "";
     let medal = idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : `${idx + 1}`;
-    const isRow3 = (stu.id === "03");
 
     const item = document.createElement('div');
-    item.className = `rank-item ${rankClass} ${isRow3 ? 'row-3-card' : ''}`;
+    item.className = `rank-item ${rankClass}`;
     item.innerHTML = `
-      <div style="display:flex; align-items:center; gap:10px;"><span class="rank-medal">${medal}</span><span class="seat-num ${isRow3 ? 'row-3-tag' : ''}">${stu.id}</span><span>${stu.name} ${isRow3 ? '⭐' : ''}</span></div>
+      <div style="display:flex; align-items:center; gap:10px;"><span class="rank-medal">${medal}</span><span class="seat-num">${stu.id}</span><span>${stu.name}</span></div>
       <span style="font-weight:900; color:${rankMode === 'daily' ? '#c2410c' : 'var(--primary)'};">${rankMode === 'daily' && score > 0 ? '+' + score : score} 分</span>
     `;
     rankContainer.appendChild(item);
@@ -954,8 +788,7 @@ function openStudentPointModal(stu) {
   if (!isTeacherMode) return;
   isBatchPointMode = false;
   activeStudentId = stu.id;
-  const isRow3 = (stu.id === "03");
-  document.getElementById('pointModalTitle').textContent = `⭐ ${stu.id} ${stu.name} ${isRow3?'(第三排)':''} （當日：${getStudentDailyPoints(stu, currentPointDate)} ｜ 總積分：${stu.totalPoints}）`;
+  document.getElementById('pointModalTitle').textContent = `⭐ ${stu.id} ${stu.name} （當日：${getStudentDailyPoints(stu, currentPointDate)} ｜ 總積分：${stu.totalPoints}）`;
   document.getElementById('pointReason').value = "";
   document.getElementById('modalRedeemSection').style.display = "block";
   renderStudentRewardButtons(stu);
@@ -1084,10 +917,7 @@ function renderAttendance() {
     if (rec.outTime) outCount++;
     if (rec.status === 'leave') leaveCount++;
 
-    const isRow3 = (stu.id === "03");
     let cardClass = rec.status === 'leave' ? "card-leave" : (currentAttStage === 'in' && rec.inTime) ? "card-checked-in" : (currentAttStage === 'out' && rec.outTime) ? "card-checked-out" : "";
-    if (isRow3 && !cardClass) cardClass = "row-3-card";
-    
     let statusBadge = rec.status === 'leave' ? "請假" : (currentAttStage === 'in' && rec.inTime) ? "✅ 已入班" : (currentAttStage === 'out' && rec.outTime) ? "🏠 已放學" : "未打卡";
 
     const card = document.createElement('div');
@@ -1102,7 +932,7 @@ function renderAttendance() {
       });
     };
     card.innerHTML = `
-      <div><div class="student-header"><span class="seat-num ${isRow3?'row-3-tag':''}">${stu.id}</span><b>${statusBadge}</b></div><div class="student-name">${stu.name} ${isRow3?'⭐':''}</div></div>
+      <div><div class="student-header"><span class="seat-num">${stu.id}</span><b>${statusBadge}</b></div><div class="student-name">${stu.name}</div></div>
       <div class="time-stamp">☀️ ${rec.inTime || '--:--'} | 🌙 ${rec.outTime || '--:--'}</div>
     `;
     grid.appendChild(card);
@@ -1208,7 +1038,9 @@ function renderAll() {
 document.getElementById('hwDateInput').value = currentHwDate;
 document.getElementById('pointDateInput').value = currentPointDate;
 document.getElementById('attDate').value = currentHwDate;
-restoreFolderHandleFromIDB();
+
+// 啟動時自動從 Google 雲端抓取全部資料
+loadCloudDB();
 renderAll();
 </script>
 </body>
