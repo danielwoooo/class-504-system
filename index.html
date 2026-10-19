@@ -145,7 +145,7 @@
   }
   .chalk-num-chip:hover { background: var(--chalk-red); }
 
-  /* 座位表加分與打卡視角專用排版 */
+  /* 座位表視角共用排版 */
   .seating-layout-card {
     background: white; border-radius: 14px; padding: 14px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06); flex: 1; display: flex; flex-direction: column; overflow: hidden;
@@ -179,6 +179,16 @@
   .seat-desk.checked-in { background: #f0fdf4; border-color: #16a34a; }
   .seat-desk.checked-out { background: #eff6ff; border-color: #2563eb; }
   .seat-desk.leave { background: #fffbeb; border-color: #d97706; opacity: 0.9; }
+
+  /* 抽籤用動態狀態 */
+  .seat-desk.candidate { border-color: #f59e0b; background: #fffbeb; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4); transform: translateY(-3px); }
+  .seat-desk.highlighting { border-color: #ef4444; background: #fee2e2; transform: scale(1.1); transition: 0.05s; z-index: 10; position: relative; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.5); }
+  .seat-desk.winner-pulse { animation: winnerPulse 1.5s infinite; border-color: #10b981; background: #dcfce7; z-index: 10; position: relative; }
+  @keyframes winnerPulse {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); transform: scale(1.05); }
+    70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); transform: scale(1.05); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); transform: scale(1.05); }
+  }
 
   .seat-desk-top { display: flex; justify-content: space-between; align-items: center; }
   .seat-desk-num { background: var(--dark); color: white; font-weight: 900; font-size: 0.85rem; padding: 2px 6px; border-radius: 4px; }
@@ -221,6 +231,12 @@
   .log-table { width: 100%; border-collapse: collapse; background: white; }
   .log-table th, .log-table td { padding: 9px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
   .log-table th { background: #f8fafc; position: sticky; top: 0; }
+
+  /* 抽籤彈窗特效 */
+  .winner-modal-content { text-align: center; }
+  .winner-modal-content .trophy { font-size: 4rem; margin-bottom: 10px; animation: bounce 1s infinite; }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+  .winner-name { font-size: 2.5rem; font-weight: 900; color: var(--danger); margin: 10px 0; }
 </style>
 </head>
 <body>
@@ -235,11 +251,12 @@
     </div>
   </div>
   <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('homework', event)">📋 作業方格登記與黑板</button>
-    <button class="tab-btn" onclick="switchTab('seating', event)">🪑 教室座位加分</button>
-    <button class="tab-btn" onclick="switchTab('points', event)">🏆 國/數/社 專科積分表</button>
-    <button class="tab-btn" onclick="switchTab('attendance', event)">👋 座位表入/出班打卡</button>
-    <button class="tab-btn teacher-only" onclick="switchTab('logs', event)">🛡️ 504紀錄與備份</button>
+    <button class="tab-btn active" onclick="switchTab('homework', event)">📋 作業方格登記</button>
+    <button class="tab-btn" onclick="switchTab('seating', event)">🪑 座位加分</button>
+    <button class="tab-btn" onclick="switchTab('points', event)">🏆 專科積分表</button>
+    <button class="tab-btn" onclick="switchTab('draw', event)">🎲 舉手抽籤</button>
+    <button class="tab-btn" onclick="switchTab('attendance', event)">👋 座位入/出班</button>
+    <button class="tab-btn teacher-only" onclick="switchTab('logs', event)">🛡️ 504紀錄備份</button>
   </div>
   <div class="admin-controls">
     <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.85rem;" onclick="manualSync()">🔄 手動同步</button>
@@ -251,7 +268,7 @@
 </header>
 
 <main>
-  <!-- 1. 作業繳交：僅保留聯絡簿，其餘有新增才顯示 -->
+  <!-- 1. 作業繳交 -->
   <section id="page-homework" class="page active">
     <div class="toolbar">
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
@@ -374,7 +391,27 @@
     </div>
   </section>
 
-  <!-- 4. 出缺席打卡 (升級：座位表視角) -->
+  <!-- 4. 新增：🎲 舉手抽籤系統 -->
+  <section id="page-draw" class="page">
+    <div class="toolbar">
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <span style="font-weight:900; font-size:1.2rem; color:#1e293b;">🎲 舉手互動抽籤</span>
+        <span style="color:var(--gray); font-size:0.9rem;">（請先點擊座位選取「有舉手的同學」，再按開始抽籤）</span>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-outline" onclick="selectAllForDraw()">👥 全班參與</button>
+        <button class="btn btn-outline" onclick="clearDrawCandidates()">❌ 清空重選</button>
+        <button class="btn btn-primary" id="startDrawBtn" onclick="startDraw()" style="font-size:1.1rem; padding:8px 20px;">🎲 開始抽籤</button>
+      </div>
+    </div>
+    
+    <div class="seating-layout-card">
+      <div class="podium-bar">講 台 / 黑 板 面 向 全 班</div>
+      <div class="seating-grid" id="drawSeatingGrid"></div>
+    </div>
+  </section>
+
+  <!-- 5. 出缺席打卡 (座位表視角) -->
   <section id="page-attendance" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -397,7 +434,7 @@
     </div>
   </section>
 
-  <!-- 5. 系統稽核紀錄 -->
+  <!-- 6. 系統稽核紀錄 -->
   <section id="page-logs" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:12px; align-items:center;">
@@ -436,6 +473,7 @@
   </section>
 </main>
 
+<!-- 全局視窗們 -->
 <div class="modal-overlay" id="confirmModal">
   <div class="modal" style="max-width:500px; text-align:center;">
     <h2 style="margin:0; font-size:1.55rem;">🛡️ 防誤觸本人確認</h2>
@@ -502,6 +540,20 @@
       </div>
     </div>
     <div id="shopItemsContainer" style="display:flex; flex-direction:column; gap:10px;"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="drawWinnerModal">
+  <div class="modal" style="max-width:400px; text-align:center;">
+    <div class="winner-modal-content">
+      <div class="trophy">🎉</div>
+      <h2 style="margin:0; font-size:1.5rem; color:var(--gray);">幸運抽中</h2>
+      <div class="winner-name" id="drawWinnerNameDisplay">01 簡逸森</div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:20px;">
+      <button class="btn btn-outline" style="padding:12px; font-size:1.1rem;" onclick="closeModal('drawWinnerModal')">關閉</button>
+      <button class="btn btn-success" style="padding:12px; font-size:1.1rem;" id="drawWinnerAddPointBtn">⭐ 給予加分</button>
+    </div>
   </div>
 </div>
 
@@ -1179,6 +1231,129 @@ function askStudentConfirm(stu, actionTitle, callback) {
   document.getElementById('confirmModal').classList.add('active');
 }
 
+// ==================== 抽籤功能 ====================
+let drawCandidates = new Set();
+let isDrawing = false;
+
+function renderDrawSeating() {
+  const seatingGrid = document.getElementById('drawSeatingGrid');
+  seatingGrid.innerHTML = "";
+
+  SEATING_LAYOUT.forEach(col => {
+    const colBox = document.createElement('div');
+    colBox.className = "column-box";
+    let colHeaderHtml = `<div class="column-header"><span>${col.colName}</span></div>`;
+    
+    let desksHtml = "";
+    col.ids.forEach(stuId => {
+      const stu = db.students.find(s => s.id === stuId);
+      if (!stu) return;
+
+      const isCandidate = drawCandidates.has(stu.id);
+      desksHtml += `
+        <div class="seat-desk ${isCandidate ? 'candidate' : ''}" id="draw-seat-${stu.id}" onclick="toggleDrawCandidate('${stu.id}')" style="min-height:70px;">
+          <div class="seat-desk-top">
+            <span class="seat-desk-num">${stu.id}</span>
+          </div>
+          <div class="seat-desk-name" style="margin-top:6px; font-size:1.2rem;">${stu.name}</div>
+        </div>
+      `;
+    });
+    colBox.innerHTML = colHeaderHtml + desksHtml;
+    seatingGrid.appendChild(colBox);
+  });
+}
+
+function toggleDrawCandidate(stuId) {
+  if(isDrawing) return;
+  if (drawCandidates.has(stuId)) {
+    drawCandidates.delete(stuId);
+  } else {
+    drawCandidates.add(stuId);
+  }
+  renderDrawSeating();
+}
+
+function clearDrawCandidates() {
+  if(isDrawing) return;
+  drawCandidates.clear();
+  renderDrawSeating();
+}
+
+function selectAllForDraw() {
+  if(isDrawing) return;
+  db.students.forEach(s => drawCandidates.add(s.id));
+  renderDrawSeating();
+}
+
+function startDraw() {
+  if (drawCandidates.size === 0) {
+    alert("請先點選至少一位有舉手的同學！");
+    return;
+  }
+  if (isDrawing) return;
+  
+  isDrawing = true;
+  document.getElementById('startDrawBtn').disabled = true;
+  
+  const candidates = Array.from(drawCandidates);
+  let cycles = 0;
+  const maxCycles = 30; // 轉盤跳動次數
+  let currentDelay = 40; // 初始速度
+
+  // 清除之前的獲勝動畫
+  document.querySelectorAll('#drawSeatingGrid .seat-desk').forEach(el => {
+    el.classList.remove('highlighting', 'winner-pulse');
+  });
+
+  const runAnimation = () => {
+    // 移除所有人的 highlight
+    candidates.forEach(id => {
+      const el = document.getElementById(`draw-seat-${id}`);
+      if(el) el.classList.remove('highlighting');
+    });
+
+    // 隨機選一個點亮
+    const randomIndex = Math.floor(Math.random() * candidates.length);
+    const randomId = candidates[randomIndex];
+    const activeEl = document.getElementById(`draw-seat-${randomId}`);
+    if(activeEl) activeEl.classList.add('highlighting');
+
+    cycles++;
+    
+    if (cycles < maxCycles) {
+      // 逐漸減速
+      currentDelay += 8; 
+      setTimeout(runAnimation, currentDelay);
+    } else {
+      // 動畫結束，選出中獎者
+      isDrawing = false;
+      document.getElementById('startDrawBtn').disabled = false;
+      
+      activeEl.classList.remove('highlighting');
+      activeEl.classList.add('winner-pulse');
+      
+      setTimeout(() => {
+        const winnerStu = db.students.find(s => s.id === randomId);
+        showWinnerModal(winnerStu);
+      }, 600);
+    }
+  };
+
+  runAnimation();
+}
+
+function showWinnerModal(stu) {
+  document.getElementById('drawWinnerNameDisplay').textContent = `${stu.id} ${stu.name}`;
+  document.getElementById('drawWinnerAddPointBtn').onclick = () => {
+    closeModal('drawWinnerModal');
+    // 自動切換到專科積分表並開啟加分視窗
+    document.querySelectorAll('.tab-btn')[2].click(); 
+    openStudentPointModal(stu); 
+  };
+  document.getElementById('drawWinnerModal').classList.add('active');
+}
+
 // ==================== 出缺席打卡（升級教室座位表版） ====================
 function onAttDateChange(val) {
   const checked = normalizeToSchoolDay(val);
@@ -1389,6 +1564,7 @@ function closeModal(id) { document.getElementById(id).classList.remove('active')
 function renderAll() {
   renderHomeworkBoard();
   renderPointsAndLeaderboard();
+  renderDrawSeating();
   renderAttendance();
   renderLogs();
 }
