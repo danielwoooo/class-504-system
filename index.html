@@ -145,7 +145,7 @@
   }
   .chalk-num-chip:hover { background: var(--chalk-red); }
 
-  /* 座位表加分視角專用排版 */
+  /* 座位表加分與打卡視角專用排版 */
   .seating-layout-card {
     background: white; border-radius: 14px; padding: 14px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06); flex: 1; display: flex; flex-direction: column; overflow: hidden;
@@ -174,6 +174,12 @@
   }
   .seat-desk:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(37,99,235,0.15); }
   .seat-desk:active { transform: scale(0.95); }
+  
+  /* 座位動態狀態 (打卡用) */
+  .seat-desk.checked-in { background: #f0fdf4; border-color: #16a34a; }
+  .seat-desk.checked-out { background: #eff6ff; border-color: #2563eb; }
+  .seat-desk.leave { background: #fffbeb; border-color: #d97706; opacity: 0.9; }
+
   .seat-desk-top { display: flex; justify-content: space-between; align-items: center; }
   .seat-desk-num { background: var(--dark); color: white; font-weight: 900; font-size: 0.85rem; padding: 2px 6px; border-radius: 4px; }
   .seat-desk-name { font-size: 1.15rem; font-weight: 900; margin: 4px 0; color: #0f172a; }
@@ -194,16 +200,6 @@
   .rank-item.top-2 { background: #f1f5f9; border: 2px solid #94a3b8; }
   .rank-item.top-3 { background: #ffedd5; border: 2px solid #f97316; }
   .rank-medal { font-size: 1.25rem; width: 32px; text-align: center; font-weight: 900; }
-
-  .student-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; padding-bottom: 12px; }
-  .student-card { background: white; border-radius: 12px; padding: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 3px solid #e2e8f0; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; min-height: 118px; }
-  .student-header { display: flex; justify-content: space-between; align-items: center; }
-  .seat-num { background: var(--dark); color: white; font-weight: 900; font-size: 1.05rem; padding: 2px 8px; border-radius: 6px; }
-  .student-name { font-size: 1.3rem; font-weight: 900; margin: 4px 0; }
-  .card-checked-in { border-color: var(--success); background: #f0fdf4; }
-  .card-checked-out { border-color: var(--primary); background: #eff6ff; }
-  .card-leave { border-color: var(--warning); background: #fffbeb; opacity: 0.8; }
-  .time-stamp { font-size: 0.82rem; color: var(--gray); font-weight: bold; }
 
   .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.68); display: none; justify-content: center; align-items: center; z-index: 100; padding: 18px; }
   .modal-overlay.active { display: flex; }
@@ -232,10 +228,11 @@
     <button class="tab-btn active" onclick="switchTab('homework', event)">📋 作業方格登記與黑板</button>
     <button class="tab-btn" onclick="switchTab('seating', event)">🪑 教室座位加分</button>
     <button class="tab-btn" onclick="switchTab('points', event)">🏆 國/數/社 專科積分表</button>
-    <button class="tab-btn" onclick="switchTab('attendance', event)">👋 入班/放學打卡</button>
+    <button class="tab-btn" onclick="switchTab('attendance', event)">👋 座位表入/出班打卡</button>
     <button class="tab-btn teacher-only" onclick="switchTab('logs', event)">🛡️ 504紀錄與備份</button>
   </div>
   <div class="admin-controls">
+    <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.85rem;" onclick="manualSync()">🔄 手動同步</button>
     <span class="cloud-status synced" id="cloudStatusBadge">☁️ 雲端連線中</span>
     <button id="modeBtn" class="mode-btn mode-student" onclick="toggleTeacherMode()">
       🔒 學生互動模式
@@ -244,7 +241,7 @@
 </header>
 
 <main>
-  <!-- 1. 作業繳交 -->
+  <!-- 1. 作業繳交：僅保留聯絡簿，其餘有新增才顯示 -->
   <section id="page-homework" class="page active">
     <div class="toolbar">
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
@@ -367,7 +364,7 @@
     </div>
   </section>
 
-  <!-- 4. 出缺席打卡 (包含防誤觸取消機制) -->
+  <!-- 4. 出缺席打卡 (全座位表視角) -->
   <section id="page-attendance" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -383,7 +380,11 @@
         <button class="btn btn-primary" onclick="batchCheckIn()">⚡ 全班一鍵打卡</button>
       </div>
     </div>
-    <div class="student-grid" id="attGrid"></div>
+    
+    <div class="seating-layout-card">
+      <div class="podium-bar">講 台 / 黑 板 面 向 全 班</div>
+      <div class="seating-grid" id="attSeatingGrid"></div>
+    </div>
   </section>
 
   <!-- 5. 系統稽核紀錄 -->
@@ -495,7 +496,6 @@
 </div>
 
 <script>
-// 寫入您的 API 網址
 const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbyD-quLq2HtVM-F-aHjI8blhZG9X4eJ2vXWE-aNTWWx-QSFJJxWGyh2JT0Ly-t-4ey7KQ/exec";
 const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
 
@@ -546,8 +546,7 @@ let currentPointDate = currentHwDate;
 let currentAttDate = currentHwDate;
 
 let existingCache = localStorage.getItem(STORAGE_KEY) 
-  || localStorage.getItem("CLASS_504_SYSTEM_DB_V5")
-  || localStorage.getItem("CLASS_504_SYSTEM_DB_V4");
+  || localStorage.getItem("CLASS_504_SYSTEM_DB_V5");
 
 let db = existingCache ? JSON.parse(existingCache) : {
   className: "504",
@@ -577,6 +576,7 @@ db.students.forEach(s => {
   if (!s.dailySubjectPoints) s.dailySubjectPoints = {};
   delete s.row;
 });
+if(!db.homeworks) db.homeworks = [];
 
 function getStudentDailyPoints(stu, dateStr) {
   return (stu.dailyPoints && stu.dailyPoints[dateStr]) ? stu.dailyPoints[dateStr] : 0;
@@ -595,7 +595,6 @@ function showUpdateToast() {
   setTimeout(() => { toast.classList.remove('show'); }, 2200);
 }
 
-// 雲端同步狀態燈管理
 function setCloudStatus(status) {
   const badge = document.getElementById('cloudStatusBadge');
   if (!badge) return;
@@ -605,12 +604,14 @@ function setCloudStatus(status) {
   else if (status === "error") badge.innerHTML = "❌ 同步異常";
 }
 
-// 雲端資料讀取
+// 雲端讀取 - 強制加入清除快取參數
 async function loadCloudDB() {
   if (!CLOUD_API_URL) return;
   setCloudStatus("syncing");
   try {
-    const res = await fetch(CLOUD_API_URL + "?action=load");
+    // 【重要修復】加入 &t=時間戳章 破解瀏覽器與 Google 的強制快取問題
+    const cacheBusterUrl = CLOUD_API_URL + "?action=load&t=" + new Date().getTime();
+    const res = await fetch(cacheBusterUrl);
     const cloudData = await res.json();
     if (cloudData && cloudData.students) {
       db = cloudData;
@@ -619,10 +620,10 @@ async function loadCloudDB() {
         if (!s.subjectPoints) s.subjectPoints = { "國語": 0, "數學": 0, "社會": 0 };
         if (!s.dailySubjectPoints) s.dailySubjectPoints = {};
       });
+      if(!db.homeworks) db.homeworks = [];
       localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
       renderAll();
       setCloudStatus("synced");
-      console.log("✅ 成功從 Google 雲端載入資料！");
     }
   } catch (err) {
     setCloudStatus("synced");
@@ -630,7 +631,12 @@ async function loadCloudDB() {
   }
 }
 
-// 雲端資料寫入 (改用 no-cors 避免 302 跨域報錯卡住)
+// 手動強制同步
+async function manualSync() {
+  await loadCloudDB();
+  alert("✅ 已從雲端抓取最新資料！");
+}
+
 async function saveDB() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
   showUpdateToast();
@@ -658,7 +664,7 @@ function addLog(category, detail) {
   saveDB();
 }
 
-// 💡 僅保證每日聯絡簿存在，不會再自動強制產生國語/數學/社會空表格
+// 僅保證每日聯絡簿存在，其餘不自動生成
 function ensureContactBookOnly(dateStr) {
   const hasContactBook = db.homeworks.some(h => h.date === dateStr && h.isContactBook);
   if (!hasContactBook) {
@@ -884,7 +890,6 @@ function setRankMode(mode) {
   renderPointsAndLeaderboard();
 }
 
-// 包含加分與扣分功能
 function quickAddSubjectPoint(stuId, subj, delta) {
   if (!isTeacherMode) {
     alert("🔒 加減分僅限在「教師管理模式」下操作！請先在右上角輸入密碼解鎖。");
@@ -945,7 +950,7 @@ function renderPointsAndLeaderboard() {
     seatingGrid.appendChild(colBox);
   });
 
-  // 2. 國語、數學、社會 獨立加分表 (新增 -1 按鈕)
+  // 2. 國語、數學、社會 獨立加分表
   const subjTableBody = document.getElementById('subjScoreTableBody');
   subjTableBody.innerHTML = "";
   db.students.forEach(stu => {
@@ -1150,7 +1155,7 @@ function askStudentConfirm(stu, actionTitle, callback) {
   document.getElementById('confirmModal').classList.add('active');
 }
 
-// 出缺席打卡（嚴格鎖定上課日，含取消打卡防呆機制）
+// ==================== 出缺席打卡（升級教室座位表版） ====================
 function onAttDateChange(val) {
   const checked = normalizeToSchoolDay(val);
   if (checked !== val) {
@@ -1177,61 +1182,96 @@ function setAttStage(stage) {
   renderAttendance();
 }
 
+window.onAttDeskClick = function(stuId) {
+  const dateStr = currentAttDate;
+  if (!db.attendance[dateStr]) db.attendance[dateStr] = {};
+  const stu = db.students.find(s => s.id === stuId);
+
+  const isAlreadyChecked = currentAttStage === 'in' ? !!db.attendance[dateStr][stu.id].inTime : !!db.attendance[dateStr][stu.id].outTime;
+
+  if (!isAlreadyChecked) {
+    askStudentConfirm(stu, currentAttStage === 'in' ? `[${dateStr}] 早自習入班打卡` : `[${dateStr}] 放學離校打卡`, () => {
+      if (currentAttStage === 'in') db.attendance[dateStr][stu.id].inTime = getNowTimeStr();
+      else db.attendance[dateStr][stu.id].outTime = getNowTimeStr();
+      addLog("出缺席", `${stu.id} ${stu.name} [${dateStr}] 打卡`);
+      renderAttendance();
+    });
+  } else {
+    // 防誤觸與教師取消機制
+    if (isTeacherMode) {
+      const actionName = currentAttStage === 'in' ? '入班打卡' : '放學打卡';
+      if (confirm(`確定要取消 ${stu.id} ${stu.name} 的【${actionName}】紀錄嗎？`)) {
+        if (currentAttStage === 'in') db.attendance[dateStr][stu.id].inTime = null;
+        else db.attendance[dateStr][stu.id].outTime = null;
+        addLog("出缺席", `教師取消 ${stu.id} ${stu.name} [${dateStr}] ${actionName}`);
+        renderAttendance();
+      }
+    } else {
+      alert(`⚠️ ${stu.name} 已經完成${currentAttStage === 'in' ? '入班' : '放學'}打卡囉！\n若不小心誤觸，請請老師輸入密碼切換至「教師管理模式」來取消。`);
+    }
+  }
+};
+
 function renderAttendance() {
   const dateStr = currentAttDate;
   if (!db.attendance[dateStr]) db.attendance[dateStr] = {};
   const dayRecord = db.attendance[dateStr];
   let inCount = 0, outCount = 0, leaveCount = 0;
-  const grid = document.getElementById('attGrid');
-  grid.innerHTML = "";
 
-  db.students.forEach(stu => {
-    const rec = dayRecord[stu.id] || { status: 'uncheck', inTime: null, outTime: null };
-    if (rec.inTime) inCount++;
-    if (rec.outTime) outCount++;
-    if (rec.status === 'leave') leaveCount++;
+  const seatingGrid = document.getElementById('attSeatingGrid');
+  seatingGrid.innerHTML = "";
 
-    let cardClass = rec.status === 'leave' ? "card-leave" : (currentAttStage === 'in' && rec.inTime) ? "card-checked-in" : (currentAttStage === 'out' && rec.outTime) ? "card-checked-out" : "";
-    let statusBadge = rec.status === 'leave' ? "請假" : (currentAttStage === 'in' && rec.inTime) ? "✅ 已入班" : (currentAttStage === 'out' && rec.outTime) ? "🏠 已放學" : "未打卡";
+  SEATING_LAYOUT.forEach(col => {
+    const colBox = document.createElement('div');
+    colBox.className = "column-box";
 
-    const card = document.createElement('div');
-    card.className = `student-card ${cardClass}`;
-    
-    card.onclick = () => {
-      if (!db.attendance[dateStr][stu.id]) db.attendance[dateStr][stu.id] = { status: 'uncheck', inTime: null, outTime: null };
-      
-      const isAlreadyChecked = currentAttStage === 'in' ? !!db.attendance[dateStr][stu.id].inTime : !!db.attendance[dateStr][stu.id].outTime;
-
-      if (!isAlreadyChecked) {
-        // 尚未打卡 -> 進行打卡確認
-        askStudentConfirm(stu, currentAttStage === 'in' ? `[${dateStr}] 早自習入班打卡` : `[${dateStr}] 放學離校打卡`, () => {
-          if (currentAttStage === 'in') db.attendance[dateStr][stu.id].inTime = getNowTimeStr();
-          else db.attendance[dateStr][stu.id].outTime = getNowTimeStr();
-          addLog("出缺席", `${stu.id} ${stu.name} [${dateStr}] 打卡`);
-          renderAttendance();
-        });
-      } else {
-        // 已經打卡 -> 教師可取消，學生跳警告
-        if (isTeacherMode) {
-          const actionName = currentAttStage === 'in' ? '入班打卡' : '放學打卡';
-          if (confirm(`確定要取消 ${stu.id} ${stu.name} 的【${actionName}】紀錄嗎？`)) {
-            if (currentAttStage === 'in') db.attendance[dateStr][stu.id].inTime = null;
-            else db.attendance[dateStr][stu.id].outTime = null;
-            addLog("出缺席", `教師取消 ${stu.id} ${stu.name} [${dateStr}] ${actionName}`);
-            renderAttendance();
-          }
-        } else {
-          alert(`⚠️ ${stu.name} 已經完成${currentAttStage === 'in' ? '入班' : '放學'}打卡囉！\n若不小心誤觸，請請老師輸入密碼切換至「教師管理模式」來取消。`);
-        }
-      }
-    };
-    
-    card.innerHTML = `
-      <div><div class="student-header"><span class="seat-num">${stu.id}</span><b>${statusBadge}</b></div><div class="student-name">${stu.name}</div></div>
-      <div class="time-stamp">☀️ ${rec.inTime || '--:--'} | 🌙 ${rec.outTime || '--:--'}</div>
+    let colHeaderHtml = `
+      <div class="column-header">
+        <span>${col.colName}</span>
+      </div>
     `;
-    grid.appendChild(card);
+
+    let desksHtml = "";
+    col.ids.forEach(stuId => {
+      const stu = db.students.find(s => s.id === stuId);
+      if (!stu) return;
+
+      const rec = dayRecord[stu.id] || { status: 'uncheck', inTime: null, outTime: null };
+      if (rec.inTime) inCount++;
+      if (rec.outTime) outCount++;
+      if (rec.status === 'leave') leaveCount++;
+
+      let cardClass = "";
+      let statusBadge = "未打卡";
+      
+      if (rec.status === 'leave') {
+        cardClass = "leave"; statusBadge = "請假";
+      } else if (currentAttStage === 'in' && rec.inTime) {
+        cardClass = "checked-in"; statusBadge = "✅ 已入班";
+      } else if (currentAttStage === 'out' && rec.outTime) {
+        cardClass = "checked-out"; statusBadge = "🏠 已放學";
+      }
+
+      const timeText = currentAttStage === 'in' ? '☀️ ' + (rec.inTime || '--:--') : '🌙 ' + (rec.outTime || '--:--');
+
+      desksHtml += `
+        <div class="seat-desk ${cardClass}" onclick="onAttDeskClick('${stu.id}')">
+          <div class="seat-desk-top">
+            <span class="seat-desk-num">${stu.id}</span>
+            <span style="font-size:0.8rem; font-weight:bold; color:var(--gray);">${statusBadge}</span>
+          </div>
+          <div class="seat-desk-name" style="margin: 8px 0;">${stu.name}</div>
+          <div style="font-size:0.85rem; font-weight:bold; color:#475569;">
+            ${timeText}
+          </div>
+        </div>
+      `;
+    });
+
+    colBox.innerHTML = colHeaderHtml + desksHtml;
+    seatingGrid.appendChild(colBox);
   });
+
   document.getElementById('attStats').innerHTML = `<span class="btn btn-outline">應到：21</span><span class="btn btn-success">入班：${inCount}</span><span class="btn btn-primary">放學：${outCount}</span>`;
 }
 
