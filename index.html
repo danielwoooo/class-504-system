@@ -201,6 +201,16 @@
   .rank-item.top-3 { background: #ffedd5; border: 2px solid #f97316; }
   .rank-medal { font-size: 1.25rem; width: 32px; text-align: center; font-weight: 900; }
 
+  .student-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; padding-bottom: 12px; }
+  .student-card { background: white; border-radius: 12px; padding: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 3px solid #e2e8f0; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; min-height: 118px; }
+  .student-header { display: flex; justify-content: space-between; align-items: center; }
+  .seat-num { background: var(--dark); color: white; font-weight: 900; font-size: 1.05rem; padding: 2px 8px; border-radius: 6px; }
+  .student-name { font-size: 1.3rem; font-weight: 900; margin: 4px 0; }
+  .card-checked-in { border-color: var(--success); background: #f0fdf4; }
+  .card-checked-out { border-color: var(--primary); background: #eff6ff; }
+  .card-leave { border-color: var(--warning); background: #fffbeb; opacity: 0.8; }
+  .time-stamp { font-size: 0.82rem; color: var(--gray); font-weight: bold; }
+
   .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.68); display: none; justify-content: center; align-items: center; z-index: 100; padding: 18px; }
   .modal-overlay.active { display: flex; }
   .modal { background: white; border-radius: 18px; width: 100%; max-width: 640px; padding: 22px; box-shadow: 0 25px 30px -5px rgba(0,0,0,0.3); max-height: 92vh; overflow-y: auto; }
@@ -364,7 +374,7 @@
     </div>
   </section>
 
-  <!-- 4. 出缺席打卡 (全座位表視角) -->
+  <!-- 4. 出缺席打卡 (升級：座位表視角) -->
   <section id="page-attendance" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -496,7 +506,8 @@
 </div>
 
 <script>
-const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbyD-quLq2HtVM-F-aHjI8blhZG9X4eJ2vXWE-aNTWWx-QSFJJxWGyh2JT0Ly-t-4ey7KQ/exec";
+// 寫入您的最新 API 網址
+const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxLmQ53ek7oxEuZqdoXGbqSJf2cuwnzNlEBfGJtRZKhUzPg10fAJ-6v5bi8YCxeP_3kTg/exec";
 const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
 
 const INITIAL_STUDENTS = [
@@ -604,15 +615,24 @@ function setCloudStatus(status) {
   else if (status === "error") badge.innerHTML = "❌ 同步異常";
 }
 
-// 雲端讀取 - 強制加入清除快取參數
+// 📌 核心修復：雲端讀取 - 強制加入清除快取參數
 async function loadCloudDB() {
   if (!CLOUD_API_URL) return;
   setCloudStatus("syncing");
   try {
-    // 【重要修復】加入 &t=時間戳章 破解瀏覽器與 Google 的強制快取問題
+    // 加入 &t=時間戳章 破解瀏覽器的快取，確保永遠抓取最新的 Google Sheets 資料
     const cacheBusterUrl = CLOUD_API_URL + "?action=load&t=" + new Date().getTime();
     const res = await fetch(cacheBusterUrl);
-    const cloudData = await res.json();
+    const textData = await res.text();
+    
+    // 防呆：如果回傳的是 Google 登入網頁的 HTML，代表權限設錯了
+    if (textData.includes("<html") || textData.includes("Sign in")) {
+      alert("🛑 雲端權限錯誤！\n請回到 Google Apps Script，重新部署並將「誰可以存取」設為【所有人 (Anyone)】，否則資料無法雙向同步！");
+      setCloudStatus("error");
+      return;
+    }
+
+    const cloudData = JSON.parse(textData);
     if (cloudData && cloudData.students) {
       db = cloudData;
       db.students.forEach(s => {
@@ -624,17 +644,18 @@ async function loadCloudDB() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
       renderAll();
       setCloudStatus("synced");
+      console.log("✅ 成功從 Google 雲端載入最新同步資料！");
     }
   } catch (err) {
-    setCloudStatus("synced");
-    console.log("⚠️ 目前使用本地資料", err);
+    setCloudStatus("error");
+    console.error("雲端讀取失敗:", err);
   }
 }
 
-// 手動強制同步
+// 📌 核心新增：手動強制同步按鈕
 async function manualSync() {
   await loadCloudDB();
-  alert("✅ 已從雲端抓取最新資料！");
+  alert("✅ 已強制從雲端抓取全班最新資料！");
 }
 
 async function saveDB() {
@@ -644,16 +665,20 @@ async function saveDB() {
   if (CLOUD_API_URL) {
     setCloudStatus("syncing");
     try {
-      await fetch(CLOUD_API_URL + "?action=save", {
+      // 不使用 mode: 'no-cors'，直接以純文字發送，才能確保正確寫入且不報錯
+      const response = await fetch(CLOUD_API_URL + "?action=save", {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(db)
+        body: JSON.stringify(db) 
       });
-      setCloudStatus("synced");
+      
+      if(response.ok || response.type === 'opaque') {
+        setCloudStatus("synced");
+      } else {
+        throw new Error("HTTP 狀態碼錯誤");
+      }
     } catch (err) {
       setCloudStatus("error");
-      console.error("❌ 雲端同步失敗", err);
+      console.error("雲端寫入失敗:", err);
     }
   }
 }
@@ -664,7 +689,6 @@ function addLog(category, detail) {
   saveDB();
 }
 
-// 僅保證每日聯絡簿存在，其餘不自動生成
 function ensureContactBookOnly(dateStr) {
   const hasContactBook = db.homeworks.some(h => h.date === dateStr && h.isContactBook);
   if (!hasContactBook) {
@@ -1197,7 +1221,6 @@ window.onAttDeskClick = function(stuId) {
       renderAttendance();
     });
   } else {
-    // 防誤觸與教師取消機制
     if (isTeacherMode) {
       const actionName = currentAttStage === 'in' ? '入班打卡' : '放學打卡';
       if (confirm(`確定要取消 ${stu.id} ${stu.name} 的【${actionName}】紀錄嗎？`)) {
