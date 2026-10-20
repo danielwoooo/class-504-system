@@ -175,12 +175,10 @@
   .seat-desk:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(37,99,235,0.15); }
   .seat-desk:active { transform: scale(0.95); }
   
-  /* 座位動態狀態 (打卡用) */
   .seat-desk.checked-in { background: #f0fdf4; border-color: #16a34a; }
   .seat-desk.checked-out { background: #eff6ff; border-color: #2563eb; }
   .seat-desk.leave { background: #fffbeb; border-color: #d97706; opacity: 0.9; }
 
-  /* 抽籤用動態狀態 */
   .seat-desk.candidate { border-color: #f59e0b; background: #fffbeb; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4); transform: translateY(-3px); }
   .seat-desk.highlighting { border-color: #ef4444; background: #fee2e2; transform: scale(1.1); transition: 0.05s; z-index: 10; position: relative; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.5); }
   .seat-desk.winner-pulse { animation: winnerPulse 1.5s infinite; border-color: #10b981; background: #dcfce7; z-index: 10; position: relative; }
@@ -211,16 +209,11 @@
   .rank-item.top-3 { background: #ffedd5; border: 2px solid #f97316; }
   .rank-medal { font-size: 1.25rem; width: 32px; text-align: center; font-weight: 900; }
 
-  .student-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; padding-bottom: 12px; }
-  .student-card { background: white; border-radius: 12px; padding: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 3px solid #e2e8f0; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; min-height: 118px; }
-  .student-header { display: flex; justify-content: space-between; align-items: center; }
-  .seat-num { background: var(--dark); color: white; font-weight: 900; font-size: 1.05rem; padding: 2px 8px; border-radius: 6px; }
-  .student-name { font-size: 1.3rem; font-weight: 900; margin: 4px 0; }
-  .card-checked-in { border-color: var(--success); background: #f0fdf4; }
-  .card-checked-out { border-color: var(--primary); background: #eff6ff; }
-  .card-leave { border-color: var(--warning); background: #fffbeb; opacity: 0.8; }
-  .time-stamp { font-size: 0.82rem; color: var(--gray); font-weight: bold; }
+  .log-table { width: 100%; border-collapse: collapse; background: white; }
+  .log-table th, .log-table td { padding: 9px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+  .log-table th { background: #f8fafc; position: sticky; top: 0; }
 
+  /* 模態視窗 */
   .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.68); display: none; justify-content: center; align-items: center; z-index: 100; padding: 18px; }
   .modal-overlay.active { display: flex; }
   .modal { background: white; border-radius: 18px; width: 100%; max-width: 640px; padding: 22px; box-shadow: 0 25px 30px -5px rgba(0,0,0,0.3); max-height: 92vh; overflow-y: auto; }
@@ -228,11 +221,6 @@
   .modal-header h2 { margin: 0; font-size: 1.45rem; }
   .close-btn { background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--gray); }
 
-  .log-table { width: 100%; border-collapse: collapse; background: white; }
-  .log-table th, .log-table td { padding: 9px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-  .log-table th { background: #f8fafc; position: sticky; top: 0; }
-
-  /* 抽籤彈窗特效 */
   .winner-modal-content { text-align: center; }
   .winner-modal-content .trophy { font-size: 4rem; margin-bottom: 10px; animation: bounce 1s infinite; }
   @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
@@ -334,7 +322,7 @@
         <span style="color:var(--gray); font-size:0.9rem;">（點擊課桌單獨加分；點擊上方「⚡整排+1」小組加分）</span>
       </div>
       <div class="teacher-only" style="gap:8px;">
-        <button class="btn btn-success" onclick="openBatchPointsModal()">✨ 全班同步加分</button>
+        <button class="btn btn-success" onclick="openBatchPointsModal()">✨ 全班同步加減分</button>
       </div>
     </div>
 
@@ -362,7 +350,7 @@
       <div style="background:white; border-radius:14px; padding:14px; box-shadow:0 2px 6px rgba(0,0,0,0.06); display:flex; flex-direction:column; overflow-y:auto;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
           <strong style="font-size:1.1rem; color:#1e293b;">📊 國語、數學、社會 獨立累計與即時加分表</strong>
-          <span style="font-size:0.85rem; color:var(--gray);">點擊「+1」或「-1」直接加分/扣分並同步雲端</span>
+          <span style="font-size:0.85rem; color:var(--gray);">點擊「+1」或「-1」直接加/扣分並同步雲端</span>
         </div>
         <table class="subj-score-table">
           <thead>
@@ -391,7 +379,7 @@
     </div>
   </section>
 
-  <!-- 4. 新增：🎲 舉手抽籤系統 -->
+  <!-- 4. 🎲 舉手抽籤系統 -->
   <section id="page-draw" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -411,7 +399,7 @@
     </div>
   </section>
 
-  <!-- 5. 出缺席打卡 (座位表視角) -->
+  <!-- 5. 出缺席打卡 -->
   <section id="page-attendance" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -473,7 +461,7 @@
   </section>
 </main>
 
-<!-- 全局視窗們 -->
+<!-- 全局彈出視窗 -->
 <div class="modal-overlay" id="confirmModal">
   <div class="modal" style="max-width:500px; text-align:center;">
     <h2 style="margin:0; font-size:1.55rem;">🛡️ 防誤觸本人確認</h2>
@@ -511,9 +499,9 @@
       <button class="btn btn-success" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(1)">+1 分</button>
       <button class="btn btn-success" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(2)">+2 分</button>
       <button class="btn btn-success" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(5)">+5 分</button>
-      <button class="btn btn-danger" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(-1)">-1 分</button>
-      <button class="btn btn-danger" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(-2)">-2 分</button>
-      <button class="btn btn-danger" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(-5)">-5 分</button>
+      <button class="btn btn-danger" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(-1)">-1 分 (扣分)</button>
+      <button class="btn btn-danger" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(-2)">-2 分 (扣分)</button>
+      <button class="btn btn-danger" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(-5)">-5 分 (扣分)</button>
     </div>
 
     <div id="modalRedeemSection" style="border-top:2px solid #e2e8f0; padding-top:14px;">
@@ -558,8 +546,7 @@
 </div>
 
 <script>
-// 寫入您的最新 API 網址
-const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxLmQ53ek7oxEuZqdoXGbqSJf2cuwnzNlEBfGJtRZKhUzPg10fAJ-6v5bi8YCxeP_3kTg/exec";
+const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxva7wkaSYsKKIae5729UvLhB2J5vy9fYCgR3m7g5MGX5mnYoVH-iJArgkqijRIB33L4Q/exec";
 const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
 
 const INITIAL_STUDENTS = [
@@ -592,7 +579,6 @@ function formatDateObj(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
-// 嚴格過濾週末，鎖定週一至週五
 function normalizeToSchoolDay(dateStr) {
   let d = dateStr ? new Date(dateStr + "T00:00:00") : new Date();
   const day = d.getDay();
@@ -608,21 +594,15 @@ let currentHwDate = normalizeToSchoolDay();
 let currentPointDate = currentHwDate;
 let currentAttDate = currentHwDate;
 
-let existingCache = localStorage.getItem(STORAGE_KEY) 
-  || localStorage.getItem("CLASS_504_SYSTEM_DB_V5");
-
+let existingCache = localStorage.getItem(STORAGE_KEY);
 let db = existingCache ? JSON.parse(existingCache) : {
   className: "504",
   pin: "0000",
+  lastUpdate: 0,
   students: INITIAL_STUDENTS.map(s => ({ 
-    ...s, 
-    totalPoints: 0, 
-    dailyPoints: {}, 
-    subjectPoints: { "國語": 0, "數學": 0, "社會": 0 },
-    dailySubjectPoints: {}
+    ...s, totalPoints: 0, dailyPoints: {}, subjectPoints: { "國語": 0, "數學": 0, "社會": 0 }, dailySubjectPoints: {}
   })),
-  attendance: {},
-  homeworks: [],
+  attendance: {}, homeworks: [],
   rewards: [
     { id: "rw_1", name: "🎯 優先選位子特權一天", cost: 15 },
     { id: "rw_2", name: "✏️ 免寫圈詞乙次券", cost: 25 },
@@ -640,6 +620,7 @@ db.students.forEach(s => {
   delete s.row;
 });
 if(!db.homeworks) db.homeworks = [];
+if(!db.lastUpdate) db.lastUpdate = 0;
 
 function getStudentDailyPoints(stu, dateStr) {
   return (stu.dailyPoints && stu.dailyPoints[dateStr]) ? stu.dailyPoints[dateStr] : 0;
@@ -667,70 +648,85 @@ function setCloudStatus(status) {
   else if (status === "error") badge.innerHTML = "❌ 同步異常";
 }
 
-// 📌 核心修復：雲端讀取 - 強制加入清除快取參數
-async function loadCloudDB() {
+// 📌 核心防護 1：自動背景抓取雲端，並比對時間戳章防覆蓋
+async function loadCloudDB(isBackground = false) {
   if (!CLOUD_API_URL) return;
-  setCloudStatus("syncing");
+  if (!isBackground) setCloudStatus("syncing");
   try {
-    // 加入 &t=時間戳章 破解瀏覽器的快取，確保永遠抓取最新的 Google Sheets 資料
     const cacheBusterUrl = CLOUD_API_URL + "?action=load&t=" + new Date().getTime();
     const res = await fetch(cacheBusterUrl);
     const textData = await res.text();
     
-    // 防呆：如果回傳的是 Google 登入網頁的 HTML，代表權限設錯了
     if (textData.includes("<html") || textData.includes("Sign in")) {
-      alert("🛑 雲端權限錯誤！\n請回到 Google Apps Script，重新部署並將「誰可以存取」設為【所有人 (Anyone)】，否則資料無法雙向同步！");
+      if (!isBackground) alert("🛑 雲端連線被 Google 阻擋！\n請回到 Apps Script 確認部署時【誰可以存取】是否有設定為【所有人(Anyone)】！");
       setCloudStatus("error");
       return;
     }
 
     const cloudData = JSON.parse(textData);
     if (cloudData && cloudData.students) {
-      db = cloudData;
-      db.students.forEach(s => {
-        if (!s.dailyPoints) s.dailyPoints = {};
-        if (!s.subjectPoints) s.subjectPoints = { "國語": 0, "數學": 0, "社會": 0 };
-        if (!s.dailySubjectPoints) s.dailySubjectPoints = {};
-      });
-      if(!db.homeworks) db.homeworks = [];
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-      renderAll();
-      setCloudStatus("synced");
-      console.log("✅ 成功從 Google 雲端載入最新同步資料！");
+      
+      let cloudTime = cloudData.lastUpdate || 0;
+      let localTime = db.lastUpdate || 0;
+      
+      if (cloudTime > localTime || !isBackground) {
+        db = cloudData;
+        db.students.forEach(s => {
+          if (!s.dailyPoints) s.dailyPoints = {};
+          if (!s.subjectPoints) s.subjectPoints = { "國語": 0, "數學": 0, "社會": 0 };
+          if (!s.dailySubjectPoints) s.dailySubjectPoints = {};
+        });
+        if(!db.homeworks) db.homeworks = [];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+        renderAll();
+        if (isBackground) console.log("✅ 偵測到其他裝置有新動作，畫面已自動刷新！");
+      }
+      if (!isBackground) setCloudStatus("synced");
     }
   } catch (err) {
-    setCloudStatus("error");
+    if (!isBackground) setCloudStatus("error");
     console.error("雲端讀取失敗:", err);
   }
 }
 
-// 📌 核心新增：手動強制同步按鈕
+// 📌 核心防護 2：視窗喚醒自動同步
+window.addEventListener('focus', () => { loadCloudDB(true); });
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') loadCloudDB(true);
+});
+
+// 📌 核心防護 3：每 10 秒靜默檢查
+setInterval(() => { loadCloudDB(true); }, 10000);
+
 async function manualSync() {
-  await loadCloudDB();
+  await loadCloudDB(false);
   alert("✅ 已強制從雲端抓取全班最新資料！");
 }
 
+// 📌 核心修復：強制穿透連線
 async function saveDB() {
+  db.lastUpdate = new Date().getTime(); 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
   showUpdateToast();
 
   if (CLOUD_API_URL) {
     setCloudStatus("syncing");
     try {
-      // 不使用 mode: 'no-cors'，直接以純文字發送，才能確保正確寫入且不報錯
       const response = await fetch(CLOUD_API_URL + "?action=save", {
         method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(db) 
       });
-      
-      if(response.ok || response.type === 'opaque') {
+      const result = await response.json();
+      if (result && result.status === "success") {
         setCloudStatus("synced");
       } else {
-        throw new Error("HTTP 狀態碼錯誤");
+        throw new Error(result.message || "Unknown error");
       }
     } catch (err) {
       setCloudStatus("error");
-      console.error("雲端寫入失敗:", err);
+      console.error("寫入失敗:", err);
+      alert("⚠️ 雲端寫入失敗！請確認試算表權限是否已開啟「所有人」存取。");
     }
   }
 }
@@ -754,7 +750,6 @@ function ensureContactBookOnly(dateStr) {
       headerClass: "contact-book-header",
       submissions: {}
     });
-    saveDB();
   }
 }
 
@@ -840,6 +835,7 @@ function addHomeworkColumn() {
   addLog("作業", `教師新增作業欄：【${subject}】${title}`);
   document.getElementById('quickHwTitle').value = "";
   document.getElementById('quickHwPages').value = "";
+  saveDB(); // 確保新增作業時立刻上傳
   renderHomeworkBoard();
 }
 
@@ -990,7 +986,6 @@ function quickAddSubjectPoint(stuId, subj, delta) {
 }
 
 function renderPointsAndLeaderboard() {
-  // 1. 教室座位看板
   const seatingGrid = document.getElementById('seatingGrid');
   seatingGrid.innerHTML = "";
 
@@ -1001,7 +996,7 @@ function renderPointsAndLeaderboard() {
     let colHeaderHtml = `
       <div class="column-header">
         <span>${col.colName}</span>
-        ${isTeacherMode ? `<button class="btn btn-success" style="padding:3px 10px; font-size:0.8rem;" onclick="openRowBatchPointsModal('${col.colName}',${JSON.stringify(col.ids)})">⚡整排+1</button>` : ''}
+        ${isTeacherMode ? `<button class="btn btn-success" style="padding:3px 10px; font-size:0.8rem;" onclick="openRowBatchPointsModal('${col.colName}', ${JSON.stringify(col.ids)})">⚡整排+1</button>` : ''}
       </div>
     `;
 
@@ -1026,7 +1021,6 @@ function renderPointsAndLeaderboard() {
     seatingGrid.appendChild(colBox);
   });
 
-  // 2. 國語、數學、社會 獨立加分表
   const subjTableBody = document.getElementById('subjScoreTableBody');
   subjTableBody.innerHTML = "";
   db.students.forEach(stu => {
@@ -1067,7 +1061,6 @@ function renderPointsAndLeaderboard() {
     subjTableBody.appendChild(tr);
   });
 
-  // 3. 排行榜
   const rankContainer = document.getElementById('leaderboardList');
   rankContainer.innerHTML = "";
   const sorted = [...db.students].sort((a, b) => {
@@ -1152,7 +1145,7 @@ function applyPoints(delta) {
       stu.subjectPoints[selectedSubject] = (stu.subjectPoints[selectedSubject] || 0) + delta;
       stu.dailySubjectPoints[currentPointDate][selectedSubject] = (stu.dailySubjectPoints[currentPointDate][selectedSubject] || 0) + delta;
     });
-    const label = batchTargetIds ? `群組加分(${targets.length}人)` : "全班";
+    const label = batchTargetIds ? `群組加/減分(${targets.length}人)` : "全班加/減分";
     addLog("積分", `${label}【${selectedSubject}】${delta > 0 ? '+' + delta : delta} 分 ${noteStr}`);
   } else {
     const stu = db.students.find(s => s.id === activeStudentId);
@@ -1298,22 +1291,19 @@ function startDraw() {
   
   const candidates = Array.from(drawCandidates);
   let cycles = 0;
-  const maxCycles = 30; // 轉盤跳動次數
-  let currentDelay = 40; // 初始速度
+  const maxCycles = 30; 
+  let currentDelay = 40; 
 
-  // 清除之前的獲勝動畫
   document.querySelectorAll('#drawSeatingGrid .seat-desk').forEach(el => {
     el.classList.remove('highlighting', 'winner-pulse');
   });
 
   const runAnimation = () => {
-    // 移除所有人的 highlight
     candidates.forEach(id => {
       const el = document.getElementById(`draw-seat-${id}`);
       if(el) el.classList.remove('highlighting');
     });
 
-    // 隨機選一個點亮
     const randomIndex = Math.floor(Math.random() * candidates.length);
     const randomId = candidates[randomIndex];
     const activeEl = document.getElementById(`draw-seat-${randomId}`);
@@ -1322,17 +1312,13 @@ function startDraw() {
     cycles++;
     
     if (cycles < maxCycles) {
-      // 逐漸減速
       currentDelay += 8; 
       setTimeout(runAnimation, currentDelay);
     } else {
-      // 動畫結束，選出中獎者
       isDrawing = false;
       document.getElementById('startDrawBtn').disabled = false;
-      
       activeEl.classList.remove('highlighting');
       activeEl.classList.add('winner-pulse');
-      
       setTimeout(() => {
         const winnerStu = db.students.find(s => s.id === randomId);
         showWinnerModal(winnerStu);
@@ -1347,14 +1333,13 @@ function showWinnerModal(stu) {
   document.getElementById('drawWinnerNameDisplay').textContent = `${stu.id} ${stu.name}`;
   document.getElementById('drawWinnerAddPointBtn').onclick = () => {
     closeModal('drawWinnerModal');
-    // 自動切換到專科積分表並開啟加分視窗
     document.querySelectorAll('.tab-btn')[2].click(); 
     openStudentPointModal(stu); 
   };
   document.getElementById('drawWinnerModal').classList.add('active');
 }
 
-// ==================== 出缺席打卡（升級教室座位表版） ====================
+// ==================== 出缺席打卡 ====================
 function onAttDateChange(val) {
   const checked = normalizeToSchoolDay(val);
   if (checked !== val) {
@@ -1575,8 +1560,8 @@ document.getElementById('pointDateInput').value = currentPointDate;
 document.getElementById('seatingDateInput').value = currentPointDate;
 document.getElementById('attDate').value = currentAttDate;
 
-loadCloudDB();
-renderAll();
+// 網頁開啟的瞬間強制讀取最新雲端資料（傳入 false 確保無視本地舊資料，強制覆蓋為最新）
+loadCloudDB(false);
 </script>
 </body>
 </html>
