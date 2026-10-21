@@ -179,13 +179,14 @@
   .seat-desk.checked-out { background: #eff6ff; border-color: #2563eb; }
   .seat-desk.leave { background: #fffbeb; border-color: #d97706; opacity: 0.9; }
 
+  /* 抽籤輪盤特效 */
   .seat-desk.candidate { border-color: #f59e0b; background: #fffbeb; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4); transform: translateY(-3px); }
-  .seat-desk.highlighting { border-color: #ef4444; background: #fee2e2; transform: scale(1.1); transition: 0.05s; z-index: 10; position: relative; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.5); }
-  .seat-desk.winner-pulse { animation: winnerPulse 1.5s infinite; border-color: #10b981; background: #dcfce7; z-index: 10; position: relative; }
+  .seat-desk.highlighting { border-color: #ef4444; background: #fee2e2; transform: scale(1.1); transition: 0.02s; z-index: 10; position: relative; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.6); }
+  .seat-desk.winner-pulse { animation: winnerPulse 1s infinite; border-color: #10b981; background: #dcfce7; z-index: 10; position: relative; }
   @keyframes winnerPulse {
-    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); transform: scale(1.05); }
-    70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); transform: scale(1.05); }
-    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); transform: scale(1.05); }
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); transform: scale(1.1); }
+    70% { box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); transform: scale(1.1); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); transform: scale(1.1); }
   }
 
   .seat-desk-top { display: flex; justify-content: space-between; align-items: center; }
@@ -336,7 +337,7 @@
   <section id="page-points" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-        <span style="font-weight:900; font-size:1.15rem;">🏆 國語、數學、社會 專科積分表</span>
+        <span style="font-weight:900; font-size:1.15rem;">🏆 專科與常規積分表</span>
         <label style="font-weight:bold; color:var(--gray);">上課日戳章：</label>
         <input type="date" id="pointDateInput" class="form-control" onchange="onCommonDateChange(this.value)">
       </div>
@@ -349,7 +350,7 @@
     <div class="points-split">
       <div style="background:white; border-radius:14px; padding:14px; box-shadow:0 2px 6px rgba(0,0,0,0.06); display:flex; flex-direction:column; overflow-y:auto;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <strong style="font-size:1.1rem; color:#1e293b;">📊 國語、數學、社會 獨立累計與即時加分表</strong>
+          <strong style="font-size:1.1rem; color:#1e293b;">📊 獨立科目累計與即時加分表</strong>
           <span style="font-size:0.85rem; color:var(--gray);">點擊「+1」或「-1」直接加/扣分並同步雲端</span>
         </div>
         <table class="subj-score-table">
@@ -383,13 +384,13 @@
   <section id="page-draw" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-        <span style="font-weight:900; font-size:1.2rem; color:#1e293b;">🎲 舉手互動抽籤</span>
+        <span style="font-weight:900; font-size:1.2rem; color:#1e293b;">🎲 舉手互動輪盤抽籤</span>
         <span style="color:var(--gray); font-size:0.9rem;">（請先點擊座位選取「有舉手的同學」，再按開始抽籤）</span>
       </div>
       <div style="display:flex; gap:8px;">
         <button class="btn btn-outline" onclick="selectAllForDraw()">👥 全班參與</button>
         <button class="btn btn-outline" onclick="clearDrawCandidates()">❌ 清空重選</button>
-        <button class="btn btn-primary" id="startDrawBtn" onclick="startDraw()" style="font-size:1.1rem; padding:8px 20px;">🎲 開始抽籤</button>
+        <button class="btn btn-primary" id="startDrawBtn" onclick="startDraw()" style="font-size:1.1rem; padding:8px 20px;">🎲 開始輪盤抽籤</button>
       </div>
     </div>
     
@@ -546,7 +547,8 @@
 </div>
 
 <script>
-const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxva7wkaSYsKKIae5729UvLhB2J5vy9fYCgR3m7g5MGX5mnYoVH-iJArgkqijRIB33L4Q/exec";
+// 您指定的最新 API 網址
+const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbyrJNUkJUJ-FxPmHiyC6zqOOZSVah0rpw4mmSL0Sb9Zwupw3SeFvVgpjOBCEJ-6r1IuDw/exec";
 const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
 
 const INITIAL_STUDENTS = [
@@ -648,7 +650,6 @@ function setCloudStatus(status) {
   else if (status === "error") badge.innerHTML = "❌ 同步異常";
 }
 
-// 📌 核心防護 1：自動背景抓取雲端，並比對時間戳章防覆蓋
 async function loadCloudDB(isBackground = false) {
   if (!CLOUD_API_URL) return;
   if (!isBackground) setCloudStatus("syncing");
@@ -658,14 +659,13 @@ async function loadCloudDB(isBackground = false) {
     const textData = await res.text();
     
     if (textData.includes("<html") || textData.includes("Sign in")) {
-      if (!isBackground) alert("🛑 雲端連線被 Google 阻擋！\n請回到 Apps Script 確認部署時【誰可以存取】是否有設定為【所有人(Anyone)】！");
+      if (!isBackground) alert("🛑 雲端連線被 Google 阻擋！\n請確認 Apps Script 部署時【誰可以存取】為【所有人(Anyone)】！");
       setCloudStatus("error");
       return;
     }
 
     const cloudData = JSON.parse(textData);
     if (cloudData && cloudData.students) {
-      
       let cloudTime = cloudData.lastUpdate || 0;
       let localTime = db.lastUpdate || 0;
       
@@ -679,23 +679,19 @@ async function loadCloudDB(isBackground = false) {
         if(!db.homeworks) db.homeworks = [];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
         renderAll();
-        if (isBackground) console.log("✅ 偵測到其他裝置有新動作，畫面已自動刷新！");
       }
       if (!isBackground) setCloudStatus("synced");
     }
   } catch (err) {
     if (!isBackground) setCloudStatus("error");
-    console.error("雲端讀取失敗:", err);
   }
 }
 
-// 📌 核心防護 2：視窗喚醒自動同步
 window.addEventListener('focus', () => { loadCloudDB(true); });
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') loadCloudDB(true);
 });
 
-// 📌 核心防護 3：每 10 秒靜默檢查
 setInterval(() => { loadCloudDB(true); }, 10000);
 
 async function manualSync() {
@@ -703,7 +699,6 @@ async function manualSync() {
   alert("✅ 已強制從雲端抓取全班最新資料！");
 }
 
-// 📌 核心修復：強制穿透連線
 async function saveDB() {
   db.lastUpdate = new Date().getTime(); 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
@@ -726,7 +721,6 @@ async function saveDB() {
     } catch (err) {
       setCloudStatus("error");
       console.error("寫入失敗:", err);
-      alert("⚠️ 雲端寫入失敗！請確認試算表權限是否已開啟「所有人」存取。");
     }
   }
 }
@@ -835,7 +829,7 @@ function addHomeworkColumn() {
   addLog("作業", `教師新增作業欄：【${subject}】${title}`);
   document.getElementById('quickHwTitle').value = "";
   document.getElementById('quickHwPages').value = "";
-  saveDB(); // 確保新增作業時立刻上傳
+  saveDB(); 
   renderHomeworkBoard();
 }
 
@@ -1224,7 +1218,7 @@ function askStudentConfirm(stu, actionTitle, callback) {
   document.getElementById('confirmModal').classList.add('active');
 }
 
-// ==================== 抽籤功能 ====================
+// ==================== 🎲 舉手輪盤抽籤功能 ====================
 let drawCandidates = new Set();
 let isDrawing = false;
 
@@ -1289,40 +1283,55 @@ function startDraw() {
   isDrawing = true;
   document.getElementById('startDrawBtn').disabled = true;
   
-  const candidates = Array.from(drawCandidates);
-  let cycles = 0;
-  const maxCycles = 30; 
-  let currentDelay = 40; 
+  const candidates = Array.from(drawCandidates).sort((a, b) => parseInt(a) - parseInt(b));
+  
+  const winnerIndex = Math.floor(Math.random() * candidates.length);
+  const minSpins = 4; // 至少繞全班 4 圈
+  const totalSteps = (minSpins * candidates.length) + winnerIndex;
+  
+  let currentStep = 0;
+  let currentDelay = 30; // 初始速度
 
   document.querySelectorAll('#drawSeatingGrid .seat-desk').forEach(el => {
     el.classList.remove('highlighting', 'winner-pulse');
   });
 
   const runAnimation = () => {
+    // 清除上一個高亮
     candidates.forEach(id => {
       const el = document.getElementById(`draw-seat-${id}`);
       if(el) el.classList.remove('highlighting');
     });
 
-    const randomIndex = Math.floor(Math.random() * candidates.length);
-    const randomId = candidates[randomIndex];
-    const activeEl = document.getElementById(`draw-seat-${randomId}`);
+    // 依序點亮下一個 (模擬輪盤旋轉)
+    const activeId = candidates[currentStep % candidates.length];
+    const activeEl = document.getElementById(`draw-seat-${activeId}`);
     if(activeEl) activeEl.classList.add('highlighting');
 
-    cycles++;
+    currentStep++;
     
-    if (cycles < maxCycles) {
-      currentDelay += 8; 
+    if (currentStep <= totalSteps) {
+      // 💡 物理減速特效：越接近目標越慢
+      const progress = currentStep / totalSteps;
+      if (progress > 0.8) {
+        currentDelay += 35; 
+      } else if (progress > 0.5) {
+        currentDelay += 10;
+      } else {
+        currentDelay += 2;
+      }
       setTimeout(runAnimation, currentDelay);
     } else {
       isDrawing = false;
       document.getElementById('startDrawBtn').disabled = false;
+      
       activeEl.classList.remove('highlighting');
       activeEl.classList.add('winner-pulse');
+      
       setTimeout(() => {
-        const winnerStu = db.students.find(s => s.id === randomId);
+        const winnerStu = db.students.find(s => s.id === activeId);
         showWinnerModal(winnerStu);
-      }, 600);
+      }, 800);
     }
   };
 
@@ -1369,9 +1378,13 @@ function setAttStage(stage) {
 window.onAttDeskClick = function(stuId) {
   const dateStr = currentAttDate;
   if (!db.attendance[dateStr]) db.attendance[dateStr] = {};
+  
+  if (!db.attendance[dateStr][stuId]) {
+    db.attendance[dateStr][stuId] = { status: 'uncheck', inTime: null, outTime: null };
+  }
+  
   const stu = db.students.find(s => s.id === stuId);
-
-  const isAlreadyChecked = currentAttStage === 'in' ? !!db.attendance[dateStr][stu.id].inTime : !!db.attendance[dateStr][stu.id].outTime;
+  const isAlreadyChecked = currentAttStage === 'in' ? !!db.attendance[dateStr][stuId].inTime : !!db.attendance[dateStr][stuId].outTime;
 
   if (!isAlreadyChecked) {
     askStudentConfirm(stu, currentAttStage === 'in' ? `[${dateStr}] 早自習入班打卡` : `[${dateStr}] 放學離校打卡`, () => {
@@ -1554,13 +1567,12 @@ function renderAll() {
   renderLogs();
 }
 
-// 啟動設定
 document.getElementById('hwDateInput').value = currentHwDate;
 document.getElementById('pointDateInput').value = currentPointDate;
 document.getElementById('seatingDateInput').value = currentPointDate;
 document.getElementById('attDate').value = currentAttDate;
 
-// 網頁開啟的瞬間強制讀取最新雲端資料（傳入 false 確保無視本地舊資料，強制覆蓋為最新）
+// 網頁開啟時強制讀取最新雲端資料
 loadCloudDB(false);
 </script>
 </body>
