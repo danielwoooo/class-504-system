@@ -194,15 +194,16 @@
   .seat-desk-name { font-size: 1.15rem; font-weight: 900; margin: 4px 0; color: #0f172a; }
   .seat-desk-pts { font-size: 0.85rem; font-weight: bold; color: var(--primary); }
 
-  /* 國數社專屬加分表 */
-  .subj-score-table { width: 100%; border-collapse: collapse; text-align: center; }
-  .subj-score-table th, .subj-score-table td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; }
-  .subj-score-table th { background: #f1f5f9; font-size: 1.05rem; font-weight: 900; position: sticky; top: 0; z-index: 10; }
-  .subj-tag-btn { padding: 4px 10px; font-size: 0.85rem; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
+  /* 積分表專用排版 (新增可橫向滾動) */
+  .subj-score-table-wrapper { overflow-x: auto; flex: 1; padding-bottom: 8px; }
+  .subj-score-table { width: 100%; border-collapse: collapse; text-align: center; min-width: 650px; }
+  .subj-score-table th, .subj-score-table td { padding: 9px 8px; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
+  .subj-score-table th { background: #f1f5f9; font-size: 1.02rem; font-weight: 900; position: sticky; top: 0; z-index: 10; }
+  .subj-tag-btn { padding: 2px 8px; font-size: 0.85rem; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
   .subj-tag-btn.minus { background: #f3f4f6; color: #4b5563; margin-left: 2px; }
 
-  .points-split { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; flex: 1; min-height: 0; }
-  .leaderboard-panel { background: white; border-radius: 14px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden; }
+  .points-split { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; flex: 1; min-height: 0; }
+  .leaderboard-panel { background: white; border-radius: 14px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden; min-width: 250px; }
   .rank-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 7px; margin-top: 10px; }
   .rank-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 10px; background: #f8fafc; border: 1px solid #e2e8f0; font-weight: bold; }
   .rank-item.top-1 { background: #fef9c3; border: 2px solid #eab308; }
@@ -242,7 +243,7 @@
   <div class="nav-tabs">
     <button class="tab-btn active" onclick="switchTab('homework', event)">📋 作業方格登記</button>
     <button class="tab-btn" onclick="switchTab('seating', event)">🪑 座位加分</button>
-    <button class="tab-btn" onclick="switchTab('points', event)">🏆 專科積分表</button>
+    <button class="tab-btn" onclick="switchTab('points', event)">🏆 全科與常規積分</button>
     <button class="tab-btn" onclick="switchTab('draw', event)">🎲 舉手抽籤</button>
     <button class="tab-btn" onclick="switchTab('attendance', event)">👋 座位入/出班</button>
     <button class="tab-btn teacher-only" onclick="switchTab('logs', event)">🛡️ 504紀錄備份</button>
@@ -337,7 +338,7 @@
   <section id="page-points" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-        <span style="font-weight:900; font-size:1.15rem;">🏆 專科與常規積分表</span>
+        <span style="font-weight:900; font-size:1.15rem;">🏆 全科與常規積分表</span>
         <label style="font-weight:bold; color:var(--gray);">上課日戳章：</label>
         <input type="date" id="pointDateInput" class="form-control" onchange="onCommonDateChange(this.value)">
       </div>
@@ -348,31 +349,35 @@
     </div>
 
     <div class="points-split">
-      <div style="background:white; border-radius:14px; padding:14px; box-shadow:0 2px 6px rgba(0,0,0,0.06); display:flex; flex-direction:column; overflow-y:auto;">
+      <div style="background:white; border-radius:14px; padding:14px; box-shadow:0 2px 6px rgba(0,0,0,0.06); display:flex; flex-direction:column; overflow:hidden;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
           <strong style="font-size:1.1rem; color:#1e293b;">📊 獨立科目累計與即時加分表</strong>
-          <span style="font-size:0.85rem; color:var(--gray);">點擊「+1」或「-1」直接加/扣分並同步雲端</span>
+          <span style="font-size:0.85rem; color:var(--gray);">（可左右滑動看隱藏科目）</span>
         </div>
-        <table class="subj-score-table">
-          <thead>
-            <tr>
-              <th style="width:70px;">座號</th>
-              <th style="width:110px;">姓名</th>
-              <th style="color:#b91c1c;">📕 國語 (今日 / 累計)</th>
-              <th style="color:#1d4ed8;">📘 數學 (今日 / 累計)</th>
-              <th style="color:#047857;">📗 社會 (今日 / 累計)</th>
-            </tr>
-          </thead>
-          <tbody id="subjScoreTableBody"></tbody>
-        </table>
+        <div class="subj-score-table-wrapper">
+          <table class="subj-score-table">
+            <thead>
+              <tr>
+                <th style="width:60px;">座號</th>
+                <th style="width:90px;">姓名</th>
+                <th style="color:#b91c1c;">📕 國語 (今/總)</th>
+                <th style="color:#1d4ed8;">📘 數學 (今/總)</th>
+                <th style="color:#047857;">📗 社會 (今/總)</th>
+                <th style="color:#d97706;">🎨 綜合 (今/總)</th>
+                <th style="color:#6d28d9;">🌟 常規 (今/總)</th>
+              </tr>
+            </thead>
+            <tbody id="subjScoreTableBody"></tbody>
+          </table>
+        </div>
       </div>
 
       <div class="leaderboard-panel">
         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #f1f5f9; padding-bottom:10px;">
           <h3 style="margin:0; font-size:1.25rem;">👑 504班 榮譽排行榜</h3>
           <div style="display:flex; gap:6px;">
-            <button class="btn btn-outline active" id="rankDailyBtn" onclick="setRankMode('daily')" style="padding:5px 10px; font-size:0.88rem;">🔥 當日積分榜</button>
-            <button class="btn btn-outline" id="rankTotalBtn" onclick="setRankMode('total')" style="padding:5px 10px; font-size:0.88rem;">💎 總積分榜</button>
+            <button class="btn btn-outline active" id="rankDailyBtn" onclick="setRankMode('daily')" style="padding:5px 10px; font-size:0.88rem;">🔥 當日積分</button>
+            <button class="btn btn-outline" id="rankTotalBtn" onclick="setRankMode('total')" style="padding:5px 10px; font-size:0.88rem;">💎 總積分</button>
           </div>
         </div>
         <div class="rank-list" id="leaderboardList"></div>
@@ -385,7 +390,7 @@
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
         <span style="font-weight:900; font-size:1.2rem; color:#1e293b;">🎲 舉手互動輪盤抽籤</span>
-        <span style="color:var(--gray); font-size:0.9rem;">（請先點擊座位選取「有舉手的同學」，再按開始抽籤）</span>
+        <span style="color:var(--gray); font-size:0.9rem;">（請先點選「有舉手」的課桌，再按開始抽籤）</span>
       </div>
       <div style="display:flex; gap:8px;">
         <button class="btn btn-outline" onclick="selectAllForDraw()">👥 全班參與</button>
@@ -547,8 +552,8 @@
 </div>
 
 <script>
-// 您指定的最新 API 網址
-const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbyrJNUkJUJ-FxPmHiyC6zqOOZSVah0rpw4mmSL0Sb9Zwupw3SeFvVgpjOBCEJ-6r1IuDw/exec";
+// 您指定的最新 API 網址 (第7版)
+const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxg9Ls8Ks0Vivyv_6n5HetqXGciWrvrH5UMLixQjQjqcYF2kYbd9ehDdx1LxFE55Lr6sw/exec";
 const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
 
 const INITIAL_STUDENTS = [
@@ -602,7 +607,7 @@ let db = existingCache ? JSON.parse(existingCache) : {
   pin: "0000",
   lastUpdate: 0,
   students: INITIAL_STUDENTS.map(s => ({ 
-    ...s, totalPoints: 0, dailyPoints: {}, subjectPoints: { "國語": 0, "數學": 0, "社會": 0 }, dailySubjectPoints: {}
+    ...s, totalPoints: 0, dailyPoints: {}, subjectPoints: { "國語": 0, "數學": 0, "社會": 0, "綜合": 0, "班級常規": 0 }, dailySubjectPoints: {}
   })),
   attendance: {}, homeworks: [],
   rewards: [
@@ -614,10 +619,15 @@ let db = existingCache ? JSON.parse(existingCache) : {
   logs: []
 };
 
-// 確保資料結構完整
+// 確保 5 科的資料結構完整，避免讀取舊版資料報錯
 db.students.forEach(s => {
   if (!s.dailyPoints) s.dailyPoints = {};
-  if (!s.subjectPoints) s.subjectPoints = { "國語": 0, "數學": 0, "社會": 0 };
+  if (!s.subjectPoints) s.subjectPoints = {};
+  if (s.subjectPoints["國語"] === undefined) s.subjectPoints["國語"] = 0;
+  if (s.subjectPoints["數學"] === undefined) s.subjectPoints["數學"] = 0;
+  if (s.subjectPoints["社會"] === undefined) s.subjectPoints["社會"] = 0;
+  if (s.subjectPoints["綜合"] === undefined) s.subjectPoints["綜合"] = 0;
+  if (s.subjectPoints["班級常規"] === undefined) s.subjectPoints["班級常規"] = 0;
   if (!s.dailySubjectPoints) s.dailySubjectPoints = {};
   delete s.row;
 });
@@ -673,7 +683,9 @@ async function loadCloudDB(isBackground = false) {
         db = cloudData;
         db.students.forEach(s => {
           if (!s.dailyPoints) s.dailyPoints = {};
-          if (!s.subjectPoints) s.subjectPoints = { "國語": 0, "數學": 0, "社會": 0 };
+          if (!s.subjectPoints) s.subjectPoints = { "國語": 0, "數學": 0, "社會": 0, "綜合": 0, "班級常規": 0 };
+          if (s.subjectPoints["綜合"] === undefined) s.subjectPoints["綜合"] = 0;
+          if (s.subjectPoints["班級常規"] === undefined) s.subjectPoints["班級常規"] = 0;
           if (!s.dailySubjectPoints) s.dailySubjectPoints = {};
         });
         if(!db.homeworks) db.homeworks = [];
@@ -965,9 +977,9 @@ function quickAddSubjectPoint(stuId, subj, delta) {
   if (!stu) return;
 
   if (!stu.dailyPoints) stu.dailyPoints = {};
-  if (!stu.subjectPoints) stu.subjectPoints = { "國語": 0, "數學": 0, "社會": 0 };
+  if (!stu.subjectPoints) stu.subjectPoints = { "國語": 0, "數學": 0, "社會": 0, "綜合": 0, "班級常規": 0 };
   if (!stu.dailySubjectPoints) stu.dailySubjectPoints = {};
-  if (!stu.dailySubjectPoints[currentPointDate]) stu.dailySubjectPoints[currentPointDate] = { "國語": 0, "數學": 0, "社會": 0 };
+  if (!stu.dailySubjectPoints[currentPointDate]) stu.dailySubjectPoints[currentPointDate] = { "國語": 0, "數學": 0, "社會": 0, "綜合": 0, "班級常規": 0 };
 
   stu.totalPoints += delta;
   stu.dailyPoints[currentPointDate] = (stu.dailyPoints[currentPointDate] || 0) + delta;
@@ -1021,34 +1033,52 @@ function renderPointsAndLeaderboard() {
     const chiDaily = getStudentDailySubjectPoints(stu, currentPointDate, "國語");
     const mathDaily = getStudentDailySubjectPoints(stu, currentPointDate, "數學");
     const socDaily = getStudentDailySubjectPoints(stu, currentPointDate, "社會");
+    const compDaily = getStudentDailySubjectPoints(stu, currentPointDate, "綜合");
+    const discDaily = getStudentDailySubjectPoints(stu, currentPointDate, "班級常規");
 
     const chiTotal = (stu.subjectPoints && stu.subjectPoints["國語"]) || 0;
     const mathTotal = (stu.subjectPoints && stu.subjectPoints["數學"]) || 0;
     const socTotal = (stu.subjectPoints && stu.subjectPoints["社會"]) || 0;
+    const compTotal = (stu.subjectPoints && stu.subjectPoints["綜合"]) || 0;
+    const discTotal = (stu.subjectPoints && stu.subjectPoints["班級常規"]) || 0;
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><span class="seat-num">${stu.id}</span></td>
       <td><b style="font-size:1.1rem;">${stu.name}</b></td>
       <td>
-        <span style="font-weight:bold; color:#b91c1c; font-size:1.05rem; display:inline-block; width:55px;">${chiDaily > 0 ? '+' + chiDaily : chiDaily} / <b>${chiTotal}</b></span>
+        <span style="font-weight:bold; color:#b91c1c; font-size:1.05rem; display:inline-block; width:45px;">${chiDaily > 0 ? '+' + chiDaily : chiDaily} / <b>${chiTotal}</b></span>
         ${isTeacherMode ? `
-          <button class="subj-tag-btn" style="background:#fee2e2; color:#b91c1c; margin-left:6px;" onclick="quickAddSubjectPoint('${stu.id}', '國語', 1)">+1</button>
+          <button class="subj-tag-btn" style="background:#fee2e2; color:#b91c1c;" onclick="quickAddSubjectPoint('${stu.id}', '國語', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '國語', -1)">-1</button>
         ` : ''}
       </td>
       <td>
-        <span style="font-weight:bold; color:#1d4ed8; font-size:1.05rem; display:inline-block; width:55px;">${mathDaily > 0 ? '+' + mathDaily : mathDaily} / <b>${mathTotal}</b></span>
+        <span style="font-weight:bold; color:#1d4ed8; font-size:1.05rem; display:inline-block; width:45px;">${mathDaily > 0 ? '+' + mathDaily : mathDaily} / <b>${mathTotal}</b></span>
         ${isTeacherMode ? `
-          <button class="subj-tag-btn" style="background:#dbeafe; color:#1d4ed8; margin-left:6px;" onclick="quickAddSubjectPoint('${stu.id}', '數學', 1)">+1</button>
+          <button class="subj-tag-btn" style="background:#dbeafe; color:#1d4ed8;" onclick="quickAddSubjectPoint('${stu.id}', '數學', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '數學', -1)">-1</button>
         ` : ''}
       </td>
       <td>
-        <span style="font-weight:bold; color:#047857; font-size:1.05rem; display:inline-block; width:55px;">${socDaily > 0 ? '+' + socDaily : socDaily} / <b>${socTotal}</b></span>
+        <span style="font-weight:bold; color:#047857; font-size:1.05rem; display:inline-block; width:45px;">${socDaily > 0 ? '+' + socDaily : socDaily} / <b>${socTotal}</b></span>
         ${isTeacherMode ? `
-          <button class="subj-tag-btn" style="background:#dcfce7; color:#047857; margin-left:6px;" onclick="quickAddSubjectPoint('${stu.id}', '社會', 1)">+1</button>
+          <button class="subj-tag-btn" style="background:#dcfce7; color:#047857;" onclick="quickAddSubjectPoint('${stu.id}', '社會', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '社會', -1)">-1</button>
+        ` : ''}
+      </td>
+      <td>
+        <span style="font-weight:bold; color:#d97706; font-size:1.05rem; display:inline-block; width:45px;">${compDaily > 0 ? '+' + compDaily : compDaily} / <b>${compTotal}</b></span>
+        ${isTeacherMode ? `
+          <button class="subj-tag-btn" style="background:#fef3c7; color:#d97706;" onclick="quickAddSubjectPoint('${stu.id}', '綜合', 1)">+1</button>
+          <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '綜合', -1)">-1</button>
+        ` : ''}
+      </td>
+      <td>
+        <span style="font-weight:bold; color:#6d28d9; font-size:1.05rem; display:inline-block; width:45px;">${discDaily > 0 ? '+' + discDaily : discDaily} / <b>${discTotal}</b></span>
+        ${isTeacherMode ? `
+          <button class="subj-tag-btn" style="background:#ede9fe; color:#6d28d9;" onclick="quickAddSubjectPoint('${stu.id}', '班級常規', 1)">+1</button>
+          <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '班級常規', -1)">-1</button>
         ` : ''}
       </td>
     `;
