@@ -385,13 +385,12 @@
     </div>
   </section>
 
-  <!-- 4. 🎲 舉手抽籤系統 (加入隨機性與速度) -->
+  <!-- 4. 🎲 舉手抽籤系統 -->
   <section id="page-draw" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
         <span style="font-weight:900; font-size:1.2rem; color:#1e293b;">🎲 互動輪盤抽籤</span>
         
-        <!-- 新增: 抽籤人數與速度控制 -->
         <div style="display:flex; align-items:center; gap:5px; background:#f1f5f9; padding:4px 10px; border-radius:8px;">
           <label style="font-weight:bold; font-size:0.95rem;">抽出:</label>
           <input type="number" id="drawCount" class="form-control" value="1" min="1" max="21" style="width:55px; padding:4px;">
@@ -404,7 +403,7 @@
             <option value="slow">🐢 慢</option>
           </select>
         </div>
-        <span style="color:var(--gray); font-size:0.85rem;">（💡 若不點選任何人，直接按開始將從「全班」隨機抽選！）</span>
+        <span style="color:var(--gray); font-size:0.85rem;">（💡 若保持清空不點選，直接抽將從「全班」隨機抽選！）</span>
       </div>
       
       <div style="display:flex; gap:8px;">
@@ -567,7 +566,7 @@
 </div>
 
 <script>
-const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbyZoG4qRyzok2_wWtFDmJy_fZBHml3c6sBU4y4eh-X3hvswt7rOiJGu-yBwau5oHuyn/exec";
+const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxg9Ls8Ks0Vivyv_6n5HetqXGciWrvrH5UMLixQjQjqcYF2kYbd9ehDdx1LxFE55Lr6sw/exec";
 const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
 
 const INITIAL_STUDENTS = [
@@ -633,7 +632,11 @@ let db = existingCache ? JSON.parse(existingCache) : {
   logs: []
 };
 
-// 確保結構完整
+// 自動將歷史日誌限制在 300 筆以內，避免資料過大
+if (db.logs && db.logs.length > 300) {
+  db.logs = db.logs.slice(0, 300);
+}
+
 db.students.forEach(s => {
   if (!s.dailyPoints) s.dailyPoints = {};
   if (!s.subjectPoints) s.subjectPoints = {};
@@ -753,7 +756,10 @@ async function saveDB() {
 
 function addLog(category, detail) {
   db.logs.unshift({ time: getFullTimestamp(), category, actor: isTeacherMode ? "👩‍🏫 教師模式" : "🧒 學生確認", detail });
-  if (db.logs.length > 3000) db.logs.pop();
+  // 自動將歷史日誌限制在 300 筆以內，避免資料過大
+  if (db.logs.length > 300) {
+    db.logs = db.logs.slice(0, 300);
+  }
   saveDB();
 }
 
@@ -1262,7 +1268,7 @@ function askStudentConfirm(stu, actionTitle, callback) {
   document.getElementById('confirmModal').classList.add('active');
 }
 
-// ==================== 🎲 進階版：多功能互動輪盤抽籤 ====================
+// ==================== 🎲 舉手輪盤抽籤功能 ====================
 let drawCandidates = new Set();
 let isDrawing = false;
 
@@ -1318,10 +1324,8 @@ function selectAllForDraw() {
 }
 
 function startDraw() {
-  // 取得使用者設定的抽取人數
   let count = parseInt(document.getElementById('drawCount').value, 10) || 1;
   
-  // 💡 如果完全沒有點選任何候選人，自動切換為「全班隨機抽」
   if (drawCandidates.size === 0) {
     selectAllForDraw();
   }
@@ -1336,14 +1340,10 @@ function startDraw() {
   document.getElementById('startDrawBtn').disabled = true;
   
   const candidates = Array.from(drawCandidates);
-  // 專門用於洗牌陣列的函數
   const shuffle = (arr) => arr.slice().sort(() => 0.5 - Math.random());
-  
-  // 決定最終中獎名單
   const winners = shuffle(candidates).slice(0, count);
   
   let cycles = 0;
-  // 取得速度設定
   const speed = document.getElementById('drawSpeed').value;
   let maxCycles = speed === 'fast' ? 15 : (speed === 'slow' ? 45 : 25); 
   let currentDelay = speed === 'fast' ? 20 : (speed === 'slow' ? 60 : 35);
@@ -1353,7 +1353,6 @@ function startDraw() {
   });
 
   const runAnimation = () => {
-    // 清除上一個影格的高亮
     candidates.forEach(id => {
       const el = document.getElementById(`draw-seat-${id}`);
       if(el) el.classList.remove('highlighting');
@@ -1362,14 +1361,12 @@ function startDraw() {
     cycles++;
     
     if (cycles <= maxCycles) {
-      // 在動畫過程中，隨機高亮對應人數的座位，創造出四處閃爍的輪盤感
       const flashIds = shuffle(candidates).slice(0, count);
       flashIds.forEach(id => {
         const el = document.getElementById(`draw-seat-${id}`);
         if (el) el.classList.add('highlighting');
       });
 
-      // 物理減速特效
       const progress = cycles / maxCycles;
       let increment = 2;
       if(speed === 'fast') {
@@ -1385,7 +1382,6 @@ function startDraw() {
       isDrawing = false;
       document.getElementById('startDrawBtn').disabled = false;
       
-      // 動畫結束，點亮真正的得獎者並加上綠色呼吸燈
       winners.forEach(id => {
         const activeEl = document.getElementById(`draw-seat-${id}`);
         if(activeEl) activeEl.classList.add('winner-pulse');
@@ -1400,21 +1396,15 @@ function startDraw() {
   runAnimation();
 }
 
-// 支援多人的中獎彈窗
 function showWinnerModal(winnerIds) {
-  // 將 ID 轉換為學生資料
   const winnerStus = winnerIds.map(id => db.students.find(s => s.id === id));
-  
-  // 組裝姓名列表 HTML
   const namesHtml = winnerStus.map(stu => `<div style="margin:5px 0;">${stu.id} ${stu.name}</div>`).join('');
   document.getElementById('drawWinnerNameDisplay').innerHTML = namesHtml;
   
   document.getElementById('drawWinnerAddPointBtn').onclick = () => {
     closeModal('drawWinnerModal');
-    // 自動切換到積分表分頁
     document.querySelectorAll('.tab-btn')[2].click(); 
     
-    // 如果只有一個人，開啟個人專屬視窗；如果多人，開啟群組加分視窗
     if (winnerIds.length === 1) {
       openStudentPointModal(winnerStus[0]); 
     } else {
@@ -1648,6 +1638,7 @@ document.getElementById('pointDateInput').value = currentPointDate;
 document.getElementById('seatingDateInput').value = currentPointDate;
 document.getElementById('attDate').value = currentAttDate;
 
+// 網頁開啟時強制讀取最新雲端資料
 loadCloudDB(false);
 </script>
 </body>
