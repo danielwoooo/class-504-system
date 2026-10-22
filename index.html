@@ -57,11 +57,15 @@
   .admin-controls { display: flex; align-items: center; gap: 8px; }
   .cloud-status {
     padding: 6px 12px; font-size: 0.88rem; font-weight: bold; border-radius: 8px;
-    display: inline-flex; align-items: center; gap: 5px; transition: 0.2s;
+    display: inline-flex; align-items: center; gap: 5px; transition: 0.2s; cursor: pointer;
   }
   .cloud-status.synced { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
   .cloud-status.syncing { background: #fef3c7; color: #b45309; border: 1.5px solid #fde047; }
-  .cloud-status.error { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; }
+  .cloud-status.error { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; animation: pulseError 1.5s infinite; }
+  @keyframes pulseError {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+  }
 
   .mode-btn {
     padding: 8px 14px; font-size: 0.95rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;
@@ -116,6 +120,7 @@
   .hw-item-header.chi-header { background: #991b1b; }
   .hw-item-header.math-header { background: #1e40af; }
   .hw-item-header.soc-header { background: #065f46; }
+  .hw-item-header.essay-header { background: #be185d; }
   .hw-item-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #cbd5e1; margin-bottom: 3px; }
   .hw-item-title { font-size: 1.15rem; font-weight: 900; color: #fff; }
   .hw-item-pages { font-size: 0.85rem; color: #fde047; font-weight: bold; margin-top: 2px; }
@@ -196,14 +201,14 @@
 
   /* 積分表專用排版 (橫向滾動) */
   .subj-score-table-wrapper { overflow-x: auto; flex: 1; padding-bottom: 8px; }
-  .subj-score-table { width: 100%; border-collapse: collapse; text-align: center; min-width: 650px; }
-  .subj-score-table th, .subj-score-table td { padding: 9px 8px; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
-  .subj-score-table th { background: #f1f5f9; font-size: 1.02rem; font-weight: 900; position: sticky; top: 0; z-index: 10; }
-  .subj-tag-btn { padding: 2px 8px; font-size: 0.85rem; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
+  .subj-score-table { width: 100%; border-collapse: collapse; text-align: center; min-width: 780px; }
+  .subj-score-table th, .subj-score-table td { padding: 9px 6px; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
+  .subj-score-table th { background: #f1f5f9; font-size: 0.98rem; font-weight: 900; position: sticky; top: 0; z-index: 10; }
+  .subj-tag-btn { padding: 2px 7px; font-size: 0.82rem; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
   .subj-tag-btn.minus { background: #f3f4f6; color: #4b5563; margin-left: 2px; }
 
-  .points-split { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; flex: 1; min-height: 0; }
-  .leaderboard-panel { background: white; border-radius: 14px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden; min-width: 250px; }
+  .points-split { display: grid; grid-template-columns: 2.1fr 1fr; gap: 14px; flex: 1; min-height: 0; }
+  .leaderboard-panel { background: white; border-radius: 14px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden; min-width: 240px; }
   .rank-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 7px; margin-top: 10px; }
   .rank-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 10px; background: #f8fafc; border: 1px solid #e2e8f0; font-weight: bold; }
   .rank-item.top-1 { background: #fef9c3; border: 2px solid #eab308; }
@@ -236,7 +241,7 @@
     <span class="class-badge">504班</span>
     <h1>班級經營互動系統</h1>
     <div class="clock-box">
-      <div id="updateToast">💾 雲端自動同步更新</div>
+      <div id="updateToast">💾 本機與雲端自動保護</div>
       <div class="clock" id="liveClock">00:00:00</div>
     </div>
   </div>
@@ -250,7 +255,7 @@
   </div>
   <div class="admin-controls">
     <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.85rem;" onclick="manualSync()">🔄 手動同步</button>
-    <span class="cloud-status synced" id="cloudStatusBadge">☁️ 雲端連線中</span>
+    <span class="cloud-status synced" id="cloudStatusBadge" onclick="onCloudBadgeClick()" title="點擊可立即重試上傳或檢查狀態">☁️ 雲端連線中</span>
     <button id="modeBtn" class="mode-btn mode-student" onclick="toggleTeacherMode()">
       🔒 學生互動模式
     </button>
@@ -279,10 +284,11 @@
           <option value="國語">國語</option>
           <option value="數學">數學</option>
           <option value="社會">社會</option>
+          <option value="作文">作文</option>
           <option value="考卷訂正">考卷訂正/簽名</option>
           <option value="綜合/其他">綜合/其他</option>
         </select>
-        <input type="text" id="quickHwTitle" class="form-control" placeholder="品項 (例如：國語習作、數學習作)" style="width:220px;">
+        <input type="text" id="quickHwTitle" class="form-control" placeholder="品項 (例如：國語習作、作文單)" style="width:220px;">
         <input type="text" id="quickHwPages" class="form-control" placeholder="範圍 (例如：P.24~26)" style="width:140px;">
         <button class="btn btn-primary" onclick="addHomeworkColumn()">➕ 登記至黑板</button>
       </div>
@@ -334,7 +340,7 @@
     </div>
   </section>
 
-  <!-- 3. 國/數/社 專科積分表與排行榜 -->
+  <!-- 3. 全科與常規積分表（新增：作文） -->
   <section id="page-points" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -351,18 +357,19 @@
     <div class="points-split">
       <div style="background:white; border-radius:14px; padding:14px; box-shadow:0 2px 6px rgba(0,0,0,0.06); display:flex; flex-direction:column; overflow:hidden;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <strong style="font-size:1.1rem; color:#1e293b;">📊 獨立科目累計與即時加分表</strong>
-          <span style="font-size:0.85rem; color:var(--gray);">（可左右滑動看隱藏科目）</span>
+          <strong style="font-size:1.1rem; color:#1e293b;">📊 獨立科目累計與即時加分表（含國/數/社/作文/綜合/常規）</strong>
+          <span style="font-size:0.85rem; color:var(--gray);">（可左右滑動表格）</span>
         </div>
         <div class="subj-score-table-wrapper">
           <table class="subj-score-table">
             <thead>
               <tr>
-                <th style="width:60px;">座號</th>
-                <th style="width:90px;">姓名</th>
+                <th style="width:55px;">座號</th>
+                <th style="width:85px;">姓名</th>
                 <th style="color:#b91c1c;">📕 國語 (今/總)</th>
                 <th style="color:#1d4ed8;">📘 數學 (今/總)</th>
                 <th style="color:#047857;">📗 社會 (今/總)</th>
+                <th style="color:#be185d;">✍️ 作文 (今/總)</th>
                 <th style="color:#d97706;">🎨 綜合 (今/總)</th>
                 <th style="color:#6d28d9;">🌟 常規 (今/總)</th>
               </tr>
@@ -446,14 +453,14 @@
   <section id="page-logs" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:12px; align-items:center;">
-        <h3 style="margin:0;">🛡️ 504班 時間戳章稽核紀錄</h3>
+        <h3 style="margin:0;">🛡️ 504班 時間戳章稽核紀錄（自動保留最新 150 筆）</h3>
         <select id="logFilter" class="form-control" onchange="renderLogs()">
           <option value="ALL">全部紀錄</option>
           <option value="作業">作業與補交</option>
           <option value="積分">課程加減分</option>
           <option value="兌換">獎勵兌換</option>
           <option value="出缺席">出缺席打卡</option>
-          <option value="系統">系統安全</option>
+          <option value="系統">系統與傳輸錯誤</option>
         </select>
       </div>
       <div style="display:flex; gap:8px;">
@@ -507,13 +514,14 @@
         <button class="btn btn-outline active" onclick="selectSubject(this, '國語')">國語</button>
         <button class="btn btn-outline" onclick="selectSubject(this, '數學')">數學</button>
         <button class="btn btn-outline" onclick="selectSubject(this, '社會')">社會</button>
+        <button class="btn btn-outline" onclick="selectSubject(this, '作文')">作文</button>
         <button class="btn btn-outline" onclick="selectSubject(this, '綜合')">綜合</button>
         <button class="btn btn-outline" onclick="selectSubject(this, '班級常規')">班級常規</button>
       </div>
     </div>
     <div style="margin-bottom:14px;">
       <label style="font-weight:bold; display:block; margin-bottom:6px;">加扣分事由備註（選填）：</label>
-      <input type="text" id="pointReason" class="form-control" style="width:100%;" placeholder="例如：主動發言、小組合作、作業優良">
+      <input type="text" id="pointReason" class="form-control" style="width:100%;" placeholder="例如：主動發言、佳作欣賞、小組合作">
     </div>
     <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-bottom:18px;">
       <button class="btn btn-success" style="justify-content:center; font-size:1.2rem; padding:12px;" onclick="applyPoints(1)">+1 分</button>
@@ -566,8 +574,12 @@
 </div>
 
 <script>
-const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxg9Ls8Ks0Vivyv_6n5HetqXGciWrvrH5UMLixQjQjqcYF2kYbd9ehDdx1LxFE55Lr6sw/exec";
+// 您指定的最新部署網址
+const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxUCjP2m_94ipEjDs8qna1pBkFS5NCjmPwS_K8L7agunisjpAVeb-bUWAbMoM0RsaayQg/exec";
 const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
+const UNSYNCED_FLAG_KEY = "CLASS_504_UNSYNCED_PROTECT";
+const ALL_SUBJECTS = ["國語", "數學", "社會", "作文", "綜合", "班級常規"];
+const MAX_LOGS_COUNT = 150;
 
 const INITIAL_STUDENTS = [
   { id: "01", name: "簡逸森" }, { id: "02", name: "吳承修" }, { id: "03", name: "呂鴻恩" },
@@ -595,6 +607,17 @@ let isBatchPointMode = false;
 let batchTargetIds = null;
 let rankMode = 'daily';
 
+// 狀態保護與防抖控制變數
+let hasUnsyncedChanges = localStorage.getItem(UNSYNCED_FLAG_KEY) === "true";
+let saveDebounceTimer = null;
+let isSavingToCloud = false;
+let lastSyncErrorMsg = "";
+
+function markUnsyncedState(state) {
+  hasUnsyncedChanges = state;
+  localStorage.setItem(UNSYNCED_FLAG_KEY, state ? "true" : "false");
+}
+
 function formatDateObj(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
@@ -620,9 +643,14 @@ let db = existingCache ? JSON.parse(existingCache) : {
   pin: "0000",
   lastUpdate: 0,
   students: INITIAL_STUDENTS.map(s => ({ 
-    ...s, totalPoints: 0, dailyPoints: {}, subjectPoints: { "國語": 0, "數學": 0, "社會": 0, "綜合": 0, "班級常規": 0 }, dailySubjectPoints: {}
+    ...s,
+    totalPoints: 0,
+    dailyPoints: {},
+    subjectPoints: { "國語": 0, "數學": 0, "社會": 0, "作文": 0, "綜合": 0, "班級常規": 0 },
+    dailySubjectPoints: {}
   })),
-  attendance: {}, homeworks: [],
+  attendance: {},
+  homeworks: [],
   rewards: [
     { id: "rw_1", name: "🎯 優先選位子特權一天", cost: 15 },
     { id: "rw_2", name: "✏️ 免寫圈詞乙次券", cost: 25 },
@@ -632,24 +660,32 @@ let db = existingCache ? JSON.parse(existingCache) : {
   logs: []
 };
 
-// 自動將歷史日誌限制在 300 筆以內，避免資料過大
-if (db.logs && db.logs.length > 300) {
-  db.logs = db.logs.slice(0, 300);
+// 強制清理與補齊 6 科結構（包含新增的「作文」與修剪日誌）
+function sanitizeAndTrimDB(targetDB) {
+  if (!targetDB) return;
+  if (!targetDB.logs) targetDB.logs = [];
+  if (targetDB.logs.length > MAX_LOGS_COUNT) {
+    targetDB.logs = targetDB.logs.slice(0, MAX_LOGS_COUNT);
+  }
+  if (!targetDB.homeworks) targetDB.homeworks = [];
+  if (!targetDB.attendance) targetDB.attendance = {};
+  if (!targetDB.lastUpdate) targetDB.lastUpdate = 0;
+
+  if (targetDB.students) {
+    targetDB.students.forEach(s => {
+      if (!s.dailyPoints) s.dailyPoints = {};
+      if (!s.subjectPoints) s.subjectPoints = {};
+      ALL_SUBJECTS.forEach(subj => {
+        if (s.subjectPoints[subj] === undefined) s.subjectPoints[subj] = 0;
+      });
+      if (!s.dailySubjectPoints) s.dailySubjectPoints = {};
+      delete s.row;
+    });
+  }
 }
 
-db.students.forEach(s => {
-  if (!s.dailyPoints) s.dailyPoints = {};
-  if (!s.subjectPoints) s.subjectPoints = {};
-  if (s.subjectPoints["國語"] === undefined) s.subjectPoints["國語"] = 0;
-  if (s.subjectPoints["數學"] === undefined) s.subjectPoints["數學"] = 0;
-  if (s.subjectPoints["社會"] === undefined) s.subjectPoints["社會"] = 0;
-  if (s.subjectPoints["綜合"] === undefined) s.subjectPoints["綜合"] = 0;
-  if (s.subjectPoints["班級常規"] === undefined) s.subjectPoints["班級常規"] = 0;
-  if (!s.dailySubjectPoints) s.dailySubjectPoints = {};
-  delete s.row;
-});
-if(!db.homeworks) db.homeworks = [];
-if(!db.lastUpdate) db.lastUpdate = 0;
+sanitizeAndTrimDB(db);
+localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
 
 function getStudentDailyPoints(stu, dateStr) {
   return (stu.dailyPoints && stu.dailyPoints[dateStr]) ? stu.dailyPoints[dateStr] : 0;
@@ -668,17 +704,52 @@ function showUpdateToast() {
   setTimeout(() => { toast.classList.remove('show'); }, 2200);
 }
 
-function setCloudStatus(status) {
+function setCloudStatus(status, customText) {
   const badge = document.getElementById('cloudStatusBadge');
   if (!badge) return;
   badge.className = "cloud-status " + status;
-  if (status === "syncing") badge.innerHTML = "⏳ 雲端同步中...";
-  else if (status === "synced") badge.innerHTML = "✅ 雲端已同步";
-  else if (status === "error") badge.innerHTML = "❌ 同步異常";
+  if (customText) {
+    badge.innerHTML = customText;
+  } else if (status === "syncing") {
+    badge.innerHTML = "⏳ 雲端同步中...";
+  } else if (status === "synced") {
+    badge.innerHTML = "✅ 雲端已同步";
+  } else if (status === "error") {
+    badge.innerHTML = "⚠️ 待同步(本機已保護，點此重試)";
+  }
 }
 
+function recordSystemErrorLog(msg) {
+  const errEntry = {
+    time: getFullTimestamp(),
+    category: "系統",
+    actor: "🛡️ 系統防護",
+    detail: `傳輸暫緩（本機紀錄已鎖定保護）：${msg}`
+  };
+  if (!db.logs.length || db.logs[0].detail !== errEntry.detail) {
+    db.logs.unshift(errEntry);
+    if (db.logs.length > MAX_LOGS_COUNT) db.logs = db.logs.slice(0, MAX_LOGS_COUNT);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+    renderLogs();
+  }
+}
+
+// 📌 核心保護：雲端讀取函式（若本機有未同步成功的紀錄，絕不覆蓋本機，改為自動重推！）
 async function loadCloudDB(isBackground = false) {
   if (!CLOUD_API_URL) return;
+
+  // 防護 1：若正在倒數等待合併上傳，或正在上傳中，禁止讀取雲端以免覆蓋
+  if (saveDebounceTimer || isSavingToCloud) {
+    return;
+  }
+
+  // 防護 2：若上次傳輸失敗（hasUnsyncedChanges 為 true），嚴禁下載舊資料覆蓋！改為優先重傳本機資料
+  if (hasUnsyncedChanges) {
+    console.log("🛡️ 偵測到本機有未同步成功的資料，已阻止雲端舊資料覆蓋，自動嘗試重新上傳本機資料...");
+    await pushDBToCloudNow();
+    return;
+  }
+
   if (!isBackground) setCloudStatus("syncing");
   try {
     const cacheBusterUrl = CLOUD_API_URL + "?action=load&t=" + new Date().getTime();
@@ -693,72 +764,124 @@ async function loadCloudDB(isBackground = false) {
 
     const cloudData = JSON.parse(textData);
     if (cloudData && cloudData.students) {
+      // 再次檢查：等待網路回應期間，使用者是否又點了加分？若是則放棄此次讀取
+      if (hasUnsyncedChanges || saveDebounceTimer || isSavingToCloud) return;
+
       let cloudTime = cloudData.lastUpdate || 0;
       let localTime = db.lastUpdate || 0;
       
       if (cloudTime > localTime || !isBackground) {
         db = cloudData;
-        db.students.forEach(s => {
-          if (!s.dailyPoints) s.dailyPoints = {};
-          if (!s.subjectPoints) s.subjectPoints = { "國語": 0, "數學": 0, "社會": 0, "綜合": 0, "班級常規": 0 };
-          if (s.subjectPoints["綜合"] === undefined) s.subjectPoints["綜合"] = 0;
-          if (s.subjectPoints["班級常規"] === undefined) s.subjectPoints["班級常規"] = 0;
-          if (!s.dailySubjectPoints) s.dailySubjectPoints = {};
-        });
-        if(!db.homeworks) db.homeworks = [];
+        sanitizeAndTrimDB(db); // 讀取後立刻瘦身並補齊作文科目
         localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
         renderAll();
       }
-      if (!isBackground) setCloudStatus("synced");
+      setCloudStatus("synced");
     }
   } catch (err) {
-    if (!isBackground) setCloudStatus("error");
+    if (!isBackground) setCloudStatus("error", "⚠️ 讀取失敗(本機保護中)");
   }
 }
 
+// 視窗喚醒與每 30 秒低頻率檢查（降低試算表同時呼叫次數）
 window.addEventListener('focus', () => { loadCloudDB(true); });
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') loadCloudDB(true);
 });
+setInterval(() => {
+  if (document.visibilityState === 'visible') loadCloudDB(true);
+}, 30000);
 
-setInterval(() => { loadCloudDB(true); }, 10000);
-
-async function manualSync() {
-  await loadCloudDB(false);
-  alert("✅ 已強制從雲端抓取全班最新資料！");
+async function onCloudBadgeClick() {
+  if (hasUnsyncedChanges) {
+    await pushDBToCloudNow();
+  } else {
+    await manualSync();
+  }
 }
 
-async function saveDB() {
-  db.lastUpdate = new Date().getTime(); 
+async function manualSync() {
+  if (hasUnsyncedChanges) {
+    const ok = await pushDBToCloudNow();
+    if (ok) {
+      alert("✅ 已將本機保護中的最新紀錄成功上傳至雲端！");
+    } else {
+      const forceLoad = confirm(`⚠️ 本機尚有未上傳成功的紀錄（原因：${lastSyncErrorMsg || '網路或試算表忙碌'}）。\n\n系統已鎖定保護本機紀錄不被蓋掉！\n• 按【確定】保留本機紀錄並稍後再試（推薦）\n• 按【取消】放棄本機未同步修改，強制載入雲端資料`);
+      if (!forceLoad) {
+        markUnsyncedState(false);
+        await loadCloudDB(false);
+      }
+    }
+    return;
+  }
+  await loadCloudDB(false);
+  alert("✅ 已從雲端同步最新資料！");
+}
+
+// 📌 核心寫入：1.5 秒防抖合併，避免連點觸發「同時呼叫服務的次數過多」
+function saveDB() {
+  sanitizeAndTrimDB(db);
+  db.lastUpdate = new Date().getTime();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+  markUnsyncedState(true); // 立即啟動本機未同步保護鎖
   showUpdateToast();
 
-  if (CLOUD_API_URL) {
-    setCloudStatus("syncing");
-    try {
-      const response = await fetch(CLOUD_API_URL + "?action=save", {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(db) 
-      });
-      const result = await response.json();
-      if (result && result.status === "success") {
+  setCloudStatus("syncing", "⏳ 準備合併上傳...");
+  if (saveDebounceTimer) clearTimeout(saveDebounceTimer);
+  saveDebounceTimer = setTimeout(() => {
+    saveDebounceTimer = null;
+    pushDBToCloudNow();
+  }, 1500);
+}
+
+// 實際執行雲端 POST 上傳
+async function pushDBToCloudNow() {
+  if (!CLOUD_API_URL) return false;
+  if (isSavingToCloud) return false;
+
+  isSavingToCloud = true;
+  setCloudStatus("syncing", "⏳ 雲端寫入中...");
+  const snapshotTime = db.lastUpdate;
+
+  try {
+    sanitizeAndTrimDB(db);
+    const response = await fetch(CLOUD_API_URL + "?action=save", {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(db)
+    });
+    const result = await response.json();
+    if (result && result.status === "success") {
+      // 若上傳期間老師沒有再按新的加分，解除保護鎖
+      if (db.lastUpdate === snapshotTime) {
+        markUnsyncedState(false);
         setCloudStatus("synced");
       } else {
-        throw new Error(result.message || "Unknown error");
+        // 上傳期間又有新操作，排程下一次上傳
+        isSavingToCloud = false;
+        saveDB();
+        return true;
       }
-    } catch (err) {
-      setCloudStatus("error");
-      console.error("寫入失敗:", err);
+      isSavingToCloud = false;
+      return true;
+    } else {
+      throw new Error(result.message || "試算表回應異常");
     }
+  } catch (err) {
+    isSavingToCloud = false;
+    lastSyncErrorMsg = err.message || String(err);
+    markUnsyncedState(true); // 保持保護鎖開啟，禁止雲端舊資料蓋掉本機
+    setCloudStatus("error");
+    recordSystemErrorLog(lastSyncErrorMsg);
+    console.error("寫入失敗，已啟動本機保護:", err);
+    return false;
   }
 }
 
 function addLog(category, detail) {
   db.logs.unshift({ time: getFullTimestamp(), category, actor: isTeacherMode ? "👩‍🏫 教師模式" : "🧒 學生確認", detail });
-  // 自動將歷史日誌限制在 300 筆以內，避免資料過大
-  if (db.logs.length > 300) {
-    db.logs = db.logs.slice(0, 300);
+  if (db.logs.length > MAX_LOGS_COUNT) {
+    db.logs = db.logs.slice(0, MAX_LOGS_COUNT);
   }
   saveDB();
 }
@@ -844,9 +967,10 @@ function addHomeworkColumn() {
   if (!title) { alert("請輸入作業品項名稱！"); return; }
 
   let hClass = "";
-  if(subject === "國語") hClass = "chi-header";
-  if(subject === "數學") hClass = "math-header";
-  if(subject === "社會") hClass = "soc-header";
+  if (subject === "國語") hClass = "chi-header";
+  if (subject === "數學") hClass = "math-header";
+  if (subject === "社會") hClass = "soc-header";
+  if (subject === "作文") hClass = "essay-header";
 
   db.homeworks.push({
     id: "hw_" + Date.now(),
@@ -861,7 +985,6 @@ function addHomeworkColumn() {
   addLog("作業", `教師新增作業欄：【${subject}】${title}`);
   document.getElementById('quickHwTitle').value = "";
   document.getElementById('quickHwPages').value = "";
-  saveDB(); 
   renderHomeworkBoard();
 }
 
@@ -997,9 +1120,9 @@ function quickAddSubjectPoint(stuId, subj, delta) {
   if (!stu) return;
 
   if (!stu.dailyPoints) stu.dailyPoints = {};
-  if (!stu.subjectPoints) stu.subjectPoints = { "國語": 0, "數學": 0, "社會": 0, "綜合": 0, "班級常規": 0 };
+  if (!stu.subjectPoints) stu.subjectPoints = {};
   if (!stu.dailySubjectPoints) stu.dailySubjectPoints = {};
-  if (!stu.dailySubjectPoints[currentPointDate]) stu.dailySubjectPoints[currentPointDate] = { "國語": 0, "數學": 0, "社會": 0, "綜合": 0, "班級常規": 0 };
+  if (!stu.dailySubjectPoints[currentPointDate]) stu.dailySubjectPoints[currentPointDate] = {};
 
   stu.totalPoints += delta;
   stu.dailyPoints[currentPointDate] = (stu.dailyPoints[currentPointDate] || 0) + delta;
@@ -1053,49 +1176,58 @@ function renderPointsAndLeaderboard() {
     const chiDaily = getStudentDailySubjectPoints(stu, currentPointDate, "國語");
     const mathDaily = getStudentDailySubjectPoints(stu, currentPointDate, "數學");
     const socDaily = getStudentDailySubjectPoints(stu, currentPointDate, "社會");
+    const essayDaily = getStudentDailySubjectPoints(stu, currentPointDate, "作文");
     const compDaily = getStudentDailySubjectPoints(stu, currentPointDate, "綜合");
     const discDaily = getStudentDailySubjectPoints(stu, currentPointDate, "班級常規");
 
     const chiTotal = (stu.subjectPoints && stu.subjectPoints["國語"]) || 0;
     const mathTotal = (stu.subjectPoints && stu.subjectPoints["數學"]) || 0;
     const socTotal = (stu.subjectPoints && stu.subjectPoints["社會"]) || 0;
+    const essayTotal = (stu.subjectPoints && stu.subjectPoints["作文"]) || 0;
     const compTotal = (stu.subjectPoints && stu.subjectPoints["綜合"]) || 0;
     const discTotal = (stu.subjectPoints && stu.subjectPoints["班級常規"]) || 0;
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><span class="seat-num">${stu.id}</span></td>
-      <td><b style="font-size:1.1rem;">${stu.name}</b></td>
+      <td><b style="font-size:1.05rem;">${stu.name}</b></td>
       <td>
-        <span style="font-weight:bold; color:#b91c1c; font-size:1.05rem; display:inline-block; width:45px;">${chiDaily > 0 ? '+' + chiDaily : chiDaily} / <b>${chiTotal}</b></span>
+        <span style="font-weight:bold; color:#b91c1c; font-size:1rem; display:inline-block; width:42px;">${chiDaily > 0 ? '+' + chiDaily : chiDaily} / <b>${chiTotal}</b></span>
         ${isTeacherMode ? `
           <button class="subj-tag-btn" style="background:#fee2e2; color:#b91c1c;" onclick="quickAddSubjectPoint('${stu.id}', '國語', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '國語', -1)">-1</button>
         ` : ''}
       </td>
       <td>
-        <span style="font-weight:bold; color:#1d4ed8; font-size:1.05rem; display:inline-block; width:45px;">${mathDaily > 0 ? '+' + mathDaily : mathDaily} / <b>${mathTotal}</b></span>
+        <span style="font-weight:bold; color:#1d4ed8; font-size:1rem; display:inline-block; width:42px;">${mathDaily > 0 ? '+' + mathDaily : mathDaily} / <b>${mathTotal}</b></span>
         ${isTeacherMode ? `
           <button class="subj-tag-btn" style="background:#dbeafe; color:#1d4ed8;" onclick="quickAddSubjectPoint('${stu.id}', '數學', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '數學', -1)">-1</button>
         ` : ''}
       </td>
       <td>
-        <span style="font-weight:bold; color:#047857; font-size:1.05rem; display:inline-block; width:45px;">${socDaily > 0 ? '+' + socDaily : socDaily} / <b>${socTotal}</b></span>
+        <span style="font-weight:bold; color:#047857; font-size:1rem; display:inline-block; width:42px;">${socDaily > 0 ? '+' + socDaily : socDaily} / <b>${socTotal}</b></span>
         ${isTeacherMode ? `
           <button class="subj-tag-btn" style="background:#dcfce7; color:#047857;" onclick="quickAddSubjectPoint('${stu.id}', '社會', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '社會', -1)">-1</button>
         ` : ''}
       </td>
       <td>
-        <span style="font-weight:bold; color:#d97706; font-size:1.05rem; display:inline-block; width:45px;">${compDaily > 0 ? '+' + compDaily : compDaily} / <b>${compTotal}</b></span>
+        <span style="font-weight:bold; color:#be185d; font-size:1rem; display:inline-block; width:42px;">${essayDaily > 0 ? '+' + essayDaily : essayDaily} / <b>${essayTotal}</b></span>
+        ${isTeacherMode ? `
+          <button class="subj-tag-btn" style="background:#fce7f3; color:#be185d;" onclick="quickAddSubjectPoint('${stu.id}', '作文', 1)">+1</button>
+          <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '作文', -1)">-1</button>
+        ` : ''}
+      </td>
+      <td>
+        <span style="font-weight:bold; color:#d97706; font-size:1rem; display:inline-block; width:42px;">${compDaily > 0 ? '+' + compDaily : compDaily} / <b>${compTotal}</b></span>
         ${isTeacherMode ? `
           <button class="subj-tag-btn" style="background:#fef3c7; color:#d97706;" onclick="quickAddSubjectPoint('${stu.id}', '綜合', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '綜合', -1)">-1</button>
         ` : ''}
       </td>
       <td>
-        <span style="font-weight:bold; color:#6d28d9; font-size:1.05rem; display:inline-block; width:45px;">${discDaily > 0 ? '+' + discDaily : discDaily} / <b>${discTotal}</b></span>
+        <span style="font-weight:bold; color:#6d28d9; font-size:1rem; display:inline-block; width:42px;">${discDaily > 0 ? '+' + discDaily : discDaily} / <b>${discTotal}</b></span>
         ${isTeacherMode ? `
           <button class="subj-tag-btn" style="background:#ede9fe; color:#6d28d9;" onclick="quickAddSubjectPoint('${stu.id}', '班級常規', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '班級常規', -1)">-1</button>
@@ -1611,6 +1743,7 @@ function importData(event) {
   reader.onload = e => {
     try {
       db = JSON.parse(e.target.result);
+      sanitizeAndTrimDB(db);
       saveDB();
       renderAll();
       alert("✅ 還原成功！");
@@ -1638,7 +1771,8 @@ document.getElementById('pointDateInput').value = currentPointDate;
 document.getElementById('seatingDateInput').value = currentPointDate;
 document.getElementById('attDate').value = currentAttDate;
 
-// 網頁開啟時強制讀取最新雲端資料
+renderAll();
+// 啟動時：若本機有上次未同步成功的資料，會優先保護並自動重推上雲端；若無則載入雲端最新資料
 loadCloudDB(false);
 </script>
 </body>
