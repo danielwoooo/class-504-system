@@ -38,10 +38,10 @@
   .class-badge { background: var(--primary); color: white; font-weight: 900; font-size: 1.25rem; padding: 3px 10px; border-radius: 8px; }
   .brand h1 { margin: 0; font-size: 1.15rem; }
   .clock-box { display: flex; align-items: center; gap: 8px; }
-  .clock { font-size: 0.92rem; background: rgba(255,255,255,0.12); padding: 4px 9px; border-radius: 6px; font-weight: bold; font-variant-numeric: tabular-nums; }
+  .clock { font-size: 0.95rem; background: rgba(255,255,255,0.12); padding: 4px 9px; border-radius: 6px; font-weight: bold; font-variant-numeric: tabular-nums; }
   
   #updateToast {
-    background: #16a34a; color: white; font-size: 0.8rem; font-weight: bold;
+    background: #16a34a; color: white; font-size: 0.82rem; font-weight: bold;
     padding: 3px 10px; border-radius: 20px; opacity: 0; transition: opacity 0.3s ease;
     display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px rgba(22,163,74,0.4);
   }
@@ -50,14 +50,14 @@
   .nav-tabs { display: flex; gap: 5px; flex-wrap: wrap; }
   .tab-btn {
     background: rgba(255,255,255,0.1); color: #cbd5e1; border: none;
-    padding: 7px 12px; font-size: 0.92rem; font-weight: bold; border-radius: 8px;
+    padding: 7px 12px; font-size: 0.95rem; font-weight: bold; border-radius: 8px;
     cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 5px;
   }
   .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 0 10px rgba(37,99,235,0.6); }
 
   .admin-controls { display: flex; align-items: center; gap: 6px; }
   .cloud-status {
-    padding: 5px 10px; font-size: 0.82rem; font-weight: bold; border-radius: 8px;
+    padding: 5px 10px; font-size: 0.84rem; font-weight: bold; border-radius: 8px;
     display: inline-flex; align-items: center; gap: 5px; transition: 0.2s; cursor: pointer;
   }
   .cloud-status.synced { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
@@ -69,7 +69,7 @@
   }
 
   .mode-btn {
-    padding: 6px 11px; font-size: 0.88rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;
+    padding: 6px 11px; font-size: 0.9rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;
   }
   .mode-student { background: var(--warning); color: white; }
   .mode-teacher { background: var(--danger); color: white; box-shadow: 0 0 12px rgba(220,38,38,0.7); }
@@ -93,13 +93,13 @@
   }
   .weekday-bar { display: flex; gap: 5px; align-items: center; }
   .day-pill {
-    padding: 5px 10px; border-radius: 8px; font-weight: 900; font-size: 0.88rem;
+    padding: 5px 10px; border-radius: 8px; font-weight: 900; font-size: 0.9rem;
     border: 2px solid #cbd5e1; background: #f8fafc; cursor: pointer; color: var(--dark);
   }
   .day-pill.active { background: var(--primary); color: white; border-color: var(--primary); }
 
   .btn {
-    padding: 6px 12px; border-radius: 8px; font-size: 0.9rem; font-weight: bold;
+    padding: 6px 12px; border-radius: 8px; font-size: 0.92rem; font-weight: bold;
     border: none; cursor: pointer; transition: 0.15s; display: inline-flex; align-items: center; gap: 5px;
   }
   .btn:active { transform: scale(0.96); }
@@ -109,16 +109,16 @@
   .btn-warning { background: var(--warning); color: white; }
   .btn-outline { background: white; border: 2px solid #cbd5e1; color: var(--dark); }
   .btn-outline.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
-  .form-control { padding: 5px 9px; font-size: 0.9rem; border: 2px solid #cbd5e1; border-radius: 8px; font-weight: bold; user-select: text; }
+  .form-control { padding: 5px 9px; font-size: 0.95rem; border: 2px solid #cbd5e1; border-radius: 8px; font-weight: bold; user-select: text; }
 
-  /* ==================== ☀️ 獨立滿版零捲軸：每日班務看板 ==================== */
+  /* ==================== ☀️ 獨立滿版零捲軸・大字體美化：每日班務看板 ==================== */
   .routine-jump-bar {
     display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
   }
   .jump-pill {
-    padding: 6px 13px; border-radius: 20px; font-weight: 900; font-size: 0.9rem;
+    padding: 6px 14px; border-radius: 20px; font-weight: 900; font-size: 0.98rem;
     border: 2px solid #cbd5e1; background: #f8fafc; cursor: pointer; transition: 0.15s;
-    display: inline-flex; align-items: center; gap: 4px; color: var(--dark);
+    display: inline-flex; align-items: center; gap: 5px; color: var(--dark);
   }
   .jump-pill:hover { border-color: var(--primary); background: var(--primary-light); }
   .jump-pill.active {
@@ -143,76 +143,70 @@
   .routine-stage-block.stage-morning { border-left-color: #f59e0b; background: linear-gradient(180deg, #fffbeb 0%, #ffffff 30%); }
   .routine-stage-block.stage-outdoor { border-left-color: #0d9488; background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 30%); }
   .routine-stage-block.stage-lunch { border-left-color: #dc2626; background: linear-gradient(180deg, #fff1f2 0%, #ffffff 30%); }
-  .routine-stage-block.stage-nap { border-left-color: #4f46e5; background: linear-gradient(180deg, #eef2ff 0%, #ffffff 35%); transition: background 0.3s, color 0.3s; }
-  .routine-stage-block.stage-nap.nap-dark-mode {
-    background: linear-gradient(180deg, #090d16 0%, #111827 100%);
-    color: #f8fafc; border-left-color: #818cf8;
-  }
+  .routine-stage-block.stage-nap { border-left-color: #6366f1; background: linear-gradient(180deg, #eef2ff 0%, #ffffff 30%); }
   .routine-stage-block.stage-indoor { border-left-color: #16a34a; background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 30%); }
 
   .stage-header {
     display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
-    padding-bottom: 8px; border-bottom: 2px solid rgba(0,0,0,0.08); flex-shrink: 0;
+    padding-bottom: 6px; border-bottom: 2px solid rgba(0,0,0,0.08); flex-shrink: 0;
   }
-  .stage-nap.nap-dark-mode .stage-header { border-bottom-color: rgba(255,255,255,0.12); }
   .stage-title {
-    font-size: 1.38rem; font-weight: 900; display: flex; align-items: center; gap: 10px;
+    font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; gap: 10px;
   }
   .stage-time-badge {
-    font-size: 0.9rem; font-weight: 900; padding: 4px 12px; border-radius: 20px;
+    font-size: 1rem; font-weight: 900; padding: 4px 14px; border-radius: 20px;
     background: var(--dark); color: #ffd166;
   }
 
-  /* 精簡版值日生頂部橫條列 */
+  /* 頂部值日生橫條列（大字體強化版） */
   .compact-duty-bar {
-    background: #fffdf5; border: 2px solid #fcd34d; border-radius: 10px;
-    padding: 6px 12px; display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 8px; flex-shrink: 0;
+    background: #fffdf5; border: 2.5px solid #fbbf24; border-radius: 12px;
+    padding: 7px 14px; display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 8px; flex-shrink: 0; box-shadow: 0 2px 5px rgba(245,158,11,0.1);
   }
   .compact-duty-pill {
-    background: white; border: 2px solid #cbd5e1; border-radius: 8px; padding: 3px 10px;
-    display: inline-flex; align-items: center; gap: 6px; cursor: pointer; transition: 0.15s;
+    background: white; border: 2.5px solid #cbd5e1; border-radius: 10px; padding: 4px 12px;
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.15s;
   }
   .compact-duty-pill.status-done { background: #dcfce7; border-color: #16a34a; }
   .compact-duty-pill.status-leave { background: #fee2e2; border-color: #ef4444; opacity: 0.85; }
 
-  /* 早自習與作業 50/50 滿版雙欄主體 */
+  /* 早自習與作業 50/50 滿版雙欄主體（大字體美化） */
   .morning-main-split {
-    display: grid; grid-template-columns: 1fr 1.1fr; gap: 14px; flex: 1; min-height: 0; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1.1fr; gap: 16px; flex: 1; min-height: 0; overflow: hidden;
   }
   .sub-panel {
-    background: rgba(255,255,255,0.95); border: 2px solid #e2e8f0; border-radius: 14px;
-    padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04); min-height: 0; overflow: hidden;
+    background: rgba(255,255,255,0.97); border: 2.5px solid #cbd5e1; border-radius: 16px;
+    padding: 14px 18px; display: flex; flex-direction: column; gap: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04); min-height: 0; overflow: hidden;
   }
   .sub-panel-title {
-    font-size: 1.2rem; font-weight: 900; display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 2px dashed #cbd5e1; padding-bottom: 6px; flex-shrink: 0;
+    font-size: 1.38rem; font-weight: 900; display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 2.5px dashed #cbd5e1; padding-bottom: 8px; flex-shrink: 0;
   }
 
   .routine-note-display {
-    font-size: 1.35rem; font-weight: 900; line-height: 1.65; white-space: pre-wrap; color: #1e293b;
-    padding: 4px; flex: 1; overflow-y: auto;
+    font-size: 1.68rem; font-weight: 900; line-height: 1.72; white-space: pre-wrap; color: #0f172a;
+    padding: 6px 4px; flex: 1; overflow-y: auto; letter-spacing: 0.5px;
   }
   /* 教師模式下：直接以編輯框原位取代顯示框，不擠壓版面高度 */
   body.is-teacher .swap-on-teacher .routine-note-display { display: none !important; }
   .routine-textarea {
-    width: 100%; flex: 1; min-height: 60px; border: 2px solid #94a3b8; border-radius: 10px; padding: 10px;
-    font-size: 1.2rem; font-weight: bold; line-height: 1.55; resize: none; user-select: text; background: #fffef7;
+    width: 100%; flex: 1; min-height: 60px; border: 2.5px solid #94a3b8; border-radius: 10px; padding: 12px;
+    font-size: 1.45rem; font-weight: 900; line-height: 1.6; resize: none; user-select: text; background: #fffef7;
   }
 
-  /* ==================== 🌳 外掃區 & 🏠 內掃區：100% 滿版不遮擋網格 ==================== */
-  /* 上午外掃：左右兩大群組並排（左：男廁與遊戲區6組，右：女廁6組），各採 2x3 滿版網格 */
+  /* ==================== 🌳 外掃區 & 🏠 內掃區：大字體美化＋100% 滿版不遮擋 ==================== */
   .outdoor-two-groups-split {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 14px; flex: 1; min-height: 0; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1; min-height: 0; overflow: hidden;
   }
   .clean-group-column {
     display: flex; flex-direction: column; gap: 6px; min-height: 0; overflow: hidden;
-    background: rgba(248,250,252,0.7); border: 2px solid #cbd5e1; border-radius: 12px; padding: 8px 10px;
+    background: #f8fafc; border: 2.5px solid #cbd5e1; border-radius: 14px; padding: 8px 10px;
   }
   .clean-group-title {
-    font-size: 1.05rem; font-weight: 900; color: #0f172a; background: #e2e8f0;
-    padding: 5px 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;
+    font-size: 1.25rem; font-weight: 900; color: #0f172a; background: #e2e8f0;
+    padding: 6px 14px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;
     flex-shrink: 0;
   }
   .outdoor-cards-grid {
@@ -225,19 +219,23 @@
     gap: 10px; flex: 1; min-height: 0;
   }
   .clean-zone-card {
-    background: #ffffff; border: 2.5px solid #cbd5e1; border-radius: 10px; padding: 8px 10px;
+    background: #ffffff; border: 2.5px solid #cbd5e1; border-radius: 12px; padding: 8px 12px;
     display: flex; flex-direction: column; justify-content: space-between; gap: 4px;
     cursor: pointer; transition: 0.15s; min-height: 0; overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
   }
-  .clean-zone-card:hover { border-color: var(--primary); }
+  .clean-zone-card:hover { border-color: var(--primary); transform: translateY(-1px); }
   .clean-zone-card.checked { background: #dcfce7; border-color: #16a34a; }
   .clean-zone-card.drag-over-zone {
     border: 3px dashed #f59e0b !important; background: #fffbeb !important; transform: scale(1.01);
   }
+  .clean-zone-header-title {
+    font-size: 1.22rem; font-weight: 900; color: #0f172a; line-height: 1.2;
+  }
   .clean-member-chip {
-    background: #eff6ff; border: 1.5px solid #3b82f6; color: #1e3a8a; border-radius: 6px;
-    padding: 2px 7px; font-size: 0.92rem; font-weight: 900; display: inline-flex; align-items: center; gap: 3px;
-    transition: 0.12s;
+    background: #dbeafe; border: 2px solid #2563eb; color: #1e3a8a; border-radius: 8px;
+    padding: 3px 9px; font-size: 1.18rem; font-weight: 900; display: inline-flex; align-items: center; gap: 4px;
+    transition: 0.12s; box-shadow: 0 1px 2px rgba(37,99,235,0.12);
   }
   body.is-teacher .clean-member-chip { cursor: grab; }
   body.is-teacher .clean-member-chip:active { cursor: grabbing; transform: scale(0.95); }
@@ -245,43 +243,74 @@
     background: #ffffff; border-color: #16a34a; color: #14532d;
   }
   .clean-desc-text {
-    font-size: 0.8rem; font-weight: bold; color: #475569; line-height: 1.25;
-    background: rgba(241,245,249,0.85); padding: 4px 6px; border-radius: 6px;
+    font-size: 1rem; font-weight: 900; color: #334155; line-height: 1.3;
+    background: #f1f5f9; padding: 5px 8px; border-radius: 8px;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0;
   }
+  .clean-zone-card.checked .clean-desc-text {
+    background: rgba(255,255,255,0.75); color: #14532d;
+  }
 
-  /* ==================== 🍱 午餐抬餐 8 人滿版網格 ==================== */
+  /* ==================== 🍱 午餐抬餐 8 人大字體滿版網格 ==================== */
   .lunch-grid {
     display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr);
     gap: 12px; flex: 1; min-height: 0;
   }
   .duty-person-card {
-    background: #f8fafc; border: 3px solid #cbd5e1; border-radius: 14px; padding: 12px 14px;
+    background: #f8fafc; border: 3px solid #cbd5e1; border-radius: 14px; padding: 14px 16px;
     display: flex; justify-content: space-between; align-items: center; gap: 8px;
-    cursor: pointer; transition: 0.15s; min-height: 0;
+    cursor: pointer; transition: 0.15s; min-height: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.04);
   }
   .duty-person-card:hover { border-color: var(--primary); }
   .duty-person-card.status-done { background: #dcfce7; border-color: #16a34a; }
   .duty-person-card.status-leave { background: #fee2e2; border-color: #ef4444; opacity: 0.85; }
-  .badge-makeup { background: #7c3aed; color: white; font-size: 0.76rem; padding: 2px 6px; border-radius: 6px; font-weight: 900; }
-  .badge-sub { background: #0284c7; color: white; font-size: 0.76rem; padding: 2px 6px; border-radius: 6px; font-weight: 900; }
+  .badge-makeup { background: #7c3aed; color: white; font-size: 0.92rem; padding: 3px 8px; border-radius: 6px; font-weight: 900; }
+  .badge-sub { background: #0284c7; color: white; font-size: 0.92rem; padding: 3px 8px; border-radius: 6px; font-weight: 900; }
 
-  /* ==================== 🕰️ 午休專屬：3D 分鐘翻頁電子時鐘 (Flip Clock) ==================== */
-  .nap-split-layout {
-    display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; flex: 1; min-height: 0; overflow: hidden;
+  /* ==================== 🕰️ 午休專屬：時鐘與常規提醒結合於「同一色塊」 ==================== */
+  .nap-unified-board {
+    flex: 1; min-height: 0; overflow: hidden;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 55%, #172554 100%);
+    color: #f8fafc; border-radius: 20px; padding: 24px 30px;
+    border: 4px solid #334155;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.55), 0 10px 25px rgba(15,23,42,0.25);
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; align-items: center;
+    transition: all 0.35s ease;
   }
-  .flip-clock-panel {
-    background: #0f172a; border-radius: 18px; padding: 20px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
-    box-shadow: inset 0 0 30px rgba(0,0,0,0.6), 0 8px 20px rgba(15,23,42,0.25);
-    border: 3px solid #334155; position: relative;
+  /* 淺色柔和模式（可自由切換，依然保持在同一色塊內） */
+  .nap-unified-board.light-theme {
+    background: linear-gradient(135deg, #1e293b 0%, #312e81 100%);
+    border-color: #6366f1;
   }
+  .nap-clock-zone {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+    padding-right: 24px; border-right: 2px dashed rgba(255,255,255,0.2); height: 100%;
+    cursor: pointer;
+  }
+  .nap-reminder-zone {
+    display: flex; flex-direction: column; justify-content: center; height: 100%; min-height: 0;
+    gap: 14px; padding-left: 6px; overflow: hidden;
+  }
+  .nap-reminder-header {
+    font-size: 1.65rem; font-weight: 900; color: #fde047;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 2px solid rgba(253, 224, 71, 0.35); padding-bottom: 10px; flex-shrink: 0;
+  }
+  .nap-unified-board .routine-note-display {
+    color: #f8fafc; font-size: 1.85rem; font-weight: 900; line-height: 1.85;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.45); letter-spacing: 1px;
+  }
+  .nap-unified-board .routine-textarea {
+    background: rgba(15, 23, 42, 0.75); color: #ffffff; border: 2px solid #818cf8;
+    font-size: 1.6rem; line-height: 1.7;
+  }
+
   .flip-clock-wrapper {
     display: flex; align-items: center; justify-content: center; gap: 14px;
   }
   .flip-colon {
-    font-size: 4.5rem; font-weight: 900; color: #94a3b8; line-height: 1;
-    animation: blinkColon 1s infinite; padding-bottom: 12px;
+    font-size: 4.8rem; font-weight: 900; color: #cbd5e1; line-height: 1;
+    animation: blinkColon 1s infinite; padding-bottom: 16px;
   }
   @keyframes blinkColon {
     0%, 100% { opacity: 1; }
@@ -291,40 +320,39 @@
     display: flex; flex-direction: column; align-items: center; gap: 8px;
   }
   .flip-unit-label {
-    font-size: 0.9rem; font-weight: 900; color: #94a3b8; letter-spacing: 3px;
+    font-size: 0.95rem; font-weight: 900; color: #cbd5e1; letter-spacing: 2px;
   }
   /* 3D 翻頁卡本體 */
   .flip-card {
-    position: relative; width: 155px; height: 185px; border-radius: 16px;
-    background: #1e293b; border: 3px solid #475569;
-    box-shadow: 0 12px 24px rgba(0,0,0,0.55);
+    position: relative; width: 160px; height: 192px; border-radius: 18px;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    border: 3px solid #64748b;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.65);
     display: flex; align-items: center; justify-content: center;
-    perspective: 600px; overflow: hidden; cursor: pointer;
+    perspective: 600px; overflow: hidden;
   }
   .flip-card.seconds-card {
-    width: 96px; height: 115px; border-radius: 12px; background: #172033;
+    width: 98px; height: 120px; border-radius: 14px;
   }
-  /* 中間機械翻頁軸線與缺口 */
   .flip-card::before {
     content: ""; position: absolute; top: 50%; left: 0; right: 0; height: 3px;
-    background: rgba(0,0,0,0.75); z-index: 10; transform: translateY(-50%);
-    box-shadow: 0 1px 2px rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.85); z-index: 10; transform: translateY(-50%);
+    box-shadow: 0 1px 2px rgba(255,255,255,0.12);
   }
   .flip-card::after {
-    content: ""; position: absolute; top: 50%; left: -6px; right: -6px; height: 12px;
+    content: ""; position: absolute; top: 50%; left: -6px; right: -6px; height: 14px;
     transform: translateY(-50%);
     border-left: 10px solid #0f172a; border-right: 10px solid #0f172a; z-index: 11; pointer-events: none;
   }
   .flip-card-num {
     font-family: "Arial Black", "Impact", "Segoe UI", sans-serif;
-    font-size: 6.8rem; font-weight: 900; color: #f8fafc; line-height: 1;
+    font-size: 7.2rem; font-weight: 900; color: #ffffff; line-height: 1;
     font-variant-numeric: tabular-nums; letter-spacing: -2px;
-    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    text-shadow: 0 4px 12px rgba(0,0,0,0.6);
   }
   .flip-card.seconds-card .flip-card-num {
-    font-size: 3.6rem; color: #38bdf8;
+    font-size: 3.8rem; color: #38bdf8;
   }
-  /* 觸發分鐘/小時翻頁時的 3D 機械翻轉動畫 */
   .flip-card.do-flip {
     animation: mechanicalFlip 0.65s cubic-bezier(0.35, 0.1, 0.25, 1);
   }
@@ -335,8 +363,8 @@
     100% { transform: rotateX(0deg); filter: brightness(1); }
   }
   .nap-status-banner {
-    background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15);
-    color: #fde047; padding: 8px 20px; border-radius: 30px; font-size: 1.15rem; font-weight: 900;
+    background: rgba(255,255,255,0.1); border: 2px solid rgba(253, 224, 71, 0.45);
+    color: #fde047; padding: 8px 22px; border-radius: 30px; font-size: 1.25rem; font-weight: 900;
     letter-spacing: 1px;
   }
 
@@ -355,18 +383,18 @@
   .hw-item-header.math-header { background: #1e40af; }
   .hw-item-header.soc-header { background: #065f46; }
   .hw-item-header.essay-header { background: #be185d; }
-  .hw-item-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #cbd5e1; margin-bottom: 3px; }
-  .hw-item-title { font-size: 1.15rem; font-weight: 900; color: #fff; }
-  .hw-item-pages { font-size: 0.85rem; color: #fde047; font-weight: bold; margin-top: 2px; }
+  .hw-item-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #cbd5e1; margin-bottom: 3px; }
+  .hw-item-title { font-size: 1.2rem; font-weight: 900; color: #fff; }
+  .hw-item-pages { font-size: 0.92rem; color: #fde047; font-weight: bold; margin-top: 2px; }
 
   .seat-boxes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 8px; overflow-y: auto; flex: 1; align-content: start; }
   .seat-box {
     border-radius: 8px; padding: 7px 4px; text-align: center; cursor: pointer; transition: 0.12s;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid #cbd5e1; background: white; min-height: 50px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid #cbd5e1; background: white; min-height: 52px;
   }
   .seat-box:active { transform: scale(0.93); }
-  .seat-box .s-num { font-size: 1.15rem; font-weight: 900; line-height: 1; }
-  .seat-box .s-name { font-size: 0.85rem; font-weight: bold; margin-top: 2px; }
+  .seat-box .s-num { font-size: 1.2rem; font-weight: 900; line-height: 1; }
+  .seat-box .s-name { font-size: 0.92rem; font-weight: bold; margin-top: 2px; }
   .seat-box.unsubmitted { background: #fff1f2; border-color: #fca5a5; color: #be123c; }
   .seat-box.submitted { background: var(--success-light); border-color: var(--success); color: var(--success); }
 
@@ -375,23 +403,23 @@
     box-shadow: inset 0 0 25px rgba(0,0,0,0.45), 0 4px 10px rgba(0,0,0,0.12); padding: 14px 16px;
     color: var(--chalk-white); display: flex; flex-direction: column; overflow-y: auto; gap: 12px;
   }
-  .chalk-header { font-size: 1.3rem; font-weight: 900; color: var(--chalk-yellow); border-bottom: 2px dashed rgba(255,255,255,0.3); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+  .chalk-header { font-size: 1.35rem; font-weight: 900; color: var(--chalk-yellow); border-bottom: 2px dashed rgba(255,255,255,0.3); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
   .chalk-row { background: rgba(0,0,0,0.22); border-left: 5px solid var(--chalk-yellow); border-radius: 8px; padding: 10px 12px; }
-  .chalk-row-title { font-size: 1.15rem; font-weight: 900; color: #fff; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+  .chalk-row-title { font-size: 1.2rem; font-weight: 900; color: #fff; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
   .chalk-numbers-wrap { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .chalk-num-chip {
-    background: rgba(255, 107, 107, 0.25); border: 2px solid var(--chalk-red); color: #fff; font-weight: 900; font-size: 1.05rem; padding: 3px 9px; border-radius: 6px; cursor: pointer; transition: 0.12s;
+    background: rgba(255, 107, 107, 0.25); border: 2px solid var(--chalk-red); color: #fff; font-weight: 900; font-size: 1.1rem; padding: 3px 10px; border-radius: 6px; cursor: pointer; transition: 0.12s;
   }
   .chalk-num-chip:hover { background: var(--chalk-red); }
 
-  /* 座位表視角共用排版 */
+  /* 座位表視角共用排版（大字體強化） */
   .seating-layout-card {
     background: white; border-radius: 14px; padding: 12px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06); flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden;
   }
   .podium-bar {
     background: #334155; color: #f8fafc; text-align: center; font-weight: 900;
-    padding: 6px; border-radius: 8px; margin-bottom: 10px; letter-spacing: 4px; font-size: 1.05rem;
+    padding: 6px; border-radius: 8px; margin-bottom: 10px; letter-spacing: 4px; font-size: 1.1rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex-shrink: 0;
   }
   .seating-grid {
@@ -407,13 +435,13 @@
     border: 2px dashed var(--primary); background: #eff6ff;
   }
   .column-header {
-    text-align: center; font-weight: 900; font-size: 0.98rem; color: #1e293b;
+    text-align: center; font-weight: 900; font-size: 1.08rem; color: #1e293b;
     padding-bottom: 6px; border-bottom: 2px solid #cbd5e1;
     display: flex; flex-direction: column; gap: 4px; align-items: center;
   }
   .seat-desk {
-    background: white; border: 2px solid #cbd5e1; border-radius: 10px;
-    padding: 7px 6px; text-align: center; cursor: pointer; transition: 0.15s;
+    background: white; border: 2.5px solid #cbd5e1; border-radius: 10px;
+    padding: 7px 8px; text-align: center; cursor: pointer; transition: 0.15s;
     display: flex; flex-direction: column; justify-content: space-between; flex: 1; min-height: 68px;
   }
   .seat-desk:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(37,99,235,0.15); }
@@ -461,26 +489,26 @@
   }
 
   .seat-desk-top { display: flex; justify-content: space-between; align-items: center; }
-  .seat-desk-num { background: var(--dark); color: white; font-weight: 900; font-size: 0.82rem; padding: 2px 6px; border-radius: 4px; }
-  .seat-desk-name { font-size: 1.08rem; font-weight: 900; margin: 2px 0; color: #0f172a; }
-  .seat-desk-pts { font-size: 0.82rem; font-weight: bold; color: var(--primary); }
+  .seat-desk-num { background: var(--dark); color: white; font-weight: 900; font-size: 0.92rem; padding: 2px 7px; border-radius: 5px; }
+  .seat-desk-name { font-size: 1.25rem; font-weight: 900; margin: 2px 0; color: #0f172a; }
+  .seat-desk-pts { font-size: 0.95rem; font-weight: 900; color: var(--primary); }
 
-  /* 積分表專用排版 */
+  /* 積分表專用排版（大字體美化） */
   .subj-score-table-wrapper { overflow: auto; flex: 1; padding-bottom: 8px; }
-  .subj-score-table { width: 100%; border-collapse: collapse; text-align: center; min-width: 780px; }
-  .subj-score-table th, .subj-score-table td { padding: 8px 6px; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
-  .subj-score-table th { background: #f1f5f9; font-size: 0.98rem; font-weight: 900; position: sticky; top: 0; z-index: 10; }
-  .subj-tag-btn { padding: 2px 7px; font-size: 0.82rem; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
+  .subj-score-table { width: 100%; border-collapse: collapse; text-align: center; min-width: 820px; }
+  .subj-score-table th, .subj-score-table td { padding: 10px 8px; border-bottom: 1px solid #e2e8f0; white-space: nowrap; font-size: 1.08rem; }
+  .subj-score-table th { background: #f1f5f9; font-size: 1.08rem; font-weight: 900; position: sticky; top: 0; z-index: 10; }
+  .subj-tag-btn { padding: 4px 9px; font-size: 0.92rem; font-weight: 900; border-radius: 6px; border: none; cursor: pointer; }
   .subj-tag-btn.minus { background: #f3f4f6; color: #4b5563; margin-left: 2px; }
 
   .points-split { display: grid; grid-template-columns: 2.1fr 1fr; gap: 14px; flex: 1; min-height: 0; }
   .leaderboard-panel { background: white; border-radius: 14px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden; min-width: 240px; }
   .rank-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 7px; margin-top: 10px; }
-  .rank-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 10px; background: #f8fafc; border: 1px solid #e2e8f0; font-weight: bold; }
+  .rank-item { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; border-radius: 10px; background: #f8fafc; border: 1px solid #e2e8f0; font-weight: 900; font-size: 1.08rem; }
   .rank-item.top-1 { background: #fef9c3; border: 2px solid #eab308; }
   .rank-item.top-2 { background: #f1f5f9; border: 2px solid #94a3b8; }
   .rank-item.top-3 { background: #ffedd5; border: 2px solid #f97316; }
-  .rank-medal { font-size: 1.25rem; width: 32px; text-align: center; font-weight: 900; }
+  .rank-medal { font-size: 1.3rem; width: 32px; text-align: center; font-weight: 900; }
 
   .log-table { width: 100%; border-collapse: collapse; background: white; }
   .log-table th, .log-table td { padding: 9px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
@@ -521,7 +549,7 @@
     <button class="tab-btn teacher-only" onclick="switchTab('logs', event)">🛡️ 504紀錄備份</button>
   </div>
   <div class="admin-controls">
-    <button class="btn btn-outline" style="padding: 5px 10px; font-size: 0.82rem;" onclick="manualSync()">🔄 雙向比對同步</button>
+    <button class="btn btn-outline" style="padding: 5px 10px; font-size: 0.84rem;" onclick="manualSync()">🔄 雙向比對同步</button>
     <span class="cloud-status synced" id="cloudStatusBadge" onclick="onCloudBadgeClick()" title="點擊可立即上傳並比對雲端狀態">☁️ 雲端連線中</span>
     <button id="modeBtn" class="mode-btn mode-student" onclick="toggleTeacherMode()">
       🔒 學生互動模式
@@ -530,7 +558,7 @@
 </header>
 
 <main>
-  <!-- ==================== 0. 獨立滿版零捲軸：☀️ 每日班務看板 ==================== -->
+  <!-- ==================== 0. 獨立滿版零捲軸・大字體美化：☀️ 每日班務看板 ==================== -->
   <section id="page-routine" class="page active">
     <div class="toolbar">
       <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
@@ -540,7 +568,7 @@
       </div>
       <!-- 獨立分頁切換按鈕：點擊直接切換單一完整時段區塊，無捲軸、不露下一個區塊 -->
       <div class="routine-jump-bar" id="routineStageTabs">
-        <span style="font-weight:900; font-size:0.88rem; color:var(--gray);">⚡ 時段區塊切換：</span>
+        <span style="font-weight:900; font-size:0.92rem; color:var(--gray);">⚡ 時段區塊切換：</span>
         <button class="jump-pill active" data-stage="stage-morning" onclick="switchRoutineStage('stage-morning')">1️⃣ 早自習・作業</button>
         <button class="jump-pill" data-stage="stage-outdoor" onclick="switchRoutineStage('stage-outdoor')">2️⃣ 上午外掃 (7:50)</button>
         <button class="jump-pill" data-stage="stage-lunch" onclick="switchRoutineStage('stage-lunch')">3️⃣ 午餐抬餐 (8人)</button>
@@ -552,7 +580,7 @@
     <!-- 單一完整區塊舞台（每次僅顯示一個區塊，100% 滿版無捲軸） -->
     <div class="routine-stage-viewport">
 
-      <!-- 區塊 1：🌅 早自習注意事項 ＆ 📚 今日作業（值日生為頂部精簡橫列） -->
+      <!-- 區塊 1：🌅 早自習注意事項 ＆ 📚 今日作業（大字體強化版） -->
       <div class="routine-stage-block stage-morning active-stage" id="stage-morning">
         <div class="stage-header">
           <div class="stage-title" style="color:#b45309;">
@@ -565,19 +593,19 @@
           </div>
         </div>
 
-        <!-- 🙋‍♂️ 頂部精簡橫列：今日值日生（2號2號輪值 ＋ 請假補當值） -->
+        <!-- 🙋‍♂️ 頂部橫列：今日值日生（2號2號輪值 ＋ 請假補當值，字體放大） -->
         <div class="compact-duty-bar">
-          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            <strong style="color:#92400e; font-size:0.98rem;">🙋‍♂️ 今日值日生(2人)：</strong>
-            <div id="dutyStudentGrid" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;"></div>
-            <span id="dutyPointerInfo" style="font-size:0.84rem; color:#b45309; font-weight:bold;"></span>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <strong style="color:#92400e; font-size:1.18rem;">🙋‍♂️ 今日值日生(2人)：</strong>
+            <div id="dutyStudentGrid" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;"></div>
+            <span id="dutyPointerInfo" style="font-size:0.98rem; color:#b45309; font-weight:900;"></span>
           </div>
           <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-            <div id="dutyMakeupQueueContainer" style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;"></div>
-            <button class="btn btn-success" style="padding:3px 8px; font-size:0.78rem;" onclick="confirmAllDutyStudents()">⚡ 2人完成</button>
-            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.78rem;" onclick="generateTodayDutyList(true)">🔄 重排</button>
-            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.78rem;" onclick="adjustDutyPointer()">⚙️ 起始號</button>
-            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.78rem;" onclick="manualAddDutyMakeup()">➕ 補當值</button>
+            <div id="dutyMakeupQueueContainer" style="display:flex; align-items:center; gap:5px; flex-wrap:wrap;"></div>
+            <button class="btn btn-success" style="padding:4px 10px; font-size:0.88rem;" onclick="confirmAllDutyStudents()">⚡ 2人完成</button>
+            <button class="btn btn-outline teacher-only" style="padding:4px 10px; font-size:0.88rem;" onclick="generateTodayDutyList(true)">🔄 重排</button>
+            <button class="btn btn-outline teacher-only" style="padding:4px 10px; font-size:0.88rem;" onclick="adjustDutyPointer()">⚙️ 起始號</button>
+            <button class="btn btn-outline teacher-only" style="padding:4px 10px; font-size:0.88rem;" onclick="manualAddDutyMakeup()">➕ 補當值</button>
           </div>
         </div>
 
@@ -586,34 +614,34 @@
           <!-- 左大欄：早自習注意事項 -->
           <div class="sub-panel swap-on-teacher">
             <div class="sub-panel-title" style="color:#b45309;">
-              <span>📢 早自習晨間任務與注意事項</span>
-              <span class="teacher-only" style="font-size:0.8rem; color:#d97706;">✏️ 直接打字即時自動存檔</span>
+              <span>📢 早自習晨間任務與常規提醒</span>
+              <span class="teacher-only" style="font-size:0.9rem; color:#d97706;">✏️ 直接打字即時自動存檔</span>
             </div>
             <div id="morningNotesDisplay" class="routine-note-display"></div>
             <textarea id="morningNotesInput" class="routine-textarea teacher-only-block" placeholder="輸入早自習注意事項（打字自動即時存檔）..." oninput="updateDailyRoutineNoteLive('morningNotes', this.value)"></textarea>
           </div>
 
           <!-- 右大欄：今日作業與聯絡簿事項 -->
-          <div class="sub-panel swap-on-teacher" style="border-color:#99f6e4; background:#f0fdfa;">
+          <div class="sub-panel swap-on-teacher" style="border-color:#5eead4; background:#f0fdfa;">
             <div class="sub-panel-title" style="color:#0f766e;">
               <span>📚 今日作業與聯絡簿事項</span>
-              <button class="btn btn-primary teacher-only" style="padding:4px 10px; font-size:0.84rem;" onclick="document.querySelectorAll('.tab-btn')[1].click()">➕ 新增/管理作業欄</button>
+              <button class="btn btn-primary teacher-only" style="padding:5px 12px; font-size:0.9rem;" onclick="document.querySelectorAll('.tab-btn')[1].click()">➕ 新增/管理作業欄</button>
             </div>
-            <div id="routineHwList" style="display:flex; flex-direction:column; gap:8px; font-size:1.3rem; font-weight:900; color:#0f172a; flex:1; overflow-y:auto;"></div>
-            <div style="border-top:2px dashed #5eead4; padding-top:8px; display:flex; flex-direction:column; min-height:110px; flex-shrink:0;">
-              <div style="font-size:0.98rem; color:#0f766e; font-weight:900; margin-bottom:4px;">📌 聯絡簿補充提醒事項：</div>
-              <div id="routineHwNotesDisplay" class="routine-note-display" style="font-size:1.25rem;"></div>
-              <textarea id="routineHwNotesInput" class="routine-textarea teacher-only-block" style="min-height:70px;" placeholder="輸入聯絡簿補充提醒（例：明穿班服、帶圓規）..." oninput="updateDailyRoutineNoteLive('hwNotes', this.value)"></textarea>
+            <div id="routineHwList" style="display:flex; flex-direction:column; gap:10px; font-size:1.58rem; font-weight:900; color:#0f172a; flex:1; overflow-y:auto;"></div>
+            <div style="border-top:2.5px dashed #5eead4; padding-top:8px; display:flex; flex-direction:column; min-height:125px; flex-shrink:0;">
+              <div style="font-size:1.15rem; color:#0f766e; font-weight:900; margin-bottom:4px;">📌 聯絡簿補充提醒事項：</div>
+              <div id="routineHwNotesDisplay" class="routine-note-display" style="font-size:1.55rem;"></div>
+              <textarea id="routineHwNotesInput" class="routine-textarea teacher-only-block" style="min-height:80px;" placeholder="輸入聯絡簿補充提醒（例：明穿班服、帶圓規）..." oninput="updateDailyRoutineNoteLive('hwNotes', this.value)"></textarea>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 區塊 2：🌳 上午外掃區（7:50 ~ 8:10，左右對開 12 組滿版無遮擋） -->
+      <!-- 區塊 2：🌳 上午外掃區（7:50 ~ 8:10，左右對開 12 組大字體滿版無遮擋） -->
       <div class="routine-stage-block stage-outdoor" id="stage-outdoor">
         <div class="stage-header">
           <div class="stage-title" style="color:#0f766e;">
-            <span>2️⃣ 🌳 上午外掃區人員分配與檢查（全12組滿版總覽）</span>
+            <span>2️⃣ 🌳 上午外掃區人員分配與檢查（全12組大字滿版）</span>
           </div>
           <div style="display:flex; gap:6px; align-items:center;">
             <span class="stage-time-badge">上午外掃 07:50 ~ 08:10</span>
@@ -623,11 +651,11 @@
             <button class="btn btn-primary" onclick="switchRoutineStage('stage-lunch')">下一時段：午餐抬餐 ▶</button>
           </div>
         </div>
-        <!-- 左右雙欄並排：左欄男廁與遊戲區6組(2x3)，右欄女廁6組(2x3)，完全不遮擋 -->
+        <!-- 左右雙欄並排：左欄男廁與遊戲區6組(2x3)，右欄女廁6組(2x3) -->
         <div class="outdoor-two-groups-split" id="outdoorCleaningContainer"></div>
       </div>
 
-      <!-- 區塊 3：🍱 午餐抬餐確認（8號8號輪值 ＋ 請假補抬機制） -->
+      <!-- 區塊 3：🍱 午餐抬餐確認（8號8號輪值 ＋ 請假補抬機制，大字體美化） -->
       <div class="routine-stage-block stage-lunch" id="stage-lunch">
         <div class="stage-header">
           <div class="stage-title" style="color:#dc2626;">
@@ -641,42 +669,43 @@
           </div>
         </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; background:#ffe4e6; padding:8px 14px; border-radius:10px; font-size:1.02rem; font-weight:900; color:#9f1239; flex-shrink:0;">
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#ffe4e6; padding:10px 16px; border-radius:12px; font-size:1.25rem; font-weight:900; color:#9f1239; flex-shrink:0;">
           <span id="lunchPointerInfo">目前輪值進度：計算中</span>
           <div style="display:flex; gap:8px; align-items:center;">
-            <span style="font-size:0.88rem; color:#be123c;">（點擊卡片切換「✅ 已完成」；點「😷 請假」自動列入補抬並遞補下一號）</span>
-            <button class="btn btn-outline teacher-only" style="padding:3px 9px; font-size:0.8rem;" onclick="adjustLunchPointer()">⚙️ 調整起始號</button>
+            <span style="font-size:1.02rem; color:#be123c;">（點擊卡片切換「✅ 已完成」；點「😷 請假」自動列入補抬並遞補下一號）</span>
+            <button class="btn btn-outline teacher-only" style="padding:4px 10px; font-size:0.9rem;" onclick="adjustLunchPointer()">⚙️ 調整起始號</button>
           </div>
         </div>
 
         <div class="lunch-grid" id="lunchDutyGrid"></div>
 
-        <div style="background:#faf5ff; border:2px dashed #c084fc; border-radius:12px; padding:10px 14px; flex-shrink:0;">
+        <div style="background:#faf5ff; border:2.5px dashed #c084fc; border-radius:12px; padding:12px 16px; flex-shrink:0;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-            <strong style="color:#6b21a8; font-size:1.02rem;">📌 午餐待補抬累計名單（下次排班優先排入，完成後自動消除）：</strong>
-            <button class="btn btn-outline teacher-only" style="padding:3px 9px; font-size:0.8rem;" onclick="manualAddMakeupStudent()">➕ 手動加入補抬</button>
+            <strong style="color:#6b21a8; font-size:1.2rem;">📌 午餐待補抬累計名單（下次排班優先排入，完成後自動消除）：</strong>
+            <button class="btn btn-outline teacher-only" style="padding:4px 10px; font-size:0.88rem;" onclick="manualAddMakeupStudent()">➕ 手動加入補抬</button>
           </div>
           <div id="makeupQueueContainer" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
         </div>
       </div>
 
-      <!-- 區塊 4：😴 午休常規（12:40 ~ 13:10）＋ 🕰️ 3D 分鐘翻頁電子時鐘 -->
+      <!-- 區塊 4：😴 午休時鐘與常規提醒（結合在同一色塊中！） -->
       <div class="routine-stage-block stage-nap" id="stage-nap">
         <div class="stage-header">
-          <div class="stage-title" style="color:#4f46e5;" id="napStageTitle">
+          <div class="stage-title" style="color:#4338ca;">
             <span>4️⃣ 😴 午休靜息翻頁時鐘 ＆ 秩序常規</span>
           </div>
           <div style="display:flex; gap:8px; align-items:center;">
             <span class="stage-time-badge">午休靜息 12:40 ~ 13:10</span>
-            <button class="btn btn-outline" onclick="toggleNapDarkMode()">🌙 切換熄燈護眼模式</button>
+            <button class="btn btn-outline" onclick="toggleNapBoardTheme()">🎨 切換色塊深淺主題</button>
             <button class="btn btn-outline teacher-only" onclick="saveDefaultNapNotes()">📌 設為預設午休提醒</button>
             <button class="btn btn-primary" onclick="switchRoutineStage('stage-indoor')">下一時段：下午內掃 ▶</button>
           </div>
         </div>
 
-        <div class="nap-split-layout">
+        <!-- 同一色塊容器：左半 3D 翻頁電子時鐘 ＋ 右半超大字午休常規提醒 -->
+        <div class="nap-unified-board" id="napUnifiedBoard">
           <!-- 左側：巨型 3D 分鐘翻頁電子時鐘 -->
-          <div class="flip-clock-panel" onclick="triggerManualFlipPreview()" title="點擊可預覽機械翻頁動畫">
+          <div class="nap-clock-zone" onclick="triggerManualFlipPreview()" title="點擊可預覽機械翻頁動畫">
             <div class="nap-status-banner" id="napTimeStatusBanner">😴 午休靜息時段：12:40 ~ 13:10</div>
             <div class="flip-clock-wrapper">
               <div class="flip-unit-box">
@@ -690,9 +719,9 @@
                 <div class="flip-card" id="flipCardMin">
                   <span class="flip-card-num" id="flipNumMin">40</span>
                 </div>
-                <span class="flip-unit-label">MINUTES 分 (整分自動翻頁)</span>
+                <span class="flip-unit-label">MINUTES 分 (整分翻頁)</span>
               </div>
-              <div class="flip-colon" style="font-size:2.8rem; padding-bottom:24px;">:</div>
+              <div class="flip-colon" style="font-size:3rem; padding-bottom:28px;">:</div>
               <div class="flip-unit-box">
                 <div class="flip-card seconds-card" id="flipCardSec">
                   <span class="flip-card-num" id="flipNumSec">00</span>
@@ -700,23 +729,24 @@
                 <span class="flip-unit-label">SEC 秒</span>
               </div>
             </div>
-            <div style="color:#94a3b8; font-size:0.9rem; font-weight:bold;">
-              💡 每當分鐘跳動時會自動觸發立體翻頁（點擊時鐘可立即測試翻頁動畫）
+            <div style="color:#cbd5e1; font-size:0.98rem; font-weight:bold;">
+              💡 每當分鐘跳動時自動立體翻頁（點擊時鐘可測試翻頁特效）
             </div>
           </div>
 
-          <!-- 右側：午休注意事項 -->
-          <div class="sub-panel swap-on-teacher" style="justify-content:center;">
-            <div class="sub-panel-title" style="color:#4338ca;">
+          <!-- 右側（同一色塊內）：超大字午休常規提醒 -->
+          <div class="nap-reminder-zone swap-on-teacher">
+            <div class="nap-reminder-header">
               <span>🤫 午休秩序與常規提醒（12:40 ~ 13:10）</span>
+              <span class="teacher-only" style="font-size:0.9rem; color:#fde047;">✏️ 直接打字即時存檔</span>
             </div>
-            <div id="napNotesDisplay" class="routine-note-display" style="font-size:1.5rem; line-height:1.85;"></div>
+            <div id="napNotesDisplay" class="routine-note-display"></div>
             <textarea id="napNotesInput" class="routine-textarea teacher-only-block" placeholder="輸入午休注意事項（打字自動即時存檔）..." oninput="updateDailyRoutineNoteLive('napNotes', this.value)"></textarea>
           </div>
         </div>
       </div>
 
-      <!-- 區塊 5：🏠 下午內掃區（3:35 ~ 3:50 桌面清空，椅子倒扣，4x2 滿版網格無遮擋） -->
+      <!-- 區塊 5：🏠 下午內掃區（3:35 ~ 3:50 桌面清空，椅子倒扣，4x2 大字體滿版無遮擋） -->
       <div class="routine-stage-block stage-indoor" id="stage-indoor">
         <div class="stage-header">
           <div class="stage-title" style="color:#15803d;">
@@ -799,7 +829,7 @@
         <span style="font-weight:900; font-size:1.15rem; color:#1e293b;">🪑 504班 教室座位加分與換位看板</span>
         <label style="font-weight:bold; color:var(--gray);">上課日戳章：</label>
         <input type="date" id="seatingDateInput" class="form-control" onchange="onCommonDateChange(this.value)">
-        <span class="teacher-only" style="color:#b45309; font-weight:900; font-size:0.86rem; background:#fffbeb; padding:3px 9px; border-radius:6px; border:1px solid #fcd34d;">
+        <span class="teacher-only" style="color:#b45309; font-weight:900; font-size:0.9rem; background:#fffbeb; padding:3px 9px; border-radius:6px; border:1px solid #fcd34d;">
           🖐️ 導師換位：直接「按住課桌拖拉」至另一張課桌即可交換位置（自動同步試算表《教室座位表》）
         </span>
       </div>
@@ -832,15 +862,15 @@
     <div class="points-split">
       <div style="background:white; border-radius:14px; padding:14px; box-shadow:0 2px 6px rgba(0,0,0,0.06); display:flex; flex-direction:column; overflow:hidden;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <strong style="font-size:1.1rem; color:#1e293b;">📊 獨立科目累計與即時加分表（國/數/社/作文/綜合/常規）</strong>
-          <span style="font-size:0.85rem; color:var(--gray);">（可左右滑動表格）</span>
+          <strong style="font-size:1.15rem; color:#1e293b;">📊 獨立科目累計與即時加分表（國/數/社/作文/綜合/常規）</strong>
+          <span style="font-size:0.9rem; color:var(--gray);">（可左右滑動表格）</span>
         </div>
         <div class="subj-score-table-wrapper">
           <table class="subj-score-table">
             <thead>
               <tr>
                 <th style="width:55px;">座號</th>
-                <th style="width:85px;">姓名</th>
+                <th style="width:90px;">姓名</th>
                 <th style="color:#b91c1c;">📕 國語 (今/總)</th>
                 <th style="color:#1d4ed8;">📘 數學 (今/總)</th>
                 <th style="color:#047857;">📗 社會 (今/總)</th>
@@ -1302,15 +1332,9 @@ function switchRoutineStage(stageId) {
   });
 }
 
-function toggleNapDarkMode() {
-  const napBlock = document.getElementById('stage-nap');
-  napBlock.classList.toggle('nap-dark-mode');
-  const titleEl = document.getElementById('napStageTitle');
-  if (napBlock.classList.contains('nap-dark-mode')) {
-    titleEl.style.color = '#a5b4fc';
-  } else {
-    titleEl.style.color = '#4f46e5';
-  }
+function toggleNapBoardTheme() {
+  const board = document.getElementById('napUnifiedBoard');
+  if (board) board.classList.toggle('light-theme');
 }
 
 // ==================== 🕰️ 3D 機械分鐘翻頁電子時鐘 (Flip Clock) ====================
@@ -1331,27 +1355,24 @@ function updateFlipClockDisplay(forceFlipAnimation = false) {
 
   if (!hourNum || !minNum || !secNum) return;
 
-  // 小時跳動時觸發翻頁
   if (hh !== lastFlipHour || forceFlipAnimation) {
     lastFlipHour = hh;
     hourCard.classList.remove('do-flip');
-    void hourCard.offsetWidth; // Reflow
+    void hourCard.offsetWidth;
     hourCard.classList.add('do-flip');
     setTimeout(() => { hourNum.textContent = hh; }, 260);
   }
 
-  // 分鐘跳動時觸發 3D 翻頁動畫
   if (mm !== lastFlipMin || forceFlipAnimation) {
     lastFlipMin = mm;
     minCard.classList.remove('do-flip');
-    void minCard.offsetWidth; // Reflow
+    void minCard.offsetWidth;
     minCard.classList.add('do-flip');
     setTimeout(() => { minNum.textContent = mm; }, 260);
   }
 
   secNum.textContent = ss;
 
-  // 判斷目前是否處於 12:40 ~ 13:10 午休時段
   const totalMins = now.getHours() * 60 + now.getMinutes();
   const banner = document.getElementById('napTimeStatusBanner');
   if (banner) {
@@ -2285,14 +2306,14 @@ function createCleanZoneCardElement(zone, dr) {
 
   card.innerHTML = `
     <div>
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-        <strong style="font-size:1.02rem; color:#0f172a;">${zone.title}</strong>
-        <span style="font-weight:900; font-size:0.84rem; color:${isChecked ? '#15803d' : '#64748b'};">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+        <span class="clean-zone-header-title">${zone.title}</span>
+        <span style="font-weight:900; font-size:0.95rem; color:${isChecked ? '#15803d' : '#64748b'};">
           ${isChecked ? '✅ 完成' : '⬜ 待檢'}
         </span>
       </div>
-      <div style="display:flex; flex-wrap:wrap; gap:5px;">
-        ${membersHtml || '<span style="color:var(--gray); font-size:0.82rem;">（可拖拉學生至此）</span>'}
+      <div style="display:flex; flex-wrap:wrap; gap:6px;">
+        ${membersHtml || '<span style="color:var(--gray); font-size:0.95rem;">（可拖拉學生至此）</span>'}
       </div>
     </div>
     ${zone.desc ? `<div class="clean-desc-text" title="${zone.desc}">📌 ${zone.desc}</div>` : ''}
@@ -2300,7 +2321,6 @@ function createCleanZoneCardElement(zone, dr) {
   return card;
 }
 
-// 渲染上午外掃區：左右雙欄對開（左：遊戲區與男廁 6組 2x3；右：女廁 6組 2x3），100% 滿版不遮擋
 function renderOutdoorCleaningSection(dr) {
   const container = document.getElementById('outdoorCleaningContainer');
   if (!container) return;
@@ -2323,7 +2343,7 @@ function renderOutdoorCleaningSection(dr) {
 
     const header = document.createElement('div');
     header.className = "clean-group-title";
-    header.innerHTML = `<span>${gName}</span> <span style="font-size:0.88rem; color:#0f766e;">完成 ${doneCnt} / ${gZones.length} 組</span>`;
+    header.innerHTML = `<span>${gName}</span> <span style="font-size:1rem; color:#0f766e;">完成 ${doneCnt} / ${gZones.length} 組</span>`;
     colWrap.appendChild(header);
 
     const grid = document.createElement('div');
@@ -2337,7 +2357,6 @@ function renderOutdoorCleaningSection(dr) {
   });
 }
 
-// 渲染下午內掃區：4x2 滿版網格（7個內掃組別 + 1張放學前總檢查卡）
 function renderIndoorCleaningSection(dr) {
   const container = document.getElementById('indoorCleaningContainer');
   if (!container) return;
@@ -2348,7 +2367,6 @@ function renderIndoorCleaningSection(dr) {
     container.appendChild(createCleanZoneCardElement(zone, dr));
   });
 
-  // 第 8 格：放學前座位與門窗總檢查卡
   const doneCnt = zones.filter(z => dr.cleaningChecks && dr.cleaningChecks[z.id]).length;
   const allDone = doneCnt === zones.length && zones.length > 0;
   const summaryCard = document.createElement('div');
@@ -2359,10 +2377,10 @@ function renderIndoorCleaningSection(dr) {
   summaryCard.innerHTML = `
     <div>
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-        <strong style="font-size:1.05rem; color:#b45309;">🪑 放學前總檢查</strong>
-        <span style="font-weight:900; font-size:0.88rem; color:#15803d;">${doneCnt}/${zones.length} 組完成</span>
+        <strong style="font-size:1.22rem; color:#b45309;">🪑 放學前總檢查</strong>
+        <span style="font-weight:900; font-size:1rem; color:#15803d;">${doneCnt}/${zones.length} 組完成</span>
       </div>
-      <div style="font-size:0.95rem; font-weight:900; color:#1e293b; line-height:1.45;">
+      <div style="font-size:1.12rem; font-weight:900; color:#1e293b; line-height:1.5;">
         1. 桌面清空、椅子倒扣<br>
         2. 抽屜無垃圾遺留<br>
         3. 門窗與電燈電扇關閉
@@ -2386,16 +2404,16 @@ function renderRoutinePage() {
   const nInput = document.getElementById('napNotesInput');
   if (document.activeElement !== nInput) nInput.value = dr.napNotes || "";
 
-  // 2. 今日作業與聯絡簿補充
+  // 2. 今日作業與聯絡簿補充（大字體強化）
   const hwListEl = document.getElementById('routineHwList');
   hwListEl.innerHTML = "";
   const dayHws = db.homeworks.filter(h => h.date === currentRoutineDate && !h.isContactBook);
   if (dayHws.length === 0) {
-    hwListEl.innerHTML = `<div style="color:var(--gray); font-size:1.1rem;">📌 今日尚無登記各科作業欄位（可點右上角「新增/管理作業欄」建立）</div>`;
+    hwListEl.innerHTML = `<div style="color:var(--gray); font-size:1.35rem;">📌 今日尚無登記各科作業欄位（可點右上角「新增/管理作業欄」建立）</div>`;
   } else {
     dayHws.forEach((hw, i) => {
       const div = document.createElement('div');
-      div.style.cssText = "background:#ffffff; padding:8px 12px; border-radius:10px; border-left:6px solid #0f766e; box-shadow:0 2px 4px rgba(0,0,0,0.04);";
+      div.style.cssText = "background:#ffffff; padding:10px 14px; border-radius:12px; border-left:7px solid #0f766e; box-shadow:0 2px 5px rgba(0,0,0,0.05);";
       div.innerHTML = `${i + 1}. 【${hw.subject}】${hw.title} — <span style="color:#b45309;">範圍：${hw.pages}</span>`;
       hwListEl.appendChild(div);
     });
@@ -2404,7 +2422,7 @@ function renderRoutinePage() {
   const hInput = document.getElementById('routineHwNotesInput');
   if (document.activeElement !== hInput) hInput.value = dr.hwNotes || "";
 
-  // 3. 🙋‍♂️ 頂部精簡橫列：今日值日生（2人輪值）
+  // 3. 🙋‍♂️ 頂部橫列：今日值日生（2人輪值，大字體美化）
   const nextDutyIdStr = String((db.routineConfig.dutyStudentConfig.nextPointer || 0) + 1).padStart(2, '0');
   const nextDutyStu = db.students.find(s => s.id === nextDutyIdStr);
   document.getElementById('dutyPointerInfo').textContent = `（下次輪值：${nextDutyIdStr}號 ${nextDutyStu ? nextDutyStu.name : ''}）`;
@@ -2414,18 +2432,18 @@ function renderRoutinePage() {
   (dr.dutyList || []).forEach((item, idx) => {
     const stu = db.students.find(s => s.id === item.id) || { id: item.id, name: "" };
     const statusClass = item.status === "done" ? "status-done" : (item.status === "leave" ? "status-leave" : "");
-    const statusIcon = item.status === "done" ? "✅" : (item.status === "leave" ? "😷請假" : "⏳");
+    const statusIcon = item.status === "done" ? "✅完成" : (item.status === "leave" ? "😷請假" : "⏳待檢");
 
     const pill = document.createElement('div');
     pill.className = `compact-duty-pill ${statusClass}`;
     pill.onclick = () => toggleDutyStudentDone(idx);
     pill.innerHTML = `
-      <span class="seat-desk-num">${stu.id}</span>
-      <strong style="font-size:1rem;">${stu.name}</strong>
+      <span class="seat-desk-num" style="font-size:1.05rem; padding:2px 8px;">${stu.id}</span>
+      <strong style="font-size:1.3rem;">${stu.name}</strong>
       ${item.isMakeup ? `<span class="badge-makeup">補</span>` : ''}
       ${item.isSub ? `<span class="badge-sub">遞補</span>` : ''}
-      <span style="font-size:0.82rem; font-weight:bold;">${statusIcon}</span>
-      ${item.status !== 'leave' ? `<button class="btn btn-outline" style="padding:1px 6px; font-size:0.74rem; border-color:#fca5a5; color:#dc2626;" onclick="markDutyStudentLeave(${idx}, event)">請假</button>` : ''}
+      <span style="font-size:0.98rem; font-weight:900;">${statusIcon}</span>
+      ${item.status !== 'leave' ? `<button class="btn btn-outline" style="padding:2px 8px; font-size:0.84rem; border-color:#fca5a5; color:#dc2626;" onclick="markDutyStudentLeave(${idx}, event)">請假</button>` : ''}
     `;
     dutyGrid.appendChild(pill);
   });
@@ -2435,13 +2453,13 @@ function renderRoutinePage() {
   const dutyQueue = db.routineConfig.dutyStudentConfig.makeupQueue || [];
   if (dutyQueue.length > 0) {
     const label = document.createElement('span');
-    label.style.cssText = "font-size:0.8rem; font-weight:900; color:#6b21a8;";
+    label.style.cssText = "font-size:0.95rem; font-weight:900; color:#6b21a8;";
     label.textContent = "📌待補:";
     dutyQContainer.appendChild(label);
     dutyQueue.forEach((m, idx) => {
       const stu = db.students.find(s => s.id === m.id) || { id: m.id, name: "" };
       const chip = document.createElement('span');
-      chip.style.cssText = "background:#f3e8ff; border:1px solid #9333ea; color:#581c87; padding:2px 6px; border-radius:6px; font-weight:900; font-size:0.78rem; display:inline-flex; align-items:center; gap:4px;";
+      chip.style.cssText = "background:#f3e8ff; border:1.5px solid #9333ea; color:#581c87; padding:3px 8px; border-radius:6px; font-weight:900; font-size:0.92rem; display:inline-flex; align-items:center; gap:4px;";
       chip.innerHTML = `${stu.id}${stu.name} ${isTeacherMode ? `<b style="cursor:pointer; color:#dc2626;" onclick="removeDutyMakeupItem(${idx})">×</b>` : ''}`;
       dutyQContainer.appendChild(chip);
     });
@@ -2451,7 +2469,7 @@ function renderRoutinePage() {
   renderOutdoorCleaningSection(dr);
   renderIndoorCleaningSection(dr);
 
-  // 5. 🍱 午餐抬餐 8 人輪值
+  // 5. 🍱 午餐抬餐 8 人輪值（大字體美化）
   const nextIdStr = String((db.routineConfig.lunchConfig.nextPointer || 0) + 1).padStart(2, '0');
   const nextStu = db.students.find(s => s.id === nextIdStr);
   document.getElementById('lunchPointerInfo').textContent = `🔄 下次輪值起始：${nextIdStr}號 ${nextStu ? nextStu.name : ''}`;
@@ -2468,16 +2486,16 @@ function renderRoutinePage() {
     card.onclick = () => toggleLunchPersonDone(idx);
     card.innerHTML = `
       <div>
-        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-          <span class="seat-desk-num" style="font-size:0.95rem; padding:3px 7px;">${stu.id}</span>
-          <strong style="font-size:1.25rem;">${stu.name}</strong>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span class="seat-desk-num" style="font-size:1.25rem; padding:4px 10px;">${stu.id}</span>
+          <strong style="font-size:1.75rem; color:#0f172a;">${stu.name}</strong>
           ${item.isMakeup ? `<span class="badge-makeup">🔄 補抬</span>` : ''}
           ${item.isSub ? `<span class="badge-sub">⚡ 遞補</span>` : ''}
         </div>
-        <div style="font-size:0.88rem; font-weight:bold; color:#475569; margin-top:4px;">${statusLabel}</div>
+        <div style="font-size:1.15rem; font-weight:900; color:#334155; margin-top:6px;">${statusLabel}</div>
       </div>
       <div>
-        ${item.status !== 'leave' ? `<button class="btn btn-outline" style="padding:4px 8px; font-size:0.8rem; border-color:#fca5a5; color:#dc2626;" onclick="markLunchPersonLeave(${idx}, event)">😷 請假</button>` : ''}
+        ${item.status !== 'leave' ? `<button class="btn btn-outline" style="padding:6px 12px; font-size:0.95rem; border-color:#fca5a5; color:#dc2626;" onclick="markLunchPersonLeave(${idx}, event)">😷 請假</button>` : ''}
       </div>
     `;
     lunchGrid.appendChild(card);
@@ -2487,12 +2505,12 @@ function renderRoutinePage() {
   qContainer.innerHTML = "";
   const queue = db.routineConfig.lunchConfig.makeupQueue || [];
   if (queue.length === 0) {
-    qContainer.innerHTML = `<span style="color:#16a34a; font-weight:bold; font-size:0.92rem;">🎉 目前無人欠抬餐！</span>`;
+    qContainer.innerHTML = `<span style="color:#16a34a; font-weight:900; font-size:1.15rem;">🎉 目前無人欠抬餐！</span>`;
   } else {
     queue.forEach((m, idx) => {
       const stu = db.students.find(s => s.id === m.id) || { id: m.id, name: "" };
       const chip = document.createElement('span');
-      chip.style.cssText = "background:#f3e8ff; border:1.5px solid #9333ea; color:#581c87; padding:3px 10px; border-radius:8px; font-weight:900; font-size:0.92rem; display:inline-flex; align-items:center; gap:6px;";
+      chip.style.cssText = "background:#f3e8ff; border:2px solid #9333ea; color:#581c87; padding:4px 12px; border-radius:8px; font-weight:900; font-size:1.15rem; display:inline-flex; align-items:center; gap:6px;";
       chip.innerHTML = `${stu.id} ${stu.name} <small>(${m.missedDate || '待補'})</small> ${isTeacherMode ? `<b style="cursor:pointer; color:#dc2626;" onclick="removeMakeupQueueItem(${idx})">×</b>` : ''}`;
       qContainer.appendChild(chip);
     });
@@ -2861,7 +2879,7 @@ function renderPointsAndLeaderboard() {
     let colHeaderHtml = `
       <div class="column-header">
         <span>${col.colName}</span>
-        ${isTeacherMode ? `<button class="btn btn-success" style="padding:3px 10px; font-size:0.8rem;" onclick="openRowBatchPointsModal('${col.colName}', ${JSON.stringify(col.ids)})">⚡整排+1</button>` : ''}
+        ${isTeacherMode ? `<button class="btn btn-success" style="padding:3px 10px; font-size:0.84rem;" onclick="openRowBatchPointsModal('${col.colName}', ${JSON.stringify(col.ids)})">⚡整排+1</button>` : ''}
       </div>
     `;
 
@@ -2883,7 +2901,7 @@ function renderPointsAndLeaderboard() {
             <span class="seat-desk-pts">⭐ ${stu.totalPoints}</span>
           </div>
           <div class="seat-desk-name">${stu.name}</div>
-          <div style="font-size:0.8rem; color:#c2410c; font-weight:bold;">今日: ${dailyPts > 0 ? '+' + dailyPts : dailyPts}</div>
+          <div style="font-size:0.9rem; color:#c2410c; font-weight:900;">今日: ${dailyPts > 0 ? '+' + dailyPts : dailyPts}</div>
         </div>
       `;
     });
@@ -2911,45 +2929,45 @@ function renderPointsAndLeaderboard() {
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td><span class="seat-num">${stu.id}</span></td>
-      <td><b style="font-size:1.05rem;">${stu.name}</b></td>
+      <td><span class="seat-desk-num">${stu.id}</span></td>
+      <td><b style="font-size:1.15rem;">${stu.name}</b></td>
       <td>
-        <span style="font-weight:bold; color:#b91c1c; font-size:1rem; display:inline-block; width:42px;">${chiDaily > 0 ? '+' + chiDaily : chiDaily} / <b>${chiTotal}</b></span>
+        <span style="font-weight:900; color:#b91c1c; font-size:1.1rem; display:inline-block; width:48px;">${chiDaily > 0 ? '+' + chiDaily : chiDaily} / <b>${chiTotal}</b></span>
         ${isTeacherMode ? `
           <button class="subj-tag-btn" style="background:#fee2e2; color:#b91c1c;" onclick="quickAddSubjectPoint('${stu.id}', '國語', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '國語', -1)">-1</button>
         ` : ''}
       </td>
       <td>
-        <span style="font-weight:bold; color:#1d4ed8; font-size:1rem; display:inline-block; width:42px;">${mathDaily > 0 ? '+' + mathDaily : mathDaily} / <b>${mathTotal}</b></span>
+        <span style="font-weight:900; color:#1d4ed8; font-size:1.1rem; display:inline-block; width:48px;">${mathDaily > 0 ? '+' + mathDaily : mathDaily} / <b>${mathTotal}</b></span>
         ${isTeacherMode ? `
           <button class="subj-tag-btn" style="background:#dbeafe; color:#1d4ed8;" onclick="quickAddSubjectPoint('${stu.id}', '數學', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '數學', -1)">-1</button>
         ` : ''}
       </td>
       <td>
-        <span style="font-weight:bold; color:#047857; font-size:1rem; display:inline-block; width:42px;">${socDaily > 0 ? '+' + socDaily : socDaily} / <b>${socTotal}</b></span>
+        <span style="font-weight:900; color:#047857; font-size:1.1rem; display:inline-block; width:48px;">${socDaily > 0 ? '+' + socDaily : socDaily} / <b>${socTotal}</b></span>
         ${isTeacherMode ? `
           <button class="subj-tag-btn" style="background:#dcfce7; color:#047857;" onclick="quickAddSubjectPoint('${stu.id}', '社會', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '社會', -1)">-1</button>
         ` : ''}
       </td>
       <td>
-        <span style="font-weight:bold; color:#be185d; font-size:1rem; display:inline-block; width:42px;">${essayDaily > 0 ? '+' + essayDaily : essayDaily} / <b>${essayTotal}</b></span>
+        <span style="font-weight:900; color:#be185d; font-size:1.1rem; display:inline-block; width:48px;">${essayDaily > 0 ? '+' + essayDaily : essayDaily} / <b>${essayTotal}</b></span>
         ${isTeacherMode ? `
           <button class="subj-tag-btn" style="background:#fce7f3; color:#be185d;" onclick="quickAddSubjectPoint('${stu.id}', '作文', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '作文', -1)">-1</button>
         ` : ''}
       </td>
       <td>
-        <span style="font-weight:bold; color:#d97706; font-size:1rem; display:inline-block; width:42px;">${compDaily > 0 ? '+' + compDaily : compDaily} / <b>${compTotal}</b></span>
+        <span style="font-weight:900; color:#d97706; font-size:1.1rem; display:inline-block; width:48px;">${compDaily > 0 ? '+' + compDaily : compDaily} / <b>${compTotal}</b></span>
         ${isTeacherMode ? `
           <button class="subj-tag-btn" style="background:#fef3c7; color:#d97706;" onclick="quickAddSubjectPoint('${stu.id}', '綜合', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '綜合', -1)">-1</button>
         ` : ''}
       </td>
       <td>
-        <span style="font-weight:bold; color:#6d28d9; font-size:1rem; display:inline-block; width:42px;">${discDaily > 0 ? '+' + discDaily : discDaily} / <b>${discTotal}</b></span>
+        <span style="font-weight:900; color:#6d28d9; font-size:1.1rem; display:inline-block; width:48px;">${discDaily > 0 ? '+' + discDaily : discDaily} / <b>${discTotal}</b></span>
         ${isTeacherMode ? `
           <button class="subj-tag-btn" style="background:#ede9fe; color:#6d28d9;" onclick="quickAddSubjectPoint('${stu.id}', '班級常規', 1)">+1</button>
           <button class="subj-tag-btn minus" onclick="quickAddSubjectPoint('${stu.id}', '班級常規', -1)">-1</button>
@@ -2975,7 +2993,7 @@ function renderPointsAndLeaderboard() {
     const item = document.createElement('div');
     item.className = `rank-item ${rankClass}`;
     item.innerHTML = `
-      <div style="display:flex; align-items:center; gap:10px;"><span class="rank-medal">${medal}</span><span class="seat-num">${stu.id}</span><span>${stu.name}</span></div>
+      <div style="display:flex; align-items:center; gap:10px;"><span class="rank-medal">${medal}</span><span class="seat-desk-num">${stu.id}</span><span>${stu.name}</span></div>
       <span style="font-weight:900; color:${rankMode === 'daily' ? '#c2410c' : 'var(--primary)'};">${rankMode === 'daily' && score > 0 ? '+' + score : score} 分</span>
     `;
     rankContainer.appendChild(item);
@@ -3189,11 +3207,11 @@ function renderDrawSeating() {
         <div class="seat-desk ${isCandidate ? 'candidate' : ''}" id="draw-seat-${stu.id}" onclick="toggleDrawCandidate('${stu.id}')">
           <div class="seat-desk-top">
             <span class="seat-desk-num">${stu.id}</span>
-            <span style="font-size:0.75rem; font-weight:bold; color:${drawnCnt > 0 ? '#dc2626' : '#16a34a'};">
+            <span style="font-size:0.82rem; font-weight:900; color:${drawnCnt > 0 ? '#dc2626' : '#16a34a'};">
               ${drawnCnt > 0 ? `今日抽${drawnCnt}次(權重${weight}%)` : '100%'}
             </span>
           </div>
-          <div class="seat-desk-name" style="margin-top:4px; font-size:1.08rem;">${stu.name}</div>
+          <div class="seat-desk-name" style="margin-top:4px;">${stu.name}</div>
         </div>
       `;
     });
@@ -3251,7 +3269,7 @@ function drawRouletteWheel(rotationDeg = 0, winnerIds = []) {
     ctx.rotate(startAngle + sliceAngle / 2);
     ctx.textAlign = "right";
     ctx.fillStyle = "#ffffff";
-    ctx.font = list.length > 14 ? "bold 13px 'Microsoft JhengHei'" : "bold 16px 'Microsoft JhengHei'";
+    ctx.font = list.length > 14 ? "bold 14px 'Microsoft JhengHei'" : "bold 17px 'Microsoft JhengHei'";
     const labelText = `${stu.id} ${stu.name}${drawnCnt > 0 ? '(降)' : ''}`;
     ctx.fillText(labelText, radius - 14, 5);
     ctx.restore();
@@ -3542,10 +3560,10 @@ function renderAttendance() {
         <div class="seat-desk ${cardClass}" onclick="onAttDeskClick('${stu.id}')">
           <div class="seat-desk-top">
             <span class="seat-desk-num">${stu.id}</span>
-            <span style="font-size:0.8rem; font-weight:bold; color:var(--gray);">${statusBadge}</span>
+            <span style="font-size:0.9rem; font-weight:900; color:var(--gray);">${statusBadge}</span>
           </div>
           <div class="seat-desk-name" style="margin: 4px 0;">${stu.name}</div>
-          <div style="font-size:0.85rem; font-weight:bold; color:#475569;">
+          <div style="font-size:0.95rem; font-weight:900; color:#475569;">
             ${timeText}
           </div>
         </div>
