@@ -78,7 +78,12 @@
   body.is-teacher .teacher-only-flex { display: flex !important; }
   body.is-teacher .teacher-only-block { display: block !important; }
 
-  main { flex: 1; overflow-y: auto; padding: 10px 16px; display: flex; flex-direction: column; }
+  main {
+    flex: 1; overflow-y: auto; padding: 10px 16px; display: flex; flex-direction: column;
+    scrollbar-width: none; -ms-overflow-style: none;
+  }
+  main::-webkit-scrollbar { display: none; }
+
   .page { display: none; height: 100%; flex-direction: column; gap: 10px; }
   .page.active { display: flex; }
 
@@ -107,7 +112,7 @@
   .btn-outline.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
   .form-control { padding: 6px 10px; font-size: 0.95rem; border: 2px solid #cbd5e1; border-radius: 8px; font-weight: bold; user-select: text; }
 
-  /* ==================== ☀️ 獨立放大上下滑動式：每日班務看板 ==================== */
+  /* ==================== ☀️ 獨立放大無捲軸：每日班務看板 ==================== */
   .routine-jump-bar {
     display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
   }
@@ -118,15 +123,19 @@
   }
   .jump-pill:hover { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
 
+  /* 隱藏右側捲軸，由按鈕與滾輪平滑切換 */
   .routine-scroll-Feed {
     flex: 1; overflow-y: auto; scroll-behavior: smooth;
-    display: flex; flex-direction: column; gap: 22px; padding-right: 6px; padding-bottom: 40px;
+    display: flex; flex-direction: column; gap: 22px; padding-bottom: 40px;
+    scrollbar-width: none; -ms-overflow-style: none;
   }
+  .routine-scroll-Feed::-webkit-scrollbar { display: none; }
+
   .routine-stage-block {
-    background: white; border-radius: 18px; padding: 20px 24px;
+    background: white; border-radius: 18px; padding: 18px 22px;
     box-shadow: 0 6px 16px rgba(15,23,42,0.08);
     border-left: 10px solid var(--primary);
-    min-height: 74vh; display: flex; flex-direction: column; gap: 14px;
+    min-height: 78vh; display: flex; flex-direction: column; gap: 12px;
     flex-shrink: 0;
   }
   .routine-stage-block.stage-morning { border-left-color: #f59e0b; background: linear-gradient(180deg, #fffbeb 0%, #ffffff 35%); }
@@ -137,30 +146,44 @@
 
   .stage-header {
     display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
-    padding-bottom: 12px; border-bottom: 3px solid rgba(0,0,0,0.08);
+    padding-bottom: 10px; border-bottom: 3px solid rgba(0,0,0,0.08);
   }
   .stage-title {
-    font-size: 1.65rem; font-weight: 900; display: flex; align-items: center; gap: 10px;
+    font-size: 1.55rem; font-weight: 900; display: flex; align-items: center; gap: 10px;
   }
   .stage-time-badge {
-    font-size: 1rem; font-weight: 900; padding: 4px 12px; border-radius: 20px;
+    font-size: 0.98rem; font-weight: 900; padding: 4px 12px; border-radius: 20px;
     background: var(--dark); color: #ffd166;
   }
 
-  .morning-split {
-    display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; flex: 1;
+  /* 精簡版值日生頂部橫條列（不佔早自習與作業空間） */
+  .compact-duty-bar {
+    background: #fffdf5; border: 2px solid #fcd34d; border-radius: 12px;
+    padding: 8px 14px; display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .compact-duty-pill {
+    background: white; border: 2px solid #cbd5e1; border-radius: 10px; padding: 5px 12px;
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.15s;
+  }
+  .compact-duty-pill.status-done { background: #dcfce7; border-color: #16a34a; }
+  .compact-duty-pill.status-leave { background: #fee2e2; border-color: #ef4444; opacity: 0.85; }
+
+  /* 早自習與作業 50/50 放大雙欄主體 */
+  .morning-main-split {
+    display: grid; grid-template-columns: 1fr 1.1fr; gap: 18px; flex: 1; min-height: 0;
   }
   .sub-panel {
-    background: rgba(255,255,255,0.9); border: 2px solid #e2e8f0; border-radius: 14px;
-    padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    background: rgba(255,255,255,0.95); border: 2px solid #e2e8f0; border-radius: 14px;
+    padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04);
   }
   .sub-panel-title {
-    font-size: 1.25rem; font-weight: 900; display: flex; justify-content: space-between; align-items: center;
+    font-size: 1.35rem; font-weight: 900; display: flex; justify-content: space-between; align-items: center;
     border-bottom: 2px dashed #cbd5e1; padding-bottom: 8px;
   }
 
   .routine-note-display {
-    font-size: 1.35rem; font-weight: 900; line-height: 1.7; white-space: pre-wrap; color: #1e293b;
+    font-size: 1.45rem; font-weight: 900; line-height: 1.75; white-space: pre-wrap; color: #1e293b;
     padding: 8px 6px;
   }
   .routine-textarea {
@@ -168,10 +191,7 @@
     font-size: 1.15rem; font-weight: bold; resize: vertical; user-select: text; background: white;
   }
 
-  /* 值日生 2 人與抬餐 8 人大卡片網格 */
-  .duty-pair-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
-  }
+  /* 抬餐 8 人大卡片網格 */
   .lunch-grid {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
   }
@@ -183,12 +203,12 @@
   .duty-person-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
   .duty-person-card.status-done { background: #dcfce7; border-color: #16a34a; }
   .duty-person-card.status-leave { background: #fee2e2; border-color: #ef4444; opacity: 0.85; }
-  .badge-makeup { background: #7c3aed; color: white; font-size: 0.8rem; padding: 2px 8px; border-radius: 6px; font-weight: 900; }
-  .badge-sub { background: #0284c7; color: white; font-size: 0.8rem; padding: 2px 8px; border-radius: 6px; font-weight: 900; }
+  .badge-makeup { background: #7c3aed; color: white; font-size: 0.78rem; padding: 2px 7px; border-radius: 6px; font-weight: 900; }
+  .badge-sub { background: #0284c7; color: white; font-size: 0.78rem; padding: 2px 7px; border-radius: 6px; font-weight: 900; }
 
-  /* 內外掃大卡片網格 */
+  /* 內外掃大卡片網格 ＋ 教師拖拉特效 */
   .clean-group-title {
-    font-size: 1.25rem; font-weight: 900; color: #0f172a; background: #e2e8f0;
+    font-size: 1.2rem; font-weight: 900; color: #0f172a; background: #e2e8f0;
     padding: 8px 14px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;
   }
   .clean-cards-grid {
@@ -201,15 +221,25 @@
   }
   .clean-zone-card:hover { border-color: var(--primary); transform: translateY(-2px); }
   .clean-zone-card.checked { background: #dcfce7; border-color: #16a34a; }
+  .clean-zone-card.drag-over-zone {
+    border: 3px dashed #f59e0b !important; background: #fffbeb !important; transform: scale(1.02);
+  }
   .clean-member-chip {
     background: #eff6ff; border: 2px solid #3b82f6; color: #1e3a8a; border-radius: 8px;
-    padding: 4px 10px; font-size: 1.08rem; font-weight: 900; display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px; font-size: 1.05rem; font-weight: 900; display: inline-flex; align-items: center; gap: 5px;
+    transition: 0.15s;
+  }
+  body.is-teacher .clean-member-chip {
+    cursor: grab;
+  }
+  body.is-teacher .clean-member-chip:active {
+    cursor: grabbing; transform: scale(0.95);
   }
   .clean-zone-card.checked .clean-member-chip {
     background: #ffffff; border-color: #16a34a; color: #14532d;
   }
   .clean-desc-text {
-    font-size: 0.95rem; font-weight: bold; color: #475569; line-height: 1.4;
+    font-size: 0.92rem; font-weight: bold; color: #475569; line-height: 1.4;
     background: rgba(241,245,249,0.8); padding: 6px 8px; border-radius: 8px;
   }
 
@@ -257,7 +287,7 @@
   }
   .chalk-num-chip:hover { background: var(--chalk-red); }
 
-  /* 座位表視角共用排版 */
+  /* 座位表視角共用排版 ＋ 教師拖拉換座位特效 */
   .seating-layout-card {
     background: white; border-radius: 14px; padding: 14px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06); flex: 1; display: flex; flex-direction: column; overflow: hidden;
@@ -269,10 +299,15 @@
   }
   .seating-grid {
     display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; flex: 1; overflow-y: auto; padding: 4px;
+    scrollbar-width: none;
   }
+  .seating-grid::-webkit-scrollbar { display: none; }
   .column-box {
     display: flex; flex-direction: column; gap: 8px; background: #f8fafc;
-    padding: 8px; border-radius: 12px; border: 2px solid #e2e8f0;
+    padding: 8px; border-radius: 12px; border: 2px solid #e2e8f0; transition: 0.15s;
+  }
+  .column-box.drag-over-col {
+    border: 2px dashed var(--primary); background: #eff6ff;
   }
   .column-header {
     text-align: center; font-weight: 900; font-size: 1rem; color: #1e293b;
@@ -286,6 +321,10 @@
   }
   .seat-desk:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(37,99,235,0.15); }
   .seat-desk:active { transform: scale(0.95); }
+  body.is-teacher #seatingGrid .seat-desk { cursor: grab; }
+  .seat-desk.drag-over-desk {
+    border: 3px dashed #f59e0b !important; background: #fffbeb !important; transform: scale(1.05);
+  }
   
   .seat-desk.checked-in { background: #f0fdf4; border-color: #16a34a; }
   .seat-desk.checked-out { background: #eff6ff; border-color: #2563eb; }
@@ -378,7 +417,7 @@
   <div class="nav-tabs">
     <button class="tab-btn active" onclick="switchTab('routine', event)">☀️ 每日班務看板</button>
     <button class="tab-btn" onclick="switchTab('homework', event)">📋 作業方格登記</button>
-    <button class="tab-btn" onclick="switchTab('seating', event)">🪑 座位加分</button>
+    <button class="tab-btn" onclick="switchTab('seating', event)">🪑 座位加分與換位</button>
     <button class="tab-btn" onclick="switchTab('points', event)">🏆 全科與常規積分</button>
     <button class="tab-btn" onclick="switchTab('draw', event)">🎲 輪盤抽籤</button>
     <button class="tab-btn" onclick="switchTab('attendance', event)">👋 座位入/出班</button>
@@ -394,7 +433,7 @@
 </header>
 
 <main>
-  <!-- ==================== 0. 獨立放大上下滑動式：☀️ 每日班務看板 ==================== -->
+  <!-- ==================== 0. 獨立放大無捲軸：☀️ 每日班務看板 ==================== -->
   <section id="page-routine" class="page active">
     <div class="toolbar">
       <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
@@ -402,25 +441,25 @@
         <input type="date" id="routineDateInput" class="form-control" onchange="onRoutineDateChange(this.value)">
         <button class="btn btn-outline" onclick="shiftRoutineDay(1)">下一日 ▶</button>
       </div>
-      <!-- 快速上下滑動定位按鈕：早自習 -> 外掃區 -> 抬餐 -> 午休 -> 內掃區 -->
+      <!-- 快速切換按鈕：早自習 -> 外掃區 -> 抬餐 -> 午休 -> 內掃區 -->
       <div class="routine-jump-bar">
         <span style="font-weight:900; font-size:0.9rem; color:var(--gray);">⚡ 時段切換：</span>
-        <button class="jump-pill" onclick="scrollToRoutineStage('stage-morning')">1️⃣ 早自習・值日生</button>
+        <button class="jump-pill" onclick="scrollToRoutineStage('stage-morning')">1️⃣ 早自習・作業</button>
         <button class="jump-pill" onclick="scrollToRoutineStage('stage-outdoor')">2️⃣ 上午外掃 (7:50)</button>
         <button class="jump-pill" onclick="scrollToRoutineStage('stage-lunch')">3️⃣ 午餐抬餐 (8人)</button>
-        <button class="jump-pill" onclick="scrollToRoutineStage('stage-nap')">4️⃣ 午休常規 (12:35)</button>
+        <button class="jump-pill" onclick="scrollToRoutineStage('stage-nap')">4️⃣ 午休常規 (12:40~13:10)</button>
         <button class="jump-pill" onclick="scrollToRoutineStage('stage-indoor')">5️⃣ 下午內掃 (3:35)</button>
       </div>
     </div>
 
-    <!-- 可上下滑動切換的放大區塊容器 -->
+    <!-- 無右側捲軸的放大區塊容器 -->
     <div class="routine-scroll-Feed" id="routineScrollFeed">
 
-      <!-- 區塊 1：🌅 早自習注意事項 ＋ 🙋‍♂️ 今日值日生(2人輪值) ＋ 📚 今日作業 -->
+      <!-- 區塊 1：🌅 早自習注意事項 ＆ 📚 今日作業（值日生改為頂部精簡橫列） -->
       <div class="routine-stage-block stage-morning" id="stage-morning">
         <div class="stage-header">
           <div class="stage-title" style="color:#b45309;">
-            <span>1️⃣ 🌅 早自習注意事項・今日值日生・今日作業</span>
+            <span>1️⃣ 🌅 早自習注意事項 ＆ 📚 今日作業聯絡簿</span>
           </div>
           <div style="display:flex; gap:8px; align-items:center;">
             <span class="stage-time-badge">早自習 07:30 ~ 07:50</span>
@@ -428,64 +467,50 @@
           </div>
         </div>
 
-        <div class="morning-split">
-          <!-- 左半：早自習提醒 ＋ 今日作業 -->
-          <div style="display:flex; flex-direction:column; gap:14px;">
-            <div class="sub-panel">
-              <div class="sub-panel-title" style="color:#b45309;">
-                <span>📢 早自習晨間任務與提醒</span>
-              </div>
-              <div id="morningNotesDisplay" class="routine-note-display"></div>
-              <textarea id="morningNotesInput" class="routine-textarea teacher-only-block" placeholder="輸入早自習注意事項..." onchange="updateDailyRoutineNote('morningNotes', this.value)"></textarea>
-            </div>
+        <!-- 🙋‍♂️ 頂部精簡橫列：今日值日生（2號2號輪值 ＋ 請假補當值） -->
+        <div class="compact-duty-bar">
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <strong style="color:#92400e; font-size:1rem;">🙋‍♂️ 今日值日生(2人)：</strong>
+            <div id="dutyStudentGrid" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;"></div>
+            <span id="dutyPointerInfo" style="font-size:0.85rem; color:#b45309; font-weight:bold;"></span>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <div id="dutyMakeupQueueContainer" style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;"></div>
+            <button class="btn btn-success" style="padding:3px 8px; font-size:0.8rem;" onclick="confirmAllDutyStudents()">⚡ 2人完成</button>
+            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.8rem;" onclick="generateTodayDutyList(true)">🔄 重排</button>
+            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.8rem;" onclick="adjustDutyPointer()">⚙️ 起始號</button>
+            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.8rem;" onclick="manualAddDutyMakeup()">➕ 補當值</button>
+          </div>
+        </div>
 
-            <div class="sub-panel" style="flex:1;">
-              <div class="sub-panel-title" style="color:#0f766e;">
-                <span>📚 今日作業與聯絡簿事項</span>
-                <button class="btn btn-primary teacher-only" style="padding:4px 10px; font-size:0.85rem;" onclick="document.querySelectorAll('.tab-btn')[1].click()">➕ 新增/管理作業欄</button>
-              </div>
-              <div id="routineHwList" style="display:flex; flex-direction:column; gap:8px; font-size:1.25rem; font-weight:900; color:#0f172a;"></div>
-              <div style="margin-top:8px; border-top:2px dashed #99f6e4; padding-top:8px;">
-                <div style="font-size:0.95rem; color:#0f766e; font-weight:900;">📌 聯絡簿補充提醒：</div>
-                <div id="routineHwNotesDisplay" class="routine-note-display" style="font-size:1.2rem;"></div>
-                <textarea id="routineHwNotesInput" class="routine-textarea teacher-only-block" style="min-height:70px;" placeholder="輸入聯絡簿補充提醒（例：明穿班服、帶圓規）..." onchange="updateDailyRoutineNote('hwNotes', this.value)"></textarea>
-              </div>
+        <!-- 主體重點放大區：左半「早自習注意事項」、右半「今日作業與聯絡簿」 -->
+        <div class="morning-main-split">
+          <!-- 左大欄：早自習注意事項 -->
+          <div class="sub-panel">
+            <div class="sub-panel-title" style="color:#b45309;">
+              <span>📢 早自習晨間任務與注意事項</span>
             </div>
+            <div id="morningNotesDisplay" class="routine-note-display" style="flex:1;"></div>
+            <textarea id="morningNotesInput" class="routine-textarea teacher-only-block" placeholder="輸入早自習注意事項（打字自動即時存檔）..." oninput="updateDailyRoutineNoteLive('morningNotes', this.value)"></textarea>
           </div>
 
-          <!-- 右半：🙋‍♂️ 今日值日生（2號2號輪值 ＋ 請假補當值機制） -->
-          <div class="sub-panel" style="background:#fffdf5; border-color:#fcd34d;">
-            <div class="sub-panel-title" style="color:#92400e;">
-              <span>🙋‍♂️ 今日值日生（2人輪值）</span>
-              <div style="display:flex; gap:6px;">
-                <button class="btn btn-success" style="padding:4px 10px; font-size:0.85rem;" onclick="confirmAllDutyStudents()">⚡ 2人皆完成</button>
-                <button class="btn btn-primary teacher-only" style="padding:4px 10px; font-size:0.85rem;" onclick="generateTodayDutyList(true)">🔄 重新排定2人</button>
-              </div>
+          <!-- 右大欄：今日作業與聯絡簿事項 -->
+          <div class="sub-panel" style="border-color:#99f6e4; background:#f0fdfa;">
+            <div class="sub-panel-title" style="color:#0f766e;">
+              <span>📚 今日作業與聯絡簿事項</span>
+              <button class="btn btn-primary teacher-only" style="padding:5px 12px; font-size:0.88rem;" onclick="document.querySelectorAll('.tab-btn')[1].click()">➕ 新增/管理作業欄</button>
             </div>
-
-            <div style="display:flex; justify-content:space-between; align-items:center; background:#fef3c7; padding:8px 12px; border-radius:10px; font-size:0.95rem; font-weight:900; color:#92400e;">
-              <span id="dutyPointerInfo">目前值日生輪值進度：計算中</span>
-              <button class="btn btn-outline teacher-only" style="padding:3px 9px; font-size:0.8rem;" onclick="adjustDutyPointer()">⚙️ 調整起始號</button>
-            </div>
-
-            <div style="font-size:0.92rem; color:var(--gray); font-weight:bold;">
-              💡 值日生負責擦黑板、協助發放作業與班級庶務。若請假點「😷 請假」，系統會<b>自動列入待補當值名單，並即時遞補下一號同學</b>！
-            </div>
-
-            <div class="duty-pair-grid" id="dutyStudentGrid"></div>
-
-            <div style="margin-top:auto; background:#faf5ff; border:2px dashed #c084fc; border-radius:10px; padding:12px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                <strong style="color:#6b21a8; font-size:1rem;">📌 值日生待補當值名單（下次優先排入）：</strong>
-                <button class="btn btn-outline teacher-only" style="padding:2px 8px; font-size:0.8rem;" onclick="manualAddDutyMakeup()">➕ 手動加入</button>
-              </div>
-              <div id="dutyMakeupQueueContainer" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+            <div id="routineHwList" style="display:flex; flex-direction:column; gap:10px; font-size:1.4rem; font-weight:900; color:#0f172a; flex:1;"></div>
+            <div style="margin-top:10px; border-top:2px dashed #5eead4; padding-top:10px;">
+              <div style="font-size:1.05rem; color:#0f766e; font-weight:900;">📌 聯絡簿補充提醒事項：</div>
+              <div id="routineHwNotesDisplay" class="routine-note-display" style="font-size:1.35rem;"></div>
+              <textarea id="routineHwNotesInput" class="routine-textarea teacher-only-block" style="min-height:75px;" placeholder="輸入聯絡簿補充提醒（打字自動即時存檔）..." oninput="updateDailyRoutineNoteLive('hwNotes', this.value)"></textarea>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 區塊 2：🌳 上午外掃區（7:50 ~ 8:10） -->
+      <!-- 區塊 2：🌳 上午外掃區（7:50 ~ 8:10，支援教師拖拉學生換組） -->
       <div class="routine-stage-block stage-outdoor" id="stage-outdoor">
         <div class="stage-header">
           <div class="stage-title" style="color:#0f766e;">
@@ -494,12 +519,12 @@
           <div style="display:flex; gap:8px; align-items:center;">
             <span class="stage-time-badge">上午外掃 07:50 ~ 08:10</span>
             <button class="btn btn-success" onclick="checkCleaningZonesByType('outdoor')">⚡ 外掃全區檢查完成</button>
-            <button class="btn btn-outline teacher-only" onclick="openCleaningModal()">✏️ 編輯掃區分配</button>
-            <button class="btn btn-outline teacher-only" onclick="resetCleaningZonesToDefault()">🔄 還原預設掃區表</button>
+            <button class="btn btn-outline teacher-only" onclick="openCleaningModal()">✏️ 編輯明細</button>
+            <button class="btn btn-outline teacher-only" onclick="resetCleaningZonesToDefault()">🔄 還原預設掃區</button>
           </div>
         </div>
         <div style="font-size:1rem; font-weight:bold; color:var(--gray);">
-          💡 點擊各外掃組別卡片即可標記今日「✅ 已打掃檢查完成」：
+          💡 點擊卡片可標記今日「✅ 已打掃完成」。<span class="teacher-only" style="color:#b45309;">（🔓 導師模式下，可直接按住學生名牌「拖拉」至其他組別卡片調動位置！）</span>
         </div>
         <div id="outdoorCleaningContainer" style="display:flex; flex-direction:column; gap:14px;"></div>
       </div>
@@ -511,7 +536,7 @@
             <span>3️⃣ 🍱 午餐抬餐輪值確認（8人一組・照號碼輪流）</span>
           </div>
           <div style="display:flex; gap:8px; align-items:center;">
-            <span class="stage-time-badge">午餐時間 11:55 ~ 12:30</span>
+            <span class="stage-time-badge">午餐時間 11:55 ~ 12:35</span>
             <button class="btn btn-success" onclick="confirmAllLunchDuty()">⚡ 8人全員完成</button>
             <button class="btn btn-primary teacher-only" onclick="generateTodayLunchList(true)">🔄 重新排定8人</button>
           </div>
@@ -536,24 +561,24 @@
         </div>
       </div>
 
-      <!-- 區塊 4：😴 午休注意事項 -->
-      <div class="routine-stage-block stage-nap" id="stage-nap" style="min-height:55vh;">
+      <!-- 區塊 4：😴 午休注意事項（12:40 ~ 13:10） -->
+      <div class="routine-stage-block stage-nap" id="stage-nap" style="min-height:60vh;">
         <div class="stage-header">
           <div class="stage-title" style="color:#4338ca;">
             <span>4️⃣ 😴 午休注意事項與秩序常規</span>
           </div>
           <div style="display:flex; gap:8px; align-items:center;">
-            <span class="stage-time-badge">午休靜息 12:35 ~ 13:15</span>
+            <span class="stage-time-badge">午休靜息 12:40 ~ 13:10</span>
             <button class="btn btn-outline teacher-only" onclick="saveDefaultNapNotes()">📌 設為預設午休提醒</button>
           </div>
         </div>
         <div class="sub-panel" style="flex:1; justify-content:center;">
-          <div id="napNotesDisplay" class="routine-note-display" style="font-size:1.55rem; line-height:1.85;"></div>
-          <textarea id="napNotesInput" class="routine-textarea teacher-only-block" placeholder="輸入午休注意事項..." onchange="updateDailyRoutineNote('napNotes', this.value)"></textarea>
+          <div id="napNotesDisplay" class="routine-note-display" style="font-size:1.6rem; line-height:1.85;"></div>
+          <textarea id="napNotesInput" class="routine-textarea teacher-only-block" placeholder="輸入午休注意事項（打字自動即時存檔）..." oninput="updateDailyRoutineNoteLive('napNotes', this.value)"></textarea>
         </div>
       </div>
 
-      <!-- 區塊 5：🏠 下午內掃區（3:35 ~ 3:50 桌面清空，椅子倒扣） -->
+      <!-- 區塊 5：🏠 下午內掃區（3:35 ~ 3:50 桌面清空，椅子倒扣，支援教師拖拉學生換組） -->
       <div class="routine-stage-block stage-indoor" id="stage-indoor">
         <div class="stage-header">
           <div class="stage-title" style="color:#15803d;">
@@ -562,11 +587,11 @@
           <div style="display:flex; gap:8px; align-items:center;">
             <span class="stage-time-badge">下午內掃 15:35 ~ 15:50</span>
             <button class="btn btn-success" onclick="checkCleaningZonesByType('indoor')">⚡ 內掃全區檢查完成</button>
-            <button class="btn btn-outline teacher-only" onclick="openCleaningModal()">✏️ 編輯掃區分配</button>
+            <button class="btn btn-outline teacher-only" onclick="openCleaningModal()">✏️ 編輯明細</button>
           </div>
         </div>
         <div style="font-size:1rem; font-weight:bold; color:var(--gray);">
-          💡 放學前請先將「桌面清空、椅子倒扣」，完成內掃檢查後始可準備放學打卡：
+          💡 放學前請先將「桌面清空、椅子倒扣」。<span class="teacher-only" style="color:#15803d;">（🔓 導師模式下，可直接按住學生名牌「拖拉」至其他組別卡片調動位置！）</span>
         </div>
         <div id="indoorCleaningContainer" style="display:flex; flex-direction:column; gap:14px;"></div>
       </div>
@@ -631,16 +656,19 @@
     </div>
   </section>
 
-  <!-- 2. 教室座位直覺加分 -->
+  <!-- ==================== 2. 教室座位直覺加分 ＋ 導師拖拉換座位 ==================== -->
   <section id="page-seating" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-        <span style="font-weight:900; font-size:1.2rem; color:#1e293b;">🪑 504班 教室座位直覺加分看板</span>
+        <span style="font-weight:900; font-size:1.15rem; color:#1e293b;">🪑 504班 教室座位加分與換位看板</span>
         <label style="font-weight:bold; color:var(--gray);">上課日戳章：</label>
         <input type="date" id="seatingDateInput" class="form-control" onchange="onCommonDateChange(this.value)">
-        <span style="color:var(--gray); font-size:0.9rem;">（點擊課桌單獨加分；點擊上方「⚡整排+1」小組加分）</span>
+        <span class="teacher-only" style="color:#b45309; font-weight:900; font-size:0.88rem; background:#fffbeb; padding:4px 10px; border-radius:6px; border:1px solid #fcd34d;">
+          🖐️ 導師換位功能已啟用：直接「按住課桌拖拉」至另一張課桌即可交換位置（自動記錄至試算表《教室座位表》）！
+        </span>
       </div>
       <div class="teacher-only" style="gap:8px;">
+        <button class="btn btn-outline" onclick="resetSeatingLayoutToDefault()">🔄 還原預設座位</button>
         <button class="btn btn-success" onclick="openBatchPointsModal()">✨ 全班同步加減分</button>
       </div>
     </div>
@@ -795,6 +823,7 @@
         <select id="logFilter" class="form-control" onchange="renderLogs()">
           <option value="ALL">全部紀錄</option>
           <option value="班務">每日班務與抬餐打掃</option>
+          <option value="座位">教室座位調動</option>
           <option value="作業">作業與補交</option>
           <option value="積分">課程加減分</option>
           <option value="抽籤">輪盤抽籤</option>
@@ -933,12 +962,12 @@
 </div>
 
 <script>
-const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbzr5-aLTUXwSPx2yHhPZ7VXhc8ry_b2FHeciqo_tMsByb5Jt8VHxUwAONs1txHqhVFdlA/exec";
+const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxtrc_L2sMP26ZZx72icak9iYWoUnrMg-waYfIR84xr8IUuIsFYZ6kkbjjK_F3orkZyaw/exec";
 const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
 const UNSYNCED_FLAG_KEY = "CLASS_504_UNSYNCED_PROTECT";
 const ALL_SUBJECTS = ["國語", "數學", "社會", "作文", "綜合", "班級常規"];
 const MAX_LOGS_COUNT = 150;
-const CURRENT_CLEANING_VERSION = 2; // 強制升級套用老師簡報中的真實內外掃分配表
+const CURRENT_CLEANING_VERSION = 2;
 
 const INITIAL_STUDENTS = [
   { id: "01", name: "簡逸森" }, { id: "02", name: "吳承修" }, { id: "03", name: "呂鴻恩" },
@@ -950,7 +979,7 @@ const INITIAL_STUDENTS = [
   { id: "19", name: "王呈翎" }, { id: "20", name: "陳雨禾" }, { id: "21", name: "王藝璇" }
 ];
 
-const SEATING_LAYOUT = [
+const DEFAULT_SEATING_LAYOUT = [
   { colName: "第五直排", ids: ["20", "14", "13", "10"] },
   { colName: "第四直排", ids: ["19", "11", "02", "17"] },
   { colName: "第三直排", ids: ["18", "21", "16", "08", "03"] },
@@ -958,7 +987,6 @@ const SEATING_LAYOUT = [
   { colName: "第一直排", ids: ["15", "04", "12", "05"] }
 ];
 
-// 根據《掃區分配.pptx》完整建置的 19 個內外掃組別
 const DEFAULT_CLEANING_ZONES = [
   // 上午外掃 7:50 ~ 8:10 (遊戲區與男廁)
   { id: "out_b1", type: "outdoor", group: "🚹 遊戲區與男廁", title: "1. 樂行樓遊戲區 (2人)", members: ["03", "04"], desc: "遊戲區撿垃圾與落葉清除・環境整潔巡視" },
@@ -1029,6 +1057,8 @@ let db = existingCache ? JSON.parse(existingCache) : {
   className: "504",
   pin: "0000",
   lastUpdate: 0,
+  seatingLayout: JSON.parse(JSON.stringify(DEFAULT_SEATING_LAYOUT)),
+  seatingLayoutUpdatedAt: 0,
   students: INITIAL_STUDENTS.map(s => ({ 
     ...s,
     totalPoints: 0,
@@ -1039,9 +1069,10 @@ let db = existingCache ? JSON.parse(existingCache) : {
   attendance: {},
   homeworks: [],
   routineConfig: {
+    updatedAt: 0,
     cleaningVersion: CURRENT_CLEANING_VERSION,
     defaultMorningNotes: "1. 入班先完成早自習打卡，將聯絡簿與今日作業交至講台。\n2. 座位保持安靜，進行晨讀或訂正發還作業。\n3. 07:50 準時前往上午外掃區進行打掃。",
-    defaultNapNotes: "1. 12:35 鐘響準時熄燈，桌面淨空趴下午休。\n2. 保持安靜不交談、不翻找抽屜。\n3. 有事請舉手輕聲向老師或風紀股長報備。",
+    defaultNapNotes: "1. 12:40 鐘響準時熄燈，12:40 ~ 13:10 桌面淨空趴下午休。\n2. 保持安靜不交談、不翻找抽屜。\n3. 有事請舉手輕聲向老師或風紀股長報備。",
     dutyStudentConfig: { nextPointer: 0, makeupQueue: [] },
     lunchConfig: { nextPointer: 0, makeupQueue: [] },
     cleaningZones: JSON.parse(JSON.stringify(DEFAULT_CLEANING_ZONES))
@@ -1057,6 +1088,13 @@ let db = existingCache ? JSON.parse(existingCache) : {
   logs: []
 };
 
+function getSeatingLayout() {
+  if (!db.seatingLayout || !Array.isArray(db.seatingLayout) || db.seatingLayout.length !== 5) {
+    db.seatingLayout = JSON.parse(JSON.stringify(DEFAULT_SEATING_LAYOUT));
+  }
+  return db.seatingLayout;
+}
+
 function sanitizeAndTrimDB(targetDB) {
   if (!targetDB) return;
   if (!targetDB.logs) targetDB.logs = [];
@@ -1068,27 +1106,36 @@ function sanitizeAndTrimDB(targetDB) {
   if (!targetDB.lastUpdate) targetDB.lastUpdate = 0;
   if (!targetDB.dailyRoutines) targetDB.dailyRoutines = {};
   if (!targetDB.drawHistory) targetDB.drawHistory = {};
+  if (!targetDB.seatingLayout || !Array.isArray(targetDB.seatingLayout) || targetDB.seatingLayout.length !== 5) {
+    targetDB.seatingLayout = JSON.parse(JSON.stringify(DEFAULT_SEATING_LAYOUT));
+  }
+  if (!targetDB.seatingLayoutUpdatedAt) targetDB.seatingLayoutUpdatedAt = 0;
 
   if (!targetDB.routineConfig) {
     targetDB.routineConfig = {
+      updatedAt: 0,
       cleaningVersion: CURRENT_CLEANING_VERSION,
       defaultMorningNotes: "1. 入班先完成早自習打卡，將聯絡簿與今日作業交至講台。\n2. 座位保持安靜，進行晨讀或訂正發還作業。\n3. 07:50 準時前往上午外掃區進行打掃。",
-      defaultNapNotes: "1. 12:35 鐘響準時熄燈，桌面淨空趴下午休。\n2. 保持安靜不交談、不翻找抽屜。\n3. 有事請舉手輕聲向老師或風紀股長報備。",
+      defaultNapNotes: "1. 12:40 鐘響準時熄燈，12:40 ~ 13:10 桌面淨空趴下午休。\n2. 保持安靜不交談、不翻找抽屜。\n3. 有事請舉手輕聲向老師或風紀股長報備。",
       dutyStudentConfig: { nextPointer: 0, makeupQueue: [] },
       lunchConfig: { nextPointer: 0, makeupQueue: [] },
       cleaningZones: JSON.parse(JSON.stringify(DEFAULT_CLEANING_ZONES))
     };
   }
+  if (!targetDB.routineConfig.updatedAt) targetDB.routineConfig.updatedAt = 0;
   if (!targetDB.routineConfig.dutyStudentConfig) {
     targetDB.routineConfig.dutyStudentConfig = { nextPointer: 0, makeupQueue: [] };
   }
   if (!targetDB.routineConfig.lunchConfig) {
     targetDB.routineConfig.lunchConfig = { nextPointer: 0, makeupQueue: [] };
   }
-  // 若掃區版本為舊版，自動升級為《掃區分配.pptx》的 19 個真實內外掃組別
   if (targetDB.routineConfig.cleaningVersion !== CURRENT_CLEANING_VERSION || !targetDB.routineConfig.cleaningZones || !targetDB.routineConfig.cleaningZones.length) {
     targetDB.routineConfig.cleaningZones = JSON.parse(JSON.stringify(DEFAULT_CLEANING_ZONES));
     targetDB.routineConfig.cleaningVersion = CURRENT_CLEANING_VERSION;
+  }
+  // 確保舊的 12:35 預設午休文字升級為 12:40 ~ 13:10
+  if (targetDB.routineConfig.defaultNapNotes && targetDB.routineConfig.defaultNapNotes.includes("12:35")) {
+    targetDB.routineConfig.defaultNapNotes = targetDB.routineConfig.defaultNapNotes.replace("12:35 鐘響準時熄燈", "12:40 鐘響準時熄燈，12:40 ~ 13:10");
   }
 
   if (targetDB.students) {
@@ -1107,13 +1154,12 @@ function sanitizeAndTrimDB(targetDB) {
 sanitizeAndTrimDB(db);
 localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
 
-// 快速捲動至指定班務時段區塊
 function scrollToRoutineStage(stageId) {
   const el = document.getElementById(stageId);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ==================== 🛡️ 雙向智慧比對與重整防遺失機制 ====================
+// ==================== 🛡️ 雙向細粒度智慧比對與重整防遺失機制 ====================
 window.addEventListener('beforeunload', () => {
   if (saveDebounceTimer || hasUnsyncedChanges) {
     if (saveDebounceTimer) {
@@ -1132,6 +1178,7 @@ window.addEventListener('beforeunload', () => {
   }
 });
 
+// 細粒度合併：針對每日班務、掃區配置、座位表各自比對 updatedAt，杜絕預設空物件覆蓋已修改的紀錄！
 function mergeDatabases(baseDB, incomingDB) {
   sanitizeAndTrimDB(baseDB);
   sanitizeAndTrimDB(incomingDB);
@@ -1140,6 +1187,18 @@ function mergeDatabases(baseDB, incomingDB) {
   const primary = JSON.parse(JSON.stringify(localIsNewer ? baseDB : incomingDB));
   const secondary = localIsNewer ? incomingDB : baseDB;
 
+  // 1. 座位表獨立時間戳章比對
+  if ((secondary.seatingLayoutUpdatedAt || 0) > (primary.seatingLayoutUpdatedAt || 0)) {
+    primary.seatingLayout = JSON.parse(JSON.stringify(secondary.seatingLayout));
+    primary.seatingLayoutUpdatedAt = secondary.seatingLayoutUpdatedAt;
+  }
+
+  // 2. 掃區與輪值設定獨立時間戳章比對
+  if ((secondary.routineConfig?.updatedAt || 0) > (primary.routineConfig?.updatedAt || 0)) {
+    primary.routineConfig = JSON.parse(JSON.stringify(secondary.routineConfig));
+  }
+
+  // 3. 合併作業與繳交紀錄
   const hwMap = {};
   (primary.homeworks || []).forEach(h => { hwMap[h.id] = h; });
   (secondary.homeworks || []).forEach(sh => {
@@ -1150,6 +1209,7 @@ function mergeDatabases(baseDB, incomingDB) {
     }
   });
 
+  // 4. 合併出缺席紀錄
   Object.keys(secondary.attendance || {}).forEach(d => {
     if (!primary.attendance[d]) {
       primary.attendance[d] = secondary.attendance[d];
@@ -1167,12 +1227,26 @@ function mergeDatabases(baseDB, incomingDB) {
     }
   });
 
-  Object.keys(secondary.dailyRoutines || {}).forEach(d => {
-    if (!primary.dailyRoutines[d]) {
-      primary.dailyRoutines[d] = secondary.dailyRoutines[d];
+  // 5. 每日班務紀錄（依各別日期的 updatedAt 決定誰是最新修改，絕不被剛初始化的 updatedAt:0 覆蓋）
+  const allRoutineDates = new Set([
+    ...Object.keys(primary.dailyRoutines || {}),
+    ...Object.keys(secondary.dailyRoutines || {})
+  ]);
+  allRoutineDates.forEach(d => {
+    const pDr = primary.dailyRoutines[d];
+    const sDr = secondary.dailyRoutines[d];
+    if (!pDr && sDr) {
+      primary.dailyRoutines[d] = JSON.parse(JSON.stringify(sDr));
+    } else if (pDr && sDr) {
+      const pTime = pDr.updatedAt || 0;
+      const sTime = sDr.updatedAt || 0;
+      if (sTime > pTime) {
+        primary.dailyRoutines[d] = JSON.parse(JSON.stringify(sDr));
+      }
     }
   });
 
+  // 6. 合併當日抽籤次數紀錄
   Object.keys(secondary.drawHistory || {}).forEach(d => {
     if (!primary.drawHistory[d]) {
       primary.drawHistory[d] = secondary.drawHistory[d];
@@ -1374,10 +1448,11 @@ function setCloudStatus(status, customText) {
   }
 }
 
-// ==================== ☀️ 每日班務看板（值日生2人輪值 ＋ 外掃 ＋ 抬餐8人輪值 ＋ 午休 ＋ 內掃） ====================
+// ==================== ☀️ 每日班務看板（含拖拉換掃區與即時存檔保護） ====================
 function ensureDailyRoutineObj(dateStr) {
   if (!db.dailyRoutines[dateStr]) {
     db.dailyRoutines[dateStr] = {
+      updatedAt: 0, // 0 代表初始預設，避免覆蓋雲端已編輯過的當日紀錄
       morningNotes: db.routineConfig.defaultMorningNotes || "",
       napNotes: db.routineConfig.defaultNapNotes || "",
       hwNotes: "",
@@ -1398,6 +1473,7 @@ function ensureDailyRoutineObj(dateStr) {
 // 🙋‍♂️ 值日生 2 號 2 號輪值排班邏輯
 function buildDutyStudentListForDate(dateStr, shouldSave = true) {
   const dr = db.dailyRoutines[dateStr] || {
+    updatedAt: shouldSave ? Date.now() : 0,
     morningNotes: db.routineConfig.defaultMorningNotes || "",
     napNotes: db.routineConfig.defaultNapNotes || "",
     hwNotes: "",
@@ -1411,7 +1487,6 @@ function buildDutyStudentListForDate(dateStr, shouldSave = true) {
   const newList = [];
   const usedIds = new Set();
 
-  // 1. 優先排入「值日生待補當值名單」
   (dutyCfg.makeupQueue || []).forEach(item => {
     if (newList.length < 2 && !usedIds.has(item.id)) {
       newList.push({
@@ -1425,7 +1500,6 @@ function buildDutyStudentListForDate(dateStr, shouldSave = true) {
     }
   });
 
-  // 2. 不足 2 人由輪值指標依序往後排滿 2 人
   let ptr = dutyCfg.nextPointer || 0;
   let guard = 0;
   while (newList.length < 2 && guard < 42) {
@@ -1447,6 +1521,8 @@ function buildDutyStudentListForDate(dateStr, shouldSave = true) {
   dutyCfg.nextPointer = ptr;
   dr.dutyList = newList;
   if (shouldSave) {
+    dr.updatedAt = Date.now();
+    db.routineConfig.updatedAt = Date.now();
     addLog("班務", `[${dateStr}] 排定今日值日生 2 人名單`);
   }
 }
@@ -1469,6 +1545,7 @@ function adjustDutyPointer() {
     return;
   }
   db.routineConfig.dutyStudentConfig.nextPointer = num - 1;
+  db.routineConfig.updatedAt = Date.now();
   saveDB();
   renderRoutinePage();
 }
@@ -1486,6 +1563,7 @@ function toggleDutyStudentDone(idx) {
       return;
     }
     item.status = "pending";
+    dr.updatedAt = Date.now();
     addLog("班務", `[${currentRoutineDate}] 恢復 ${stu.id} ${stu.name} 值日生狀態為待確認`);
     renderRoutinePage();
     return;
@@ -1494,9 +1572,13 @@ function toggleDutyStudentDone(idx) {
   const nextStatus = item.status === "done" ? "pending" : "done";
   const actionBlock = () => {
     item.status = nextStatus;
+    dr.updatedAt = Date.now();
     if (nextStatus === "done") {
       const qIdx = db.routineConfig.dutyStudentConfig.makeupQueue.findIndex(m => m.id === item.id);
-      if (qIdx !== -1) db.routineConfig.dutyStudentConfig.makeupQueue.splice(qIdx, 1);
+      if (qIdx !== -1) {
+        db.routineConfig.dutyStudentConfig.makeupQueue.splice(qIdx, 1);
+        db.routineConfig.updatedAt = Date.now();
+      }
     }
     addLog("班務", `[${currentRoutineDate}] ${stu.id} ${stu.name} 今日值日生：${nextStatus === 'done' ? '✅ 已完成' : '取消完成'}`);
     renderRoutinePage();
@@ -1522,6 +1604,7 @@ function markDutyStudentLeave(idx, event) {
   }
 
   item.status = "leave";
+  dr.updatedAt = Date.now();
   const dutyCfg = db.routineConfig.dutyStudentConfig;
   if (!dutyCfg.makeupQueue.some(m => m.id === item.id)) {
     dutyCfg.makeupQueue.push({ id: item.id, missedDate: currentRoutineDate.slice(5) });
@@ -1551,6 +1634,7 @@ function markDutyStudentLeave(idx, event) {
     subMsg = `，並由 ${subStu.id} ${subStu.name} 遞補`;
   }
 
+  db.routineConfig.updatedAt = Date.now();
   addLog("班務", `[${currentRoutineDate}] ${stu.id} ${stu.name} 值日生請假(列入待補)${subMsg}`);
   renderRoutinePage();
 }
@@ -1564,6 +1648,8 @@ function confirmAllDutyStudents() {
       if (qIdx !== -1) db.routineConfig.dutyStudentConfig.makeupQueue.splice(qIdx, 1);
     }
   });
+  dr.updatedAt = Date.now();
+  db.routineConfig.updatedAt = Date.now();
   addLog("班務", `[${currentRoutineDate}] 確認今日值日生皆已完成工作`);
   renderRoutinePage();
 }
@@ -1576,6 +1662,7 @@ function manualAddDutyMakeup() {
   const stu = db.students.find(s => s.id === stuId);
   if (!stu) { alert("找不到此座號！"); return; }
   db.routineConfig.dutyStudentConfig.makeupQueue.push({ id: stu.id, missedDate: "教師指定" });
+  db.routineConfig.updatedAt = Date.now();
   addLog("班務", `教師手動將 ${stu.id} ${stu.name} 加入值日生待補名單`);
   renderRoutinePage();
 }
@@ -1587,6 +1674,7 @@ function removeDutyMakeupItem(idx) {
   const stu = db.students.find(s => s.id === item.id);
   if (confirm(`確定將 ${stu ? stu.name : item.id} 從值日生待補名單移除嗎？`)) {
     db.routineConfig.dutyStudentConfig.makeupQueue.splice(idx, 1);
+    db.routineConfig.updatedAt = Date.now();
     saveDB();
     renderRoutinePage();
   }
@@ -1595,6 +1683,7 @@ function removeDutyMakeupItem(idx) {
 // 🍱 午餐抬餐 8 號 8 號輪值排班邏輯
 function buildLunchListForDate(dateStr, shouldSave = true) {
   const dr = db.dailyRoutines[dateStr] || {
+    updatedAt: shouldSave ? Date.now() : 0,
     morningNotes: db.routineConfig.defaultMorningNotes || "",
     napNotes: db.routineConfig.defaultNapNotes || "",
     hwNotes: "",
@@ -1642,6 +1731,8 @@ function buildLunchListForDate(dateStr, shouldSave = true) {
   lunchCfg.nextPointer = ptr;
   dr.lunchList = newList;
   if (shouldSave) {
+    dr.updatedAt = Date.now();
+    db.routineConfig.updatedAt = Date.now();
     addLog("班務", `[${dateStr}] 排定今日午餐抬餐 8 人名單`);
   }
 }
@@ -1664,6 +1755,7 @@ function adjustLunchPointer() {
     return;
   }
   db.routineConfig.lunchConfig.nextPointer = num - 1;
+  db.routineConfig.updatedAt = Date.now();
   saveDB();
   renderRoutinePage();
 }
@@ -1681,6 +1773,7 @@ function toggleLunchPersonDone(idx) {
       return;
     }
     item.status = "pending";
+    dr.updatedAt = Date.now();
     addLog("班務", `[${currentRoutineDate}] 恢復 ${stu.id} ${stu.name} 抬餐狀態為待確認`);
     renderRoutinePage();
     return;
@@ -1689,10 +1782,12 @@ function toggleLunchPersonDone(idx) {
   const nextStatus = item.status === "done" ? "pending" : "done";
   const actionBlock = () => {
     item.status = nextStatus;
+    dr.updatedAt = Date.now();
     if (nextStatus === "done") {
       const qIdx = db.routineConfig.lunchConfig.makeupQueue.findIndex(m => m.id === item.id);
       if (qIdx !== -1) {
         db.routineConfig.lunchConfig.makeupQueue.splice(qIdx, 1);
+        db.routineConfig.updatedAt = Date.now();
       }
     }
     addLog("班務", `[${currentRoutineDate}] ${stu.id} ${stu.name} 午餐抬餐：${nextStatus === 'done' ? '✅ 已完成' : '取消完成'}`);
@@ -1719,6 +1814,7 @@ function markLunchPersonLeave(idx, event) {
   }
 
   item.status = "leave";
+  dr.updatedAt = Date.now();
   const lunchCfg = db.routineConfig.lunchConfig;
 
   const alreadyInQueue = lunchCfg.makeupQueue.some(m => m.id === item.id);
@@ -1751,6 +1847,7 @@ function markLunchPersonLeave(idx, event) {
     subMsg = `，並由 ${subStu.id} ${subStu.name} 遞補`;
   }
 
+  db.routineConfig.updatedAt = Date.now();
   addLog("班務", `[${currentRoutineDate}] ${stu.id} ${stu.name} 抬餐請假(列入待補抬)${subMsg}`);
   renderRoutinePage();
 }
@@ -1764,6 +1861,8 @@ function confirmAllLunchDuty() {
       if (qIdx !== -1) db.routineConfig.lunchConfig.makeupQueue.splice(qIdx, 1);
     }
   });
+  dr.updatedAt = Date.now();
+  db.routineConfig.updatedAt = Date.now();
   addLog("班務", `[${currentRoutineDate}] 確認今日所有在席抬餐人員皆已完成`);
   renderRoutinePage();
 }
@@ -1777,6 +1876,7 @@ function manualAddMakeupStudent() {
   if (!stu) { alert("找不到此座號！"); return; }
 
   db.routineConfig.lunchConfig.makeupQueue.push({ id: stu.id, missedDate: "教師指定" });
+  db.routineConfig.updatedAt = Date.now();
   addLog("班務", `教師手動將 ${stu.id} ${stu.name} 加入待補抬名單`);
   renderRoutinePage();
 }
@@ -1788,6 +1888,7 @@ function removeMakeupQueueItem(idx) {
   const stu = db.students.find(s => s.id === item.id);
   if (confirm(`確定將 ${stu ? stu.name : item.id} 從待補抬名單移除嗎？`)) {
     db.routineConfig.lunchConfig.makeupQueue.splice(idx, 1);
+    db.routineConfig.updatedAt = Date.now();
     saveDB();
     renderRoutinePage();
   }
@@ -1808,16 +1909,25 @@ function shiftRoutineDay(dir) {
   renderRoutinePage();
 }
 
-function updateDailyRoutineNote(field, val) {
+// 📌 打字瞬間即時更新並觸發防抖上傳，絕不因切換分頁或重整而遺失文字！
+function updateDailyRoutineNoteLive(field, val) {
   const dr = ensureDailyRoutineObj(currentRoutineDate);
   dr[field] = val;
-  addLog("班務", `[${currentRoutineDate}] 更新每日班務看板注意事項`);
-  renderRoutinePage();
+  dr.updatedAt = Date.now();
+  if (field === 'morningNotes') {
+    document.getElementById('morningNotesDisplay').textContent = val || "（尚無早自習注意事項）";
+  } else if (field === 'hwNotes') {
+    document.getElementById('routineHwNotesDisplay').textContent = val || "（無額外補充提醒）";
+  } else if (field === 'napNotes') {
+    document.getElementById('napNotesDisplay').textContent = val || "（尚無午休注意事項）";
+  }
+  saveDB();
 }
 
 function saveDefaultMorningNotes() {
   const dr = ensureDailyRoutineObj(currentRoutineDate);
   db.routineConfig.defaultMorningNotes = dr.morningNotes;
+  db.routineConfig.updatedAt = Date.now();
   saveDB();
   alert("✅ 已將目前的早自習注意事項設為每日預設範本！");
 }
@@ -1825,6 +1935,7 @@ function saveDefaultMorningNotes() {
 function saveDefaultNapNotes() {
   const dr = ensureDailyRoutineObj(currentRoutineDate);
   db.routineConfig.defaultNapNotes = dr.napNotes;
+  db.routineConfig.updatedAt = Date.now();
   saveDB();
   alert("✅ 已將目前的午休注意事項設為每日預設範本！");
 }
@@ -1833,6 +1944,7 @@ function toggleCleaningZoneCheck(zoneId) {
   const dr = ensureDailyRoutineObj(currentRoutineDate);
   if (!dr.cleaningChecks) dr.cleaningChecks = {};
   dr.cleaningChecks[zoneId] = !dr.cleaningChecks[zoneId];
+  dr.updatedAt = Date.now();
   const zone = db.routineConfig.cleaningZones.find(z => z.id === zoneId);
   addLog("班務", `[${currentRoutineDate}] 打掃區域【${zone ? zone.title : zoneId}】檢查：${dr.cleaningChecks[zoneId] ? '✅ 已完成' : '未完成'}`);
   renderRoutinePage();
@@ -1844,6 +1956,7 @@ function checkCleaningZonesByType(type) {
   db.routineConfig.cleaningZones.filter(z => z.type === type).forEach(z => {
     dr.cleaningChecks[z.id] = true;
   });
+  dr.updatedAt = Date.now();
   addLog("班務", `[${currentRoutineDate}] ${type === 'outdoor' ? '上午外掃區' : '下午內掃區'}全區一鍵檢查完成`);
   renderRoutinePage();
 }
@@ -1853,7 +1966,59 @@ function resetCleaningZonesToDefault() {
   if (!confirm("確定要還原為《掃區分配.pptx》預設的 19 個內外掃分配組別嗎？")) return;
   db.routineConfig.cleaningZones = JSON.parse(JSON.stringify(DEFAULT_CLEANING_ZONES));
   db.routineConfig.cleaningVersion = CURRENT_CLEANING_VERSION;
+  db.routineConfig.updatedAt = Date.now();
   saveDB();
+  renderRoutinePage();
+}
+
+// ==================== 🧹 教師模式下拖拉（Drag & Drop）掃區人員功能 ====================
+let draggedCleanMember = null; // { stuId, fromZoneId }
+
+function onCleanMemberDragStart(evt, stuId, fromZoneId) {
+  if (!isTeacherMode) {
+    evt.preventDefault();
+    return;
+  }
+  evt.stopPropagation();
+  draggedCleanMember = { stuId, fromZoneId };
+  evt.dataTransfer.effectAllowed = "move";
+  evt.dataTransfer.setData("text/plain", JSON.stringify(draggedCleanMember));
+}
+
+function onCleanZoneDragOver(evt) {
+  if (!isTeacherMode || !draggedCleanMember) return;
+  evt.preventDefault();
+  evt.dataTransfer.dropEffect = "move";
+  evt.currentTarget.classList.add("drag-over-zone");
+}
+
+function onCleanZoneDragLeave(evt) {
+  evt.currentTarget.classList.remove("drag-over-zone");
+}
+
+function onCleanZoneDrop(evt, targetZoneId) {
+  if (!isTeacherMode || !draggedCleanMember) return;
+  evt.preventDefault();
+  evt.stopPropagation();
+  evt.currentTarget.classList.remove("drag-over-zone");
+
+  const { stuId, fromZoneId } = draggedCleanMember;
+  draggedCleanMember = null;
+  if (fromZoneId === targetZoneId) return;
+
+  const fromZone = db.routineConfig.cleaningZones.find(z => z.id === fromZoneId);
+  const targetZone = db.routineConfig.cleaningZones.find(z => z.id === targetZoneId);
+  if (!fromZone || !targetZone) return;
+
+  fromZone.members = (fromZone.members || []).filter(id => id !== stuId);
+  if (!targetZone.members) targetZone.members = [];
+  if (!targetZone.members.includes(stuId)) {
+    targetZone.members.push(stuId);
+  }
+
+  db.routineConfig.updatedAt = Date.now();
+  const stu = db.students.find(s => s.id === stuId);
+  addLog("班務", `教師拖拉調整掃區：將 ${stu ? stu.id + stu.name : stuId} 從【${fromZone.title}】移至【${targetZone.title}】`);
   renderRoutinePage();
 }
 
@@ -1865,15 +2030,15 @@ function openCleaningModal() {
     const row = document.createElement('div');
     row.style.cssText = "display:flex; gap:6px; align-items:center; background:#f8fafc; padding:8px; border-radius:10px; border:1px solid #cbd5e1; flex-wrap:wrap;";
     row.innerHTML = `
-      <select class="form-control" onchange="db.routineConfig.cleaningZones[${idx}].type=this.value; saveDB();">
+      <select class="form-control" onchange="db.routineConfig.cleaningZones[${idx}].type=this.value; db.routineConfig.updatedAt=Date.now(); saveDB();">
         <option value="outdoor" ${zone.type === 'outdoor' ? 'selected' : ''}>🌳 上午外掃</option>
         <option value="indoor" ${zone.type === 'indoor' ? 'selected' : ''}>🏠 下午內掃</option>
       </select>
-      <input type="text" class="form-control" style="width:140px;" value="${zone.group || ''}" placeholder="分區 (例: 男廁)" onchange="db.routineConfig.cleaningZones[${idx}].group=this.value; saveDB();">
-      <input type="text" class="form-control" style="width:170px;" value="${zone.title}" placeholder="組別名稱" onchange="db.routineConfig.cleaningZones[${idx}].title=this.value; saveDB();">
+      <input type="text" class="form-control" style="width:140px;" value="${zone.group || ''}" placeholder="分區 (例: 男廁)" onchange="db.routineConfig.cleaningZones[${idx}].group=this.value; db.routineConfig.updatedAt=Date.now(); saveDB();">
+      <input type="text" class="form-control" style="width:170px;" value="${zone.title}" placeholder="組別名稱" onchange="db.routineConfig.cleaningZones[${idx}].title=this.value; db.routineConfig.updatedAt=Date.now(); saveDB();">
       <input type="text" class="form-control" style="width:120px;" value="${(zone.members || []).join(', ')}" placeholder="座號(01,02)" onchange="updateCleaningZoneMembers(${idx}, this.value)">
-      <input type="text" class="form-control" style="flex:1; min-width:180px;" value="${zone.desc || ''}" placeholder="工作細項說明" onchange="db.routineConfig.cleaningZones[${idx}].desc=this.value; saveDB();">
-      <button class="btn btn-danger" onclick="db.routineConfig.cleaningZones.splice(${idx},1); saveDB(); openCleaningModal();">🗑️</button>
+      <input type="text" class="form-control" style="flex:1; min-width:180px;" value="${zone.desc || ''}" placeholder="工作細項說明" onchange="db.routineConfig.cleaningZones[${idx}].desc=this.value; db.routineConfig.updatedAt=Date.now(); saveDB();">
+      <button class="btn btn-danger" onclick="db.routineConfig.cleaningZones.splice(${idx},1); db.routineConfig.updatedAt=Date.now(); saveDB(); openCleaningModal();">🗑️</button>
     `;
     container.appendChild(row);
   });
@@ -1884,6 +2049,7 @@ function updateCleaningZoneMembers(idx, valStr) {
   const parts = valStr.split(/[,，\s]+/).map(s => s.trim()).filter(Boolean);
   const formatted = parts.map(p => String(parseInt(p, 10)).padStart(2, '0')).filter(p => p !== "NaN");
   db.routineConfig.cleaningZones[idx].members = formatted;
+  db.routineConfig.updatedAt = Date.now();
   saveDB();
 }
 
@@ -1896,6 +2062,7 @@ function addCleaningZoneItem() {
     members: [],
     desc: ""
   });
+  db.routineConfig.updatedAt = Date.now();
   saveDB();
   openCleaningModal();
 }
@@ -1933,10 +2100,13 @@ function renderCleaningSectionByType(type, containerId, dr) {
       const card = document.createElement('div');
       card.className = `clean-zone-card ${isChecked ? 'checked' : ''}`;
       card.onclick = () => toggleCleaningZoneCheck(zone.id);
+      card.ondragover = (e) => onCleanZoneDragOver(e);
+      card.ondragleave = (e) => onCleanZoneDragLeave(e);
+      card.ondrop = (e) => onCleanZoneDrop(e, zone.id);
 
       const membersHtml = (zone.members || []).map(id => {
         const stu = db.students.find(s => s.id === id);
-        return `<span class="clean-member-chip">${id} ${stu ? stu.name : ''}</span>`;
+        return `<span class="clean-member-chip" ${isTeacherMode ? 'draggable="true"' : ''} ondragstart="onCleanMemberDragStart(event, '${id}', '${zone.id}')" onclick="event.stopPropagation(); toggleCleaningZoneCheck('${zone.id}')">${isTeacherMode ? '⠿ ' : ''}${id} ${stu ? stu.name : ''}</span>`;
       }).join('');
 
       card.innerHTML = `
@@ -1948,7 +2118,7 @@ function renderCleaningSectionByType(type, containerId, dr) {
             </span>
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
-            ${membersHtml || '<span style="color:var(--gray);">未指派</span>'}
+            ${membersHtml || '<span style="color:var(--gray);">（可拖拉學生至此）</span>'}
           </div>
         </div>
         ${zone.desc ? `<div class="clean-desc-text">📌 ${zone.desc}</div>` : ''}
@@ -1965,73 +2135,72 @@ function renderRoutinePage() {
   document.getElementById('routineDateInput').value = currentRoutineDate;
   const dr = ensureDailyRoutineObj(currentRoutineDate);
 
-  // 1. 早自習與午休注意事項
+  // 1. 早自習與午休注意事項（若使用者正在打字中則不覆蓋游標位置）
   document.getElementById('morningNotesDisplay').textContent = dr.morningNotes || "（尚無早自習注意事項）";
-  document.getElementById('morningNotesInput').value = dr.morningNotes || "";
+  const mInput = document.getElementById('morningNotesInput');
+  if (document.activeElement !== mInput) mInput.value = dr.morningNotes || "";
 
   document.getElementById('napNotesDisplay').textContent = dr.napNotes || "（尚無午休注意事項）";
-  document.getElementById('napNotesInput').value = dr.napNotes || "";
+  const nInput = document.getElementById('napNotesInput');
+  if (document.activeElement !== nInput) nInput.value = dr.napNotes || "";
 
   // 2. 今日作業與聯絡簿補充
   const hwListEl = document.getElementById('routineHwList');
   hwListEl.innerHTML = "";
   const dayHws = db.homeworks.filter(h => h.date === currentRoutineDate && !h.isContactBook);
   if (dayHws.length === 0) {
-    hwListEl.innerHTML = `<div style="color:var(--gray); font-size:1.05rem;">📌 今日尚無登記各科作業欄位（可點右上角「新增/管理作業欄」建立）</div>`;
+    hwListEl.innerHTML = `<div style="color:var(--gray); font-size:1.15rem;">📌 今日尚無登記各科作業欄位（可點右上角「新增/管理作業欄」建立）</div>`;
   } else {
     dayHws.forEach((hw, i) => {
       const div = document.createElement('div');
-      div.style.cssText = "background:#f0fdfa; padding:8px 12px; border-radius:10px; border-left:5px solid #0f766e;";
+      div.style.cssText = "background:#ffffff; padding:10px 14px; border-radius:10px; border-left:6px solid #0f766e; box-shadow:0 2px 4px rgba(0,0,0,0.04);";
       div.innerHTML = `${i + 1}. 【${hw.subject}】${hw.title} — <span style="color:#b45309;">範圍：${hw.pages}</span>`;
       hwListEl.appendChild(div);
     });
   }
   document.getElementById('routineHwNotesDisplay').textContent = dr.hwNotes || "（無額外補充提醒）";
-  document.getElementById('routineHwNotesInput').value = dr.hwNotes || "";
+  const hInput = document.getElementById('routineHwNotesInput');
+  if (document.activeElement !== hInput) hInput.value = dr.hwNotes || "";
 
-  // 3. 🙋‍♂️ 今日值日生（2人輪值）
+  // 3. 🙋‍♂️ 頂部精簡橫列：今日值日生（2人輪值）
   const nextDutyIdStr = String((db.routineConfig.dutyStudentConfig.nextPointer || 0) + 1).padStart(2, '0');
   const nextDutyStu = db.students.find(s => s.id === nextDutyIdStr);
-  document.getElementById('dutyPointerInfo').textContent = `🔄 下次值日生起始：${nextDutyIdStr}號 ${nextDutyStu ? nextDutyStu.name : ''}`;
+  document.getElementById('dutyPointerInfo').textContent = `（下次輪值：${nextDutyIdStr}號 ${nextDutyStu ? nextDutyStu.name : ''}）`;
 
   const dutyGrid = document.getElementById('dutyStudentGrid');
   dutyGrid.innerHTML = "";
   (dr.dutyList || []).forEach((item, idx) => {
     const stu = db.students.find(s => s.id === item.id) || { id: item.id, name: "" };
     const statusClass = item.status === "done" ? "status-done" : (item.status === "leave" ? "status-leave" : "");
-    const statusLabel = item.status === "done" ? "✅ 已完成當值" : (item.status === "leave" ? "😷 請假(已排補當值)" : "🙋‍♂️ 今日值日生");
+    const statusIcon = item.status === "done" ? "✅" : (item.status === "leave" ? "😷請假" : "⏳");
 
-    const card = document.createElement('div');
-    card.className = `duty-person-card ${statusClass}`;
-    card.onclick = () => toggleDutyStudentDone(idx);
-    card.innerHTML = `
-      <div>
-        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-          <span class="seat-desk-num" style="font-size:1rem; padding:3px 8px;">${stu.id}</span>
-          <strong style="font-size:1.35rem;">${stu.name}</strong>
-          ${item.isMakeup ? `<span class="badge-makeup">🔄 補當值</span>` : ''}
-          ${item.isSub ? `<span class="badge-sub">⚡ 遞補</span>` : ''}
-        </div>
-        <div style="font-size:0.9rem; font-weight:bold; color:#475569; margin-top:4px;">${statusLabel}</div>
-      </div>
-      <div>
-        ${item.status !== 'leave' ? `<button class="btn btn-outline" style="padding:4px 9px; font-size:0.82rem; border-color:#fca5a5; color:#dc2626;" onclick="markDutyStudentLeave(${idx}, event)">😷 請假</button>` : ''}
-      </div>
+    const pill = document.createElement('div');
+    pill.className = `compact-duty-pill ${statusClass}`;
+    pill.onclick = () => toggleDutyStudentDone(idx);
+    pill.innerHTML = `
+      <span class="seat-desk-num">${stu.id}</span>
+      <strong style="font-size:1.05rem;">${stu.name}</strong>
+      ${item.isMakeup ? `<span class="badge-makeup">補</span>` : ''}
+      ${item.isSub ? `<span class="badge-sub">遞補</span>` : ''}
+      <span style="font-size:0.85rem; font-weight:bold;">${statusIcon}</span>
+      ${item.status !== 'leave' ? `<button class="btn btn-outline" style="padding:1px 6px; font-size:0.75rem; border-color:#fca5a5; color:#dc2626;" onclick="markDutyStudentLeave(${idx}, event)">請假</button>` : ''}
     `;
-    dutyGrid.appendChild(card);
+    dutyGrid.appendChild(pill);
   });
 
   const dutyQContainer = document.getElementById('dutyMakeupQueueContainer');
   dutyQContainer.innerHTML = "";
   const dutyQueue = db.routineConfig.dutyStudentConfig.makeupQueue || [];
-  if (dutyQueue.length === 0) {
-    dutyQContainer.innerHTML = `<span style="color:#16a34a; font-weight:bold; font-size:0.92rem;">🎉 目前無人欠值日生！</span>`;
-  } else {
+  if (dutyQueue.length > 0) {
+    const label = document.createElement('span');
+    label.style.cssText = "font-size:0.82rem; font-weight:900; color:#6b21a8;";
+    label.textContent = "📌待補當值:";
+    dutyQContainer.appendChild(label);
     dutyQueue.forEach((m, idx) => {
       const stu = db.students.find(s => s.id === m.id) || { id: m.id, name: "" };
       const chip = document.createElement('span');
-      chip.style.cssText = "background:#f3e8ff; border:1.5px solid #9333ea; color:#581c87; padding:3px 9px; border-radius:6px; font-weight:900; font-size:0.9rem; display:inline-flex; align-items:center; gap:5px;";
-      chip.innerHTML = `${stu.id} ${stu.name} <small>(${m.missedDate || '待補'})</small> ${isTeacherMode ? `<b style="cursor:pointer; color:#dc2626;" onclick="removeDutyMakeupItem(${idx})">×</b>` : ''}`;
+      chip.style.cssText = "background:#f3e8ff; border:1px solid #9333ea; color:#581c87; padding:2px 6px; border-radius:6px; font-weight:900; font-size:0.8rem; display:inline-flex; align-items:center; gap:4px;";
+      chip.innerHTML = `${stu.id}${stu.name} ${isTeacherMode ? `<b style="cursor:pointer; color:#dc2626;" onclick="removeDutyMakeupItem(${idx})">×</b>` : ''}`;
       dutyQContainer.appendChild(chip);
     });
   }
@@ -2086,6 +2255,101 @@ function renderRoutinePage() {
       qContainer.appendChild(chip);
     });
   }
+}
+
+// ==================== 🪑 導師模式下「拖拉換座位」並記錄至試算表 ====================
+let draggedSeatStudentId = null;
+
+function onSeatDeskDragStart(evt, stuId) {
+  if (!isTeacherMode) {
+    evt.preventDefault();
+    return;
+  }
+  draggedSeatStudentId = stuId;
+  evt.dataTransfer.effectAllowed = "move";
+  evt.dataTransfer.setData("text/plain", stuId);
+}
+
+function onSeatDeskDragOver(evt) {
+  if (!isTeacherMode || !draggedSeatStudentId) return;
+  evt.preventDefault();
+  evt.dataTransfer.dropEffect = "move";
+  evt.currentTarget.classList.add("drag-over-desk");
+}
+
+function onSeatDeskDragLeave(evt) {
+  evt.currentTarget.classList.remove("drag-over-desk");
+}
+
+function onSeatDeskDrop(evt, targetStuId) {
+  if (!isTeacherMode || !draggedSeatStudentId) return;
+  evt.preventDefault();
+  evt.stopPropagation();
+  evt.currentTarget.classList.remove("drag-over-desk");
+
+  const srcStuId = draggedSeatStudentId;
+  draggedSeatStudentId = null;
+  if (srcStuId === targetStuId) return;
+
+  const layout = getSeatingLayout();
+  let posA = null, posB = null;
+
+  layout.forEach((col, cIdx) => {
+    col.ids.forEach((id, rIdx) => {
+      if (id === srcStuId) posA = { cIdx, rIdx };
+      if (id === targetStuId) posB = { cIdx, rIdx };
+    });
+  });
+
+  if (posA && posB) {
+    layout[posA.cIdx].ids[posA.rIdx] = targetStuId;
+    layout[posB.cIdx].ids[posB.rIdx] = srcStuId;
+    db.seatingLayoutUpdatedAt = Date.now();
+
+    const stuA = db.students.find(s => s.id === srcStuId);
+    const stuB = db.students.find(s => s.id === targetStuId);
+    addLog("座位", `導師交換座位：【${srcStuId} ${stuA ? stuA.name : ''}】⇄【${targetStuId} ${stuB ? stuB.name : ''}】`);
+    renderAll();
+  }
+}
+
+function onSeatColDragOver(evt) {
+  if (!isTeacherMode || !draggedSeatStudentId) return;
+  evt.preventDefault();
+  evt.currentTarget.classList.add("drag-over-col");
+}
+
+function onSeatColDragLeave(evt) {
+  evt.currentTarget.classList.remove("drag-over-col");
+}
+
+function onSeatColDrop(evt, targetColIdx) {
+  if (!isTeacherMode || !draggedSeatStudentId) return;
+  evt.preventDefault();
+  evt.currentTarget.classList.remove("drag-over-col");
+
+  const srcStuId = draggedSeatStudentId;
+  draggedSeatStudentId = null;
+
+  const layout = getSeatingLayout();
+  layout.forEach(col => {
+    col.ids = col.ids.filter(id => id !== srcStuId);
+  });
+  layout[targetColIdx].ids.push(srcStuId);
+  db.seatingLayoutUpdatedAt = Date.now();
+
+  const stuA = db.students.find(s => s.id === srcStuId);
+  addLog("座位", `導師調整座位：將【${srcStuId} ${stuA ? stuA.name : ''}】移至【${layout[targetColIdx].colName}】`);
+  renderAll();
+}
+
+function resetSeatingLayoutToDefault() {
+  if (!isTeacherMode) return;
+  if (!confirm("確定要將教室座位表還原為預設排列嗎？")) return;
+  db.seatingLayout = JSON.parse(JSON.stringify(DEFAULT_SEATING_LAYOUT));
+  db.seatingLayoutUpdatedAt = Date.now();
+  addLog("座位", "導師將教室座位表還原為預設排列");
+  renderAll();
 }
 
 // ==================== 1. 作業繳交 ====================
@@ -2343,10 +2607,14 @@ function quickAddSubjectPoint(stuId, subj, delta) {
 function renderPointsAndLeaderboard() {
   const seatingGrid = document.getElementById('seatingGrid');
   seatingGrid.innerHTML = "";
+  const layout = getSeatingLayout();
 
-  SEATING_LAYOUT.forEach(col => {
+  layout.forEach((col, colIdx) => {
     const colBox = document.createElement('div');
     colBox.className = "column-box";
+    colBox.ondragover = (e) => onSeatColDragOver(e);
+    colBox.ondragleave = (e) => onSeatColDragLeave(e);
+    colBox.ondrop = (e) => onSeatColDrop(e, colIdx);
 
     let colHeaderHtml = `
       <div class="column-header">
@@ -2361,9 +2629,15 @@ function renderPointsAndLeaderboard() {
       if (!stu) return;
       const dailyPts = getStudentDailyPoints(stu, currentPointDate);
       desksHtml += `
-        <div class="seat-desk" onclick="openStudentPointModal(db.students.find(s=>s.id==='${stu.id}'))">
+        <div class="seat-desk"
+             ${isTeacherMode ? 'draggable="true"' : ''}
+             ondragstart="onSeatDeskDragStart(event, '${stu.id}')"
+             ondragover="onSeatDeskDragOver(event)"
+             ondragleave="onSeatDeskDragLeave(event)"
+             ondrop="onSeatDeskDrop(event, '${stu.id}')"
+             onclick="openStudentPointModal(db.students.find(s=>s.id==='${stu.id}'))">
           <div class="seat-desk-top">
-            <span class="seat-desk-num">${stu.id}</span>
+            <span class="seat-desk-num">${isTeacherMode ? '⠿ ' : ''}${stu.id}</span>
             <span class="seat-desk-pts">⭐ ${stu.totalPoints}</span>
           </div>
           <div class="seat-desk-name">${stu.name}</div>
@@ -2653,8 +2927,9 @@ function resetTodayDrawHistory() {
 function renderDrawSeating() {
   const seatingGrid = document.getElementById('drawSeatingGrid');
   seatingGrid.innerHTML = "";
+  const layout = getSeatingLayout();
 
-  SEATING_LAYOUT.forEach(col => {
+  layout.forEach(col => {
     const colBox = document.createElement('div');
     colBox.className = "column-box";
     let colHeaderHtml = `<div class="column-header"><span>${col.colName}</span></div>`;
@@ -2987,8 +3262,9 @@ function renderAttendance() {
 
   const seatingGrid = document.getElementById('attSeatingGrid');
   seatingGrid.innerHTML = "";
+  const layout = getSeatingLayout();
 
-  SEATING_LAYOUT.forEach(col => {
+  layout.forEach(col => {
     const colBox = document.createElement('div');
     colBox.className = "column-box";
 
