@@ -29,34 +29,34 @@
   body { margin: 0; background: var(--bg); color: var(--dark); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
   header {
-    background: var(--dark); color: white; padding: 8px 18px;
+    background: var(--dark); color: white; padding: 8px 14px;
     display: flex; justify-content: space-between; align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 20;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 20; flex-wrap: wrap; gap: 8px;
   }
   .brand { display: flex; align-items: center; gap: 10px; }
-  .class-badge { background: var(--primary); color: white; font-weight: 900; font-size: 1.35rem; padding: 4px 12px; border-radius: 8px; }
-  .brand h1 { margin: 0; font-size: 1.3rem; }
-  .clock-box { display: flex; align-items: center; gap: 10px; }
-  .clock { font-size: 1rem; background: rgba(255,255,255,0.12); padding: 5px 10px; border-radius: 6px; font-weight: bold; font-variant-numeric: tabular-nums; }
+  .class-badge { background: var(--primary); color: white; font-weight: 900; font-size: 1.3rem; padding: 4px 10px; border-radius: 8px; }
+  .brand h1 { margin: 0; font-size: 1.2rem; }
+  .clock-box { display: flex; align-items: center; gap: 8px; }
+  .clock { font-size: 0.95rem; background: rgba(255,255,255,0.12); padding: 5px 9px; border-radius: 6px; font-weight: bold; font-variant-numeric: tabular-nums; }
   
   #updateToast {
-    background: #16a34a; color: white; font-size: 0.85rem; font-weight: bold;
+    background: #16a34a; color: white; font-size: 0.82rem; font-weight: bold;
     padding: 4px 10px; border-radius: 20px; opacity: 0; transition: opacity 0.3s ease;
     display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px rgba(22,163,74,0.4);
   }
   #updateToast.show { opacity: 1; }
 
-  .nav-tabs { display: flex; gap: 6px; }
+  .nav-tabs { display: flex; gap: 5px; flex-wrap: wrap; }
   .tab-btn {
     background: rgba(255,255,255,0.1); color: #cbd5e1; border: none;
-    padding: 9px 16px; font-size: 1rem; font-weight: bold; border-radius: 8px;
-    cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px;
+    padding: 8px 13px; font-size: 0.95rem; font-weight: bold; border-radius: 8px;
+    cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 5px;
   }
   .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 0 10px rgba(37,99,235,0.6); }
 
   .admin-controls { display: flex; align-items: center; gap: 8px; }
   .cloud-status {
-    padding: 6px 12px; font-size: 0.88rem; font-weight: bold; border-radius: 8px;
+    padding: 6px 11px; font-size: 0.85rem; font-weight: bold; border-radius: 8px;
     display: inline-flex; align-items: center; gap: 5px; transition: 0.2s; cursor: pointer;
   }
   .cloud-status.synced { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
@@ -68,7 +68,7 @@
   }
 
   .mode-btn {
-    padding: 8px 14px; font-size: 0.95rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;
+    padding: 7px 12px; font-size: 0.92rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;
   }
   .mode-student { background: var(--warning); color: white; }
   .mode-teacher { background: var(--danger); color: white; box-shadow: 0 0 12px rgba(220,38,38,0.7); }
@@ -76,6 +76,7 @@
   .teacher-only { display: none !important; }
   body.is-teacher .teacher-only { display: inline-flex !important; }
   body.is-teacher .teacher-only-flex { display: flex !important; }
+  body.is-teacher .teacher-only-block { display: block !important; }
 
   main { flex: 1; overflow-y: auto; padding: 12px 16px; display: flex; flex-direction: column; }
   .page { display: none; height: 100%; flex-direction: column; gap: 10px; }
@@ -104,7 +105,7 @@
   .btn-warning { background: var(--warning); color: white; }
   .btn-outline { background: white; border: 2px solid #cbd5e1; color: var(--dark); }
   .btn-outline.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
-  .form-control { padding: 6px 10px; font-size: 0.95rem; border: 2px solid #cbd5e1; border-radius: 8px; font-weight: bold; }
+  .form-control { padding: 6px 10px; font-size: 0.95rem; border: 2px solid #cbd5e1; border-radius: 8px; font-weight: bold; user-select: text; }
 
   .teacher-hw-setup {
     display: none; background: #fffbeb; border: 2px solid #f59e0b; border-radius: 12px;
@@ -150,6 +151,56 @@
   }
   .chalk-num-chip:hover { background: var(--chalk-red); }
 
+  /* ==================== 新增：☀️ 每日班務看板專用樣式 ==================== */
+  .routine-grid {
+    display: grid; grid-template-columns: 1.1fr 1.25fr 1.15fr; gap: 14px; flex: 1; min-height: 0; overflow-y: auto;
+  }
+  .routine-col {
+    display: flex; flex-direction: column; gap: 12px; min-height: 0;
+  }
+  .routine-card {
+    background: white; border-radius: 14px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    display: flex; flex-direction: column; gap: 8px; border-top: 5px solid var(--primary);
+  }
+  .routine-card.morning-card { border-top-color: #f59e0b; background: #fffbeb; }
+  .routine-card.hw-card { border-top-color: #0f766e; background: #f0fdfa; flex: 1; }
+  .routine-card.nap-card { border-top-color: #6366f1; background: #eef2ff; }
+  .routine-card.lunch-card { border-top-color: #dc2626; flex: 1; }
+  .routine-card.clean-card { border-top-color: #16a34a; flex: 1; }
+  .routine-title {
+    font-size: 1.18rem; font-weight: 900; display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 6px; border-bottom: 2px solid rgba(0,0,0,0.07);
+  }
+  .routine-note-display {
+    font-size: 1.15rem; font-weight: bold; line-height: 1.55; white-space: pre-wrap; color: #1e293b;
+    padding: 6px 4px;
+  }
+  .routine-textarea {
+    width: 100%; min-height: 88px; border: 2px solid #cbd5e1; border-radius: 8px; padding: 8px;
+    font-size: 1.05rem; font-weight: bold; resize: vertical; user-select: text; background: white;
+  }
+  .lunch-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+  }
+  .lunch-person-card {
+    background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 10px; padding: 8px 10px;
+    display: flex; justify-content: space-between; align-items: center; gap: 6px; transition: 0.15s;
+  }
+  .lunch-person-card.status-done { background: #dcfce7; border-color: #16a34a; }
+  .lunch-person-card.status-leave { background: #fee2e2; border-color: #ef4444; opacity: 0.85; }
+  .badge-makeup { background: #7c3aed; color: white; font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; font-weight: 900; }
+  .badge-sub { background: #0284c7; color: white; font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; font-weight: 900; }
+
+  .clean-zone-item {
+    background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 8px 10px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .clean-zone-item.checked { background: #f0fdf4; border-color: #16a34a; }
+  .clean-member-chip {
+    background: white; border: 1.5px solid #94a3b8; border-radius: 6px; padding: 2px 8px;
+    font-size: 0.88rem; font-weight: 900; display: inline-flex; align-items: center; gap: 4px;
+  }
+
   /* 座位表視角共用排版 */
   .seating-layout-card {
     background: white; border-radius: 14px; padding: 14px;
@@ -161,21 +212,21 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   .seating-grid {
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; flex: 1; overflow-y: auto; padding: 4px;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; flex: 1; overflow-y: auto; padding: 4px;
   }
   .column-box {
-    display: flex; flex-direction: column; gap: 10px; background: #f8fafc;
-    padding: 10px; border-radius: 12px; border: 2px solid #e2e8f0;
+    display: flex; flex-direction: column; gap: 8px; background: #f8fafc;
+    padding: 8px; border-radius: 12px; border: 2px solid #e2e8f0;
   }
   .column-header {
-    text-align: center; font-weight: 900; font-size: 1.05rem; color: #1e293b;
-    padding-bottom: 8px; border-bottom: 2px solid #cbd5e1;
-    display: flex; flex-direction: column; gap: 5px; align-items: center;
+    text-align: center; font-weight: 900; font-size: 1rem; color: #1e293b;
+    padding-bottom: 6px; border-bottom: 2px solid #cbd5e1;
+    display: flex; flex-direction: column; gap: 4px; align-items: center;
   }
   .seat-desk {
     background: white; border: 2px solid #cbd5e1; border-radius: 10px;
-    padding: 10px 8px; text-align: center; cursor: pointer; transition: 0.15s;
-    display: flex; flex-direction: column; justify-content: space-between; min-height: 82px;
+    padding: 8px 6px; text-align: center; cursor: pointer; transition: 0.15s;
+    display: flex; flex-direction: column; justify-content: space-between; min-height: 76px;
   }
   .seat-desk:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(37,99,235,0.15); }
   .seat-desk:active { transform: scale(0.95); }
@@ -184,22 +235,46 @@
   .seat-desk.checked-out { background: #eff6ff; border-color: #2563eb; }
   .seat-desk.leave { background: #fffbeb; border-color: #d97706; opacity: 0.9; }
 
-  /* 抽籤輪盤特效 */
-  .seat-desk.candidate { border-color: #f59e0b; background: #fffbeb; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4); transform: translateY(-3px); }
-  .seat-desk.highlighting { border-color: #ef4444; background: #fee2e2; transform: scale(1.1); transition: 0.02s; z-index: 10; position: relative; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.6); }
+  /* 抽籤與輪盤特效 */
+  .draw-split-layout {
+    display: grid; grid-template-columns: 1.35fr 1fr; gap: 14px; flex: 1; min-height: 0;
+  }
+  .wheel-panel {
+    background: white; border-radius: 14px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;
+  }
+  .wheel-Stage {
+    position: relative; width: 420px; height: 420px; display: flex; align-items: center; justify-content: center;
+  }
+  /* 頂部指向指針 */
+  .wheel-pointer {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 18px solid transparent; border-right: 18px solid transparent; border-top: 38px solid #dc2626;
+    z-index: 15; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.35));
+  }
+  .wheel-center-hub {
+    position: absolute; width: 64px; height: 64px; border-radius: 50%;
+    background: #0f172a; color: #ffd166; border: 4px solid #fff;
+    display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 12; cursor: pointer;
+  }
+
+  .seat-desk.candidate { border-color: #f59e0b; background: #fffbeb; box-shadow: 0 3px 8px rgba(245, 158, 11, 0.35); }
+  .seat-desk.highlighting { border-color: #ef4444; background: #fee2e2; transform: scale(1.07); transition: 0.02s; z-index: 10; position: relative; box-shadow: 0 8px 18px rgba(239, 68, 68, 0.6); }
   .seat-desk.winner-pulse { animation: winnerPulse 1s infinite; border-color: #10b981; background: #dcfce7; z-index: 10; position: relative; }
   @keyframes winnerPulse {
-    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); transform: scale(1.1); }
-    70% { box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); transform: scale(1.1); }
-    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); transform: scale(1.1); }
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); transform: scale(1.06); }
+    70% { box-shadow: 0 0 0 16px rgba(16, 185, 129, 0); transform: scale(1.06); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); transform: scale(1.06); }
   }
 
   .seat-desk-top { display: flex; justify-content: space-between; align-items: center; }
-  .seat-desk-num { background: var(--dark); color: white; font-weight: 900; font-size: 0.85rem; padding: 2px 6px; border-radius: 4px; }
-  .seat-desk-name { font-size: 1.15rem; font-weight: 900; margin: 4px 0; color: #0f172a; }
-  .seat-desk-pts { font-size: 0.85rem; font-weight: bold; color: var(--primary); }
+  .seat-desk-num { background: var(--dark); color: white; font-weight: 900; font-size: 0.82rem; padding: 2px 6px; border-radius: 4px; }
+  .seat-desk-name { font-size: 1.1rem; font-weight: 900; margin: 3px 0; color: #0f172a; }
+  .seat-desk-pts { font-size: 0.82rem; font-weight: bold; color: var(--primary); }
 
-  /* 積分表專用排版 (橫向滾動) */
+  /* 積分表專用排版 */
   .subj-score-table-wrapper { overflow-x: auto; flex: 1; padding-bottom: 8px; }
   .subj-score-table { width: 100%; border-collapse: collapse; text-align: center; min-width: 780px; }
   .subj-score-table th, .subj-score-table td { padding: 9px 6px; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
@@ -241,21 +316,22 @@
     <span class="class-badge">504班</span>
     <h1>班級經營互動系統</h1>
     <div class="clock-box">
-      <div id="updateToast">💾 本機與雲端自動保護</div>
+      <div id="updateToast">💾 本機與雲端雙向保護中</div>
       <div class="clock" id="liveClock">00:00:00</div>
     </div>
   </div>
   <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('homework', event)">📋 作業方格登記</button>
+    <button class="tab-btn active" onclick="switchTab('routine', event)">☀️ 每日班務看板</button>
+    <button class="tab-btn" onclick="switchTab('homework', event)">📋 作業方格登記</button>
     <button class="tab-btn" onclick="switchTab('seating', event)">🪑 座位加分</button>
     <button class="tab-btn" onclick="switchTab('points', event)">🏆 全科與常規積分</button>
-    <button class="tab-btn" onclick="switchTab('draw', event)">🎲 舉手抽籤</button>
+    <button class="tab-btn" onclick="switchTab('draw', event)">🎲 輪盤抽籤</button>
     <button class="tab-btn" onclick="switchTab('attendance', event)">👋 座位入/出班</button>
     <button class="tab-btn teacher-only" onclick="switchTab('logs', event)">🛡️ 504紀錄備份</button>
   </div>
   <div class="admin-controls">
-    <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.85rem;" onclick="manualSync()">🔄 手動同步</button>
-    <span class="cloud-status synced" id="cloudStatusBadge" onclick="onCloudBadgeClick()" title="點擊可立即重試上傳或檢查狀態">☁️ 雲端連線中</span>
+    <button class="btn btn-outline" style="padding: 6px 10px; font-size: 0.85rem;" onclick="manualSync()">🔄 雙向比對同步</button>
+    <span class="cloud-status synced" id="cloudStatusBadge" onclick="onCloudBadgeClick()" title="點擊可立即上傳並比對雲端狀態">☁️ 雲端連線中</span>
     <button id="modeBtn" class="mode-btn mode-student" onclick="toggleTeacherMode()">
       🔒 學生互動模式
     </button>
@@ -263,8 +339,112 @@
 </header>
 
 <main>
+  <!-- ==================== 0. 新增：☀️ 每日班務看板 ==================== -->
+  <section id="page-routine" class="page active">
+    <div class="toolbar">
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <span style="font-weight:900; font-size:1.15rem; color:#1e293b;">☀️ 504班 每日班務與生活常規看板</span>
+        <button class="btn btn-outline" onclick="shiftRoutineDay(-1)">◀ 前一上課日</button>
+        <input type="date" id="routineDateInput" class="form-control" onchange="onRoutineDateChange(this.value)">
+        <button class="btn btn-outline" onclick="shiftRoutineDay(1)">下一上課日 ▶</button>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:0.88rem; color:var(--gray); font-weight:bold;">💡 切換至「教師管理模式」即可編輯注意事項、排定抬餐與調配打掃區域</span>
+      </div>
+    </div>
+
+    <div class="routine-grid">
+      <!-- 左欄：早自習注意事項 ＋ 今日作業(聯絡簿) ＋ 午休注意事項 -->
+      <div class="routine-col">
+        <!-- 早自習注意事項 -->
+        <div class="routine-card morning-card">
+          <div class="routine-title">
+            <span style="color:#b45309;">🌅 早自習注意事項</span>
+            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.8rem;" onclick="saveDefaultMorningNotes()">📌 設為每日預設</button>
+          </div>
+          <div id="morningNotesDisplay" class="routine-note-display"></div>
+          <textarea id="morningNotesInput" class="routine-textarea teacher-only-block" placeholder="輸入早自習注意事項..." onchange="updateDailyRoutineNote('morningNotes', this.value)"></textarea>
+        </div>
+
+        <!-- 今日作業與聯絡簿 -->
+        <div class="routine-card hw-card">
+          <div class="routine-title">
+            <span style="color:#0f766e;">📚 今日作業與聯絡簿事項</span>
+            <button class="btn btn-primary teacher-only" style="padding:3px 9px; font-size:0.8rem;" onclick="document.querySelectorAll('.tab-btn')[1].click()">➕ 管理作業欄</button>
+          </div>
+          <div id="routineHwList" style="display:flex; flex-direction:column; gap:6px; font-size:1.08rem; font-weight:bold; color:#0f172a;"></div>
+          <div style="margin-top:6px; border-top:1px dashed #99f6e4; padding-top:6px;">
+            <div style="font-size:0.88rem; color:#0f766e; font-weight:bold; margin-bottom:4px;">📌 補充提醒事項：</div>
+            <div id="routineHwNotesDisplay" class="routine-note-display" style="font-size:1.05rem;"></div>
+            <textarea id="routineHwNotesInput" class="routine-textarea teacher-only-block" style="min-height:65px;" placeholder="輸入聯絡簿補充提醒（例：明穿班服、帶圓規）..." onchange="updateDailyRoutineNote('hwNotes', this.value)"></textarea>
+          </div>
+        </div>
+
+        <!-- 午休注意事項 -->
+        <div class="routine-card nap-card">
+          <div class="routine-title">
+            <span style="color:#4338ca;">😴 午休注意事項</span>
+            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.8rem;" onclick="saveDefaultNapNotes()">📌 設為每日預設</button>
+          </div>
+          <div id="napNotesDisplay" class="routine-note-display"></div>
+          <textarea id="napNotesInput" class="routine-textarea teacher-only-block" placeholder="輸入午休注意事項..." onchange="updateDailyRoutineNote('napNotes', this.value)"></textarea>
+        </div>
+      </div>
+
+      <!-- 中欄：🍱 午餐抬餐 8 人輪值（含請假遞補與補抬機制） -->
+      <div class="routine-col">
+        <div class="routine-card lunch-card">
+          <div class="routine-title">
+            <span style="color:#dc2626;">🍱 午餐抬餐輪值確認（8人一組）</span>
+            <div style="display:flex; gap:5px;">
+              <button class="btn btn-success" style="padding:4px 9px; font-size:0.82rem;" onclick="confirmAllLunchDuty()">⚡ 全員完成</button>
+              <button class="btn btn-primary teacher-only" style="padding:4px 9px; font-size:0.82rem;" onclick="generateTodayLunchList(true)">🔄 重新排定8人</button>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; background:#fff1f2; padding:6px 10px; border-radius:8px; font-size:0.88rem; font-weight:bold; color:#9f1239;">
+            <span id="lunchPointerInfo">目前輪值進度：計算中</span>
+            <button class="btn btn-outline teacher-only" style="padding:2px 8px; font-size:0.78rem;" onclick="adjustLunchPointer()">⚙️ 調整起始號</button>
+          </div>
+
+          <div style="font-size:0.85rem; color:var(--gray); font-weight:bold;">
+            💡 點擊學生可切換「✅ 已完成」。若同學請假沒抬，請點「😷 請假」，系統會<b>自動將其列入待補抬名單，並自動遞補下一號同學</b>！
+          </div>
+
+          <div class="lunch-grid" id="lunchDutyGrid"></div>
+
+          <!-- 待補抬累計名單區 -->
+          <div style="margin-top:auto; background:#faf5ff; border:2px dashed #c084fc; border-radius:10px; padding:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <strong style="color:#6b21a8; font-size:0.98rem;">📌 待補抬累計名單（下次排班優先排入）：</strong>
+              <button class="btn btn-outline teacher-only" style="padding:2px 8px; font-size:0.78rem;" onclick="manualAddMakeupStudent()">➕ 手動加入補抬</button>
+            </div>
+            <div id="makeupQueueContainer" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右欄：🧹 內外掃打掃人員分配與檢查 -->
+      <div class="routine-col">
+        <div class="routine-card clean-card">
+          <div class="routine-title">
+            <span style="color:#15803d;">🧹 內外掃打掃人員分配</span>
+            <div style="display:flex; gap:5px;">
+              <button class="btn btn-success" style="padding:4px 9px; font-size:0.82rem;" onclick="checkAllCleaningZones()">⚡ 全區檢查完成</button>
+              <button class="btn btn-outline teacher-only" style="padding:4px 9px; font-size:0.82rem;" onclick="openCleaningModal()">✏️ 編輯分配</button>
+            </div>
+          </div>
+          <div style="font-size:0.85rem; color:var(--gray); font-weight:bold;">
+            💡 點擊各打掃區域卡片可標記今日「✅ 已打掃檢查完成」：
+          </div>
+          <div id="cleaningZonesContainer" style="display:flex; flex-direction:column; gap:8px; overflow-y:auto; flex:1;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 1. 作業繳交 -->
-  <section id="page-homework" class="page active">
+  <section id="page-homework" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
         <button class="btn btn-outline" onclick="shiftSchoolDay(-1)">◀ 前一上課日</button>
@@ -340,7 +520,7 @@
     </div>
   </section>
 
-  <!-- 3. 全科與常規積分表（新增：作文） -->
+  <!-- 3. 全科與常規積分表 -->
   <section id="page-points" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -357,7 +537,7 @@
     <div class="points-split">
       <div style="background:white; border-radius:14px; padding:14px; box-shadow:0 2px 6px rgba(0,0,0,0.06); display:flex; flex-direction:column; overflow:hidden;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <strong style="font-size:1.1rem; color:#1e293b;">📊 獨立科目累計與即時加分表（含國/數/社/作文/綜合/常規）</strong>
+          <strong style="font-size:1.1rem; color:#1e293b;">📊 獨立科目累計與即時加分表（國/數/社/作文/綜合/常規）</strong>
           <span style="font-size:0.85rem; color:var(--gray);">（可左右滑動表格）</span>
         </div>
         <div class="subj-score-table-wrapper">
@@ -392,37 +572,66 @@
     </div>
   </section>
 
-  <!-- 4. 🎲 舉手抽籤系統 -->
+  <!-- ==================== 4. 升級：🎲 真實指針輪盤抽籤（含轉動圈數與當日降權） ==================== -->
   <section id="page-draw" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-        <span style="font-weight:900; font-size:1.2rem; color:#1e293b;">🎲 互動輪盤抽籤</span>
+        <span style="font-weight:900; font-size:1.15rem; color:#1e293b;">🎲 互動指針輪盤抽籤</span>
         
-        <div style="display:flex; align-items:center; gap:5px; background:#f1f5f9; padding:4px 10px; border-radius:8px;">
-          <label style="font-weight:bold; font-size:0.95rem;">抽出:</label>
-          <input type="number" id="drawCount" class="form-control" value="1" min="1" max="21" style="width:55px; padding:4px;">
-          <span style="font-weight:bold; font-size:0.95rem;">人</span>
+        <div style="display:flex; align-items:center; gap:6px; background:#f1f5f9; padding:4px 10px; border-radius:8px; flex-wrap:wrap;">
+          <label style="font-weight:bold; font-size:0.9rem;">抽出:</label>
+          <input type="number" id="drawCount" class="form-control" value="1" min="1" max="21" style="width:52px; padding:3px 6px;">
+          <span style="font-weight:bold; font-size:0.9rem;">人</span>
           
-          <label style="font-weight:bold; font-size:0.95rem; margin-left:10px;">速度:</label>
-          <select id="drawSpeed" class="form-control" style="padding:4px;">
+          <label style="font-weight:bold; font-size:0.9rem; margin-left:6px;">🔄 轉動圈數:</label>
+          <input type="number" id="drawLaps" class="form-control" value="5" min="1" max="30" style="width:56px; padding:3px 6px;" title="可自由設定輪盤旋轉圈數(1~30圈)">
+          <span style="font-weight:bold; font-size:0.9rem;">圈</span>
+
+          <label style="font-weight:bold; font-size:0.9rem; margin-left:6px;">速度:</label>
+          <select id="drawSpeed" class="form-control" style="padding:3px 6px;">
             <option value="fast">🚀 快</option>
             <option value="normal" selected>🚶 中</option>
             <option value="slow">🐢 慢</option>
           </select>
+
+          <label style="display:inline-flex; align-items:center; gap:4px; font-weight:bold; font-size:0.88rem; margin-left:8px; color:#b45309; cursor:pointer;">
+            <input type="checkbox" id="reduceRepeatProb" checked onchange="renderDrawSeating()">
+            📉 調降當日已抽中機率
+          </label>
         </div>
-        <span style="color:var(--gray); font-size:0.85rem;">（💡 若保持清空不點選，直接抽將從「全班」隨機抽選！）</span>
       </div>
       
-      <div style="display:flex; gap:8px;">
-        <button class="btn btn-outline" onclick="selectAllForDraw()">👥 全選</button>
-        <button class="btn btn-outline" onclick="clearDrawCandidates()">❌ 清空</button>
-        <button class="btn btn-primary" id="startDrawBtn" onclick="startDraw()" style="font-size:1.1rem; padding:8px 20px;">🎲 開始輪盤抽籤</button>
+      <div style="display:flex; gap:6px; align-items:center;">
+        <button class="btn btn-outline" style="padding:6px 10px; font-size:0.85rem;" onclick="resetTodayDrawHistory()">🔄 重置今日抽中次數</button>
+        <button class="btn btn-outline" style="padding:6px 10px; font-size:0.85rem;" onclick="selectAllForDraw()">👥 全選</button>
+        <button class="btn btn-outline" style="padding:6px 10px; font-size:0.85rem;" onclick="clearDrawCandidates()">❌ 清空</button>
+        <button class="btn btn-primary" id="startDrawBtn" onclick="startDraw()" style="font-size:1.05rem; padding:7px 16px;">🎲 啟動輪盤</button>
       </div>
     </div>
     
-    <div class="seating-layout-card">
-      <div class="podium-bar">講 台 / 黑 板 面 向 全 班</div>
-      <div class="seating-grid" id="drawSeatingGrid"></div>
+    <div class="draw-split-layout">
+      <!-- 左側：座位點選舉手同學 -->
+      <div class="seating-layout-card">
+        <div class="podium-bar" style="margin-bottom:8px; font-size:0.98rem;">
+          講 台 / 點選舉手同學（若未選則預設全班參與，已抽過者當日機率自動調降）
+        </div>
+        <div class="seating-grid" id="drawSeatingGrid"></div>
+      </div>
+
+      <!-- 右側：真實滾動指向大輪盤 -->
+      <div class="wheel-panel">
+        <div style="font-weight:900; font-size:1.1rem; color:#1e293b; margin-bottom:10px; text-align:center;">
+          🎯 幸運指向大輪盤 <span id="wheelCandidateCountLabel" style="color:var(--primary); font-size:0.92rem;"></span>
+        </div>
+        <div class="wheel-Stage">
+          <div class="wheel-pointer"></div>
+          <canvas id="rouletteCanvas" width="410" height="410"></canvas>
+          <div class="wheel-center-hub" onclick="startDraw()">GO!</div>
+        </div>
+        <div id="wheelCurrentPointingLabel" style="margin-top:10px; font-size:1.2rem; font-weight:900; color:#dc2626; min-height:28px;">
+          準備就緒，點擊「GO!」或「啟動輪盤」開始
+        </div>
+      </div>
     </div>
   </section>
 
@@ -456,11 +665,13 @@
         <h3 style="margin:0;">🛡️ 504班 時間戳章稽核紀錄（自動保留最新 150 筆）</h3>
         <select id="logFilter" class="form-control" onchange="renderLogs()">
           <option value="ALL">全部紀錄</option>
+          <option value="班務">每日班務與抬餐打掃</option>
           <option value="作業">作業與補交</option>
           <option value="積分">課程加減分</option>
+          <option value="抽籤">輪盤抽籤</option>
           <option value="兌換">獎勵兌換</option>
           <option value="出缺席">出缺席打卡</option>
-          <option value="系統">系統與傳輸錯誤</option>
+          <option value="系統">系統與傳輸保護</option>
         </select>
       </div>
       <div style="display:flex; gap:8px;">
@@ -541,6 +752,24 @@
   </div>
 </div>
 
+<!-- 內外掃打掃分配編輯視窗 -->
+<div class="modal-overlay" id="cleaningModal">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal-header">
+      <h2>🧹 編輯內外掃打掃人員分配</h2>
+      <button class="close-btn" onclick="closeModal('cleaningModal')">&times;</button>
+    </div>
+    <p style="margin:0 0 10px 0; color:var(--gray); font-size:0.9rem; font-weight:bold;">
+      請輸入各區負責學生的座號（以逗號或空格分隔，例如：<code>01, 02, 03</code>）：
+    </p>
+    <div id="cleaningModalList" style="display:flex; flex-direction:column; gap:10px; max-height:55vh; overflow-y:auto;"></div>
+    <div style="margin-top:14px; display:flex; justify-content:space-between;">
+      <button class="btn btn-outline" onclick="addCleaningZoneItem()">➕ 新增打掃區域</button>
+      <button class="btn btn-primary" onclick="closeModal('cleaningModal'); renderRoutinePage();">✅ 完成並關閉</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="shopModal">
   <div class="modal">
     <div class="modal-header">
@@ -560,22 +789,22 @@
 </div>
 
 <div class="modal-overlay" id="drawWinnerModal">
-  <div class="modal" style="max-width:400px; text-align:center;">
+  <div class="modal" style="max-width:420px; text-align:center;">
     <div class="winner-modal-content">
       <div class="trophy">🎉</div>
-      <h2 style="margin:0; font-size:1.5rem; color:var(--gray);">幸運抽中</h2>
+      <h2 style="margin:0; font-size:1.5rem; color:var(--gray);">輪盤指針幸運抽中</h2>
       <div class="winner-name" id="drawWinnerNameDisplay">01 簡逸森</div>
+      <div style="font-size:0.88rem; color:var(--gray); font-weight:bold; margin-bottom:8px;">（已自動記錄並調降今日再次抽中機率）</div>
     </div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:20px;">
-      <button class="btn btn-outline" style="padding:12px; font-size:1.1rem;" onclick="closeModal('drawWinnerModal')">關閉</button>
-      <button class="btn btn-success" style="padding:12px; font-size:1.1rem;" id="drawWinnerAddPointBtn">⭐ 給予加分</button>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;">
+      <button class="btn btn-outline" style="padding:12px; font-size:1.1rem; justify-content:center;" onclick="closeModal('drawWinnerModal')">關閉</button>
+      <button class="btn btn-success" style="padding:12px; font-size:1.1rem; justify-content:center;" id="drawWinnerAddPointBtn">⭐ 給予加分</button>
     </div>
   </div>
 </div>
 
 <script>
-// 您指定的最新部署網址
-const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxUCjP2m_94ipEjDs8qna1pBkFS5NCjmPwS_K8L7agunisjpAVeb-bUWAbMoM0RsaayQg/exec";
+const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbzYV0cT8JJil1h4TxiV5rTyro7XWbGOS_NbFcQVcmDPvdzBfUXOJ4ksoxsLPgL11nELQQ/exec";
 const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
 const UNSYNCED_FLAG_KEY = "CLASS_504_UNSYNCED_PROTECT";
 const ALL_SUBJECTS = ["國語", "數學", "社會", "作文", "綜合", "班級常規"];
@@ -599,6 +828,15 @@ const SEATING_LAYOUT = [
   { colName: "第一直排", ids: ["15", "04", "12", "05"] }
 ];
 
+const DEFAULT_CLEANING_ZONES = [
+  { id: "cz_1", type: "indoor", title: "教室掃地組", members: ["01", "02", "03", "04"] },
+  { id: "cz_2", type: "indoor", title: "教室拖地組", members: ["05", "06", "07", "08"] },
+  { id: "cz_3", type: "indoor", title: "黑板講台與門窗組", members: ["09", "10", "11"] },
+  { id: "cz_4", type: "indoor", title: "資源回收與整潔組", members: ["12", "13", "14"] },
+  { id: "cz_5", type: "outdoor", title: "走廊與洗手台組", members: ["15", "16", "17"] },
+  { id: "cz_6", type: "outdoor", title: "外掃區專責組", members: ["18", "19", "20", "21"] }
+];
+
 let isTeacherMode = false;
 let currentAttStage = 'in';
 let activeStudentId = null;
@@ -607,7 +845,6 @@ let isBatchPointMode = false;
 let batchTargetIds = null;
 let rankMode = 'daily';
 
-// 狀態保護與防抖控制變數
 let hasUnsyncedChanges = localStorage.getItem(UNSYNCED_FLAG_KEY) === "true";
 let saveDebounceTimer = null;
 let isSavingToCloud = false;
@@ -633,9 +870,10 @@ function normalizeToSchoolDay(dateStr) {
 function getNowTimeStr() { return new Date().toTimeString().split(' ')[0]; }
 function getFullTimestamp() { return `${formatDateObj(new Date())} ${getNowTimeStr()}`; }
 
-let currentHwDate = normalizeToSchoolDay();
-let currentPointDate = currentHwDate;
-let currentAttDate = currentHwDate;
+let currentRoutineDate = normalizeToSchoolDay();
+let currentHwDate = currentRoutineDate;
+let currentPointDate = currentRoutineDate;
+let currentAttDate = currentRoutineDate;
 
 let existingCache = localStorage.getItem(STORAGE_KEY);
 let db = existingCache ? JSON.parse(existingCache) : {
@@ -651,6 +889,14 @@ let db = existingCache ? JSON.parse(existingCache) : {
   })),
   attendance: {},
   homeworks: [],
+  routineConfig: {
+    defaultMorningNotes: "1. 入班先完成早自習打卡，將聯絡簿與今日作業交至講台。\n2. 座位保持安靜，進行晨讀或訂正發還作業。\n3. 提前準備第一節課本與文具。",
+    defaultNapNotes: "1. 12:35 鐘響準時熄燈，桌面淨空趴下午休。\n2. 保持安靜不交談、不翻找抽屜。\n3. 有事請舉手輕聲向老師或風紀股長報備。",
+    lunchConfig: { nextPointer: 0, makeupQueue: [] },
+    cleaningZones: JSON.parse(JSON.stringify(DEFAULT_CLEANING_ZONES))
+  },
+  dailyRoutines: {},
+  drawHistory: {},
   rewards: [
     { id: "rw_1", name: "🎯 優先選位子特權一天", cost: 15 },
     { id: "rw_2", name: "✏️ 免寫圈詞乙次券", cost: 25 },
@@ -660,7 +906,6 @@ let db = existingCache ? JSON.parse(existingCache) : {
   logs: []
 };
 
-// 強制清理與補齊 6 科結構（包含新增的「作文」與修剪日誌）
 function sanitizeAndTrimDB(targetDB) {
   if (!targetDB) return;
   if (!targetDB.logs) targetDB.logs = [];
@@ -670,6 +915,23 @@ function sanitizeAndTrimDB(targetDB) {
   if (!targetDB.homeworks) targetDB.homeworks = [];
   if (!targetDB.attendance) targetDB.attendance = {};
   if (!targetDB.lastUpdate) targetDB.lastUpdate = 0;
+  if (!targetDB.dailyRoutines) targetDB.dailyRoutines = {};
+  if (!targetDB.drawHistory) targetDB.drawHistory = {};
+
+  if (!targetDB.routineConfig) {
+    targetDB.routineConfig = {
+      defaultMorningNotes: "1. 入班先完成早自習打卡，將聯絡簿與今日作業交至講台。\n2. 座位保持安靜，進行晨讀或訂正發還作業。\n3. 提前準備第一節課本與文具。",
+      defaultNapNotes: "1. 12:35 鐘響準時熄燈，桌面淨空趴下午休。\n2. 保持安靜不交談、不翻找抽屜。\n3. 有事請舉手輕聲向老師或風紀股長報備。",
+      lunchConfig: { nextPointer: 0, makeupQueue: [] },
+      cleaningZones: JSON.parse(JSON.stringify(DEFAULT_CLEANING_ZONES))
+    };
+  }
+  if (!targetDB.routineConfig.lunchConfig) {
+    targetDB.routineConfig.lunchConfig = { nextPointer: 0, makeupQueue: [] };
+  }
+  if (!targetDB.routineConfig.cleaningZones || !targetDB.routineConfig.cleaningZones.length) {
+    targetDB.routineConfig.cleaningZones = JSON.parse(JSON.stringify(DEFAULT_CLEANING_ZONES));
+  }
 
   if (targetDB.students) {
     targetDB.students.forEach(s => {
@@ -686,6 +948,248 @@ function sanitizeAndTrimDB(targetDB) {
 
 sanitizeAndTrimDB(db);
 localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+
+// ==================== 🛡️ 雙向智慧比對與重整防遺失機制 ====================
+// 當關閉或重整視窗時，若尚有等待防抖合併的變更，立刻透過 keepalive 送出
+window.addEventListener('beforeunload', () => {
+  if (saveDebounceTimer || hasUnsyncedChanges) {
+    if (saveDebounceTimer) {
+      clearTimeout(saveDebounceTimer);
+      saveDebounceTimer = null;
+    }
+    try {
+      sanitizeAndTrimDB(db);
+      fetch(CLOUD_API_URL + "?action=save", {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(db),
+        keepalive: true
+      });
+    } catch (e) {}
+  }
+});
+
+// 智慧合併兩個資料庫（確保重整或跨裝置時，作業、打卡、班務、抽籤與積分絕不遺失）
+function mergeDatabases(baseDB, incomingDB) {
+  sanitizeAndTrimDB(baseDB);
+  sanitizeAndTrimDB(incomingDB);
+
+  // 以 lastUpdate 較新的作為主體，但將另一方的局部新紀錄融合進來
+  const localIsNewer = (baseDB.lastUpdate || 0) >= (incomingDB.lastUpdate || 0);
+  const primary = JSON.parse(JSON.stringify(localIsNewer ? baseDB : incomingDB));
+  const secondary = localIsNewer ? incomingDB : baseDB;
+
+  // 1. 合併作業與繳交紀錄
+  const hwMap = {};
+  (primary.homeworks || []).forEach(h => { hwMap[h.id] = h; });
+  (secondary.homeworks || []).forEach(sh => {
+    if (!hwMap[sh.id]) {
+      primary.homeworks.push(sh);
+    } else {
+      hwMap[sh.id].submissions = { ...(sh.submissions || {}), ...(hwMap[sh.id].submissions || {}) };
+    }
+  });
+
+  // 2. 合併出缺席紀錄
+  Object.keys(secondary.attendance || {}).forEach(d => {
+    if (!primary.attendance[d]) {
+      primary.attendance[d] = secondary.attendance[d];
+    } else {
+      Object.keys(secondary.attendance[d]).forEach(stuId => {
+        const pRec = primary.attendance[d][stuId];
+        const sRec = secondary.attendance[d][stuId];
+        if (!pRec) {
+          primary.attendance[d][stuId] = sRec;
+        } else {
+          if (!pRec.inTime && sRec.inTime) pRec.inTime = sRec.inTime;
+          if (!pRec.outTime && sRec.outTime) pRec.outTime = sRec.outTime;
+        }
+      });
+    }
+  });
+
+  // 3. 合併每日班務與抬餐紀錄
+  Object.keys(secondary.dailyRoutines || {}).forEach(d => {
+    if (!primary.dailyRoutines[d]) {
+      primary.dailyRoutines[d] = secondary.dailyRoutines[d];
+    }
+  });
+
+  // 4. 合併當日抽籤次數紀錄（取較大值避免重複抽）
+  Object.keys(secondary.drawHistory || {}).forEach(d => {
+    if (!primary.drawHistory[d]) {
+      primary.drawHistory[d] = secondary.drawHistory[d];
+    } else {
+      Object.keys(secondary.drawHistory[d]).forEach(stuId => {
+        primary.drawHistory[d][stuId] = Math.max(primary.drawHistory[d][stuId] || 0, secondary.drawHistory[d][stuId] || 0);
+      });
+    }
+  });
+
+  sanitizeAndTrimDB(primary);
+  return primary;
+}
+
+// 📌 核心流程：每次重整或同步時，先比對本機與雲端，若本機有未上傳或較新紀錄則優先上傳！
+async function syncWithComparisonOnLoad(isBackground = false) {
+  if (!CLOUD_API_URL) return;
+  if (saveDebounceTimer || isSavingToCloud) return;
+
+  if (!isBackground) setCloudStatus("syncing", "⏳ 比對本機與雲端紀錄...");
+
+  try {
+    const cacheBusterUrl = CLOUD_API_URL + "?action=load&t=" + new Date().getTime();
+    const res = await fetch(cacheBusterUrl);
+    const textData = await res.text();
+
+    if (textData.includes("<html") || textData.includes("Sign in")) {
+      if (!isBackground) alert("🛑 雲端連線被 Google 阻擋！請確認 Apps Script 部署權限為【所有人(Anyone)】！");
+      setCloudStatus("error");
+      return;
+    }
+
+    const cloudData = JSON.parse(textData);
+    const cloudHasData = cloudData && cloudData.students && cloudData.students.length > 0;
+
+    if (!cloudHasData) {
+      // 雲端為空，立即將本機完整上傳
+      await pushDBToCloudNow();
+      return;
+    }
+
+    const localTime = db.lastUpdate || 0;
+    const cloudTime = cloudData.lastUpdate || 0;
+
+    // 情況 A：本機有未同步保護鎖（上次上傳失敗或剛重整前有操作）或本機時間較新 -> 先合併再立刻上傳本機紀錄！
+    if (hasUnsyncedChanges || localTime > cloudTime) {
+      console.log("🛡️ 本機紀錄較新或有未上傳變更，執行智慧合併並優先上傳至雲端...");
+      db = mergeDatabases(db, cloudData);
+      db.lastUpdate = Math.max(localTime, cloudTime, new Date().getTime());
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+      renderAll();
+      await pushDBToCloudNow();
+      return;
+    }
+
+    // 情況 B：雲端時間較新 -> 將雲端與本機智慧合併後更新畫面
+    if (cloudTime > localTime || !isBackground) {
+      db = mergeDatabases(cloudData, db);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+      renderAll();
+    }
+    setCloudStatus("synced");
+  } catch (err) {
+    // 若網路斷線或試算表忙碌，絕不清空本機，保持本機保護狀態並排程重傳
+    if (hasUnsyncedChanges) {
+      setCloudStatus("error", "⚠️ 待上傳(本機已保護)");
+    } else if (!isBackground) {
+      setCloudStatus("error", "⚠️ 離線保護中");
+    }
+  }
+}
+
+window.addEventListener('focus', () => { syncWithComparisonOnLoad(true); });
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') syncWithComparisonOnLoad(true);
+});
+setInterval(() => {
+  if (document.visibilityState === 'visible') syncWithComparisonOnLoad(true);
+}, 30000);
+
+async function onCloudBadgeClick() {
+  await manualSync();
+}
+
+async function manualSync() {
+  if (saveDebounceTimer) {
+    clearTimeout(saveDebounceTimer);
+    saveDebounceTimer = null;
+  }
+  await syncWithComparisonOnLoad(false);
+  if (!hasUnsyncedChanges) {
+    alert("✅ 已完成本機與雲端雙向比對同步，所有紀錄皆為最新狀態！");
+  } else {
+    alert("⚠️ 目前試算表忙碌中，您的最新紀錄已安全鎖定保存在本機，系統將自動重傳！");
+  }
+}
+
+function saveDB() {
+  sanitizeAndTrimDB(db);
+  db.lastUpdate = new Date().getTime();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+  markUnsyncedState(true);
+  showUpdateToast();
+
+  setCloudStatus("syncing", "⏳ 準備合併上傳...");
+  if (saveDebounceTimer) clearTimeout(saveDebounceTimer);
+  saveDebounceTimer = setTimeout(() => {
+    saveDebounceTimer = null;
+    pushDBToCloudNow();
+  }, 1200);
+}
+
+async function pushDBToCloudNow() {
+  if (!CLOUD_API_URL) return false;
+  if (isSavingToCloud) return false;
+
+  isSavingToCloud = true;
+  setCloudStatus("syncing", "⏳ 雲端寫入中...");
+  const snapshotTime = db.lastUpdate;
+
+  try {
+    sanitizeAndTrimDB(db);
+    const response = await fetch(CLOUD_API_URL + "?action=save", {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(db)
+    });
+    const result = await response.json();
+    if (result && result.status === "success") {
+      if (db.lastUpdate === snapshotTime) {
+        markUnsyncedState(false);
+        setCloudStatus("synced");
+      } else {
+        isSavingToCloud = false;
+        saveDB();
+        return true;
+      }
+      isSavingToCloud = false;
+      return true;
+    } else {
+      throw new Error(result.message || "試算表回應異常");
+    }
+  } catch (err) {
+    isSavingToCloud = false;
+    lastSyncErrorMsg = err.message || String(err);
+    markUnsyncedState(true);
+    setCloudStatus("error");
+    recordSystemErrorLog(lastSyncErrorMsg);
+    return false;
+  }
+}
+
+function recordSystemErrorLog(msg) {
+  const errEntry = {
+    time: getFullTimestamp(),
+    category: "系統",
+    actor: "🛡️ 系統防護",
+    detail: `傳輸暫緩（本機紀錄已鎖定保護）：${msg}`
+  };
+  if (!db.logs.length || db.logs[0].detail !== errEntry.detail) {
+    db.logs.unshift(errEntry);
+    if (db.logs.length > MAX_LOGS_COUNT) db.logs = db.logs.slice(0, MAX_LOGS_COUNT);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+    renderLogs();
+  }
+}
+
+function addLog(category, detail) {
+  db.logs.unshift({ time: getFullTimestamp(), category, actor: isTeacherMode ? "👩‍🏫 教師模式" : "🧒 學生確認", detail });
+  if (db.logs.length > MAX_LOGS_COUNT) {
+    db.logs = db.logs.slice(0, MAX_LOGS_COUNT);
+  }
+  saveDB();
+}
 
 function getStudentDailyPoints(stu, dateStr) {
   return (stu.dailyPoints && stu.dailyPoints[dateStr]) ? stu.dailyPoints[dateStr] : 0;
@@ -719,173 +1223,431 @@ function setCloudStatus(status, customText) {
   }
 }
 
-function recordSystemErrorLog(msg) {
-  const errEntry = {
-    time: getFullTimestamp(),
-    category: "系統",
-    actor: "🛡️ 系統防護",
-    detail: `傳輸暫緩（本機紀錄已鎖定保護）：${msg}`
+// ==================== ☀️ 每日班務看板（早自習、今日作業、8人抬餐補抬、午休、內外掃） ====================
+function ensureDailyRoutineObj(dateStr) {
+  if (!db.dailyRoutines[dateStr]) {
+    db.dailyRoutines[dateStr] = {
+      morningNotes: db.routineConfig.defaultMorningNotes || "",
+      napNotes: db.routineConfig.defaultNapNotes || "",
+      hwNotes: "",
+      lunchList: [],
+      cleaningChecks: {}
+    };
+  }
+  // 若當日尚未產生 8 人抬餐名單，自動依序產生（不主動觸發網路洗版，待使用者點確認或操作時一併上傳）
+  if (!db.dailyRoutines[dateStr].lunchList || db.dailyRoutines[dateStr].lunchList.length === 0) {
+    buildLunchListForDate(dateStr, false);
+  }
+  return db.dailyRoutines[dateStr];
+}
+
+function buildLunchListForDate(dateStr, shouldSave = true) {
+  const dr = db.dailyRoutines[dateStr] || {
+    morningNotes: db.routineConfig.defaultMorningNotes || "",
+    napNotes: db.routineConfig.defaultNapNotes || "",
+    hwNotes: "",
+    lunchList: [],
+    cleaningChecks: {}
   };
-  if (!db.logs.length || db.logs[0].detail !== errEntry.detail) {
-    db.logs.unshift(errEntry);
-    if (db.logs.length > MAX_LOGS_COUNT) db.logs = db.logs.slice(0, MAX_LOGS_COUNT);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-    renderLogs();
+  db.dailyRoutines[dateStr] = dr;
+
+  const lunchCfg = db.routineConfig.lunchConfig;
+  const newList = [];
+  const usedIds = new Set();
+
+  // 1. 優先排入「待補抬名單 (makeupQueue)」中的同學
+  (lunchCfg.makeupQueue || []).forEach(item => {
+    if (newList.length < 8 && !usedIds.has(item.id)) {
+      newList.push({
+        id: item.id,
+        status: "pending", // pending | done | leave
+        isMakeup: true,
+        makeupFrom: item.missedDate || "前次請假",
+        isSub: false
+      });
+      usedIds.add(item.id);
+    }
+  });
+
+  // 2. 不足 8 人由輪值指標 (nextPointer) 依序往後排滿 8 人
+  let ptr = lunchCfg.nextPointer || 0;
+  let guard = 0;
+  while (newList.length < 8 && guard < 42) {
+    const stu = db.students[ptr % db.students.length];
+    ptr = (ptr + 1) % db.students.length;
+    guard++;
+    if (stu && !usedIds.has(stu.id)) {
+      newList.push({
+        id: stu.id,
+        status: "pending",
+        isMakeup: false,
+        makeupFrom: null,
+        isSub: false
+      });
+      usedIds.add(stu.id);
+    }
+  }
+
+  lunchCfg.nextPointer = ptr;
+  dr.lunchList = newList;
+  if (shouldSave) {
+    addLog("班務", `[${dateStr}] 排定今日午餐抬餐 8 人名單`);
   }
 }
 
-// 📌 核心保護：雲端讀取函式（若本機有未同步成功的紀錄，絕不覆蓋本機，改為自動重推！）
-async function loadCloudDB(isBackground = false) {
-  if (!CLOUD_API_URL) return;
+function generateTodayLunchList(askConfirm) {
+  if (!isTeacherMode) return;
+  if (askConfirm && !confirm("確定要重新排定今日的 8 位抬餐人員嗎？（輪值號碼將會往後推進）")) return;
+  buildLunchListForDate(currentRoutineDate, true);
+  renderRoutinePage();
+}
 
-  // 防護 1：若正在倒數等待合併上傳，或正在上傳中，禁止讀取雲端以免覆蓋
-  if (saveDebounceTimer || isSavingToCloud) {
+function adjustLunchPointer() {
+  if (!isTeacherMode) return;
+  const currentNextId = String((db.routineConfig.lunchConfig.nextPointer || 0) + 1).padStart(2, '0');
+  const input = prompt("請輸入下一輪抬餐要從幾號開始（01 ~ 21）：", currentNextId);
+  if (!input) return;
+  const num = parseInt(input, 10);
+  if (isNaN(num) || num < 1 || num > 21) {
+    alert("請輸入 1 到 21 之間的座號！");
     return;
   }
+  db.routineConfig.lunchConfig.nextPointer = num - 1;
+  saveDB();
+  renderRoutinePage();
+}
 
-  // 防護 2：若上次傳輸失敗（hasUnsyncedChanges 為 true），嚴禁下載舊資料覆蓋！改為優先重傳本機資料
-  if (hasUnsyncedChanges) {
-    console.log("🛡️ 偵測到本機有未同步成功的資料，已阻止雲端舊資料覆蓋，自動嘗試重新上傳本機資料...");
-    await pushDBToCloudNow();
-    return;
-  }
+// 點擊抬餐學生：切換完成狀態
+function toggleLunchPersonDone(idx) {
+  const dr = ensureDailyRoutineObj(currentRoutineDate);
+  const item = dr.lunchList[idx];
+  if (!item) return;
+  const stu = db.students.find(s => s.id === item.id);
+  if (!stu) return;
 
-  if (!isBackground) setCloudStatus("syncing");
-  try {
-    const cacheBusterUrl = CLOUD_API_URL + "?action=load&t=" + new Date().getTime();
-    const res = await fetch(cacheBusterUrl);
-    const textData = await res.text();
-    
-    if (textData.includes("<html") || textData.includes("Sign in")) {
-      if (!isBackground) alert("🛑 雲端連線被 Google 阻擋！\n請確認 Apps Script 部署時【誰可以存取】為【所有人(Anyone)】！");
-      setCloudStatus("error");
+  if (item.status === "leave") {
+    if (!isTeacherMode) {
+      alert("此同學今日已登記請假未抬，如需更改請由教師模式操作。");
       return;
     }
-
-    const cloudData = JSON.parse(textData);
-    if (cloudData && cloudData.students) {
-      // 再次檢查：等待網路回應期間，使用者是否又點了加分？若是則放棄此次讀取
-      if (hasUnsyncedChanges || saveDebounceTimer || isSavingToCloud) return;
-
-      let cloudTime = cloudData.lastUpdate || 0;
-      let localTime = db.lastUpdate || 0;
-      
-      if (cloudTime > localTime || !isBackground) {
-        db = cloudData;
-        sanitizeAndTrimDB(db); // 讀取後立刻瘦身並補齊作文科目
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-        renderAll();
-      }
-      setCloudStatus("synced");
-    }
-  } catch (err) {
-    if (!isBackground) setCloudStatus("error", "⚠️ 讀取失敗(本機保護中)");
-  }
-}
-
-// 視窗喚醒與每 30 秒低頻率檢查（降低試算表同時呼叫次數）
-window.addEventListener('focus', () => { loadCloudDB(true); });
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') loadCloudDB(true);
-});
-setInterval(() => {
-  if (document.visibilityState === 'visible') loadCloudDB(true);
-}, 30000);
-
-async function onCloudBadgeClick() {
-  if (hasUnsyncedChanges) {
-    await pushDBToCloudNow();
-  } else {
-    await manualSync();
-  }
-}
-
-async function manualSync() {
-  if (hasUnsyncedChanges) {
-    const ok = await pushDBToCloudNow();
-    if (ok) {
-      alert("✅ 已將本機保護中的最新紀錄成功上傳至雲端！");
-    } else {
-      const forceLoad = confirm(`⚠️ 本機尚有未上傳成功的紀錄（原因：${lastSyncErrorMsg || '網路或試算表忙碌'}）。\n\n系統已鎖定保護本機紀錄不被蓋掉！\n• 按【確定】保留本機紀錄並稍後再試（推薦）\n• 按【取消】放棄本機未同步修改，強制載入雲端資料`);
-      if (!forceLoad) {
-        markUnsyncedState(false);
-        await loadCloudDB(false);
-      }
-    }
+    item.status = "pending";
+    addLog("班務", `[${currentRoutineDate}] 恢復 ${stu.id} ${stu.name} 抬餐狀態為待確認`);
+    renderRoutinePage();
     return;
   }
-  await loadCloudDB(false);
-  alert("✅ 已從雲端同步最新資料！");
-}
 
-// 📌 核心寫入：1.5 秒防抖合併，避免連點觸發「同時呼叫服務的次數過多」
-function saveDB() {
-  sanitizeAndTrimDB(db);
-  db.lastUpdate = new Date().getTime();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-  markUnsyncedState(true); // 立即啟動本機未同步保護鎖
-  showUpdateToast();
-
-  setCloudStatus("syncing", "⏳ 準備合併上傳...");
-  if (saveDebounceTimer) clearTimeout(saveDebounceTimer);
-  saveDebounceTimer = setTimeout(() => {
-    saveDebounceTimer = null;
-    pushDBToCloudNow();
-  }, 1500);
-}
-
-// 實際執行雲端 POST 上傳
-async function pushDBToCloudNow() {
-  if (!CLOUD_API_URL) return false;
-  if (isSavingToCloud) return false;
-
-  isSavingToCloud = true;
-  setCloudStatus("syncing", "⏳ 雲端寫入中...");
-  const snapshotTime = db.lastUpdate;
-
-  try {
-    sanitizeAndTrimDB(db);
-    const response = await fetch(CLOUD_API_URL + "?action=save", {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(db)
-    });
-    const result = await response.json();
-    if (result && result.status === "success") {
-      // 若上傳期間老師沒有再按新的加分，解除保護鎖
-      if (db.lastUpdate === snapshotTime) {
-        markUnsyncedState(false);
-        setCloudStatus("synced");
-      } else {
-        // 上傳期間又有新操作，排程下一次上傳
-        isSavingToCloud = false;
-        saveDB();
-        return true;
+  const nextStatus = item.status === "done" ? "pending" : "done";
+  const actionBlock = () => {
+    item.status = nextStatus;
+    // 若此人原本在待補抬名單中，且今日完成了抬餐，則從待補抬名單移除！
+    if (nextStatus === "done") {
+      const qIdx = db.routineConfig.lunchConfig.makeupQueue.findIndex(m => m.id === item.id);
+      if (qIdx !== -1) {
+        db.routineConfig.lunchConfig.makeupQueue.splice(qIdx, 1);
       }
-      isSavingToCloud = false;
-      return true;
-    } else {
-      throw new Error(result.message || "試算表回應異常");
     }
-  } catch (err) {
-    isSavingToCloud = false;
-    lastSyncErrorMsg = err.message || String(err);
-    markUnsyncedState(true); // 保持保護鎖開啟，禁止雲端舊資料蓋掉本機
-    setCloudStatus("error");
-    recordSystemErrorLog(lastSyncErrorMsg);
-    console.error("寫入失敗，已啟動本機保護:", err);
-    return false;
+    addLog("班務", `[${currentRoutineDate}] ${stu.id} ${stu.name} 午餐抬餐：${nextStatus === 'done' ? '✅ 已完成' : '取消完成'}`);
+    renderRoutinePage();
+  };
+
+  if (nextStatus === "done" && !isTeacherMode) {
+    askStudentConfirm(stu, `確認已完成今日【🍱 午餐抬餐】工作`, actionBlock);
+  } else {
+    actionBlock();
   }
 }
 
-function addLog(category, detail) {
-  db.logs.unshift({ time: getFullTimestamp(), category, actor: isTeacherMode ? "👩‍🏫 教師模式" : "🧒 學生確認", detail });
-  if (db.logs.length > MAX_LOGS_COUNT) {
-    db.logs = db.logs.slice(0, MAX_LOGS_COUNT);
+// 😷 請假未抬：自動列入「待補抬名單」並自動遞補下一號同學！
+function markLunchPersonLeave(idx, event) {
+  if (event) event.stopPropagation();
+  const dr = ensureDailyRoutineObj(currentRoutineDate);
+  const item = dr.lunchList[idx];
+  if (!item || item.status === "leave") return;
+  const stu = db.students.find(s => s.id === item.id);
+  if (!stu) return;
+
+  if (!confirm(`確定將【${stu.id} ${stu.name}】登記為今日「😷 請假/未抬餐」嗎？\n\n• 系統將自動把 ${stu.name} 加入【📌 待補抬名單】\n• 並自動從輪值順位遞補下一位同學來補足 8 人！`)) {
+    return;
   }
+
+  item.status = "leave";
+  const lunchCfg = db.routineConfig.lunchConfig;
+
+  // 1. 加入待補抬名單（避免重複加入同一人同一天）
+  const alreadyInQueue = lunchCfg.makeupQueue.some(m => m.id === item.id);
+  if (!alreadyInQueue) {
+    lunchCfg.makeupQueue.push({ id: item.id, missedDate: currentRoutineDate.slice(5) });
+  }
+
+  // 2. 自動尋找下一位不在今日名單中的同學進行「即時遞補」
+  const currentIds = new Set(dr.lunchList.map(x => x.id));
+  let ptr = lunchCfg.nextPointer || 0;
+  let subStu = null;
+  for (let i = 0; i < db.students.length; i++) {
+    const candidate = db.students[(ptr + i) % db.students.length];
+    if (candidate && !currentIds.has(candidate.id)) {
+      subStu = candidate;
+      lunchCfg.nextPointer = (ptr + i + 1) % db.students.length;
+      break;
+    }
+  }
+
+  let subMsg = "";
+  if (subStu) {
+    dr.lunchList.push({
+      id: subStu.id,
+      status: "pending",
+      isMakeup: false,
+      makeupFrom: null,
+      isSub: true,
+      subFor: stu.name
+    });
+    subMsg = `，並由 ${subStu.id} ${subStu.name} 遞補`;
+  }
+
+  addLog("班務", `[${currentRoutineDate}] ${stu.id} ${stu.name} 抬餐請假(列入待補抬)${subMsg}`);
+  renderRoutinePage();
+}
+
+function confirmAllLunchDuty() {
+  const dr = ensureDailyRoutineObj(currentRoutineDate);
+  dr.lunchList.forEach(item => {
+    if (item.status !== "leave") {
+      item.status = "done";
+      const qIdx = db.routineConfig.lunchConfig.makeupQueue.findIndex(m => m.id === item.id);
+      if (qIdx !== -1) db.routineConfig.lunchConfig.makeupQueue.splice(qIdx, 1);
+    }
+  });
+  addLog("班務", `[${currentRoutineDate}] 確認今日所有在席抬餐人員皆已完成`);
+  renderRoutinePage();
+}
+
+function manualAddMakeupStudent() {
+  if (!isTeacherMode) return;
+  const input = prompt("請輸入要加入「待補抬名單」的學生座號（例如：05）：");
+  if (!input) return;
+  const stuId = String(parseInt(input, 10)).padStart(2, '0');
+  const stu = db.students.find(s => s.id === stuId);
+  if (!stu) { alert("找不到此座號！"); return; }
+
+  db.routineConfig.lunchConfig.makeupQueue.push({ id: stu.id, missedDate: "教師指定" });
+  addLog("班務", `教師手動將 ${stu.id} ${stu.name} 加入待補抬名單`);
+  renderRoutinePage();
+}
+
+function removeMakeupQueueItem(idx) {
+  if (!isTeacherMode) return;
+  const item = db.routineConfig.lunchConfig.makeupQueue[idx];
+  if (!item) return;
+  const stu = db.students.find(s => s.id === item.id);
+  if (confirm(`確定將 ${stu ? stu.name : item.id} 從待補抬名單移除嗎？`)) {
+    db.routineConfig.lunchConfig.makeupQueue.splice(idx, 1);
+    saveDB();
+    renderRoutinePage();
+  }
+}
+
+function onRoutineDateChange(val) {
+  currentRoutineDate = normalizeToSchoolDay(val);
+  document.getElementById('routineDateInput').value = currentRoutineDate;
+  renderRoutinePage();
+}
+
+function shiftRoutineDay(dir) {
+  let d = new Date(currentRoutineDate + "T00:00:00");
+  d.setDate(d.getDate() + dir);
+  while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + dir);
+  currentRoutineDate = formatDateObj(d);
+  document.getElementById('routineDateInput').value = currentRoutineDate;
+  renderRoutinePage();
+}
+
+function updateDailyRoutineNote(field, val) {
+  const dr = ensureDailyRoutineObj(currentRoutineDate);
+  dr[field] = val;
+  addLog("班務", `[${currentRoutineDate}] 更新每日班務看板注意事項`);
+  renderRoutinePage();
+}
+
+function saveDefaultMorningNotes() {
+  const dr = ensureDailyRoutineObj(currentRoutineDate);
+  db.routineConfig.defaultMorningNotes = dr.morningNotes;
+  saveDB();
+  alert("✅ 已將目前的早自習注意事項設為每日預設範本！");
+}
+
+function saveDefaultNapNotes() {
+  const dr = ensureDailyRoutineObj(currentRoutineDate);
+  db.routineConfig.defaultNapNotes = dr.napNotes;
+  saveDB();
+  alert("✅ 已將目前的午休注意事項設為每日預設範本！");
+}
+
+function toggleCleaningZoneCheck(zoneId) {
+  const dr = ensureDailyRoutineObj(currentRoutineDate);
+  if (!dr.cleaningChecks) dr.cleaningChecks = {};
+  dr.cleaningChecks[zoneId] = !dr.cleaningChecks[zoneId];
+  const zone = db.routineConfig.cleaningZones.find(z => z.id === zoneId);
+  addLog("班務", `[${currentRoutineDate}] 打掃區域【${zone ? zone.title : zoneId}】檢查：${dr.cleaningChecks[zoneId] ? '✅ 已完成' : '未完成'}`);
+  renderRoutinePage();
+}
+
+function checkAllCleaningZones() {
+  const dr = ensureDailyRoutineObj(currentRoutineDate);
+  if (!dr.cleaningChecks) dr.cleaningChecks = {};
+  db.routineConfig.cleaningZones.forEach(z => { dr.cleaningChecks[z.id] = true; });
+  addLog("班務", `[${currentRoutineDate}] 全班內外掃區域一鍵檢查完成`);
+  renderRoutinePage();
+}
+
+function openCleaningModal() {
+  if (!isTeacherMode) return;
+  const container = document.getElementById('cleaningModalList');
+  container.innerHTML = "";
+  db.routineConfig.cleaningZones.forEach((zone, idx) => {
+    const row = document.createElement('div');
+    row.style.cssText = "display:flex; gap:8px; align-items:center; background:#f8fafc; padding:8px; border-radius:10px; border:1px solid #cbd5e1;";
+    row.innerHTML = `
+      <select class="form-control" onchange="db.routineConfig.cleaningZones[${idx}].type=this.value; saveDB();">
+        <option value="indoor" ${zone.type === 'indoor' ? 'selected' : ''}>🏠 內掃</option>
+        <option value="outdoor" ${zone.type === 'outdoor' ? 'selected' : ''}>🌳 外掃</option>
+      </select>
+      <input type="text" class="form-control" style="width:165px;" value="${zone.title}" placeholder="區域名稱" onchange="db.routineConfig.cleaningZones[${idx}].title=this.value; saveDB();">
+      <input type="text" class="form-control" style="flex:1;" value="${(zone.members || []).join(', ')}" placeholder="負責座號 (例: 01, 02)" onchange="updateCleaningZoneMembers(${idx}, this.value)">
+      <button class="btn btn-danger" onclick="db.routineConfig.cleaningZones.splice(${idx},1); saveDB(); openCleaningModal();">🗑️</button>
+    `;
+    container.appendChild(row);
+  });
+  document.getElementById('cleaningModal').classList.add('active');
+}
+
+function updateCleaningZoneMembers(idx, valStr) {
+  const parts = valStr.split(/[,，\s]+/).map(s => s.trim()).filter(Boolean);
+  const formatted = parts.map(p => String(parseInt(p, 10)).padStart(2, '0')).filter(p => p !== "NaN");
+  db.routineConfig.cleaningZones[idx].members = formatted;
   saveDB();
 }
 
+function addCleaningZoneItem() {
+  db.routineConfig.cleaningZones.push({
+    id: "cz_" + Date.now(),
+    type: "indoor",
+    title: "新打掃區域",
+    members: []
+  });
+  saveDB();
+  openCleaningModal();
+}
+
+function renderRoutinePage() {
+  document.getElementById('routineDateInput').value = currentRoutineDate;
+  const dr = ensureDailyRoutineObj(currentRoutineDate);
+
+  // 1. 早自習與午休注意事項
+  document.getElementById('morningNotesDisplay').textContent = dr.morningNotes || "（尚無早自習注意事項）";
+  document.getElementById('morningNotesInput').value = dr.morningNotes || "";
+
+  document.getElementById('napNotesDisplay').textContent = dr.napNotes || "（尚無午休注意事項）";
+  document.getElementById('napNotesInput').value = dr.napNotes || "";
+
+  // 2. 今日作業與聯絡簿補充
+  const hwListEl = document.getElementById('routineHwList');
+  hwListEl.innerHTML = "";
+  const dayHws = db.homeworks.filter(h => h.date === currentRoutineDate && !h.isContactBook);
+  if (dayHws.length === 0) {
+    hwListEl.innerHTML = `<div style="color:var(--gray);">📌 今日尚無登記各科作業欄位（可點右上角「管理作業欄」新增）</div>`;
+  } else {
+    dayHws.forEach((hw, i) => {
+      const div = document.createElement('div');
+      div.style.cssText = "background:white; padding:6px 10px; border-radius:8px; border-left:4px solid #0f766e; box-shadow:0 1px 2px rgba(0,0,0,0.04);";
+      div.innerHTML = `${i + 1}. 【${hw.subject}】${hw.title} — <span style="color:#b45309;">範圍：${hw.pages}</span>`;
+      hwListEl.appendChild(div);
+    });
+  }
+  document.getElementById('routineHwNotesDisplay').textContent = dr.hwNotes || "（無額外補充提醒）";
+  document.getElementById('routineHwNotesInput').value = dr.hwNotes || "";
+
+  // 3. 午餐抬餐 8 人輪值
+  const nextIdStr = String((db.routineConfig.lunchConfig.nextPointer || 0) + 1).padStart(2, '0');
+  const nextStu = db.students.find(s => s.id === nextIdStr);
+  document.getElementById('lunchPointerInfo').textContent = `🔄 下次輪值起始：${nextIdStr}號 ${nextStu ? nextStu.name : ''}`;
+
+  const lunchGrid = document.getElementById('lunchDutyGrid');
+  lunchGrid.innerHTML = "";
+  (dr.lunchList || []).forEach((item, idx) => {
+    const stu = db.students.find(s => s.id === item.id) || { id: item.id, name: "" };
+    const statusClass = item.status === "done" ? "status-done" : (item.status === "leave" ? "status-leave" : "");
+    const statusLabel = item.status === "done" ? "✅ 已完成" : (item.status === "leave" ? "😷 請假(已排補抬)" : "⏳ 待抬餐");
+
+    const card = document.createElement('div');
+    card.className = `lunch-person-card ${statusClass}`;
+    card.onclick = () => toggleLunchPersonDone(idx);
+    card.innerHTML = `
+      <div>
+        <div style="display:flex; align-items:center; gap:5px; flex-wrap:wrap;">
+          <span class="seat-desk-num">${stu.id}</span>
+          <strong style="font-size:1.05rem;">${stu.name}</strong>
+          ${item.isMakeup ? `<span class="badge-makeup">🔄 補抬</span>` : ''}
+          ${item.isSub ? `<span class="badge-sub">⚡ 遞補</span>` : ''}
+        </div>
+        <div style="font-size:0.8rem; font-weight:bold; color:#475569; margin-top:3px;">${statusLabel}</div>
+      </div>
+      <div>
+        ${item.status !== 'leave' ? `<button class="btn btn-outline" style="padding:3px 7px; font-size:0.78rem; border-color:#fca5a5; color:#dc2626;" onclick="markLunchPersonLeave(${idx}, event)">😷 請假</button>` : ''}
+      </div>
+    `;
+    lunchGrid.appendChild(card);
+  });
+
+  // 待補抬累計名單
+  const qContainer = document.getElementById('makeupQueueContainer');
+  qContainer.innerHTML = "";
+  const queue = db.routineConfig.lunchConfig.makeupQueue || [];
+  if (queue.length === 0) {
+    qContainer.innerHTML = `<span style="color:#16a34a; font-weight:bold; font-size:0.9rem;">🎉 目前無人欠抬餐！</span>`;
+  } else {
+    queue.forEach((m, idx) => {
+      const stu = db.students.find(s => s.id === m.id) || { id: m.id, name: "" };
+      const chip = document.createElement('span');
+      chip.style.cssText = "background:#f3e8ff; border:1.5px solid #9333ea; color:#581c87; padding:3px 9px; border-radius:6px; font-weight:900; font-size:0.88rem; display:inline-flex; align-items:center; gap:5px;";
+      chip.innerHTML = `${stu.id} ${stu.name} <small>(${m.missedDate || '待補'})</small> ${isTeacherMode ? `<b style="cursor:pointer; color:#dc2626;" onclick="removeMakeupQueueItem(${idx})">×</b>` : ''}`;
+      qContainer.appendChild(chip);
+    });
+  }
+
+  // 4. 內外掃分配與檢查
+  const cleanContainer = document.getElementById('cleaningZonesContainer');
+  cleanContainer.innerHTML = "";
+  (db.routineConfig.cleaningZones || []).forEach(zone => {
+    const isChecked = dr.cleaningChecks && dr.cleaningChecks[zone.id];
+    const div = document.createElement('div');
+    div.className = `clean-zone-item ${isChecked ? 'checked' : ''}`;
+    div.onclick = () => toggleCleaningZoneCheck(zone.id);
+
+    const membersHtml = (zone.members || []).map(id => {
+      const stu = db.students.find(s => s.id === id);
+      return `<span class="clean-member-chip">${id} ${stu ? stu.name : ''}</span>`;
+    }).join('');
+
+    div.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="font-size:0.8rem; font-weight:900; padding:2px 6px; border-radius:4px; background:${zone.type === 'indoor' ? '#dbeafe' : '#dcfce7'}; color:${zone.type === 'indoor' ? '#1e40af' : '#166534'};">
+            ${zone.type === 'indoor' ? '🏠 內掃' : '🌳 外掃'}
+          </span>
+          <strong style="font-size:1rem;">${zone.title}</strong>
+        </div>
+        <span style="font-weight:900; font-size:0.88rem; color:${isChecked ? '#16a34a' : '#64748b'};">
+          ${isChecked ? '✅ 已檢查完成' : '⬜ 點此打勾'}
+        </span>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:5px;">${membersHtml || '<span style="color:var(--gray); font-size:0.85rem;">尚未指派人員</span>'}</div>
+    `;
+    cleanContainer.appendChild(div);
+  });
+}
+
+// ==================== 1. 作業繳交 ====================
 function ensureContactBookOnly(dateStr) {
   const hasContactBook = db.homeworks.some(h => h.date === dateStr && h.isContactBook);
   if (!hasContactBook) {
@@ -986,6 +1748,7 @@ function addHomeworkColumn() {
   document.getElementById('quickHwTitle').value = "";
   document.getElementById('quickHwPages').value = "";
   renderHomeworkBoard();
+  renderRoutinePage();
 }
 
 function renderHomeworkBoard() {
@@ -1102,8 +1865,10 @@ function deleteHwColumn(hwId) {
   db.homeworks = db.homeworks.filter(h => h.id !== hwId);
   addLog("作業", `教師刪除作業欄位：【${hw.title}】`);
   renderHomeworkBoard();
+  renderRoutinePage();
 }
 
+// ==================== 2 & 3. 座位與全科積分表 ====================
 function setRankMode(mode) {
   rankMode = mode;
   document.getElementById('rankDailyBtn').classList.toggle('active', mode === 'daily');
@@ -1400,9 +2165,50 @@ function askStudentConfirm(stu, actionTitle, callback) {
   document.getElementById('confirmModal').classList.add('active');
 }
 
-// ==================== 🎲 舉手輪盤抽籤功能 ====================
+// ==================== 4. 🎲 升級版：真實指針大輪盤 ＋ 轉動圈數 ＋ 當日降權機制 ====================
 let drawCandidates = new Set();
 let isDrawing = false;
+let currentWheelRotationDeg = 0; // 目前輪盤累積旋轉角度
+
+const WHEEL_COLORS = [
+  "#2563eb", "#16a34a", "#d97706", "#dc2626", "#7c3aed",
+  "#0891b2", "#be185d", "#4f46e5", "#059669", "#ea580c"
+];
+
+function getTodayDrawCount(stuId) {
+  const today = normalizeToSchoolDay();
+  if (!db.drawHistory || !db.drawHistory[today]) return 0;
+  return db.drawHistory[today][stuId] || 0;
+}
+
+// 計算學生當日抽籤權重（未抽過=100，抽過1次=12，抽過2次=3，3次以上=1）
+function getStudentDrawWeight(stuId) {
+  const reduceEl = document.getElementById('reduceRepeatProb');
+  const shouldReduce = !reduceEl || reduceEl.checked;
+  if (!shouldReduce) return 100;
+
+  const cnt = getTodayDrawCount(stuId);
+  if (cnt === 0) return 100;
+  if (cnt === 1) return 12;
+  if (cnt === 2) return 3;
+  return 1;
+}
+
+function getActiveWheelCandidates() {
+  if (drawCandidates.size > 0) {
+    return Array.from(drawCandidates).sort();
+  }
+  return db.students.map(s => s.id);
+}
+
+function resetTodayDrawHistory() {
+  const today = normalizeToSchoolDay();
+  if (!confirm(`確定要重置今日（${today}）所有同學的被抽中次數，恢復全班相同機率嗎？`)) return;
+  if (!db.drawHistory) db.drawHistory = {};
+  db.drawHistory[today] = {};
+  addLog("抽籤", `重置 [${today}] 當日抽籤次數權重`);
+  renderDrawSeating();
+}
 
 function renderDrawSeating() {
   const seatingGrid = document.getElementById('drawSeatingGrid');
@@ -1419,22 +2225,104 @@ function renderDrawSeating() {
       if (!stu) return;
 
       const isCandidate = drawCandidates.has(stu.id);
+      const drawnCnt = getTodayDrawCount(stu.id);
+      const weight = getStudentDrawWeight(stu.id);
+
       desksHtml += `
-        <div class="seat-desk ${isCandidate ? 'candidate' : ''}" id="draw-seat-${stu.id}" onclick="toggleDrawCandidate('${stu.id}')" style="min-height:70px;">
+        <div class="seat-desk ${isCandidate ? 'candidate' : ''}" id="draw-seat-${stu.id}" onclick="toggleDrawCandidate('${stu.id}')" style="min-height:72px;">
           <div class="seat-desk-top">
             <span class="seat-desk-num">${stu.id}</span>
+            <span style="font-size:0.75rem; font-weight:bold; color:${drawnCnt > 0 ? '#dc2626' : '#16a34a'};">
+              ${drawnCnt > 0 ? `今日抽${drawnCnt}次(權重${weight}%)` : '100%'}
+            </span>
           </div>
-          <div class="seat-desk-name" style="margin-top:6px; font-size:1.2rem;">${stu.name}</div>
+          <div class="seat-desk-name" style="margin-top:4px; font-size:1.1rem;">${stu.name}</div>
         </div>
       `;
     });
     colBox.innerHTML = colHeaderHtml + desksHtml;
     seatingGrid.appendChild(colBox);
   });
+
+  drawRouletteWheel(currentWheelRotationDeg);
+}
+
+// 繪製 HTML5 Canvas 動態指針大輪盤
+function drawRouletteWheel(rotationDeg = 0, winnerIds = []) {
+  const canvas = document.getElementById('rouletteCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
+  const radius = cx - 12;
+
+  const list = getActiveWheelCandidates();
+  document.getElementById('wheelCandidateCountLabel').textContent = `（目前候選 ${list.length} 人）`;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (list.length === 0) return;
+
+  const sliceAngle = (2 * Math.PI) / list.length;
+  // 頂部指針位於 -90 度 (-Math.PI / 2)
+  const rotRad = (rotationDeg * Math.PI) / 180;
+
+  list.forEach((stuId, idx) => {
+    const stu = db.students.find(s => s.id === stuId) || { id: stuId, name: "" };
+    const startAngle = -Math.PI / 2 + idx * sliceAngle + rotRad;
+    const endAngle = startAngle + sliceAngle;
+
+    const isWinner = winnerIds.includes(stuId);
+    const drawnCnt = getTodayDrawCount(stuId);
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, radius, startAngle, endAngle);
+    ctx.closePath();
+
+    if (isWinner) {
+      ctx.fillStyle = "#10b981";
+    } else if (drawnCnt > 0) {
+      ctx.fillStyle = "#64748b"; // 已抽過降權者顯示深灰藍
+    } else {
+      ctx.fillStyle = WHEEL_COLORS[idx % WHEEL_COLORS.length];
+    }
+    ctx.fill();
+    ctx.lineWidth = isWinner ? 4 : 2;
+    ctx.strokeStyle = "#ffffff";
+    ctx.stroke();
+
+    // 繪製學生座號與姓名文字
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(startAngle + sliceAngle / 2);
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#ffffff";
+    ctx.font = list.length > 14 ? "bold 13px 'Microsoft JhengHei'" : "bold 16px 'Microsoft JhengHei'";
+    const labelText = `${stu.id} ${stu.name}${drawnCnt > 0 ? '(降)' : ''}`;
+    ctx.fillText(labelText, radius - 14, 5);
+    ctx.restore();
+  });
+
+  // 外框金邊
+  ctx.beginPath();
+  ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
+  ctx.lineWidth = 6;
+  ctx.strokeStyle = "#1e293b";
+  ctx.stroke();
+}
+
+// 根據目前輪盤角度，計算頂部指針 (-90度) 指到的候選人索引
+function getPointedCandidateId(rotationDeg, list) {
+  if (!list.length) return null;
+  const sliceDeg = 360 / list.length;
+  // 頂部是基準 0，當順時針轉動 rotationDeg 時，位於頂部的扇形索引為：
+  const normalized = ((360 - (rotationDeg % 360)) + 360) % 360;
+  const idx = Math.floor(normalized / sliceDeg) % list.length;
+  return list[idx];
 }
 
 function toggleDrawCandidate(stuId) {
-  if(isDrawing) return;
+  if (isDrawing) return;
   if (drawCandidates.has(stuId)) {
     drawCandidates.delete(stuId);
   } else {
@@ -1444,88 +2332,146 @@ function toggleDrawCandidate(stuId) {
 }
 
 function clearDrawCandidates() {
-  if(isDrawing) return;
+  if (isDrawing) return;
   drawCandidates.clear();
   renderDrawSeating();
 }
 
 function selectAllForDraw() {
-  if(isDrawing) return;
+  if (isDrawing) return;
   db.students.forEach(s => drawCandidates.add(s.id));
   renderDrawSeating();
 }
 
-function startDraw() {
-  let count = parseInt(document.getElementById('drawCount').value, 10) || 1;
-  
-  if (drawCandidates.size === 0) {
-    selectAllForDraw();
+// 依權重隨機抽取 1 名不重複得主
+function pickWeightedRandomId(poolIds) {
+  const weights = poolIds.map(id => getStudentDrawWeight(id));
+  const totalWeight = weights.reduce((a, b) => a + b, 0);
+  let r = Math.random() * totalWeight;
+  for (let i = 0; i < poolIds.length; i++) {
+    r -= weights[i];
+    if (r <= 0) return poolIds[i];
   }
+  return poolIds[poolIds.length - 1];
+}
 
-  if (count > drawCandidates.size) {
-    alert(`目前候選名單只有 ${drawCandidates.size} 人，無法抽出 ${count} 人喔！`);
+function startDraw() {
+  if (isDrawing) return;
+
+  let count = parseInt(document.getElementById('drawCount').value, 10) || 1;
+  let laps = parseInt(document.getElementById('drawLaps').value, 10);
+  if (isNaN(laps) || laps < 1) laps = 5;
+  if (laps > 30) laps = 30;
+
+  const candidates = getActiveWheelCandidates();
+  if (count > candidates.length) {
+    alert(`目前候選名單只有 ${candidates.length} 人，無法抽出 ${count} 人喔！`);
     return;
   }
-  if (isDrawing) return;
-  
+
   isDrawing = true;
   document.getElementById('startDrawBtn').disabled = true;
-  
-  const candidates = Array.from(drawCandidates);
-  const shuffle = (arr) => arr.slice().sort(() => 0.5 - Math.random());
-  const winners = shuffle(candidates).slice(0, count);
-  
-  let cycles = 0;
+
+  // 1. 根據「當日調降後權重」抽出中獎名單
+  const remainingPool = [...candidates];
+  const winners = [];
+  for (let i = 0; i < count; i++) {
+    const picked = pickWeightedRandomId(remainingPool);
+    winners.push(picked);
+    remainingPool.splice(remainingPool.indexOf(picked), 1);
+  }
+
+  // 主指針停在第一位得獎者扇形正中央（加入微小隨機偏移讓視覺更自然）
+  const mainWinnerId = winners[0];
+  const winnerIdx = candidates.indexOf(mainWinnerId);
+  const sliceDeg = 360 / candidates.length;
+  const randomInnerOffset = (0.2 + Math.random() * 0.6) * sliceDeg;
+  const targetNormalizedDeg = (360 - (winnerIdx * sliceDeg + randomInnerOffset) + 360) % 360;
+
+  const currentMod = ((currentWheelRotationDeg % 360) + 360) % 360;
+  let deltaDeg = targetNormalizedDeg - currentMod;
+  if (deltaDeg <= 0) deltaDeg += 360;
+
+  const totalSpinDeg = (laps * 360) + deltaDeg;
+  const startRotation = currentWheelRotationDeg;
+  const finalRotation = startRotation + totalSpinDeg;
+
   const speed = document.getElementById('drawSpeed').value;
-  let maxCycles = speed === 'fast' ? 15 : (speed === 'slow' ? 45 : 25); 
-  let currentDelay = speed === 'fast' ? 20 : (speed === 'slow' ? 60 : 35);
+  const basePerLapMs = speed === 'fast' ? 350 : (speed === 'slow' ? 900 : 600);
+  const durationMs = Math.min(12000, Math.max(1800, laps * basePerLapMs));
 
   document.querySelectorAll('#drawSeatingGrid .seat-desk').forEach(el => {
     el.classList.remove('highlighting', 'winner-pulse');
   });
 
-  const runAnimation = () => {
-    candidates.forEach(id => {
-      const el = document.getElementById(`draw-seat-${id}`);
-      if(el) el.classList.remove('highlighting');
-    });
+  const startTime = performance.now();
+  let lastPointedId = null;
 
-    cycles++;
-    
-    if (cycles <= maxCycles) {
-      const flashIds = shuffle(candidates).slice(0, count);
-      flashIds.forEach(id => {
-        const el = document.getElementById(`draw-seat-${id}`);
-        if (el) el.classList.add('highlighting');
-      });
+  const animateWheel = (now) => {
+    const elapsed = now - startTime;
+    const progress = Math.min(1, elapsed / durationMs);
+    // Cubic Ease-Out 物理減速曲線
+    const easeOut = 1 - Math.pow(1 - progress, 3.5);
+    currentWheelRotationDeg = startRotation + totalSpinDeg * easeOut;
 
-      const progress = cycles / maxCycles;
-      let increment = 2;
-      if(speed === 'fast') {
-        increment = progress > 0.8 ? 10 : progress > 0.5 ? 4 : 1;
-      } else if (speed === 'slow') {
-        increment = progress > 0.8 ? 30 : progress > 0.5 ? 12 : 3;
-      } else {
-        increment = progress > 0.8 ? 20 : progress > 0.5 ? 8 : 2;
+    drawRouletteWheel(currentWheelRotationDeg);
+
+    // 同步高亮目前指針指到的座位
+    const pointedId = getPointedCandidateId(currentWheelRotationDeg, candidates);
+    if (pointedId && pointedId !== lastPointedId) {
+      if (lastPointedId) {
+        const prevEl = document.getElementById(`draw-seat-${lastPointedId}`);
+        if (prevEl) prevEl.classList.remove('highlighting');
       }
-      currentDelay += increment;
-      setTimeout(runAnimation, currentDelay);
+      const curEl = document.getElementById(`draw-seat-${pointedId}`);
+      if (curEl) curEl.classList.add('highlighting');
+      const pStu = db.students.find(s => s.id === pointedId);
+      document.getElementById('wheelCurrentPointingLabel').textContent = `👉 指針掃描中：${pointedId} ${pStu ? pStu.name : ''}`;
+      lastPointedId = pointedId;
+    }
+
+    if (progress < 1) {
+      requestAnimationFrame(animateWheel);
     } else {
+      // 旋轉結束！
+      currentWheelRotationDeg = finalRotation;
       isDrawing = false;
       document.getElementById('startDrawBtn').disabled = false;
-      
+
+      document.querySelectorAll('#drawSeatingGrid .seat-desk').forEach(el => {
+        el.classList.remove('highlighting');
+      });
+
+      // 記錄今日抽中次數（調降今日後續機率）
+      const today = normalizeToSchoolDay();
+      if (!db.drawHistory) db.drawHistory = {};
+      if (!db.drawHistory[today]) db.drawHistory[today] = {};
+      winners.forEach(id => {
+        db.drawHistory[today][id] = (db.drawHistory[today][id] || 0) + 1;
+      });
+
+      const winnerNamesStr = winners.map(id => {
+        const s = db.students.find(x => x.id === id);
+        return s ? `${s.id}${s.name}` : id;
+      }).join('、');
+
+      addLog("抽籤", `輪盤轉動 ${laps} 圈抽中：${winnerNamesStr}`);
+      renderDrawSeating();
+      drawRouletteWheel(currentWheelRotationDeg, winners);
+
       winners.forEach(id => {
         const activeEl = document.getElementById(`draw-seat-${id}`);
-        if(activeEl) activeEl.classList.add('winner-pulse');
+        if (activeEl) activeEl.classList.add('winner-pulse');
       });
-      
+
+      document.getElementById('wheelCurrentPointingLabel').textContent = `🎉 恭喜抽中：${winnerNamesStr}！`;
       setTimeout(() => {
         showWinnerModal(winners);
-      }, 800);
+      }, 650);
     }
   };
 
-  runAnimation();
+  requestAnimationFrame(animateWheel);
 }
 
 function showWinnerModal(winnerIds) {
@@ -1535,7 +2481,7 @@ function showWinnerModal(winnerIds) {
   
   document.getElementById('drawWinnerAddPointBtn').onclick = () => {
     closeModal('drawWinnerModal');
-    document.querySelectorAll('.tab-btn')[2].click(); 
+    document.querySelectorAll('.tab-btn')[3].click(); 
     
     if (winnerIds.length === 1) {
       openStudentPointModal(winnerStus[0]); 
@@ -1546,7 +2492,7 @@ function showWinnerModal(winnerIds) {
   document.getElementById('drawWinnerModal').classList.add('active');
 }
 
-// ==================== 出缺席打卡 ====================
+// ==================== 5. 出缺席打卡 ====================
 function onAttDateChange(val) {
   const checked = normalizeToSchoolDay(val);
   if (checked !== val) {
@@ -1610,7 +2556,7 @@ function renderAttendance() {
   const dateStr = currentAttDate;
   if (!db.attendance[dateStr]) db.attendance[dateStr] = {};
   const dayRecord = db.attendance[dateStr];
-  let inCount = 0, outCount = 0, leaveCount = 0;
+  let inCount = 0, outCount = 0;
 
   const seatingGrid = document.getElementById('attSeatingGrid');
   seatingGrid.innerHTML = "";
@@ -1633,7 +2579,6 @@ function renderAttendance() {
       const rec = dayRecord[stu.id] || { status: 'uncheck', inTime: null, outTime: null };
       if (rec.inTime) inCount++;
       if (rec.outTime) outCount++;
-      if (rec.status === 'leave') leaveCount++;
 
       let cardClass = "";
       let statusBadge = "未打卡";
@@ -1759,6 +2704,7 @@ function changePin() {
 
 function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 function renderAll() {
+  renderRoutinePage();
   renderHomeworkBoard();
   renderPointsAndLeaderboard();
   renderDrawSeating();
@@ -1766,14 +2712,15 @@ function renderAll() {
   renderLogs();
 }
 
+document.getElementById('routineDateInput').value = currentRoutineDate;
 document.getElementById('hwDateInput').value = currentHwDate;
 document.getElementById('pointDateInput').value = currentPointDate;
 document.getElementById('seatingDateInput').value = currentPointDate;
 document.getElementById('attDate').value = currentAttDate;
 
 renderAll();
-// 啟動時：若本機有上次未同步成功的資料，會優先保護並自動重推上雲端；若無則載入雲端最新資料
-loadCloudDB(false);
+// 啟動或重整網頁時：先執行雙向比對，若本機有未上傳成功或較新的紀錄，會優先合併並上傳至試算表！
+syncWithComparisonOnLoad(false);
 </script>
 </body>
 </html>
