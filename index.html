@@ -29,19 +29,20 @@
   body { margin: 0; background: var(--bg); color: var(--dark); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
   header {
-    background: var(--dark); color: white; padding: 8px 14px;
+    background: var(--dark); color: white; padding: 6px 14px;
     display: flex; justify-content: space-between; align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 20; flex-wrap: wrap; gap: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 20; flex-wrap: wrap; gap: 6px;
+    flex-shrink: 0;
   }
   .brand { display: flex; align-items: center; gap: 10px; }
-  .class-badge { background: var(--primary); color: white; font-weight: 900; font-size: 1.3rem; padding: 4px 10px; border-radius: 8px; }
-  .brand h1 { margin: 0; font-size: 1.2rem; }
+  .class-badge { background: var(--primary); color: white; font-weight: 900; font-size: 1.25rem; padding: 3px 10px; border-radius: 8px; }
+  .brand h1 { margin: 0; font-size: 1.15rem; }
   .clock-box { display: flex; align-items: center; gap: 8px; }
-  .clock { font-size: 0.95rem; background: rgba(255,255,255,0.12); padding: 5px 9px; border-radius: 6px; font-weight: bold; font-variant-numeric: tabular-nums; }
+  .clock { font-size: 0.92rem; background: rgba(255,255,255,0.12); padding: 4px 9px; border-radius: 6px; font-weight: bold; font-variant-numeric: tabular-nums; }
   
   #updateToast {
-    background: #16a34a; color: white; font-size: 0.82rem; font-weight: bold;
-    padding: 4px 10px; border-radius: 20px; opacity: 0; transition: opacity 0.3s ease;
+    background: #16a34a; color: white; font-size: 0.8rem; font-weight: bold;
+    padding: 3px 10px; border-radius: 20px; opacity: 0; transition: opacity 0.3s ease;
     display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px rgba(22,163,74,0.4);
   }
   #updateToast.show { opacity: 1; }
@@ -49,14 +50,14 @@
   .nav-tabs { display: flex; gap: 5px; flex-wrap: wrap; }
   .tab-btn {
     background: rgba(255,255,255,0.1); color: #cbd5e1; border: none;
-    padding: 8px 13px; font-size: 0.95rem; font-weight: bold; border-radius: 8px;
+    padding: 7px 12px; font-size: 0.92rem; font-weight: bold; border-radius: 8px;
     cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 5px;
   }
   .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 0 10px rgba(37,99,235,0.6); }
 
-  .admin-controls { display: flex; align-items: center; gap: 8px; }
+  .admin-controls { display: flex; align-items: center; gap: 6px; }
   .cloud-status {
-    padding: 6px 11px; font-size: 0.85rem; font-weight: bold; border-radius: 8px;
+    padding: 5px 10px; font-size: 0.82rem; font-weight: bold; border-radius: 8px;
     display: inline-flex; align-items: center; gap: 5px; transition: 0.2s; cursor: pointer;
   }
   .cloud-status.synced { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
@@ -68,7 +69,7 @@
   }
 
   .mode-btn {
-    padding: 7px 12px; font-size: 0.92rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;
+    padding: 6px 11px; font-size: 0.88rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;
   }
   .mode-student { background: var(--warning); color: white; }
   .mode-teacher { background: var(--danger); color: white; box-shadow: 0 0 12px rgba(220,38,38,0.7); }
@@ -79,28 +80,26 @@
   body.is-teacher .teacher-only-block { display: block !important; }
 
   main {
-    flex: 1; overflow-y: auto; padding: 10px 16px; display: flex; flex-direction: column;
-    scrollbar-width: none; -ms-overflow-style: none;
+    flex: 1; overflow: hidden; padding: 8px 14px; display: flex; flex-direction: column; min-height: 0;
   }
-  main::-webkit-scrollbar { display: none; }
 
-  .page { display: none; height: 100%; flex-direction: column; gap: 10px; }
+  .page { display: none; flex: 1; min-height: 0; flex-direction: column; gap: 8px; overflow: hidden; }
   .page.active { display: flex; }
 
   .toolbar {
-    background: white; padding: 8px 14px; border-radius: 12px;
+    background: white; padding: 6px 12px; border-radius: 10px;
     display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); flex-shrink: 0;
   }
   .weekday-bar { display: flex; gap: 5px; align-items: center; }
   .day-pill {
-    padding: 6px 11px; border-radius: 8px; font-weight: 900; font-size: 0.92rem;
+    padding: 5px 10px; border-radius: 8px; font-weight: 900; font-size: 0.88rem;
     border: 2px solid #cbd5e1; background: #f8fafc; cursor: pointer; color: var(--dark);
   }
   .day-pill.active { background: var(--primary); color: white; border-color: var(--primary); }
 
   .btn {
-    padding: 7px 13px; border-radius: 8px; font-size: 0.95rem; font-weight: bold;
+    padding: 6px 12px; border-radius: 8px; font-size: 0.9rem; font-weight: bold;
     border: none; cursor: pointer; transition: 0.15s; display: inline-flex; align-items: center; gap: 5px;
   }
   .btn:active { transform: scale(0.96); }
@@ -110,143 +109,241 @@
   .btn-warning { background: var(--warning); color: white; }
   .btn-outline { background: white; border: 2px solid #cbd5e1; color: var(--dark); }
   .btn-outline.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
-  .form-control { padding: 6px 10px; font-size: 0.95rem; border: 2px solid #cbd5e1; border-radius: 8px; font-weight: bold; user-select: text; }
+  .form-control { padding: 5px 9px; font-size: 0.9rem; border: 2px solid #cbd5e1; border-radius: 8px; font-weight: bold; user-select: text; }
 
-  /* ==================== ☀️ 獨立放大無捲軸：每日班務看板 ==================== */
+  /* ==================== ☀️ 獨立滿版零捲軸：每日班務看板 ==================== */
   .routine-jump-bar {
     display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
   }
   .jump-pill {
-    padding: 6px 12px; border-radius: 20px; font-weight: 900; font-size: 0.9rem;
+    padding: 6px 13px; border-radius: 20px; font-weight: 900; font-size: 0.9rem;
     border: 2px solid #cbd5e1; background: #f8fafc; cursor: pointer; transition: 0.15s;
-    display: inline-flex; align-items: center; gap: 4px;
+    display: inline-flex; align-items: center; gap: 4px; color: var(--dark);
   }
-  .jump-pill:hover { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
-
-  /* 隱藏右側捲軸，由按鈕與滾輪平滑切換 */
-  .routine-scroll-Feed {
-    flex: 1; overflow-y: auto; scroll-behavior: smooth;
-    display: flex; flex-direction: column; gap: 22px; padding-bottom: 40px;
-    scrollbar-width: none; -ms-overflow-style: none;
+  .jump-pill:hover { border-color: var(--primary); background: var(--primary-light); }
+  .jump-pill.active {
+    background: var(--primary); color: white; border-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(37,99,235,0.4);
   }
-  .routine-scroll-Feed::-webkit-scrollbar { display: none; }
 
+  /* 舞台容器：固定滿版高度、零捲軸，每次只顯示一個完整區塊 */
+  .routine-stage-viewport {
+    flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column;
+  }
   .routine-stage-block {
-    background: white; border-radius: 18px; padding: 18px 22px;
+    display: none; flex: 1; min-height: 0; overflow: hidden;
+    background: white; border-radius: 16px; padding: 12px 18px;
     box-shadow: 0 6px 16px rgba(15,23,42,0.08);
     border-left: 10px solid var(--primary);
-    min-height: 78vh; display: flex; flex-direction: column; gap: 12px;
-    flex-shrink: 0;
+    flex-direction: column; gap: 10px;
   }
-  .routine-stage-block.stage-morning { border-left-color: #f59e0b; background: linear-gradient(180deg, #fffbeb 0%, #ffffff 35%); }
-  .routine-stage-block.stage-outdoor { border-left-color: #0d9488; background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 35%); }
-  .routine-stage-block.stage-lunch { border-left-color: #dc2626; background: linear-gradient(180deg, #fff1f2 0%, #ffffff 35%); }
-  .routine-stage-block.stage-nap { border-left-color: #4f46e5; background: linear-gradient(180deg, #eef2ff 0%, #ffffff 35%); }
-  .routine-stage-block.stage-indoor { border-left-color: #16a34a; background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 35%); }
+  .routine-stage-block.active-stage {
+    display: flex;
+  }
+  .routine-stage-block.stage-morning { border-left-color: #f59e0b; background: linear-gradient(180deg, #fffbeb 0%, #ffffff 30%); }
+  .routine-stage-block.stage-outdoor { border-left-color: #0d9488; background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 30%); }
+  .routine-stage-block.stage-lunch { border-left-color: #dc2626; background: linear-gradient(180deg, #fff1f2 0%, #ffffff 30%); }
+  .routine-stage-block.stage-nap { border-left-color: #4f46e5; background: linear-gradient(180deg, #eef2ff 0%, #ffffff 35%); transition: background 0.3s, color 0.3s; }
+  .routine-stage-block.stage-nap.nap-dark-mode {
+    background: linear-gradient(180deg, #090d16 0%, #111827 100%);
+    color: #f8fafc; border-left-color: #818cf8;
+  }
+  .routine-stage-block.stage-indoor { border-left-color: #16a34a; background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 30%); }
 
   .stage-header {
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
-    padding-bottom: 10px; border-bottom: 3px solid rgba(0,0,0,0.08);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+    padding-bottom: 8px; border-bottom: 2px solid rgba(0,0,0,0.08); flex-shrink: 0;
   }
+  .stage-nap.nap-dark-mode .stage-header { border-bottom-color: rgba(255,255,255,0.12); }
   .stage-title {
-    font-size: 1.55rem; font-weight: 900; display: flex; align-items: center; gap: 10px;
+    font-size: 1.38rem; font-weight: 900; display: flex; align-items: center; gap: 10px;
   }
   .stage-time-badge {
-    font-size: 0.98rem; font-weight: 900; padding: 4px 12px; border-radius: 20px;
+    font-size: 0.9rem; font-weight: 900; padding: 4px 12px; border-radius: 20px;
     background: var(--dark); color: #ffd166;
   }
 
-  /* 精簡版值日生頂部橫條列（不佔早自習與作業空間） */
+  /* 精簡版值日生頂部橫條列 */
   .compact-duty-bar {
-    background: #fffdf5; border: 2px solid #fcd34d; border-radius: 12px;
-    padding: 8px 14px; display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 10px;
+    background: #fffdf5; border: 2px solid #fcd34d; border-radius: 10px;
+    padding: 6px 12px; display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 8px; flex-shrink: 0;
   }
   .compact-duty-pill {
-    background: white; border: 2px solid #cbd5e1; border-radius: 10px; padding: 5px 12px;
-    display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.15s;
+    background: white; border: 2px solid #cbd5e1; border-radius: 8px; padding: 3px 10px;
+    display: inline-flex; align-items: center; gap: 6px; cursor: pointer; transition: 0.15s;
   }
   .compact-duty-pill.status-done { background: #dcfce7; border-color: #16a34a; }
   .compact-duty-pill.status-leave { background: #fee2e2; border-color: #ef4444; opacity: 0.85; }
 
-  /* 早自習與作業 50/50 放大雙欄主體 */
+  /* 早自習與作業 50/50 滿版雙欄主體 */
   .morning-main-split {
-    display: grid; grid-template-columns: 1fr 1.1fr; gap: 18px; flex: 1; min-height: 0;
+    display: grid; grid-template-columns: 1fr 1.1fr; gap: 14px; flex: 1; min-height: 0; overflow: hidden;
   }
   .sub-panel {
     background: rgba(255,255,255,0.95); border: 2px solid #e2e8f0; border-radius: 14px;
-    padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04); min-height: 0; overflow: hidden;
   }
   .sub-panel-title {
-    font-size: 1.35rem; font-weight: 900; display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 2px dashed #cbd5e1; padding-bottom: 8px;
+    font-size: 1.2rem; font-weight: 900; display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 2px dashed #cbd5e1; padding-bottom: 6px; flex-shrink: 0;
   }
 
   .routine-note-display {
-    font-size: 1.45rem; font-weight: 900; line-height: 1.75; white-space: pre-wrap; color: #1e293b;
-    padding: 8px 6px;
+    font-size: 1.35rem; font-weight: 900; line-height: 1.65; white-space: pre-wrap; color: #1e293b;
+    padding: 4px; flex: 1; overflow-y: auto;
   }
+  /* 教師模式下：直接以編輯框原位取代顯示框，不擠壓版面高度 */
+  body.is-teacher .swap-on-teacher .routine-note-display { display: none !important; }
   .routine-textarea {
-    width: 100%; min-height: 110px; border: 2px solid #cbd5e1; border-radius: 10px; padding: 10px;
-    font-size: 1.15rem; font-weight: bold; resize: vertical; user-select: text; background: white;
+    width: 100%; flex: 1; min-height: 60px; border: 2px solid #94a3b8; border-radius: 10px; padding: 10px;
+    font-size: 1.2rem; font-weight: bold; line-height: 1.55; resize: none; user-select: text; background: #fffef7;
   }
 
-  /* 抬餐 8 人大卡片網格 */
-  .lunch-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  /* ==================== 🌳 外掃區 & 🏠 內掃區：100% 滿版不遮擋網格 ==================== */
+  /* 上午外掃：左右兩大群組並排（左：男廁與遊戲區6組，右：女廁6組），各採 2x3 滿版網格 */
+  .outdoor-two-groups-split {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px; flex: 1; min-height: 0; overflow: hidden;
   }
-  .duty-person-card {
-    background: #f8fafc; border: 3px solid #cbd5e1; border-radius: 14px; padding: 14px 16px;
-    display: flex; justify-content: space-between; align-items: center; gap: 8px;
-    cursor: pointer; transition: 0.15s; min-height: 92px;
+  .clean-group-column {
+    display: flex; flex-direction: column; gap: 6px; min-height: 0; overflow: hidden;
+    background: rgba(248,250,252,0.7); border: 2px solid #cbd5e1; border-radius: 12px; padding: 8px 10px;
   }
-  .duty-person-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
-  .duty-person-card.status-done { background: #dcfce7; border-color: #16a34a; }
-  .duty-person-card.status-leave { background: #fee2e2; border-color: #ef4444; opacity: 0.85; }
-  .badge-makeup { background: #7c3aed; color: white; font-size: 0.78rem; padding: 2px 7px; border-radius: 6px; font-weight: 900; }
-  .badge-sub { background: #0284c7; color: white; font-size: 0.78rem; padding: 2px 7px; border-radius: 6px; font-weight: 900; }
-
-  /* 內外掃大卡片網格 ＋ 教師拖拉特效 */
   .clean-group-title {
-    font-size: 1.2rem; font-weight: 900; color: #0f172a; background: #e2e8f0;
-    padding: 8px 14px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;
+    font-size: 1.05rem; font-weight: 900; color: #0f172a; background: #e2e8f0;
+    padding: 5px 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;
+    flex-shrink: 0;
   }
-  .clean-cards-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  .outdoor-cards-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr);
+    gap: 8px; flex: 1; min-height: 0;
+  }
+  /* 下午內掃（7組 + 1張放學檢查卡 = 8格，採 4x2 滿版網格） */
+  .indoor-cards-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr);
+    gap: 10px; flex: 1; min-height: 0;
   }
   .clean-zone-card {
-    background: #ffffff; border: 3px solid #cbd5e1; border-radius: 14px; padding: 14px 16px;
-    display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
-    cursor: pointer; transition: 0.15s;
+    background: #ffffff; border: 2.5px solid #cbd5e1; border-radius: 10px; padding: 8px 10px;
+    display: flex; flex-direction: column; justify-content: space-between; gap: 4px;
+    cursor: pointer; transition: 0.15s; min-height: 0; overflow: hidden;
   }
-  .clean-zone-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+  .clean-zone-card:hover { border-color: var(--primary); }
   .clean-zone-card.checked { background: #dcfce7; border-color: #16a34a; }
   .clean-zone-card.drag-over-zone {
-    border: 3px dashed #f59e0b !important; background: #fffbeb !important; transform: scale(1.02);
+    border: 3px dashed #f59e0b !important; background: #fffbeb !important; transform: scale(1.01);
   }
   .clean-member-chip {
-    background: #eff6ff; border: 2px solid #3b82f6; color: #1e3a8a; border-radius: 8px;
-    padding: 4px 10px; font-size: 1.05rem; font-weight: 900; display: inline-flex; align-items: center; gap: 5px;
-    transition: 0.15s;
+    background: #eff6ff; border: 1.5px solid #3b82f6; color: #1e3a8a; border-radius: 6px;
+    padding: 2px 7px; font-size: 0.92rem; font-weight: 900; display: inline-flex; align-items: center; gap: 3px;
+    transition: 0.12s;
   }
-  body.is-teacher .clean-member-chip {
-    cursor: grab;
-  }
-  body.is-teacher .clean-member-chip:active {
-    cursor: grabbing; transform: scale(0.95);
-  }
+  body.is-teacher .clean-member-chip { cursor: grab; }
+  body.is-teacher .clean-member-chip:active { cursor: grabbing; transform: scale(0.95); }
   .clean-zone-card.checked .clean-member-chip {
     background: #ffffff; border-color: #16a34a; color: #14532d;
   }
   .clean-desc-text {
-    font-size: 0.92rem; font-weight: bold; color: #475569; line-height: 1.4;
-    background: rgba(241,245,249,0.8); padding: 6px 8px; border-radius: 8px;
+    font-size: 0.8rem; font-weight: bold; color: #475569; line-height: 1.25;
+    background: rgba(241,245,249,0.85); padding: 4px 6px; border-radius: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0;
+  }
+
+  /* ==================== 🍱 午餐抬餐 8 人滿版網格 ==================== */
+  .lunch-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr);
+    gap: 12px; flex: 1; min-height: 0;
+  }
+  .duty-person-card {
+    background: #f8fafc; border: 3px solid #cbd5e1; border-radius: 14px; padding: 12px 14px;
+    display: flex; justify-content: space-between; align-items: center; gap: 8px;
+    cursor: pointer; transition: 0.15s; min-height: 0;
+  }
+  .duty-person-card:hover { border-color: var(--primary); }
+  .duty-person-card.status-done { background: #dcfce7; border-color: #16a34a; }
+  .duty-person-card.status-leave { background: #fee2e2; border-color: #ef4444; opacity: 0.85; }
+  .badge-makeup { background: #7c3aed; color: white; font-size: 0.76rem; padding: 2px 6px; border-radius: 6px; font-weight: 900; }
+  .badge-sub { background: #0284c7; color: white; font-size: 0.76rem; padding: 2px 6px; border-radius: 6px; font-weight: 900; }
+
+  /* ==================== 🕰️ 午休專屬：3D 分鐘翻頁電子時鐘 (Flip Clock) ==================== */
+  .nap-split-layout {
+    display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; flex: 1; min-height: 0; overflow: hidden;
+  }
+  .flip-clock-panel {
+    background: #0f172a; border-radius: 18px; padding: 20px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.6), 0 8px 20px rgba(15,23,42,0.25);
+    border: 3px solid #334155; position: relative;
+  }
+  .flip-clock-wrapper {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+  }
+  .flip-colon {
+    font-size: 4.5rem; font-weight: 900; color: #94a3b8; line-height: 1;
+    animation: blinkColon 1s infinite; padding-bottom: 12px;
+  }
+  @keyframes blinkColon {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+  .flip-unit-box {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .flip-unit-label {
+    font-size: 0.9rem; font-weight: 900; color: #94a3b8; letter-spacing: 3px;
+  }
+  /* 3D 翻頁卡本體 */
+  .flip-card {
+    position: relative; width: 155px; height: 185px; border-radius: 16px;
+    background: #1e293b; border: 3px solid #475569;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.55);
+    display: flex; align-items: center; justify-content: center;
+    perspective: 600px; overflow: hidden; cursor: pointer;
+  }
+  .flip-card.seconds-card {
+    width: 96px; height: 115px; border-radius: 12px; background: #172033;
+  }
+  /* 中間機械翻頁軸線與缺口 */
+  .flip-card::before {
+    content: ""; position: absolute; top: 50%; left: 0; right: 0; height: 3px;
+    background: rgba(0,0,0,0.75); z-index: 10; transform: translateY(-50%);
+    box-shadow: 0 1px 2px rgba(255,255,255,0.1);
+  }
+  .flip-card::after {
+    content: ""; position: absolute; top: 50%; left: -6px; right: -6px; height: 12px;
+    transform: translateY(-50%);
+    border-left: 10px solid #0f172a; border-right: 10px solid #0f172a; z-index: 11; pointer-events: none;
+  }
+  .flip-card-num {
+    font-family: "Arial Black", "Impact", "Segoe UI", sans-serif;
+    font-size: 6.8rem; font-weight: 900; color: #f8fafc; line-height: 1;
+    font-variant-numeric: tabular-nums; letter-spacing: -2px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  }
+  .flip-card.seconds-card .flip-card-num {
+    font-size: 3.6rem; color: #38bdf8;
+  }
+  /* 觸發分鐘/小時翻頁時的 3D 機械翻轉動畫 */
+  .flip-card.do-flip {
+    animation: mechanicalFlip 0.65s cubic-bezier(0.35, 0.1, 0.25, 1);
+  }
+  @keyframes mechanicalFlip {
+    0% { transform: rotateX(0deg); filter: brightness(1); }
+    45% { transform: rotateX(-90deg) scale(0.96); filter: brightness(0.5); border-color: #fbbf24; }
+    55% { transform: rotateX(70deg) scale(1.02); filter: brightness(1.3); border-color: #fbbf24; }
+    100% { transform: rotateX(0deg); filter: brightness(1); }
+  }
+  .nap-status-banner {
+    background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15);
+    color: #fde047; padding: 8px 20px; border-radius: 30px; font-size: 1.15rem; font-weight: 900;
+    letter-spacing: 1px;
   }
 
   /* 作業與其他分頁樣式 */
   .teacher-hw-setup {
     display: none; background: #fffbeb; border: 2px solid #f59e0b; border-radius: 12px;
-    padding: 8px 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    padding: 8px 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; flex-shrink: 0;
   }
   .hw-main-split { display: grid; grid-template-columns: 1.55fr 1fr; gap: 14px; flex: 1; min-height: 0; }
   .hw-checklist-panel { background: white; border-radius: 14px; padding: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden; }
@@ -287,18 +384,18 @@
   }
   .chalk-num-chip:hover { background: var(--chalk-red); }
 
-  /* 座位表視角共用排版 ＋ 教師拖拉換座位特效 */
+  /* 座位表視角共用排版 */
   .seating-layout-card {
-    background: white; border-radius: 14px; padding: 14px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06); flex: 1; display: flex; flex-direction: column; overflow: hidden;
+    background: white; border-radius: 14px; padding: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06); flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden;
   }
   .podium-bar {
     background: #334155; color: #f8fafc; text-align: center; font-weight: 900;
-    padding: 8px; border-radius: 8px; margin-bottom: 12px; letter-spacing: 4px; font-size: 1.1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 6px; border-radius: 8px; margin-bottom: 10px; letter-spacing: 4px; font-size: 1.05rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex-shrink: 0;
   }
   .seating-grid {
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; flex: 1; overflow-y: auto; padding: 4px;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; flex: 1; min-height: 0; overflow-y: auto; padding: 2px;
     scrollbar-width: none;
   }
   .seating-grid::-webkit-scrollbar { display: none; }
@@ -310,14 +407,14 @@
     border: 2px dashed var(--primary); background: #eff6ff;
   }
   .column-header {
-    text-align: center; font-weight: 900; font-size: 1rem; color: #1e293b;
+    text-align: center; font-weight: 900; font-size: 0.98rem; color: #1e293b;
     padding-bottom: 6px; border-bottom: 2px solid #cbd5e1;
     display: flex; flex-direction: column; gap: 4px; align-items: center;
   }
   .seat-desk {
     background: white; border: 2px solid #cbd5e1; border-radius: 10px;
-    padding: 8px 6px; text-align: center; cursor: pointer; transition: 0.15s;
-    display: flex; flex-direction: column; justify-content: space-between; min-height: 76px;
+    padding: 7px 6px; text-align: center; cursor: pointer; transition: 0.15s;
+    display: flex; flex-direction: column; justify-content: space-between; flex: 1; min-height: 68px;
   }
   .seat-desk:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(37,99,235,0.15); }
   .seat-desk:active { transform: scale(0.95); }
@@ -339,7 +436,7 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;
   }
   .wheel-Stage {
-    position: relative; width: 420px; height: 420px; display: flex; align-items: center; justify-content: center;
+    position: relative; width: 400px; height: 400px; display: flex; align-items: center; justify-content: center;
   }
   .wheel-pointer {
     position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
@@ -365,13 +462,13 @@
 
   .seat-desk-top { display: flex; justify-content: space-between; align-items: center; }
   .seat-desk-num { background: var(--dark); color: white; font-weight: 900; font-size: 0.82rem; padding: 2px 6px; border-radius: 4px; }
-  .seat-desk-name { font-size: 1.1rem; font-weight: 900; margin: 3px 0; color: #0f172a; }
+  .seat-desk-name { font-size: 1.08rem; font-weight: 900; margin: 2px 0; color: #0f172a; }
   .seat-desk-pts { font-size: 0.82rem; font-weight: bold; color: var(--primary); }
 
   /* 積分表專用排版 */
-  .subj-score-table-wrapper { overflow-x: auto; flex: 1; padding-bottom: 8px; }
+  .subj-score-table-wrapper { overflow: auto; flex: 1; padding-bottom: 8px; }
   .subj-score-table { width: 100%; border-collapse: collapse; text-align: center; min-width: 780px; }
-  .subj-score-table th, .subj-score-table td { padding: 9px 6px; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
+  .subj-score-table th, .subj-score-table td { padding: 8px 6px; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
   .subj-score-table th { background: #f1f5f9; font-size: 0.98rem; font-weight: 900; position: sticky; top: 0; z-index: 10; }
   .subj-tag-btn { padding: 2px 7px; font-size: 0.82rem; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
   .subj-tag-btn.minus { background: #f3f4f6; color: #4b5563; margin-left: 2px; }
@@ -424,7 +521,7 @@
     <button class="tab-btn teacher-only" onclick="switchTab('logs', event)">🛡️ 504紀錄備份</button>
   </div>
   <div class="admin-controls">
-    <button class="btn btn-outline" style="padding: 6px 10px; font-size: 0.85rem;" onclick="manualSync()">🔄 雙向比對同步</button>
+    <button class="btn btn-outline" style="padding: 5px 10px; font-size: 0.82rem;" onclick="manualSync()">🔄 雙向比對同步</button>
     <span class="cloud-status synced" id="cloudStatusBadge" onclick="onCloudBadgeClick()" title="點擊可立即上傳並比對雲端狀態">☁️ 雲端連線中</span>
     <button id="modeBtn" class="mode-btn mode-student" onclick="toggleTeacherMode()">
       🔒 學生互動模式
@@ -433,7 +530,7 @@
 </header>
 
 <main>
-  <!-- ==================== 0. 獨立放大無捲軸：☀️ 每日班務看板 ==================== -->
+  <!-- ==================== 0. 獨立滿版零捲軸：☀️ 每日班務看板 ==================== -->
   <section id="page-routine" class="page active">
     <div class="toolbar">
       <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
@@ -441,22 +538,22 @@
         <input type="date" id="routineDateInput" class="form-control" onchange="onRoutineDateChange(this.value)">
         <button class="btn btn-outline" onclick="shiftRoutineDay(1)">下一日 ▶</button>
       </div>
-      <!-- 快速切換按鈕：早自習 -> 外掃區 -> 抬餐 -> 午休 -> 內掃區 -->
-      <div class="routine-jump-bar">
-        <span style="font-weight:900; font-size:0.9rem; color:var(--gray);">⚡ 時段切換：</span>
-        <button class="jump-pill" onclick="scrollToRoutineStage('stage-morning')">1️⃣ 早自習・作業</button>
-        <button class="jump-pill" onclick="scrollToRoutineStage('stage-outdoor')">2️⃣ 上午外掃 (7:50)</button>
-        <button class="jump-pill" onclick="scrollToRoutineStage('stage-lunch')">3️⃣ 午餐抬餐 (8人)</button>
-        <button class="jump-pill" onclick="scrollToRoutineStage('stage-nap')">4️⃣ 午休常規 (12:40~13:10)</button>
-        <button class="jump-pill" onclick="scrollToRoutineStage('stage-indoor')">5️⃣ 下午內掃 (3:35)</button>
+      <!-- 獨立分頁切換按鈕：點擊直接切換單一完整時段區塊，無捲軸、不露下一個區塊 -->
+      <div class="routine-jump-bar" id="routineStageTabs">
+        <span style="font-weight:900; font-size:0.88rem; color:var(--gray);">⚡ 時段區塊切換：</span>
+        <button class="jump-pill active" data-stage="stage-morning" onclick="switchRoutineStage('stage-morning')">1️⃣ 早自習・作業</button>
+        <button class="jump-pill" data-stage="stage-outdoor" onclick="switchRoutineStage('stage-outdoor')">2️⃣ 上午外掃 (7:50)</button>
+        <button class="jump-pill" data-stage="stage-lunch" onclick="switchRoutineStage('stage-lunch')">3️⃣ 午餐抬餐 (8人)</button>
+        <button class="jump-pill" data-stage="stage-nap" onclick="switchRoutineStage('stage-nap')">4️⃣ 午休時鐘 (12:40~13:10)</button>
+        <button class="jump-pill" data-stage="stage-indoor" onclick="switchRoutineStage('stage-indoor')">5️⃣ 下午內掃 (3:35)</button>
       </div>
     </div>
 
-    <!-- 無右側捲軸的放大區塊容器 -->
-    <div class="routine-scroll-Feed" id="routineScrollFeed">
+    <!-- 單一完整區塊舞台（每次僅顯示一個區塊，100% 滿版無捲軸） -->
+    <div class="routine-stage-viewport">
 
-      <!-- 區塊 1：🌅 早自習注意事項 ＆ 📚 今日作業（值日生改為頂部精簡橫列） -->
-      <div class="routine-stage-block stage-morning" id="stage-morning">
+      <!-- 區塊 1：🌅 早自習注意事項 ＆ 📚 今日作業（值日生為頂部精簡橫列） -->
+      <div class="routine-stage-block stage-morning active-stage" id="stage-morning">
         <div class="stage-header">
           <div class="stage-title" style="color:#b45309;">
             <span>1️⃣ 🌅 早自習注意事項 ＆ 📚 今日作業聯絡簿</span>
@@ -464,69 +561,70 @@
           <div style="display:flex; gap:8px; align-items:center;">
             <span class="stage-time-badge">早自習 07:30 ~ 07:50</span>
             <button class="btn btn-outline teacher-only" onclick="saveDefaultMorningNotes()">📌 設為預設早自習提醒</button>
+            <button class="btn btn-primary" onclick="switchRoutineStage('stage-outdoor')">下一時段：上午外掃 ▶</button>
           </div>
         </div>
 
         <!-- 🙋‍♂️ 頂部精簡橫列：今日值日生（2號2號輪值 ＋ 請假補當值） -->
         <div class="compact-duty-bar">
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            <strong style="color:#92400e; font-size:1rem;">🙋‍♂️ 今日值日生(2人)：</strong>
+            <strong style="color:#92400e; font-size:0.98rem;">🙋‍♂️ 今日值日生(2人)：</strong>
             <div id="dutyStudentGrid" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;"></div>
-            <span id="dutyPointerInfo" style="font-size:0.85rem; color:#b45309; font-weight:bold;"></span>
+            <span id="dutyPointerInfo" style="font-size:0.84rem; color:#b45309; font-weight:bold;"></span>
           </div>
           <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
             <div id="dutyMakeupQueueContainer" style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;"></div>
-            <button class="btn btn-success" style="padding:3px 8px; font-size:0.8rem;" onclick="confirmAllDutyStudents()">⚡ 2人完成</button>
-            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.8rem;" onclick="generateTodayDutyList(true)">🔄 重排</button>
-            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.8rem;" onclick="adjustDutyPointer()">⚙️ 起始號</button>
-            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.8rem;" onclick="manualAddDutyMakeup()">➕ 補當值</button>
+            <button class="btn btn-success" style="padding:3px 8px; font-size:0.78rem;" onclick="confirmAllDutyStudents()">⚡ 2人完成</button>
+            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.78rem;" onclick="generateTodayDutyList(true)">🔄 重排</button>
+            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.78rem;" onclick="adjustDutyPointer()">⚙️ 起始號</button>
+            <button class="btn btn-outline teacher-only" style="padding:3px 8px; font-size:0.78rem;" onclick="manualAddDutyMakeup()">➕ 補當值</button>
           </div>
         </div>
 
         <!-- 主體重點放大區：左半「早自習注意事項」、右半「今日作業與聯絡簿」 -->
         <div class="morning-main-split">
           <!-- 左大欄：早自習注意事項 -->
-          <div class="sub-panel">
+          <div class="sub-panel swap-on-teacher">
             <div class="sub-panel-title" style="color:#b45309;">
               <span>📢 早自習晨間任務與注意事項</span>
+              <span class="teacher-only" style="font-size:0.8rem; color:#d97706;">✏️ 直接打字即時自動存檔</span>
             </div>
-            <div id="morningNotesDisplay" class="routine-note-display" style="flex:1;"></div>
+            <div id="morningNotesDisplay" class="routine-note-display"></div>
             <textarea id="morningNotesInput" class="routine-textarea teacher-only-block" placeholder="輸入早自習注意事項（打字自動即時存檔）..." oninput="updateDailyRoutineNoteLive('morningNotes', this.value)"></textarea>
           </div>
 
           <!-- 右大欄：今日作業與聯絡簿事項 -->
-          <div class="sub-panel" style="border-color:#99f6e4; background:#f0fdfa;">
+          <div class="sub-panel swap-on-teacher" style="border-color:#99f6e4; background:#f0fdfa;">
             <div class="sub-panel-title" style="color:#0f766e;">
               <span>📚 今日作業與聯絡簿事項</span>
-              <button class="btn btn-primary teacher-only" style="padding:5px 12px; font-size:0.88rem;" onclick="document.querySelectorAll('.tab-btn')[1].click()">➕ 新增/管理作業欄</button>
+              <button class="btn btn-primary teacher-only" style="padding:4px 10px; font-size:0.84rem;" onclick="document.querySelectorAll('.tab-btn')[1].click()">➕ 新增/管理作業欄</button>
             </div>
-            <div id="routineHwList" style="display:flex; flex-direction:column; gap:10px; font-size:1.4rem; font-weight:900; color:#0f172a; flex:1;"></div>
-            <div style="margin-top:10px; border-top:2px dashed #5eead4; padding-top:10px;">
-              <div style="font-size:1.05rem; color:#0f766e; font-weight:900;">📌 聯絡簿補充提醒事項：</div>
-              <div id="routineHwNotesDisplay" class="routine-note-display" style="font-size:1.35rem;"></div>
-              <textarea id="routineHwNotesInput" class="routine-textarea teacher-only-block" style="min-height:75px;" placeholder="輸入聯絡簿補充提醒（打字自動即時存檔）..." oninput="updateDailyRoutineNoteLive('hwNotes', this.value)"></textarea>
+            <div id="routineHwList" style="display:flex; flex-direction:column; gap:8px; font-size:1.3rem; font-weight:900; color:#0f172a; flex:1; overflow-y:auto;"></div>
+            <div style="border-top:2px dashed #5eead4; padding-top:8px; display:flex; flex-direction:column; min-height:110px; flex-shrink:0;">
+              <div style="font-size:0.98rem; color:#0f766e; font-weight:900; margin-bottom:4px;">📌 聯絡簿補充提醒事項：</div>
+              <div id="routineHwNotesDisplay" class="routine-note-display" style="font-size:1.25rem;"></div>
+              <textarea id="routineHwNotesInput" class="routine-textarea teacher-only-block" style="min-height:70px;" placeholder="輸入聯絡簿補充提醒（例：明穿班服、帶圓規）..." oninput="updateDailyRoutineNoteLive('hwNotes', this.value)"></textarea>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 區塊 2：🌳 上午外掃區（7:50 ~ 8:10，支援教師拖拉學生換組） -->
+      <!-- 區塊 2：🌳 上午外掃區（7:50 ~ 8:10，左右對開 12 組滿版無遮擋） -->
       <div class="routine-stage-block stage-outdoor" id="stage-outdoor">
         <div class="stage-header">
           <div class="stage-title" style="color:#0f766e;">
-            <span>2️⃣ 🌳 上午外掃區人員分配與檢查</span>
+            <span>2️⃣ 🌳 上午外掃區人員分配與檢查（全12組滿版總覽）</span>
           </div>
-          <div style="display:flex; gap:8px; align-items:center;">
+          <div style="display:flex; gap:6px; align-items:center;">
             <span class="stage-time-badge">上午外掃 07:50 ~ 08:10</span>
             <button class="btn btn-success" onclick="checkCleaningZonesByType('outdoor')">⚡ 外掃全區檢查完成</button>
             <button class="btn btn-outline teacher-only" onclick="openCleaningModal()">✏️ 編輯明細</button>
-            <button class="btn btn-outline teacher-only" onclick="resetCleaningZonesToDefault()">🔄 還原預設掃區</button>
+            <button class="btn btn-outline teacher-only" onclick="resetCleaningZonesToDefault()">🔄 還原預設</button>
+            <button class="btn btn-primary" onclick="switchRoutineStage('stage-lunch')">下一時段：午餐抬餐 ▶</button>
           </div>
         </div>
-        <div style="font-size:1rem; font-weight:bold; color:var(--gray);">
-          💡 點擊卡片可標記今日「✅ 已打掃完成」。<span class="teacher-only" style="color:#b45309;">（🔓 導師模式下，可直接按住學生名牌「拖拉」至其他組別卡片調動位置！）</span>
-        </div>
-        <div id="outdoorCleaningContainer" style="display:flex; flex-direction:column; gap:14px;"></div>
+        <!-- 左右雙欄並排：左欄男廁與遊戲區6組(2x3)，右欄女廁6組(2x3)，完全不遮擋 -->
+        <div class="outdoor-two-groups-split" id="outdoorCleaningContainer"></div>
       </div>
 
       <!-- 區塊 3：🍱 午餐抬餐確認（8號8號輪值 ＋ 請假補抬機制） -->
@@ -539,46 +637,86 @@
             <span class="stage-time-badge">午餐時間 11:55 ~ 12:35</span>
             <button class="btn btn-success" onclick="confirmAllLunchDuty()">⚡ 8人全員完成</button>
             <button class="btn btn-primary teacher-only" onclick="generateTodayLunchList(true)">🔄 重新排定8人</button>
+            <button class="btn btn-primary" onclick="switchRoutineStage('stage-nap')">下一時段：午休時鐘 ▶</button>
           </div>
         </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; background:#ffe4e6; padding:10px 16px; border-radius:12px; font-size:1.1rem; font-weight:900; color:#9f1239;">
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#ffe4e6; padding:8px 14px; border-radius:10px; font-size:1.02rem; font-weight:900; color:#9f1239; flex-shrink:0;">
           <span id="lunchPointerInfo">目前輪值進度：計算中</span>
           <div style="display:flex; gap:8px; align-items:center;">
-            <span style="font-size:0.92rem; color:#be123c;">（點擊卡片切換「✅ 已完成」；點「😷 請假」自動列入補抬並遞補下一號）</span>
-            <button class="btn btn-outline teacher-only" style="padding:4px 10px; font-size:0.85rem;" onclick="adjustLunchPointer()">⚙️ 調整起始號</button>
+            <span style="font-size:0.88rem; color:#be123c;">（點擊卡片切換「✅ 已完成」；點「😷 請假」自動列入補抬並遞補下一號）</span>
+            <button class="btn btn-outline teacher-only" style="padding:3px 9px; font-size:0.8rem;" onclick="adjustLunchPointer()">⚙️ 調整起始號</button>
           </div>
         </div>
 
         <div class="lunch-grid" id="lunchDutyGrid"></div>
 
-        <div style="margin-top:auto; background:#faf5ff; border:2px dashed #c084fc; border-radius:12px; padding:14px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <strong style="color:#6b21a8; font-size:1.1rem;">📌 午餐待補抬累計名單（下次排班優先排入，完成後自動消除）：</strong>
-            <button class="btn btn-outline teacher-only" style="padding:4px 10px; font-size:0.85rem;" onclick="manualAddMakeupStudent()">➕ 手動加入補抬</button>
+        <div style="background:#faf5ff; border:2px dashed #c084fc; border-radius:12px; padding:10px 14px; flex-shrink:0;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong style="color:#6b21a8; font-size:1.02rem;">📌 午餐待補抬累計名單（下次排班優先排入，完成後自動消除）：</strong>
+            <button class="btn btn-outline teacher-only" style="padding:3px 9px; font-size:0.8rem;" onclick="manualAddMakeupStudent()">➕ 手動加入補抬</button>
           </div>
           <div id="makeupQueueContainer" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
         </div>
       </div>
 
-      <!-- 區塊 4：😴 午休注意事項（12:40 ~ 13:10） -->
-      <div class="routine-stage-block stage-nap" id="stage-nap" style="min-height:60vh;">
+      <!-- 區塊 4：😴 午休常規（12:40 ~ 13:10）＋ 🕰️ 3D 分鐘翻頁電子時鐘 -->
+      <div class="routine-stage-block stage-nap" id="stage-nap">
         <div class="stage-header">
-          <div class="stage-title" style="color:#4338ca;">
-            <span>4️⃣ 😴 午休注意事項與秩序常規</span>
+          <div class="stage-title" style="color:#4f46e5;" id="napStageTitle">
+            <span>4️⃣ 😴 午休靜息翻頁時鐘 ＆ 秩序常規</span>
           </div>
           <div style="display:flex; gap:8px; align-items:center;">
             <span class="stage-time-badge">午休靜息 12:40 ~ 13:10</span>
+            <button class="btn btn-outline" onclick="toggleNapDarkMode()">🌙 切換熄燈護眼模式</button>
             <button class="btn btn-outline teacher-only" onclick="saveDefaultNapNotes()">📌 設為預設午休提醒</button>
+            <button class="btn btn-primary" onclick="switchRoutineStage('stage-indoor')">下一時段：下午內掃 ▶</button>
           </div>
         </div>
-        <div class="sub-panel" style="flex:1; justify-content:center;">
-          <div id="napNotesDisplay" class="routine-note-display" style="font-size:1.6rem; line-height:1.85;"></div>
-          <textarea id="napNotesInput" class="routine-textarea teacher-only-block" placeholder="輸入午休注意事項（打字自動即時存檔）..." oninput="updateDailyRoutineNoteLive('napNotes', this.value)"></textarea>
+
+        <div class="nap-split-layout">
+          <!-- 左側：巨型 3D 分鐘翻頁電子時鐘 -->
+          <div class="flip-clock-panel" onclick="triggerManualFlipPreview()" title="點擊可預覽機械翻頁動畫">
+            <div class="nap-status-banner" id="napTimeStatusBanner">😴 午休靜息時段：12:40 ~ 13:10</div>
+            <div class="flip-clock-wrapper">
+              <div class="flip-unit-box">
+                <div class="flip-card" id="flipCardHour">
+                  <span class="flip-card-num" id="flipNumHour">12</span>
+                </div>
+                <span class="flip-unit-label">HOURS 時</span>
+              </div>
+              <div class="flip-colon">:</div>
+              <div class="flip-unit-box">
+                <div class="flip-card" id="flipCardMin">
+                  <span class="flip-card-num" id="flipNumMin">40</span>
+                </div>
+                <span class="flip-unit-label">MINUTES 分 (整分自動翻頁)</span>
+              </div>
+              <div class="flip-colon" style="font-size:2.8rem; padding-bottom:24px;">:</div>
+              <div class="flip-unit-box">
+                <div class="flip-card seconds-card" id="flipCardSec">
+                  <span class="flip-card-num" id="flipNumSec">00</span>
+                </div>
+                <span class="flip-unit-label">SEC 秒</span>
+              </div>
+            </div>
+            <div style="color:#94a3b8; font-size:0.9rem; font-weight:bold;">
+              💡 每當分鐘跳動時會自動觸發立體翻頁（點擊時鐘可立即測試翻頁動畫）
+            </div>
+          </div>
+
+          <!-- 右側：午休注意事項 -->
+          <div class="sub-panel swap-on-teacher" style="justify-content:center;">
+            <div class="sub-panel-title" style="color:#4338ca;">
+              <span>🤫 午休秩序與常規提醒（12:40 ~ 13:10）</span>
+            </div>
+            <div id="napNotesDisplay" class="routine-note-display" style="font-size:1.5rem; line-height:1.85;"></div>
+            <textarea id="napNotesInput" class="routine-textarea teacher-only-block" placeholder="輸入午休注意事項（打字自動即時存檔）..." oninput="updateDailyRoutineNoteLive('napNotes', this.value)"></textarea>
+          </div>
         </div>
       </div>
 
-      <!-- 區塊 5：🏠 下午內掃區（3:35 ~ 3:50 桌面清空，椅子倒扣，支援教師拖拉學生換組） -->
+      <!-- 區塊 5：🏠 下午內掃區（3:35 ~ 3:50 桌面清空，椅子倒扣，4x2 滿版網格無遮擋） -->
       <div class="routine-stage-block stage-indoor" id="stage-indoor">
         <div class="stage-header">
           <div class="stage-title" style="color:#15803d;">
@@ -588,12 +726,10 @@
             <span class="stage-time-badge">下午內掃 15:35 ~ 15:50</span>
             <button class="btn btn-success" onclick="checkCleaningZonesByType('indoor')">⚡ 內掃全區檢查完成</button>
             <button class="btn btn-outline teacher-only" onclick="openCleaningModal()">✏️ 編輯明細</button>
+            <button class="btn btn-primary" onclick="switchRoutineStage('stage-morning')">🔄 回到早自習</button>
           </div>
         </div>
-        <div style="font-size:1rem; font-weight:bold; color:var(--gray);">
-          💡 放學前請先將「桌面清空、椅子倒扣」。<span class="teacher-only" style="color:#15803d;">（🔓 導師模式下，可直接按住學生名牌「拖拉」至其他組別卡片調動位置！）</span>
-        </div>
-        <div id="indoorCleaningContainer" style="display:flex; flex-direction:column; gap:14px;"></div>
+        <div id="indoorCleaningContainer" class="indoor-cards-grid"></div>
       </div>
 
     </div>
@@ -656,15 +792,15 @@
     </div>
   </section>
 
-  <!-- ==================== 2. 教室座位直覺加分 ＋ 導師拖拉換座位 ==================== -->
+  <!-- 2. 教室座位直覺加分 ＋ 導師拖拉換座位 -->
   <section id="page-seating" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
         <span style="font-weight:900; font-size:1.15rem; color:#1e293b;">🪑 504班 教室座位加分與換位看板</span>
         <label style="font-weight:bold; color:var(--gray);">上課日戳章：</label>
         <input type="date" id="seatingDateInput" class="form-control" onchange="onCommonDateChange(this.value)">
-        <span class="teacher-only" style="color:#b45309; font-weight:900; font-size:0.88rem; background:#fffbeb; padding:4px 10px; border-radius:6px; border:1px solid #fcd34d;">
-          🖐️ 導師換位功能已啟用：直接「按住課桌拖拉」至另一張課桌即可交換位置（自動記錄至試算表《教室座位表》）！
+        <span class="teacher-only" style="color:#b45309; font-weight:900; font-size:0.86rem; background:#fffbeb; padding:3px 9px; border-radius:6px; border:1px solid #fcd34d;">
+          🖐️ 導師換位：直接「按住課桌拖拉」至另一張課桌即可交換位置（自動同步試算表《教室座位表》）
         </span>
       </div>
       <div class="teacher-only" style="gap:8px;">
@@ -782,7 +918,7 @@
         </div>
         <div class="wheel-Stage">
           <div class="wheel-pointer"></div>
-          <canvas id="rouletteCanvas" width="410" height="410"></canvas>
+          <canvas id="rouletteCanvas" width="390" height="390"></canvas>
           <div class="wheel-center-hub" onclick="startDraw()">GO!</div>
         </div>
         <div id="wheelCurrentPointingLabel" style="margin-top:10px; font-size:1.2rem; font-weight:900; color:#dc2626; min-height:28px;">
@@ -962,6 +1098,7 @@
 </div>
 
 <script>
+// 最新綁定之 Google Apps Script 部署網址
 const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbxtrc_L2sMP26ZZx72icak9iYWoUnrMg-waYfIR84xr8IUuIsFYZ6kkbjjK_F3orkZyaw/exec";
 const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
 const UNSYNCED_FLAG_KEY = "CLASS_504_UNSYNCED_PROTECT";
@@ -988,15 +1125,15 @@ const DEFAULT_SEATING_LAYOUT = [
 ];
 
 const DEFAULT_CLEANING_ZONES = [
-  // 上午外掃 7:50 ~ 8:10 (遊戲區與男廁)
+  // 上午外掃 7:50 ~ 8:10 (遊戲區與男廁 6組)
   { id: "out_b1", type: "outdoor", group: "🚹 遊戲區與男廁", title: "1. 樂行樓遊戲區 (2人)", members: ["03", "04"], desc: "遊戲區撿垃圾與落葉清除・環境整潔巡視" },
   { id: "out_b2", type: "outdoor", group: "🚹 遊戲區與男廁", title: "2. 男廁：掃拖地組 (2人)", members: ["01", "02"], desc: "男廁地板全面掃地・地板濕拖保持乾爽" },
   { id: "out_b3", type: "outdoor", group: "🚹 遊戲區與男廁", title: "3. 男廁：小便斗組 (2人)", members: ["07", "08"], desc: "拿抹布擦拭小便斗上方灰塵・刷洗6個小便斗" },
   { id: "out_b4", type: "outdoor", group: "🚹 遊戲區與男廁", title: "4. 男廁：馬桶刷洗組 (3人)", members: ["09", "10", "11"], desc: "刷洗3間廁所馬桶內部・清掃內部地板" },
   { id: "out_b5", type: "outdoor", group: "🚹 遊戲區與男廁", title: "5. 男廁：洗手台清潔 (1人)", members: ["05"], desc: "洗手台清洗與檯面擦拭・水槽毛髮殘渣清除" },
-  { id: "out_b6", type: "outdoor", group: "🚹 遊戲區與男廁", title: "6. 男廁：垃圾 (1人)", members: ["06"], desc: "廁所垃圾倒棄與換新袋・垃圾桶周邊維護、整理掃具間" },
+  { id: "out_b6", type: "outdoor", group: "🚹 遊戲區與男廁", title: "6. 男廁：垃圾 (1人)", members: ["06"], desc: "廁所垃圾倒棄與換新袋・維護周邊與掃具間" },
 
-  // 上午外掃 7:50 ~ 8:10 (601 隔壁女廁)
+  // 上午外掃 7:50 ~ 8:10 (601 隔壁女廁 6組)
   { id: "out_g1", type: "outdoor", group: "🚺 601 隔壁女廁", title: "1. 女廁：掃拖地組 (2人)", members: ["12", "13"], desc: "女廁內部地板全面掃地・濕拖確保走道乾爽" },
   { id: "out_g2", type: "outdoor", group: "🚺 601 隔壁女廁", title: "2. 女廁：前段馬桶 (2人)", members: ["17", "15"], desc: "刷洗前段 1~3 間馬桶・擦拭門板與沖水把手" },
   { id: "out_g3", type: "outdoor", group: "🚺 601 隔壁女廁", title: "3. 女廁：中段馬桶 (2人)", members: ["19", "20"], desc: "刷洗中段 4~6 間馬桶・確保無髒汙與隔間整潔" },
@@ -1004,14 +1141,14 @@ const DEFAULT_CLEANING_ZONES = [
   { id: "out_g5", type: "outdoor", group: "🚺 601 隔壁女廁", title: "5. 女廁：洗手台清潔 (1人)", members: ["18"], desc: "刷洗洗手台檯面水槽・鏡面擦拭與水漬清理" },
   { id: "out_g6", type: "outdoor", group: "🚺 601 隔壁女廁", title: "6. 女廁：垃圾倒棄 (1人)", members: ["16"], desc: "收集女廁垃圾桶倒棄・更換新垃圾袋維持整潔" },
 
-  // 下午全內掃 3:35 ~ 3:50 (桌面清空，椅子倒扣)
-  { id: "in_1", type: "indoor", group: "🏠 下午全內掃 (桌面清空・椅子倒扣)", title: "1. 教室內掃地 (4人)", members: ["01", "02", "05", "06"], desc: "班級內部全面掃地・走道與座位區維護" },
-  { id: "in_2", type: "indoor", group: "🏠 下午全內掃 (桌面清空・椅子倒扣)", title: "2. 黑板 (1人)", members: ["16"], desc: "專責擦黑板・板溝清潔與講台周邊維護" },
-  { id: "in_3", type: "indoor", group: "🏠 下午全內掃 (桌面清空・椅子倒扣)", title: "3. 後陽台清潔 (3人)", members: ["12", "13", "20"], desc: "洗手台清洗・工具間整理與掃具擺放以及後陽台地板整潔" },
-  { id: "in_4", type: "indoor", group: "🏠 下午全內掃 (桌面清空・椅子倒扣)", title: "4. 504走廊掃地 (3人)", members: ["17", "19", "21"], desc: "504外走廊全區掃地・落葉清理與走廊整潔維護" },
-  { id: "in_5", type: "indoor", group: "🏠 下午全內掃 (桌面清空・椅子倒扣)", title: "5. 本土語走廊掃地 (3人)", members: ["03", "04", "11"], desc: "本土語外走廊掃地・飲水機周邊清潔與擦拭" },
-  { id: "in_6", type: "indoor", group: "🏠 下午全內掃 (桌面清空・椅子倒扣)", title: "6. 本土語教室內掃地 (4人)", members: ["07", "08", "15", "18"], desc: "教室全面掃地・走道與座位區維護" },
-  { id: "in_7", type: "indoor", group: "🏠 下午全內掃 (桌面清空・椅子倒扣)", title: "7. 垃圾回收整理 (2人)", members: ["09", "10"], desc: "班級與科任教室垃圾清理・資源回收分類倒垃圾" }
+  // 下午全內掃 3:35 ~ 3:50 (桌面清空，椅子倒扣 7組)
+  { id: "in_1", type: "indoor", group: "🏠 下午全內掃", title: "1. 教室內掃地 (4人)", members: ["01", "02", "05", "06"], desc: "班級內部全面掃地・走道與座位區維護" },
+  { id: "in_2", type: "indoor", group: "🏠 下午全內掃", title: "2. 黑板 (1人)", members: ["16"], desc: "專責擦黑板・板溝清潔與講台周邊維護" },
+  { id: "in_3", type: "indoor", group: "🏠 下午全內掃", title: "3. 後陽台清潔 (3人)", members: ["12", "13", "20"], desc: "洗手台清洗・工具間整理與後陽台地板整潔" },
+  { id: "in_4", type: "indoor", group: "🏠 下午全內掃", title: "4. 504走廊掃地 (3人)", members: ["17", "19", "21"], desc: "504外走廊全區掃地・落葉清理與整潔維護" },
+  { id: "in_5", type: "indoor", group: "🏠 下午全內掃", title: "5. 本土語走廊掃地 (3人)", members: ["03", "04", "11"], desc: "本土語外走廊掃地・飲水機周邊清潔與擦拭" },
+  { id: "in_6", type: "indoor", group: "🏠 下午全內掃", title: "6. 本土語教室內掃地 (4人)", members: ["07", "08", "15", "18"], desc: "教室全面掃地・走道與座位區維護" },
+  { id: "in_7", type: "indoor", group: "🏠 下午全內掃", title: "7. 垃圾回收整理 (2人)", members: ["09", "10"], desc: "班級與科任教室垃圾清理・資源回收分類" }
 ];
 
 let isTeacherMode = false;
@@ -1021,6 +1158,7 @@ let selectedSubject = '國語';
 let isBatchPointMode = false;
 let batchTargetIds = null;
 let rankMode = 'daily';
+let currentActiveRoutineStage = 'stage-morning';
 
 let hasUnsyncedChanges = localStorage.getItem(UNSYNCED_FLAG_KEY) === "true";
 let saveDebounceTimer = null;
@@ -1133,7 +1271,6 @@ function sanitizeAndTrimDB(targetDB) {
     targetDB.routineConfig.cleaningZones = JSON.parse(JSON.stringify(DEFAULT_CLEANING_ZONES));
     targetDB.routineConfig.cleaningVersion = CURRENT_CLEANING_VERSION;
   }
-  // 確保舊的 12:35 預設午休文字升級為 12:40 ~ 13:10
   if (targetDB.routineConfig.defaultNapNotes && targetDB.routineConfig.defaultNapNotes.includes("12:35")) {
     targetDB.routineConfig.defaultNapNotes = targetDB.routineConfig.defaultNapNotes.replace("12:35 鐘響準時熄燈", "12:40 鐘響準時熄燈，12:40 ~ 13:10");
   }
@@ -1154,9 +1291,83 @@ function sanitizeAndTrimDB(targetDB) {
 sanitizeAndTrimDB(db);
 localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
 
-function scrollToRoutineStage(stageId) {
-  const el = document.getElementById(stageId);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// ==================== ⚡ 班務看板：獨立單一區塊切換（無捲軸、不露下一個區塊） ====================
+function switchRoutineStage(stageId) {
+  currentActiveRoutineStage = stageId;
+  document.querySelectorAll('.routine-stage-block').forEach(el => {
+    el.classList.toggle('active-stage', el.id === stageId);
+  });
+  document.querySelectorAll('#routineStageTabs .jump-pill').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-stage') === stageId);
+  });
+}
+
+function toggleNapDarkMode() {
+  const napBlock = document.getElementById('stage-nap');
+  napBlock.classList.toggle('nap-dark-mode');
+  const titleEl = document.getElementById('napStageTitle');
+  if (napBlock.classList.contains('nap-dark-mode')) {
+    titleEl.style.color = '#a5b4fc';
+  } else {
+    titleEl.style.color = '#4f46e5';
+  }
+}
+
+// ==================== 🕰️ 3D 機械分鐘翻頁電子時鐘 (Flip Clock) ====================
+let lastFlipHour = "";
+let lastFlipMin = "";
+
+function updateFlipClockDisplay(forceFlipAnimation = false) {
+  const now = new Date();
+  const hh = String(now.getHours()).padStart(2, '0');
+  const mm = String(now.getMinutes()).padStart(2, '0');
+  const ss = String(now.getSeconds()).padStart(2, '0');
+
+  const hourCard = document.getElementById('flipCardHour');
+  const minCard = document.getElementById('flipCardMin');
+  const hourNum = document.getElementById('flipNumHour');
+  const minNum = document.getElementById('flipNumMin');
+  const secNum = document.getElementById('flipNumSec');
+
+  if (!hourNum || !minNum || !secNum) return;
+
+  // 小時跳動時觸發翻頁
+  if (hh !== lastFlipHour || forceFlipAnimation) {
+    lastFlipHour = hh;
+    hourCard.classList.remove('do-flip');
+    void hourCard.offsetWidth; // Reflow
+    hourCard.classList.add('do-flip');
+    setTimeout(() => { hourNum.textContent = hh; }, 260);
+  }
+
+  // 分鐘跳動時觸發 3D 翻頁動畫
+  if (mm !== lastFlipMin || forceFlipAnimation) {
+    lastFlipMin = mm;
+    minCard.classList.remove('do-flip');
+    void minCard.offsetWidth; // Reflow
+    minCard.classList.add('do-flip');
+    setTimeout(() => { minNum.textContent = mm; }, 260);
+  }
+
+  secNum.textContent = ss;
+
+  // 判斷目前是否處於 12:40 ~ 13:10 午休時段
+  const totalMins = now.getHours() * 60 + now.getMinutes();
+  const banner = document.getElementById('napTimeStatusBanner');
+  if (banner) {
+    if (totalMins >= (12 * 60 + 40) && totalMins < (13 * 60 + 10)) {
+      const remain = (13 * 60 + 10) - totalMins;
+      banner.textContent = `😴 午休進行中（12:40 ~ 13:10）— 距離起床還有 ${remain} 分鐘`;
+      banner.style.color = "#4ade80";
+    } else {
+      banner.textContent = `😴 午休靜息時段：12:40 ~ 13:10（現在時間 ${hh}:${mm}）`;
+      banner.style.color = "#fde047";
+    }
+  }
+}
+
+function triggerManualFlipPreview() {
+  updateFlipClockDisplay(true);
 }
 
 // ==================== 🛡️ 雙向細粒度智慧比對與重整防遺失機制 ====================
@@ -1178,7 +1389,6 @@ window.addEventListener('beforeunload', () => {
   }
 });
 
-// 細粒度合併：針對每日班務、掃區配置、座位表各自比對 updatedAt，杜絕預設空物件覆蓋已修改的紀錄！
 function mergeDatabases(baseDB, incomingDB) {
   sanitizeAndTrimDB(baseDB);
   sanitizeAndTrimDB(incomingDB);
@@ -1187,18 +1397,15 @@ function mergeDatabases(baseDB, incomingDB) {
   const primary = JSON.parse(JSON.stringify(localIsNewer ? baseDB : incomingDB));
   const secondary = localIsNewer ? incomingDB : baseDB;
 
-  // 1. 座位表獨立時間戳章比對
   if ((secondary.seatingLayoutUpdatedAt || 0) > (primary.seatingLayoutUpdatedAt || 0)) {
     primary.seatingLayout = JSON.parse(JSON.stringify(secondary.seatingLayout));
     primary.seatingLayoutUpdatedAt = secondary.seatingLayoutUpdatedAt;
   }
 
-  // 2. 掃區與輪值設定獨立時間戳章比對
   if ((secondary.routineConfig?.updatedAt || 0) > (primary.routineConfig?.updatedAt || 0)) {
     primary.routineConfig = JSON.parse(JSON.stringify(secondary.routineConfig));
   }
 
-  // 3. 合併作業與繳交紀錄
   const hwMap = {};
   (primary.homeworks || []).forEach(h => { hwMap[h.id] = h; });
   (secondary.homeworks || []).forEach(sh => {
@@ -1209,7 +1416,6 @@ function mergeDatabases(baseDB, incomingDB) {
     }
   });
 
-  // 4. 合併出缺席紀錄
   Object.keys(secondary.attendance || {}).forEach(d => {
     if (!primary.attendance[d]) {
       primary.attendance[d] = secondary.attendance[d];
@@ -1227,7 +1433,6 @@ function mergeDatabases(baseDB, incomingDB) {
     }
   });
 
-  // 5. 每日班務紀錄（依各別日期的 updatedAt 決定誰是最新修改，絕不被剛初始化的 updatedAt:0 覆蓋）
   const allRoutineDates = new Set([
     ...Object.keys(primary.dailyRoutines || {}),
     ...Object.keys(secondary.dailyRoutines || {})
@@ -1246,7 +1451,6 @@ function mergeDatabases(baseDB, incomingDB) {
     }
   });
 
-  // 6. 合併當日抽籤次數紀錄
   Object.keys(secondary.drawHistory || {}).forEach(d => {
     if (!primary.drawHistory[d]) {
       primary.drawHistory[d] = secondary.drawHistory[d];
@@ -1452,7 +1656,7 @@ function setCloudStatus(status, customText) {
 function ensureDailyRoutineObj(dateStr) {
   if (!db.dailyRoutines[dateStr]) {
     db.dailyRoutines[dateStr] = {
-      updatedAt: 0, // 0 代表初始預設，避免覆蓋雲端已編輯過的當日紀錄
+      updatedAt: 0,
       morningNotes: db.routineConfig.defaultMorningNotes || "",
       napNotes: db.routineConfig.defaultNapNotes || "",
       hwNotes: "",
@@ -1470,7 +1674,6 @@ function ensureDailyRoutineObj(dateStr) {
   return db.dailyRoutines[dateStr];
 }
 
-// 🙋‍♂️ 值日生 2 號 2 號輪值排班邏輯
 function buildDutyStudentListForDate(dateStr, shouldSave = true) {
   const dr = db.dailyRoutines[dateStr] || {
     updatedAt: shouldSave ? Date.now() : 0,
@@ -1909,7 +2112,6 @@ function shiftRoutineDay(dir) {
   renderRoutinePage();
 }
 
-// 📌 打字瞬間即時更新並觸發防抖上傳，絕不因切換分頁或重整而遺失文字！
 function updateDailyRoutineNoteLive(field, val) {
   const dr = ensureDailyRoutineObj(currentRoutineDate);
   dr[field] = val;
@@ -1972,7 +2174,7 @@ function resetCleaningZonesToDefault() {
 }
 
 // ==================== 🧹 教師模式下拖拉（Drag & Drop）掃區人員功能 ====================
-let draggedCleanMember = null; // { stuId, fromZoneId }
+let draggedCleanMember = null;
 
 function onCleanMemberDragStart(evt, stuId, fromZoneId) {
   if (!isTeacherMode) {
@@ -2067,75 +2269,115 @@ function addCleaningZoneItem() {
   openCleaningModal();
 }
 
-function renderCleaningSectionByType(type, containerId, dr) {
-  const container = document.getElementById(containerId);
+function createCleanZoneCardElement(zone, dr) {
+  const isChecked = dr.cleaningChecks && dr.cleaningChecks[zone.id];
+  const card = document.createElement('div');
+  card.className = `clean-zone-card ${isChecked ? 'checked' : ''}`;
+  card.onclick = () => toggleCleaningZoneCheck(zone.id);
+  card.ondragover = (e) => onCleanZoneDragOver(e);
+  card.ondragleave = (e) => onCleanZoneDragLeave(e);
+  card.ondrop = (e) => onCleanZoneDrop(e, zone.id);
+
+  const membersHtml = (zone.members || []).map(id => {
+    const stu = db.students.find(s => s.id === id);
+    return `<span class="clean-member-chip" ${isTeacherMode ? 'draggable="true"' : ''} ondragstart="onCleanMemberDragStart(event, '${id}', '${zone.id}')" onclick="event.stopPropagation(); toggleCleaningZoneCheck('${zone.id}')">${isTeacherMode ? '⠿ ' : ''}${id} ${stu ? stu.name : ''}</span>`;
+  }).join('');
+
+  card.innerHTML = `
+    <div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <strong style="font-size:1.02rem; color:#0f172a;">${zone.title}</strong>
+        <span style="font-weight:900; font-size:0.84rem; color:${isChecked ? '#15803d' : '#64748b'};">
+          ${isChecked ? '✅ 完成' : '⬜ 待檢'}
+        </span>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:5px;">
+        ${membersHtml || '<span style="color:var(--gray); font-size:0.82rem;">（可拖拉學生至此）</span>'}
+      </div>
+    </div>
+    ${zone.desc ? `<div class="clean-desc-text" title="${zone.desc}">📌 ${zone.desc}</div>` : ''}
+  `;
+  return card;
+}
+
+// 渲染上午外掃區：左右雙欄對開（左：遊戲區與男廁 6組 2x3；右：女廁 6組 2x3），100% 滿版不遮擋
+function renderOutdoorCleaningSection(dr) {
+  const container = document.getElementById('outdoorCleaningContainer');
   if (!container) return;
   container.innerHTML = "";
 
-  const zones = (db.routineConfig.cleaningZones || []).filter(z => z.type === type);
+  const zones = (db.routineConfig.cleaningZones || []).filter(z => z.type === 'outdoor');
   const groupsMap = {};
   zones.forEach(z => {
-    const gName = z.group || (type === 'outdoor' ? '🌳 外掃區' : '🏠 內掃區');
+    const gName = z.group || '🌳 外掃區';
     if (!groupsMap[gName]) groupsMap[gName] = [];
     groupsMap[gName].push(z);
   });
 
   Object.keys(groupsMap).forEach(gName => {
-    const groupWrap = document.createElement('div');
-    groupWrap.style.cssText = "display:flex; flex-direction:column; gap:10px;";
+    const colWrap = document.createElement('div');
+    colWrap.className = "clean-group-column";
 
     const gZones = groupsMap[gName];
     const doneCnt = gZones.filter(z => dr.cleaningChecks && dr.cleaningChecks[z.id]).length;
 
     const header = document.createElement('div');
     header.className = "clean-group-title";
-    header.innerHTML = `<span>${gName}</span> <span style="font-size:0.95rem; color:#0f766e;">已完成 ${doneCnt} / ${gZones.length} 組</span>`;
-    groupWrap.appendChild(header);
+    header.innerHTML = `<span>${gName}</span> <span style="font-size:0.88rem; color:#0f766e;">完成 ${doneCnt} / ${gZones.length} 組</span>`;
+    colWrap.appendChild(header);
 
     const grid = document.createElement('div');
-    grid.className = "clean-cards-grid";
-
+    grid.className = "outdoor-cards-grid";
     gZones.forEach(zone => {
-      const isChecked = dr.cleaningChecks && dr.cleaningChecks[zone.id];
-      const card = document.createElement('div');
-      card.className = `clean-zone-card ${isChecked ? 'checked' : ''}`;
-      card.onclick = () => toggleCleaningZoneCheck(zone.id);
-      card.ondragover = (e) => onCleanZoneDragOver(e);
-      card.ondragleave = (e) => onCleanZoneDragLeave(e);
-      card.ondrop = (e) => onCleanZoneDrop(e, zone.id);
-
-      const membersHtml = (zone.members || []).map(id => {
-        const stu = db.students.find(s => s.id === id);
-        return `<span class="clean-member-chip" ${isTeacherMode ? 'draggable="true"' : ''} ondragstart="onCleanMemberDragStart(event, '${id}', '${zone.id}')" onclick="event.stopPropagation(); toggleCleaningZoneCheck('${zone.id}')">${isTeacherMode ? '⠿ ' : ''}${id} ${stu ? stu.name : ''}</span>`;
-      }).join('');
-
-      card.innerHTML = `
-        <div>
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <strong style="font-size:1.18rem; color:#0f172a;">${zone.title}</strong>
-            <span style="font-weight:900; font-size:0.92rem; color:${isChecked ? '#15803d' : '#64748b'};">
-              ${isChecked ? '✅ 已完成' : '⬜ 待檢查'}
-            </span>
-          </div>
-          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
-            ${membersHtml || '<span style="color:var(--gray);">（可拖拉學生至此）</span>'}
-          </div>
-        </div>
-        ${zone.desc ? `<div class="clean-desc-text">📌 ${zone.desc}</div>` : ''}
-      `;
-      grid.appendChild(card);
+      grid.appendChild(createCleanZoneCardElement(zone, dr));
     });
 
-    groupWrap.appendChild(grid);
-    container.appendChild(groupWrap);
+    colWrap.appendChild(grid);
+    container.appendChild(colWrap);
   });
+}
+
+// 渲染下午內掃區：4x2 滿版網格（7個內掃組別 + 1張放學前總檢查卡）
+function renderIndoorCleaningSection(dr) {
+  const container = document.getElementById('indoorCleaningContainer');
+  if (!container) return;
+  container.innerHTML = "";
+
+  const zones = (db.routineConfig.cleaningZones || []).filter(z => z.type === 'indoor');
+  zones.forEach(zone => {
+    container.appendChild(createCleanZoneCardElement(zone, dr));
+  });
+
+  // 第 8 格：放學前座位與門窗總檢查卡
+  const doneCnt = zones.filter(z => dr.cleaningChecks && dr.cleaningChecks[z.id]).length;
+  const allDone = doneCnt === zones.length && zones.length > 0;
+  const summaryCard = document.createElement('div');
+  summaryCard.className = `clean-zone-card ${allDone ? 'checked' : ''}`;
+  summaryCard.style.background = allDone ? "#dcfce7" : "#fffbeb";
+  summaryCard.style.borderColor = allDone ? "#16a34a" : "#f59e0b";
+  summaryCard.onclick = () => checkCleaningZonesByType('indoor');
+  summaryCard.innerHTML = `
+    <div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <strong style="font-size:1.05rem; color:#b45309;">🪑 放學前總檢查</strong>
+        <span style="font-weight:900; font-size:0.88rem; color:#15803d;">${doneCnt}/${zones.length} 組完成</span>
+      </div>
+      <div style="font-size:0.95rem; font-weight:900; color:#1e293b; line-height:1.45;">
+        1. 桌面清空、椅子倒扣<br>
+        2. 抽屜無垃圾遺留<br>
+        3. 門窗與電燈電扇關閉
+      </div>
+    </div>
+    <div class="clean-desc-text" style="background:#fef3c7; color:#92400e;">⚡ 點此可一鍵完成全區檢查</div>
+  `;
+  container.appendChild(summaryCard);
 }
 
 function renderRoutinePage() {
   document.getElementById('routineDateInput').value = currentRoutineDate;
   const dr = ensureDailyRoutineObj(currentRoutineDate);
 
-  // 1. 早自習與午休注意事項（若使用者正在打字中則不覆蓋游標位置）
+  // 1. 早自習與午休注意事項
   document.getElementById('morningNotesDisplay').textContent = dr.morningNotes || "（尚無早自習注意事項）";
   const mInput = document.getElementById('morningNotesInput');
   if (document.activeElement !== mInput) mInput.value = dr.morningNotes || "";
@@ -2149,11 +2391,11 @@ function renderRoutinePage() {
   hwListEl.innerHTML = "";
   const dayHws = db.homeworks.filter(h => h.date === currentRoutineDate && !h.isContactBook);
   if (dayHws.length === 0) {
-    hwListEl.innerHTML = `<div style="color:var(--gray); font-size:1.15rem;">📌 今日尚無登記各科作業欄位（可點右上角「新增/管理作業欄」建立）</div>`;
+    hwListEl.innerHTML = `<div style="color:var(--gray); font-size:1.1rem;">📌 今日尚無登記各科作業欄位（可點右上角「新增/管理作業欄」建立）</div>`;
   } else {
     dayHws.forEach((hw, i) => {
       const div = document.createElement('div');
-      div.style.cssText = "background:#ffffff; padding:10px 14px; border-radius:10px; border-left:6px solid #0f766e; box-shadow:0 2px 4px rgba(0,0,0,0.04);";
+      div.style.cssText = "background:#ffffff; padding:8px 12px; border-radius:10px; border-left:6px solid #0f766e; box-shadow:0 2px 4px rgba(0,0,0,0.04);";
       div.innerHTML = `${i + 1}. 【${hw.subject}】${hw.title} — <span style="color:#b45309;">範圍：${hw.pages}</span>`;
       hwListEl.appendChild(div);
     });
@@ -2179,11 +2421,11 @@ function renderRoutinePage() {
     pill.onclick = () => toggleDutyStudentDone(idx);
     pill.innerHTML = `
       <span class="seat-desk-num">${stu.id}</span>
-      <strong style="font-size:1.05rem;">${stu.name}</strong>
+      <strong style="font-size:1rem;">${stu.name}</strong>
       ${item.isMakeup ? `<span class="badge-makeup">補</span>` : ''}
       ${item.isSub ? `<span class="badge-sub">遞補</span>` : ''}
-      <span style="font-size:0.85rem; font-weight:bold;">${statusIcon}</span>
-      ${item.status !== 'leave' ? `<button class="btn btn-outline" style="padding:1px 6px; font-size:0.75rem; border-color:#fca5a5; color:#dc2626;" onclick="markDutyStudentLeave(${idx}, event)">請假</button>` : ''}
+      <span style="font-size:0.82rem; font-weight:bold;">${statusIcon}</span>
+      ${item.status !== 'leave' ? `<button class="btn btn-outline" style="padding:1px 6px; font-size:0.74rem; border-color:#fca5a5; color:#dc2626;" onclick="markDutyStudentLeave(${idx}, event)">請假</button>` : ''}
     `;
     dutyGrid.appendChild(pill);
   });
@@ -2193,21 +2435,21 @@ function renderRoutinePage() {
   const dutyQueue = db.routineConfig.dutyStudentConfig.makeupQueue || [];
   if (dutyQueue.length > 0) {
     const label = document.createElement('span');
-    label.style.cssText = "font-size:0.82rem; font-weight:900; color:#6b21a8;";
-    label.textContent = "📌待補當值:";
+    label.style.cssText = "font-size:0.8rem; font-weight:900; color:#6b21a8;";
+    label.textContent = "📌待補:";
     dutyQContainer.appendChild(label);
     dutyQueue.forEach((m, idx) => {
       const stu = db.students.find(s => s.id === m.id) || { id: m.id, name: "" };
       const chip = document.createElement('span');
-      chip.style.cssText = "background:#f3e8ff; border:1px solid #9333ea; color:#581c87; padding:2px 6px; border-radius:6px; font-weight:900; font-size:0.8rem; display:inline-flex; align-items:center; gap:4px;";
+      chip.style.cssText = "background:#f3e8ff; border:1px solid #9333ea; color:#581c87; padding:2px 6px; border-radius:6px; font-weight:900; font-size:0.78rem; display:inline-flex; align-items:center; gap:4px;";
       chip.innerHTML = `${stu.id}${stu.name} ${isTeacherMode ? `<b style="cursor:pointer; color:#dc2626;" onclick="removeDutyMakeupItem(${idx})">×</b>` : ''}`;
       dutyQContainer.appendChild(chip);
     });
   }
 
   // 4. 🌳 上午外掃區 ＆ 🏠 下午內掃區
-  renderCleaningSectionByType('outdoor', 'outdoorCleaningContainer', dr);
-  renderCleaningSectionByType('indoor', 'indoorCleaningContainer', dr);
+  renderOutdoorCleaningSection(dr);
+  renderIndoorCleaningSection(dr);
 
   // 5. 🍱 午餐抬餐 8 人輪值
   const nextIdStr = String((db.routineConfig.lunchConfig.nextPointer || 0) + 1).padStart(2, '0');
@@ -2245,12 +2487,12 @@ function renderRoutinePage() {
   qContainer.innerHTML = "";
   const queue = db.routineConfig.lunchConfig.makeupQueue || [];
   if (queue.length === 0) {
-    qContainer.innerHTML = `<span style="color:#16a34a; font-weight:bold; font-size:0.95rem;">🎉 目前無人欠抬餐！</span>`;
+    qContainer.innerHTML = `<span style="color:#16a34a; font-weight:bold; font-size:0.92rem;">🎉 目前無人欠抬餐！</span>`;
   } else {
     queue.forEach((m, idx) => {
       const stu = db.students.find(s => s.id === m.id) || { id: m.id, name: "" };
       const chip = document.createElement('span');
-      chip.style.cssText = "background:#f3e8ff; border:1.5px solid #9333ea; color:#581c87; padding:4px 10px; border-radius:8px; font-weight:900; font-size:0.95rem; display:inline-flex; align-items:center; gap:6px;";
+      chip.style.cssText = "background:#f3e8ff; border:1.5px solid #9333ea; color:#581c87; padding:3px 10px; border-radius:8px; font-weight:900; font-size:0.92rem; display:inline-flex; align-items:center; gap:6px;";
       chip.innerHTML = `${stu.id} ${stu.name} <small>(${m.missedDate || '待補'})</small> ${isTeacherMode ? `<b style="cursor:pointer; color:#dc2626;" onclick="removeMakeupQueueItem(${idx})">×</b>` : ''}`;
       qContainer.appendChild(chip);
     });
@@ -2944,14 +3186,14 @@ function renderDrawSeating() {
       const weight = getStudentDrawWeight(stu.id);
 
       desksHtml += `
-        <div class="seat-desk ${isCandidate ? 'candidate' : ''}" id="draw-seat-${stu.id}" onclick="toggleDrawCandidate('${stu.id}')" style="min-height:72px;">
+        <div class="seat-desk ${isCandidate ? 'candidate' : ''}" id="draw-seat-${stu.id}" onclick="toggleDrawCandidate('${stu.id}')">
           <div class="seat-desk-top">
             <span class="seat-desk-num">${stu.id}</span>
             <span style="font-size:0.75rem; font-weight:bold; color:${drawnCnt > 0 ? '#dc2626' : '#16a34a'};">
               ${drawnCnt > 0 ? `今日抽${drawnCnt}次(權重${weight}%)` : '100%'}
             </span>
           </div>
-          <div class="seat-desk-name" style="margin-top:4px; font-size:1.1rem;">${stu.name}</div>
+          <div class="seat-desk-name" style="margin-top:4px; font-size:1.08rem;">${stu.name}</div>
         </div>
       `;
     });
@@ -3302,7 +3544,7 @@ function renderAttendance() {
             <span class="seat-desk-num">${stu.id}</span>
             <span style="font-size:0.8rem; font-weight:bold; color:var(--gray);">${statusBadge}</span>
           </div>
-          <div class="seat-desk-name" style="margin: 8px 0;">${stu.name}</div>
+          <div class="seat-desk-name" style="margin: 4px 0;">${stu.name}</div>
           <div style="font-size:0.85rem; font-weight:bold; color:#475569;">
             ${timeText}
           </div>
@@ -3330,8 +3572,13 @@ function batchCheckIn() {
   renderAttendance();
 }
 
-setInterval(() => { document.getElementById('liveClock').textContent = getFullTimestamp(); }, 1000);
+// 每秒更新頂部時鐘與午休 3D 翻頁電子時鐘
+setInterval(() => {
+  document.getElementById('liveClock').textContent = getFullTimestamp();
+  updateFlipClockDisplay(false);
+}, 1000);
 document.getElementById('liveClock').textContent = getFullTimestamp();
+updateFlipClockDisplay(true);
 
 function toggleTeacherMode() {
   if (isTeacherMode) {
