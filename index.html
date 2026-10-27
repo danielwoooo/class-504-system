@@ -468,7 +468,7 @@
   
   .seat-desk.checked-in { background: #f0fdf4; border-color: #16a34a; }
   .seat-desk.checked-out { background: #eff6ff; border-color: #2563eb; }
-  .seat-desk.leave { background: #fffbeb; border-color: #d97706; box-shadow: inset 0 0 0 1px #f59e0b; }
+  .seat-desk.leave { background: #fffbeb; border-color: #d97706; box-shadow: inset 0 0 0 2px #f59e0b; }
 
   /* 抽籤與輪盤特效 */
   .draw-split-layout {
@@ -596,10 +596,10 @@
       </div>
     </div>
 
-    <!-- 單一完整區塊舞台（每次僅顯示一個區塊，100% 滿版無捲軸） -->
+    <!-- 單一完整區塊舞台 -->
     <div class="routine-stage-viewport">
 
-      <!-- 區塊 1：🌅 早自習注意事項 ＆ 📚 今日聯絡簿（今日派作業 -> 自動變明日待繳，考試除外） -->
+      <!-- 區塊 1：🌅 早自習注意事項 ＆ 📚 今日聯絡簿（自動轉換明日待繳，具備舊資料修復相容性） -->
       <div class="routine-stage-block stage-morning active-stage" id="stage-morning">
         <div class="stage-header">
           <div class="stage-title" style="color:#b45309;">
@@ -612,7 +612,7 @@
           </div>
         </div>
 
-        <!-- 🙋‍♂️ 頂部橫列：今日值日生（2號2號輪值 ＋ 請假補當值） -->
+        <!-- 🙋‍♂️ 頂部橫列：今日值日生 -->
         <div class="compact-duty-bar">
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
             <strong style="color:#92400e; font-size:1.18rem;">🙋‍♂️ 今日值日生(2人)：</strong>
@@ -640,7 +640,7 @@
             <textarea id="morningNotesInput" class="routine-textarea teacher-only-block" placeholder="輸入早自習注意事項（打字自動即時存檔）..." oninput="updateDailyRoutineNoteLive('morningNotes', this.value)"></textarea>
           </div>
 
-          <!-- 右大欄：今日聯絡簿（新增今日作業 -> 自動成為下一上學日待繳事項，考試除外） -->
+          <!-- 右大欄：今日聯絡簿 -->
           <div class="sub-panel" style="border-color:#5eead4; background:#f0fdfa;">
             <div class="sub-panel-title" style="color:#0f766e;">
               <span>📚 今日聯絡簿事項 <small id="nextSchoolDayHint" style="font-size:0.92rem; color:#0d9488;"></small></span>
@@ -658,17 +658,15 @@
                 <option value="考試/測驗">📢 考試/測驗 (不列待繳)</option>
                 <option value="一般提醒">📌 一般提醒 (不列待繳)</option>
               </select>
-              <input type="text" id="cbItemTitle" class="form-control" placeholder="項目 (例：國習、數卷訂正、聽寫考)" style="flex:1; min-width:140px; padding:4px 8px;">
+              <input type="text" id="cbItemTitle" class="form-control" placeholder="項目 (例：國習、聽寫考)" style="flex:1; min-width:130px; padding:4px 8px;">
               <input type="text" id="cbItemPages" class="form-control" placeholder="範圍 (例：P.24~26)" style="width:115px; padding:4px 8px;">
               <button class="btn btn-primary" style="padding:5px 10px; font-size:0.88rem;" onclick="addContactBookItem()">➕ 寫入聯絡簿</button>
             </div>
 
-            <!-- 今日聯絡簿項目清單 -->
             <div id="routineHwList" style="display:flex; flex-direction:column; gap:8px; font-size:1.5rem; font-weight:900; color:#0f172a; flex:1; overflow-y:auto;"></div>
 
-            <!-- 聯絡簿補充提醒事項 -->
             <div class="swap-on-teacher" style="border-top:2.5px dashed #5eead4; padding-top:8px; display:flex; flex-direction:column; min-height:105px; flex-shrink:0;">
-              <div style="font-size:1.1rem; color:#0f766e; font-weight:900; margin-bottom:4px;">📌 聯絡簿其他補充叮嚀：</div>
+              <div style="font-size:1.1rem; color:#0f766e; font-weight:900; margin-bottom:4px;">📌 聯絡簿補充提醒事項：</div>
               <div id="routineHwNotesDisplay" class="routine-note-display" style="font-size:1.45rem;"></div>
               <textarea id="routineHwNotesInput" class="routine-textarea teacher-only-block" style="min-height:68px; font-size:1.25rem;" placeholder="輸入聯絡簿補充提醒（例：明穿班服、帶圓規）..." oninput="updateDailyRoutineNoteLive('hwNotes', this.value)"></textarea>
             </div>
@@ -676,7 +674,7 @@
         </div>
       </div>
 
-      <!-- 區塊 2：🌳 上午外掃區（7:50 ~ 8:10，左右對開 12 組大字體滿版無遮擋） -->
+      <!-- 區塊 2：🌳 上午外掃區（12 組大字滿版） -->
       <div class="routine-stage-block stage-outdoor" id="stage-outdoor">
         <div class="stage-header">
           <div class="stage-title" style="color:#0f766e;">
@@ -690,7 +688,6 @@
             <button class="btn btn-primary" onclick="switchRoutineStage('stage-lunch')">下一時段：午餐抬餐 ▶</button>
           </div>
         </div>
-        <!-- 左右雙欄並排：左欄男廁與遊戲區6組(2x3)，右欄女廁6組(2x3) -->
         <div class="outdoor-two-groups-split" id="outdoorCleaningContainer"></div>
       </div>
 
@@ -727,7 +724,7 @@
         </div>
       </div>
 
-      <!-- 區塊 4：😴 午休時鐘與常規提醒（結合在同一色塊中！） -->
+      <!-- 區塊 4：😴 午休時鐘與常規提醒 -->
       <div class="routine-stage-block stage-nap" id="stage-nap">
         <div class="stage-header">
           <div class="stage-title" style="color:#4338ca;">
@@ -746,29 +743,21 @@
             <div class="nap-status-banner" id="napTimeStatusBanner">😴 午休靜息時段：12:40 ~ 13:10</div>
             <div class="flip-clock-wrapper">
               <div class="flip-unit-box">
-                <div class="flip-card" id="flipCardHour">
-                  <span class="flip-card-num" id="flipNumHour">12</span>
-                </div>
+                <div class="flip-card" id="flipCardHour"><span class="flip-card-num" id="flipNumHour">12</span></div>
                 <span class="flip-unit-label">HOURS 時</span>
               </div>
               <div class="flip-colon">:</div>
               <div class="flip-unit-box">
-                <div class="flip-card" id="flipCardMin">
-                  <span class="flip-card-num" id="flipNumMin">40</span>
-                </div>
+                <div class="flip-card" id="flipCardMin"><span class="flip-card-num" id="flipNumMin">40</span></div>
                 <span class="flip-unit-label">MINUTES 分 (整分翻頁)</span>
               </div>
               <div class="flip-colon" style="font-size:3rem; padding-bottom:28px;">:</div>
               <div class="flip-unit-box">
-                <div class="flip-card seconds-card" id="flipCardSec">
-                  <span class="flip-card-num" id="flipNumSec">00</span>
-                </div>
+                <div class="flip-card seconds-card" id="flipCardSec"><span class="flip-card-num" id="flipNumSec">00</span></div>
                 <span class="flip-unit-label">SEC 秒</span>
               </div>
             </div>
-            <div style="color:#cbd5e1; font-size:0.98rem; font-weight:bold;">
-              💡 每當分鐘跳動時自動立體翻頁（點擊時鐘可測試翻頁特效）
-            </div>
+            <div style="color:#cbd5e1; font-size:0.98rem; font-weight:bold;">💡 每當分鐘跳動時自動立體翻頁（點擊時鐘可測試翻頁特效）</div>
           </div>
 
           <div class="nap-reminder-zone swap-on-teacher">
@@ -782,7 +771,7 @@
         </div>
       </div>
 
-      <!-- 區塊 5：🏠 下午內掃區（3:35 ~ 3:50 桌面清空，椅子倒扣，4x2 大字體滿版無遮擋） -->
+      <!-- 區塊 5：🏠 下午內掃區（4x2 大字體滿版） -->
       <div class="routine-stage-block stage-indoor" id="stage-indoor">
         <div class="stage-header">
           <div class="stage-title" style="color:#15803d;">
@@ -801,7 +790,7 @@
     </div>
   </section>
 
-  <!-- ==================== 1. 作業繳交（顯示該上學日應繳交之作業） ==================== -->
+  <!-- ==================== 1. 作業方格登記表（顯示該日「應繳交」之作業） ==================== -->
   <section id="page-homework" class="page">
     <div class="toolbar">
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
@@ -1320,10 +1309,28 @@ function sanitizeAndTrimDB(targetDB) {
   if (targetDB.logs.length > MAX_LOGS_COUNT) {
     targetDB.logs = targetDB.logs.slice(0, MAX_LOGS_COUNT);
   }
+  
+  // 💡 【相容修復】自動檢查舊版作業，補齊 date, assignedDate
   if (!targetDB.homeworks) targetDB.homeworks = [];
+  targetDB.homeworks.forEach(hw => {
+    if (!hw.date) hw.date = currentRoutineDate; // 若完全無日期，預設壓為當日
+    if (!hw.assignedDate) {
+      // 舊版作業通常當天派當天交，若無派發日，預設等同於應繳日或前一上學日
+      hw.assignedDate = hw.date; 
+    }
+  });
+
   if (!targetDB.attendance) targetDB.attendance = {};
   if (!targetDB.lastUpdate) targetDB.lastUpdate = 0;
   if (!targetDB.dailyRoutines) targetDB.dailyRoutines = {};
+  
+  // 💡 【相容修復】修復舊版班務紀錄中的聯絡簿作業格式
+  Object.keys(targetDB.dailyRoutines).forEach(d => {
+    if (!targetDB.dailyRoutines[d].contactBookItems) {
+      targetDB.dailyRoutines[d].contactBookItems = [];
+    }
+  });
+
   if (!targetDB.drawHistory) targetDB.drawHistory = {};
   if (!targetDB.seatingLayout || !Array.isArray(targetDB.seatingLayout) || targetDB.seatingLayout.length !== 5) {
     targetDB.seatingLayout = JSON.parse(JSON.stringify(DEFAULT_SEATING_LAYOUT));
@@ -1359,7 +1366,7 @@ function sanitizeAndTrimDB(targetDB) {
       if (!s.subjectPoints) s.subjectPoints = {};
       if (!s.dailySubjectPoints) s.dailySubjectPoints = {};
       
-      // 強制將分數轉為數值型別（避免變成字串相加 "0"+"1"="01"）
+      // 強制將分數轉為數值型別
       s.totalPoints = Number(s.totalPoints) || 0;
       s.redeemedPoints = Number(s.redeemedPoints) || 0;
 
@@ -1798,7 +1805,7 @@ function setCloudStatus(status, customText) {
   } else if (status === "synced") {
     badge.innerHTML = "✅ 雲端已同步";
   } else if (status === "error") {
-    badge.innerHTML = "⚠️ 待同步(本機保護中)";
+    badge.innerHTML = "⚠️ 待同步(本機已保護，點此重試)";
   }
 }
 
@@ -2112,7 +2119,7 @@ function manualAddDutyMakeup() {
   if (!stu) { alert("找不到此座號！"); return; }
   db.routineConfig.dutyStudentConfig.makeupQueue.push({ id: stu.id, missedDate: "教師指定" });
   db.routineConfig.updatedAt = Date.now();
-  addLog("班務", `教師手動將 ${stu.id} ${stu.name} 加入值日生待補名單`);
+  addLog("班務", `教師手手動將 ${stu.id} ${stu.name} 加入值日生待補名單`);
   renderRoutinePage();
 }
 
@@ -2411,7 +2418,7 @@ function checkCleaningZonesByType(type) {
 
 function resetCleaningZonesToDefault() {
   if (!isTeacherMode) return;
-  if (!confirm("確定要還原為《掃區分配.pptx》預設的 19 個內外掃分配組別嗎？")) return;
+  if (!confirm("確定要還原為預設的 19 個內外掃分配組別嗎？")) return;
   db.routineConfig.cleaningZones = JSON.parse(JSON.stringify(DEFAULT_CLEANING_ZONES));
   db.routineConfig.cleaningVersion = CURRENT_CLEANING_VERSION;
   db.routineConfig.updatedAt = Date.now();
@@ -2419,23 +2426,31 @@ function resetCleaningZonesToDefault() {
   renderRoutinePage();
 }
 
+// ==================== 🧹 教師模式下拖拉（Drag & Drop）掃區人員功能 ====================
 let draggedCleanMember = null;
+
 function onCleanMemberDragStart(evt, stuId, fromZoneId) {
-  if (!isTeacherMode) { evt.preventDefault(); return; }
+  if (!isTeacherMode) {
+    evt.preventDefault();
+    return;
+  }
   evt.stopPropagation();
   draggedCleanMember = { stuId, fromZoneId };
   evt.dataTransfer.effectAllowed = "move";
   evt.dataTransfer.setData("text/plain", JSON.stringify(draggedCleanMember));
 }
+
 function onCleanZoneDragOver(evt) {
   if (!isTeacherMode || !draggedCleanMember) return;
   evt.preventDefault();
   evt.dataTransfer.dropEffect = "move";
   evt.currentTarget.classList.add("drag-over-zone");
 }
+
 function onCleanZoneDragLeave(evt) {
   evt.currentTarget.classList.remove("drag-over-zone");
 }
+
 function onCleanZoneDrop(evt, targetZoneId) {
   if (!isTeacherMode || !draggedCleanMember) return;
   evt.preventDefault();
@@ -2455,6 +2470,7 @@ function onCleanZoneDrop(evt, targetZoneId) {
   if (!targetZone.members.includes(stuId)) {
     targetZone.members.push(stuId);
   }
+
   db.routineConfig.updatedAt = Date.now();
   const stu = db.students.find(s => s.id === stuId);
   addLog("班務", `教師拖拉調整掃區：將 ${stu ? stu.id + stu.name : stuId} 從【${fromZone.title}】移至【${targetZone.title}】`);
@@ -2564,7 +2580,9 @@ function renderOutdoorCleaningSection(dr) {
 
     const grid = document.createElement('div');
     grid.className = "outdoor-cards-grid";
-    gZones.forEach(zone => { grid.appendChild(createCleanZoneCardElement(zone, dr)); });
+    gZones.forEach(zone => {
+      grid.appendChild(createCleanZoneCardElement(zone, dr));
+    });
 
     colWrap.appendChild(grid);
     container.appendChild(colWrap);
@@ -2577,7 +2595,9 @@ function renderIndoorCleaningSection(dr) {
   container.innerHTML = "";
 
   const zones = (db.routineConfig.cleaningZones || []).filter(z => z.type === 'indoor');
-  zones.forEach(zone => { container.appendChild(createCleanZoneCardElement(zone, dr)); });
+  zones.forEach(zone => {
+    container.appendChild(createCleanZoneCardElement(zone, dr));
+  });
 
   const doneCnt = zones.filter(z => dr.cleaningChecks && dr.cleaningChecks[z.id]).length;
   const allDone = doneCnt === zones.length && zones.length > 0;
@@ -2618,7 +2638,6 @@ function renderRoutinePage() {
   const nInput = document.getElementById('napNotesInput');
   if (document.activeElement !== nInput) nInput.value = dr.napNotes || "";
 
-  // 聯絡簿與今日作業
   const hwListEl = document.getElementById('routineHwList');
   hwListEl.innerHTML = "";
   const cbItems = [...(dr.contactBookItems || [])];
@@ -2627,8 +2646,13 @@ function renderRoutinePage() {
   db.homeworks.filter(h => !h.isContactBook && h.assignedDate === currentRoutineDate && !existingLinkedIds.has(h.id)).forEach(h => {
     cbItems.push({
       id: "auto_" + h.id,
-      subject: h.subject, title: h.title, pages: h.pages,
-      isExamOrNote: false, assignedDate: h.assignedDate, dueDate: h.date, linkedHwId: h.id
+      subject: h.subject,
+      title: h.title,
+      pages: h.pages,
+      isExamOrNote: false,
+      assignedDate: h.assignedDate,
+      dueDate: h.date,
+      linkedHwId: h.id
     });
   });
 
@@ -2653,7 +2677,6 @@ function renderRoutinePage() {
   const hInput = document.getElementById('routineHwNotesInput');
   if (document.activeElement !== hInput) hInput.value = dr.hwNotes || "";
 
-  // 值日生
   const nextDutyIdStr = String((db.routineConfig.dutyStudentConfig.nextPointer || 0) + 1).padStart(2, '0');
   const nextDutyStu = db.students.find(s => s.id === nextDutyIdStr);
   document.getElementById('dutyPointerInfo').textContent = `（下次輪值：${nextDutyIdStr}號 ${nextDutyStu ? nextDutyStu.name : ''}）`;
@@ -2699,7 +2722,6 @@ function renderRoutinePage() {
   renderOutdoorCleaningSection(dr);
   renderIndoorCleaningSection(dr);
 
-  // 午餐抬餐
   const nextIdStr = String((db.routineConfig.lunchConfig.nextPointer || 0) + 1).padStart(2, '0');
   const nextStu = db.students.find(s => s.id === nextIdStr);
   document.getElementById('lunchPointerInfo').textContent = `🔄 下次輪值起始：${nextIdStr}號 ${nextStu ? nextStu.name : ''}`;
@@ -2747,7 +2769,7 @@ function renderRoutinePage() {
   }
 }
 
-// ==================== 1. 作業繳交 ====================
+// ==================== 1. 作業繳交（顯示該日「應繳交」之作業） ====================
 function onHwDateChange(val) {
   currentHwDate = normalizeToSchoolDay(val);
   document.getElementById('hwDateInput').value = currentHwDate;
@@ -2970,7 +2992,6 @@ function deleteHwColumn(hwId) {
   
   db.homeworks = db.homeworks.filter(h => h.id !== hwId);
   
-  // 若該作業有綁定當日聯絡簿，同步移除
   const dr = db.dailyRoutines[hw.assignedDate];
   if (dr && dr.contactBookItems) {
     dr.contactBookItems = dr.contactBookItems.filter(x => x.linkedHwId !== hwId);
@@ -3018,7 +3039,6 @@ function quickAddSubjectPoint(stuId, subj, delta) {
   stu.dailySubjectPoints[currentPointDate][subj] = (Number(stu.dailySubjectPoints[currentPointDate][subj]) || 0) + numDelta;
   stu.subjectPoints[subj] = (Number(stu.subjectPoints[subj]) || 0) + numDelta;
   
-  // 重新統計當日總分與歷史總分
   let daySum = 0;
   ALL_SUBJECTS.forEach(s => { daySum += (Number(stu.dailySubjectPoints[currentPointDate][s]) || 0); });
   stu.dailyPoints[currentPointDate] = daySum;
@@ -3455,7 +3475,7 @@ function drawRouletteWheel(rotationDeg = 0, winnerIds = []) {
     ctx.rotate(startAngle + sliceAngle / 2);
     ctx.textAlign = "right";
     ctx.fillStyle = "#ffffff";
-    ctx.font = list.length > 14 ? "bold 13px 'Microsoft JhengHei'" : "bold 16px 'Microsoft JhengHei'";
+    ctx.font = list.length > 14 ? "bold 14px 'Microsoft JhengHei'" : "bold 17px 'Microsoft JhengHei'";
     const labelText = `${stu.id} ${stu.name}${drawnCnt > 0 ? '(降)' : ''}`;
     ctx.fillText(labelText, radius - 14, 5);
     ctx.restore();
@@ -3629,7 +3649,7 @@ function showWinnerModal(winnerIds) {
   
   document.getElementById('drawWinnerAddPointBtn').onclick = () => {
     closeModal('drawWinnerModal');
-    // 精準跳轉至座位加分頁面（原本 index: 2 才是座位頁面）
+    // 精準切換至座位加分分頁（ID: tabBtn-seating）
     document.getElementById('tabBtn-seating').click(); 
     
     if (winnerIds.length === 1) {
@@ -3641,7 +3661,7 @@ function showWinnerModal(winnerIds) {
   document.getElementById('drawWinnerModal').classList.add('active');
 }
 
-// ==================== 5. 出缺席打卡 ====================
+// ==================== 5. 出缺席與請假登記打卡 ====================
 function onAttDateChange(val) {
   const checked = normalizeToSchoolDay(val);
   if (checked !== val) {
@@ -3686,7 +3706,6 @@ window.onAttDeskClick = function(stuId, forceLeave = false) {
   const stu = db.students.find(s => s.id === stuId);
   const rec = db.attendance[dateStr][stuId];
 
-  // 處理強制請假（點擊右上角快捷😷）或處於請假模式
   if (forceLeave || currentAttStage === 'leave') {
     if (!isTeacherMode) return;
     if (rec.status === 'leave') {
@@ -3706,7 +3725,6 @@ window.onAttDeskClick = function(stuId, forceLeave = false) {
     return;
   }
 
-  // 一般打卡
   if (rec.status === 'leave') {
     alert(`⚠️ ${stu.name} 今日已標記為請假。如要打卡，請切換至「教師管理模式」取消請假。`);
     return;
@@ -3814,7 +3832,6 @@ function batchCheckIn() {
   const t = getNowTimeStr();
   db.students.forEach(stu => {
     if (!db.attendance[dateStr][stu.id]) db.attendance[dateStr][stu.id] = { status: 'uncheck', inTime: null, outTime: null };
-    // 排除已請假者
     if (db.attendance[dateStr][stu.id].status === 'leave') return;
 
     if (currentAttStage === 'in') db.attendance[dateStr][stu.id].inTime = t;
@@ -3824,7 +3841,6 @@ function batchCheckIn() {
   renderAttendance();
 }
 
-// 每秒更新頂部時鐘與午休 3D 翻頁電子時鐘
 setInterval(() => {
   document.getElementById('liveClock').textContent = getFullTimestamp();
   updateFlipClockDisplay(false);
@@ -3884,9 +3900,8 @@ function exportData() {
   const a = document.createElement('a'); a.href = dataStr; a.download = `504班級_總資料庫_${currentHwDate}.json`; a.click();
 }
 
-// 📥 下載完整多工作表 Excel 試算表（整合 6 張表）
+// 📥 匯出完整 Excel (.xls)
 async function exportFullWorkbookXLS() {
-  // 1. 先與雲端同步合併確保資料最新
   await syncWithComparisonOnLoad(false);
   
   if (typeof XLSX === 'undefined') {
@@ -3896,14 +3911,14 @@ async function exportFullWorkbookXLS() {
   
   const wb = XLSX.utils.book_new();
 
-  // (1) 全班總分表
+  // 1. 總分表
   const totalRows = [["座號", "姓名", "🎯 總積分", "國語總分", "數學總分", "社會總分", "作文總分", "綜合總分", "班級常規總分"]];
   db.students.forEach(s => {
     totalRows.push([s.id, s.name, s.totalPoints || 0, s.subjectPoints["國語"] || 0, s.subjectPoints["數學"] || 0, s.subjectPoints["社會"] || 0, s.subjectPoints["作文"] || 0, s.subjectPoints["綜合"] || 0, s.subjectPoints["班級常規"] || 0]);
   });
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(totalRows), "全班總分表");
 
-  // (2) 國語加分表 (以此類推)
+  // 2. 各科每日加分表
   const dateSet = {};
   db.students.forEach(s => Object.keys(s.dailySubjectPoints || {}).forEach(d => dateSet[d]=true));
   const allDates = Object.keys(dateSet).sort();
@@ -3920,10 +3935,10 @@ async function exportFullWorkbookXLS() {
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(subjRows), subj+"加分表");
   });
 
-  // (3) 作業繳交紀錄
+  // 3. 作業表
   const hws = [...db.homeworks].sort((a,b) => (a.date+a.id).localeCompare(b.date+b.id));
   const hwHeaders = ["座號", "姓名"];
-  hws.forEach(h => hwHeaders.push(`${h.date}\n【${h.subject}】${h.title}\n(${h.pages})`));
+  hws.forEach(h => hwHeaders.push(`${h.date}待繳\n【${h.subject}】${h.title}\n(${h.pages})`));
   const hwRows = [hwHeaders];
   db.students.forEach(s => {
     const row = [s.id, s.name];
@@ -3935,7 +3950,7 @@ async function exportFullWorkbookXLS() {
   });
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(hwRows), "作業繳交紀錄表");
 
-  // (4) 出缺席請假表
+  // 4. 出缺席請假表
   const attDates = Object.keys(db.attendance || {}).sort();
   const attHeaders = ["座號", "姓名", ...attDates];
   const attRows = [attHeaders];
@@ -3951,7 +3966,7 @@ async function exportFullWorkbookXLS() {
   });
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(attRows), "出缺席與請假紀錄");
 
-  // (5) 每日班務表
+  // 5. 班務表
   const routineDates = Object.keys(db.dailyRoutines || {}).sort().reverse();
   const rtRows = [["日期", "早自習注意事項", "今日作業與聯絡簿", "午休注意事項"]];
   routineDates.forEach(d => {
@@ -3961,7 +3976,7 @@ async function exportFullWorkbookXLS() {
   });
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rtRows), "每日班務表");
 
-  // (6) 教室座位表
+  // 6. 教室座位表
   const layout = getSeatingLayout();
   const stMap = {};
   db.students.forEach(s => stMap[s.id] = `${s.id} ${s.name}`);
@@ -3977,7 +3992,6 @@ async function exportFullWorkbookXLS() {
   }
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(seatRows), "教室座位表");
 
-  // 下載 Excel
   XLSX.writeFile(wb, `504班級_完整試算表_${currentRoutineDate}.xlsx`);
 }
 
