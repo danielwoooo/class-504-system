@@ -3017,8 +3017,16 @@ function exportFullWorkbookXLS() {
   });
 
   // 9. 作業繳交紀錄表 (含聯絡簿每日檢核)
-  const hws = [...db.homeworks].sort((a,b) => (a.date+a.id).localeCompare(b.date+b.id));
-  const hwHead = ["座號", "姓名", ...hws.map(h => `派發:${h.assignedDate ? h.assignedDate.slice(5) : ''}→應繳:${h.date.slice(5)}\n【${h.subject}】${h.title}\n(${h.pages})`)];
+  const hws = [...db.homeworks].sort((a, b) => (a.date + a.id).localeCompare(b.date + b.id));
+  const hwHead = ["座號", "姓名"];
+  hws.forEach(h => {
+    const subj = h.subject || "作業";
+    const title = h.title || "未命名";
+    const pages = h.pages && h.pages !== "全" ? ` (${h.pages})` : "";
+    const dueTag = h.date ? ` [${h.date.slice(5)}繳]` : "";
+    // 把【科目】品項放最前面，日期簡化標註在後方
+    hwHead.push(`【${subj}】${title}${pages}${dueTag}`);
+  });
   const hwRows = [hwHead];
   db.students.forEach(s => {
     hwRows.push([s.id, s.name, ...hws.map(h => h.submissions[s.id] ? "✓ (" + String(h.submissions[s.id]).slice(0,5) + ")" : "未交")]);
