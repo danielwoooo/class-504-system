@@ -28,7 +28,7 @@
   * { box-sizing: border-box; font-family: "Microsoft JhengHei", "PingFang TC", sans-serif; user-select: none; }
   body { margin: 0; background: var(--bg); color: var(--dark); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-  /* 🖥️ 全螢幕看板模式 */
+  /* 全螢幕看板模式 */
   body.board-fullscreen header { display: none !important; }
   body.board-fullscreen main { padding: 6px 10px; }
 
@@ -65,8 +65,7 @@
   }
   .cloud-status.synced { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
   .cloud-status.syncing { background: #fef3c7; color: #b45309; border: 1.5px solid #fde047; }
-  .cloud-status.error { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; animation: pulseError 1.5s infinite; }
-  @keyframes pulseError { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+  .cloud-status.error { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; }
 
   .mode-btn { padding: 6px 11px; font-size: 0.9rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; }
   .mode-student { background: var(--warning); color: white; }
@@ -106,7 +105,7 @@
   .btn-outline.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
   .form-control { padding: 5px 9px; font-size: 0.95rem; border: 2px solid #cbd5e1; border-radius: 8px; font-weight: bold; user-select: text; }
 
-  /* ==================== ☀️ 每日班務看板 ==================== */
+  /* ==================== 班務看板 ==================== */
   .routine-jump-bar { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
   .jump-pill {
     padding: 6px 13px; border-radius: 20px; font-weight: 900; font-size: 0.95rem;
@@ -114,10 +113,7 @@
     display: inline-flex; align-items: center; gap: 5px; color: var(--dark);
   }
   .jump-pill:hover { border-color: var(--primary); background: var(--primary-light); }
-  .jump-pill.active {
-    background: var(--primary); color: white; border-color: var(--primary);
-    box-shadow: 0 2px 8px rgba(37,99,235,0.4);
-  }
+  .jump-pill.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 2px 8px rgba(37,99,235,0.4); }
 
   .routine-stage-viewport { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
   .routine-stage-block {
@@ -133,10 +129,7 @@
   .routine-stage-block.stage-nap { border-left-color: #6366f1; background: linear-gradient(180deg, #eef2ff 0%, #ffffff 30%); }
   .routine-stage-block.stage-indoor { border-left-color: #16a34a; background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 30%); }
 
-  .stage-header {
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
-    padding-bottom: 6px; border-bottom: 2px solid rgba(0,0,0,0.08); flex-shrink: 0;
-  }
+  .stage-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding-bottom: 6px; border-bottom: 2px solid rgba(0,0,0,0.08); flex-shrink: 0; }
   .stage-title { font-size: 1.48rem; font-weight: 900; display: flex; align-items: center; gap: 10px; }
   .stage-time-badge { font-size: 0.98rem; font-weight: 900; padding: 4px 14px; border-radius: 20px; background: var(--dark); color: #ffd166; }
 
@@ -163,10 +156,7 @@
     border-bottom: 2.5px dashed #cbd5e1; padding-bottom: 6px; flex-shrink: 0; flex-wrap: wrap; gap: 6px;
   }
 
-  .routine-note-display {
-    font-size: 1.65rem; font-weight: 900; line-height: 1.7; white-space: pre-wrap; color: #0f172a;
-    padding: 4px; flex: 1; overflow-y: auto; letter-spacing: 0.5px;
-  }
+  .routine-note-display { font-size: 1.65rem; font-weight: 900; line-height: 1.7; white-space: pre-wrap; color: #0f172a; padding: 4px; flex: 1; overflow-y: auto; }
   body.is-teacher .swap-on-teacher .routine-note-display { display: none !important; }
   .routine-textarea {
     width: 100%; flex: 1; min-height: 60px; border: 2.5px solid #94a3b8; border-radius: 10px; padding: 10px;
@@ -184,7 +174,7 @@
   .cb-item-row.exam-row { border-left-color: #dc2626; background: #fff1f2; }
   .cb-item-row.note-row { border-left-color: #d97706; background: #fffbeb; }
 
-  /* 內外掃區排版與拖曳高亮 */
+  /* 內外掃區排版與拖曳 */
   .outdoor-two-groups-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1; min-height: 0; overflow: hidden; }
   .clean-group-column {
     display: flex; flex-direction: column; gap: 6px; min-height: 0; overflow: hidden;
@@ -192,16 +182,14 @@
   }
   .clean-group-title {
     font-size: 1.25rem; font-weight: 900; color: #0f172a; background: #e2e8f0;
-    padding: 6px 14px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;
-    flex-shrink: 0;
+    padding: 6px 14px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
   }
   .outdoor-cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); gap: 8px; flex: 1; min-height: 0; }
   .indoor-cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 10px; flex: 1; min-height: 0; }
   .clean-zone-card {
     background: #ffffff; border: 2.5px solid #cbd5e1; border-radius: 12px; padding: 8px 12px;
     display: flex; flex-direction: column; justify-content: space-between; gap: 4px;
-    cursor: pointer; transition: 0.15s; min-height: 0; overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    cursor: pointer; transition: 0.15s; min-height: 0; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.03);
   }
   .clean-zone-card:hover { border-color: var(--primary); transform: translateY(-1px); }
   .clean-zone-card.checked { background: #dcfce7; border-color: #16a34a; }
@@ -209,18 +197,16 @@
   .clean-zone-header-title { font-size: 1.22rem; font-weight: 900; color: #0f172a; line-height: 1.2; }
   .clean-member-chip {
     background: #dbeafe; border: 2px solid #2563eb; color: #1e3a8a; border-radius: 8px;
-    padding: 3px 9px; font-size: 1.15rem; font-weight: 900; display: inline-flex; align-items: center; gap: 4px;
-    transition: 0.12s;
+    padding: 3px 9px; font-size: 1.15rem; font-weight: 900; display: inline-flex; align-items: center; gap: 4px; transition: 0.12s;
   }
   body.is-teacher .clean-member-chip { cursor: grab; }
   body.is-teacher .clean-member-chip:active { cursor: grabbing; transform: scale(0.95); }
   .clean-desc-text {
     font-size: 0.95rem; font-weight: 900; color: #334155; line-height: 1.3;
-    background: #f1f5f9; padding: 4px 8px; border-radius: 8px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0;
+    background: #f1f5f9; padding: 4px 8px; border-radius: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0;
   }
 
-  /* 午餐抬餐 8 人網格與拖曳 */
+  /* 午餐抬餐 8 人網格 */
   .lunch-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 12px; flex: 1; min-height: 0; }
   .duty-person-card {
     background: #f8fafc; border: 3px solid #cbd5e1; border-radius: 14px; padding: 12px 14px;
@@ -232,10 +218,9 @@
   .duty-person-card.status-leave { background: #fee2e2; border-color: #ef4444; opacity: 0.85; }
   .duty-person-card.drag-over-lunch { border: 3px dashed #dc2626 !important; background: #fff1f2 !important; transform: scale(1.03); }
   body.is-teacher .duty-person-card { cursor: grab; }
-  body.is-teacher .duty-person-card:active { cursor: grabbing; }
   .makeup-queue-box.drag-over-makeup { border: 3px dashed #7c3aed !important; background: #f3e8ff !important; }
 
-  /* 午休時鐘與常規 */
+  /* 午休時鐘 */
   .nap-unified-board {
     flex: 1; min-height: 0; overflow: hidden;
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 55%, #172554 100%);
@@ -248,14 +233,10 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
     padding-right: 24px; border-right: 2px dashed rgba(255,255,255,0.2); height: 100%; cursor: pointer;
   }
-  .nap-reminder-zone {
-    display: flex; flex-direction: column; justify-content: center; height: 100%; min-height: 0;
-    gap: 14px; padding-left: 6px; overflow: hidden;
-  }
+  .nap-reminder-zone { display: flex; flex-direction: column; justify-content: center; height: 100%; min-height: 0; gap: 14px; padding-left: 6px; overflow: hidden; }
   .nap-reminder-header {
     font-size: 1.65rem; font-weight: 900; color: #fde047;
-    display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 2px solid rgba(253, 224, 71, 0.35); padding-bottom: 10px; flex-shrink: 0;
+    display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(253, 224, 71, 0.35); padding-bottom: 10px; flex-shrink: 0;
   }
   .flip-clock-wrapper { display: flex; align-items: center; justify-content: center; gap: 14px; }
   .flip-colon { font-size: 4.8rem; font-weight: 900; color: #cbd5e1; line-height: 1; padding-bottom: 16px; animation: blinkColon 1s infinite; }
@@ -263,25 +244,16 @@
   .flip-unit-box { display: flex; flex-direction: column; align-items: center; gap: 8px; }
   .flip-card {
     position: relative; width: 160px; height: 192px; border-radius: 18px;
-    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-    border: 3px solid #64748b; display: flex; align-items: center; justify-content: center;
-    perspective: 600px; overflow: hidden;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border: 3px solid #64748b;
+    display: flex; align-items: center; justify-content: center; perspective: 600px; overflow: hidden;
   }
   .flip-card.seconds-card { width: 98px; height: 120px; border-radius: 14px; }
-  .flip-card-num {
-    font-family: "Arial Black", "Impact", "Segoe UI", sans-serif;
-    font-size: 7.2rem; font-weight: 900; color: #ffffff; line-height: 1;
-  }
+  .flip-card-num { font-family: "Arial Black", "Impact", "Segoe UI", sans-serif; font-size: 7.2rem; font-weight: 900; color: #ffffff; line-height: 1; }
   .flip-card.seconds-card .flip-card-num { font-size: 3.8rem; color: #38bdf8; }
   .flip-card.do-flip { animation: mechanicalFlip 0.65s cubic-bezier(0.35, 0.1, 0.25, 1); }
-  @keyframes mechanicalFlip {
-    0% { transform: rotateX(0deg); }
-    45% { transform: rotateX(-90deg) scale(0.96); border-color: #fbbf24; }
-    55% { transform: rotateX(70deg) scale(1.02); border-color: #fbbf24; }
-    100% { transform: rotateX(0deg); }
-  }
+  @keyframes mechanicalFlip { 0% { transform: rotateX(0deg); } 45% { transform: rotateX(-90deg) scale(0.96); border-color: #fbbf24; } 55% { transform: rotateX(70deg) scale(1.02); border-color: #fbbf24; } 100% { transform: rotateX(0deg); } }
 
-  /* 作業方格與黑板看板 */
+  /* ==================== 🌈 作業方格科目專屬顏色 ==================== */
   .teacher-hw-setup {
     display: none; background: #fffbeb; border: 2px solid #f59e0b; border-radius: 12px;
     padding: 8px 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; flex-shrink: 0;
@@ -290,10 +262,19 @@
   .hw-checklist-panel { background: white; border-radius: 14px; padding: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden; }
   .hw-columns-wrapper { display: flex; gap: 10px; overflow-x: auto; flex: 1; padding-bottom: 4px; }
   .hw-item-col { min-width: 255px; flex: 1; background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; }
+  
   .hw-item-header { background: var(--dark); color: white; padding: 8px 10px; text-align: center; position: relative; }
-  .hw-item-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: #cbd5e1; margin-bottom: 3px; }
-  .hw-item-title { font-size: 1.2rem; font-weight: 900; color: #fff; }
-  .hw-item-pages { font-size: 0.92rem; color: #fde047; font-weight: bold; margin-top: 2px; }
+  .hw-item-header.cb-header { background: linear-gradient(135deg, #0f766e 0%, #115e59 100%) !important; }
+  .hw-item-header.chi-header { background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%) !important; }
+  .hw-item-header.math-header { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important; }
+  .hw-item-header.soc-header { background: linear-gradient(135deg, #047857 0%, #065f46 100%) !important; }
+  .hw-item-header.essay-header { background: linear-gradient(135deg, #be185d 0%, #9d174d 100%) !important; }
+  .hw-item-header.quiz-header { background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important; }
+  .hw-item-header.comp-header { background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important; }
+
+  .hw-item-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: #f8fafc; margin-bottom: 3px; font-weight: bold; }
+  .hw-item-title { font-size: 1.25rem; font-weight: 900; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+  .hw-item-pages { font-size: 0.95rem; color: #fde047; font-weight: 900; margin-top: 2px; }
 
   .seat-boxes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 8px; overflow-y: auto; flex: 1; align-content: start; }
   .seat-box {
@@ -312,14 +293,22 @@
     color: var(--chalk-white); display: flex; flex-direction: column; overflow-y: auto; gap: 12px;
   }
   .chalk-header { font-size: 1.35rem; font-weight: 900; color: var(--chalk-yellow); border-bottom: 2px dashed rgba(255,255,255,0.3); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-  .chalk-row { background: rgba(0,0,0,0.22); border-left: 5px solid var(--chalk-yellow); border-radius: 8px; padding: 10px 12px; }
+  .chalk-row { background: rgba(0,0,0,0.22); border-left: 6px solid var(--chalk-yellow); border-radius: 8px; padding: 10px 12px; }
+  .chalk-row.chi-border { border-left-color: #ef4444; }
+  .chalk-row.math-border { border-left-color: #3b82f6; }
+  .chalk-row.soc-border { border-left-color: #10b981; }
+  .chalk-row.essay-border { border-left-color: #ec4899; }
+  .chalk-row.quiz-border { border-left-color: #f97316; }
+  .chalk-row.comp-border { border-left-color: #a855f7; }
+  .chalk-row.cb-border { border-left-color: #14b8a6; }
+
   .chalk-row-title { font-size: 1.2rem; font-weight: 900; color: #fff; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
   .chalk-numbers-wrap { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .chalk-num-chip {
     background: rgba(255, 107, 107, 0.25); border: 2px solid var(--chalk-red); color: #fff; font-weight: 900; font-size: 1.1rem; padding: 3px 10px; border-radius: 6px; cursor: pointer; transition: 0.12s;
   }
 
-  /* 座位表與拖拉樣式 */
+  /* 座位表與換位 */
   .seating-layout-card {
     background: white; border-radius: 14px; padding: 12px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06); flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden;
@@ -328,19 +317,10 @@
     background: #334155; color: #f8fafc; text-align: center; font-weight: 900;
     padding: 6px; border-radius: 8px; margin-bottom: 10px; letter-spacing: 4px; font-size: 1.1rem; flex-shrink: 0;
   }
-  .seating-grid {
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; flex: 1; min-height: 0; overflow-y: auto; padding: 2px;
-  }
-  .column-box {
-    display: flex; flex-direction: column; gap: 8px; background: #f8fafc;
-    padding: 8px; border-radius: 12px; border: 2px solid #e2e8f0; transition: 0.15s;
-  }
+  .seating-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; flex: 1; min-height: 0; overflow-y: auto; padding: 2px; }
+  .column-box { display: flex; flex-direction: column; gap: 8px; background: #f8fafc; padding: 8px; border-radius: 12px; border: 2px solid #e2e8f0; transition: 0.15s; }
   .column-box.drag-over-col { border: 2px dashed var(--primary) !important; background: #eff6ff !important; }
-  .column-header {
-    text-align: center; font-weight: 900; font-size: 1.08rem; color: #1e293b;
-    padding-bottom: 6px; border-bottom: 2px solid #cbd5e1;
-    display: flex; flex-direction: column; gap: 4px; align-items: center;
-  }
+  .column-header { text-align: center; font-weight: 900; font-size: 1.08rem; color: #1e293b; padding-bottom: 6px; border-bottom: 2px solid #cbd5e1; display: flex; flex-direction: column; gap: 4px; align-items: center; }
   .seat-desk {
     background: white; border: 2.5px solid #cbd5e1; border-radius: 10px;
     padding: 7px 8px; text-align: center; cursor: pointer; transition: 0.15s;
@@ -358,7 +338,7 @@
   .seat-desk-name { font-size: 1.25rem; font-weight: 900; margin: 2px 0; color: #0f172a; }
   .seat-desk-pts { font-size: 0.95rem; font-weight: 900; color: var(--primary); }
 
-  /* 輪盤抽籤 */
+  /* ==================== 🎲 輪盤與機率扇區 ==================== */
   .draw-split-layout { display: grid; grid-template-columns: 1.35fr 1fr; gap: 14px; flex: 1; min-height: 0; }
   .wheel-panel {
     background: white; border-radius: 14px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
@@ -366,7 +346,7 @@
   }
   .wheel-Stage { position: relative; width: 400px; height: 400px; display: flex; align-items: center; justify-content: center; }
   .wheel-pointer {
-    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
     width: 0; height: 0; border-left: 18px solid transparent; border-right: 18px solid transparent; border-top: 38px solid #dc2626;
     z-index: 15; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.35));
   }
@@ -379,11 +359,7 @@
   .seat-desk.candidate { border-color: #f59e0b; background: #fffbeb; }
   .seat-desk.highlighting { border-color: #ef4444; background: #fee2e2; transform: scale(1.07); }
   .seat-desk.winner-pulse { border-color: #10b981; background: #dcfce7; transform: scale(1.06); animation: winnerPulse 1s infinite; }
-  @keyframes winnerPulse {
-    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-    70% { box-shadow: 0 0 0 16px rgba(16, 185, 129, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-  }
+  @keyframes winnerPulse { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 70% { box-shadow: 0 0 0 16px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
 
   /* 積分表 */
   .subj-score-table-wrapper { overflow: auto; flex: 1; padding-bottom: 8px; }
@@ -536,7 +512,7 @@
         </div>
       </div>
 
-      <!-- 區塊 2：外掃區 (可拖曳調動人員) -->
+      <!-- 區塊 2：外掃區 (支援拖拉調動) -->
       <div class="routine-stage-block stage-outdoor" id="stage-outdoor">
         <div class="stage-header">
           <div class="stage-title" style="color:#0f766e;">
@@ -677,7 +653,10 @@
       </div>
     </div>
 
-    <div class="hw-main-split">
+    <!-- 休假告示條 -->
+    <div id="hwHolidayBanner" style="display:none; background:#fee2e2; border:2.5px solid #ef4444; border-radius:12px; padding:12px 18px; font-size:1.25rem; font-weight:900; color:#991b1b; text-align:center;"></div>
+
+    <div class="hw-main-split" id="hwMainSplitArea">
       <div class="hw-checklist-panel">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding-bottom:6px; border-bottom:2px solid #f1f5f9;">
           <strong style="font-size:1.1rem;">📝 504班 當日應繳交作業方格表</strong>
@@ -786,12 +765,13 @@
           <input type="number" id="drawCount" class="form-control" value="1" min="1" max="21" style="width:52px; padding:3px 6px;">
           <label style="font-weight:bold; font-size:0.9rem; margin-left:6px;">圈數:</label>
           <input type="number" id="drawLaps" class="form-control" value="5" min="1" max="25" style="width:52px; padding:3px 6px;">
-          <label style="font-weight:bold; font-size:0.9rem; margin-left:6px; color:#b45309;">
-            <input type="checkbox" id="reduceRepeatProb" checked onchange="renderDrawSeating()"> 調降當日重複率
+          <label style="font-weight:bold; font-size:0.9rem; margin-left:6px; color:#b45309; cursor:pointer;">
+            <input type="checkbox" id="reduceRepeatProb" checked onchange="renderDrawSeating()"> 📉 調降當日重複率(影響扇區大小)
           </label>
         </div>
       </div>
       <div style="display:flex; gap:6px; align-items:center;">
+        <button class="btn btn-outline" onclick="resetTodayDrawHistory()">🔄 重設機率</button>
         <button class="btn btn-outline" onclick="selectAllForDraw()">👥 全選</button>
         <button class="btn btn-outline" onclick="clearDrawCandidates()">❌ 清空</button>
         <button class="btn btn-primary" id="startDrawBtn" onclick="startDraw()" style="font-size:1.05rem;">🎲 啟動輪盤</button>
@@ -799,13 +779,13 @@
     </div>
     <div class="draw-split-layout">
       <div class="seating-layout-card">
-        <div class="podium-bar">點選參與學生（未選則預設全班參與）</div>
+        <div class="podium-bar">點選參與學生（未選則預設全班參與，課桌顯示即時抽中機率%）</div>
         <div class="seating-grid" id="drawSeatingGrid"></div>
       </div>
       <div class="wheel-panel">
         <div class="wheel-Stage">
           <div class="wheel-pointer"></div>
-          <canvas id="rouletteCanvas" width="390" height="390"></canvas>
+          <canvas id="rouletteCanvas" width="400" height="400"></canvas>
           <div class="wheel-center-hub" onclick="startDraw()">GO!</div>
         </div>
         <div id="wheelCurrentPointingLabel" style="margin-top:10px; font-size:1.2rem; font-weight:900; color:#dc2626; min-height:28px;">準備就緒</div>
@@ -1196,24 +1176,51 @@ let currentHwDate = currentRoutineDate;
 let currentPointDate = currentRoutineDate;
 let currentAttDate = currentRoutineDate;
 
-// 💡 關鍵修復：保證所有先前上傳的作業全面校正歸屬到「前一上學日」派發
+// 💡 關鍵修復：保證所有先前作業與聯絡簿依上學日正確歸位！
 function sanitizeAndTrimDB(targetDB) {
   if (!targetDB) return;
   if (!targetDB.holidays || !Array.isArray(targetDB.holidays)) targetDB.holidays = [];
   if (!targetDB.logs) targetDB.logs = [];
   if (targetDB.logs.length > MAX_LOGS_COUNT) targetDB.logs = targetDB.logs.slice(0, MAX_LOGS_COUNT);
-  
+
+  // 1. 作業關聯修復：若作業應繳日 date 與 assignedDate 相同或派發日在後，一律校正派發日為前一上學日
   if (!targetDB.homeworks) targetDB.homeworks = [];
   targetDB.homeworks.forEach(h => {
     if (!h.date) h.date = currentRoutineDate;
-    // 💡 關鍵：若原本沒有派發日，或被誤設成等於應繳日，一律校正為前一上學日派發！
-    if (!h.assignedDate || h.assignedDate === h.date) {
+    if (!h.assignedDate || (h.assignedDate >= h.date && !h.isNoSubmit)) {
       h.assignedDate = getPrevSchoolDay(h.date);
     }
     if (!h.submissions) h.submissions = {};
   });
 
+  // 2. 聯絡簿項目修復：若聯絡簿內有「應繳日 <= 當天」的項目，代表是前一天抄寫的，自動歸位至前一上學日！
   if (!targetDB.dailyRoutines) targetDB.dailyRoutines = {};
+  Object.keys(targetDB.dailyRoutines).forEach(d => {
+    const dr = targetDB.dailyRoutines[d];
+    if (!dr.contactBookItems) dr.contactBookItems = [];
+
+    const keepItems = [];
+    dr.contactBookItems.forEach(item => {
+      if (item.dueDate && item.dueDate <= d) {
+        // 這項作業其實是前一上學日派發的！移動至前一上學日
+        const correctAssignDate = getPrevSchoolDay(item.dueDate);
+        item.assignedDate = correctAssignDate;
+        if (!targetDB.dailyRoutines[correctAssignDate]) {
+          targetDB.dailyRoutines[correctAssignDate] = { contactBookItems: [] };
+        }
+        if (!targetDB.dailyRoutines[correctAssignDate].contactBookItems) {
+          targetDB.dailyRoutines[correctAssignDate].contactBookItems = [];
+        }
+        if (!targetDB.dailyRoutines[correctAssignDate].contactBookItems.some(x => x.id === item.id)) {
+          targetDB.dailyRoutines[correctAssignDate].contactBookItems.push(item);
+        }
+      } else {
+        keepItems.push(item);
+      }
+    });
+    dr.contactBookItems = keepItems;
+  });
+
   if (!targetDB.seatingLayout || targetDB.seatingLayout.length !== 5) {
     targetDB.seatingLayout = JSON.parse(JSON.stringify(DEFAULT_SEATING_LAYOUT));
   }
@@ -1333,14 +1340,14 @@ function ensureDailyRoutineObj(dateStr) {
       napNotes: db.routineConfig.defaultNapNotes || "",
       hwNotes: "",
       contactBookItems: [],
+      contactBookSubmissions: {}, // 每日聯絡簿繳交狀態
       dutyList: [],
       lunchList: [],
       cleaningChecks: {}
     };
   }
-  if (!db.dailyRoutines[dateStr].contactBookItems) {
-    db.dailyRoutines[dateStr].contactBookItems = [];
-  }
+  if (!db.dailyRoutines[dateStr].contactBookItems) db.dailyRoutines[dateStr].contactBookItems = [];
+  if (!db.dailyRoutines[dateStr].contactBookSubmissions) db.dailyRoutines[dateStr].contactBookSubmissions = {};
   if (!db.dailyRoutines[dateStr].dutyList || !db.dailyRoutines[dateStr].dutyList.length) {
     buildDutyStudentListForDate(dateStr, false);
   }
@@ -1359,7 +1366,7 @@ function renderRoutinePage() {
   document.getElementById('routineDateInput').value = currentRoutineDate;
   const dr = ensureDailyRoutineObj(currentRoutineDate);
   const nextSchool = getNextSchoolDay(currentRoutineDate);
-  document.getElementById('nextSchoolDayHint').textContent = `（派發之作業將排入下一上學日 ${nextSchool.slice(5)} 待繳）`;
+  document.getElementById('nextSchoolDayHint').textContent = `（今日派發之作業將排入下一上學日 ${nextSchool.slice(5)} 待繳）`;
 
   const hBadge = document.getElementById('holidayNoticeBadge');
   const hReason = getHolidayReason(currentRoutineDate);
@@ -1387,7 +1394,7 @@ function renderRoutinePage() {
   const hIn = document.getElementById('routineHwNotesInput');
   if (document.activeElement !== hIn) hIn.value = dr.hwNotes || "";
 
-  // 渲染當日聯絡簿作業（嚴格依派發日 assignedDate === currentRoutineDate 顯示）
+  // 渲染當日聯絡簿作業（嚴格只顯示 assignedDate === currentRoutineDate 且 dueDate > currentRoutineDate）
   const listEl = document.getElementById('routineHwList');
   listEl.innerHTML = "";
 
@@ -1404,10 +1411,13 @@ function renderRoutinePage() {
     });
   });
 
-  if (cbItems.length === 0) {
+  // 再次過濾：絕對不允許 dueDate <= currentRoutineDate 的昨天作業留在今天聯絡簿
+  const filteredCbItems = cbItems.filter(it => !it.dueDate || it.dueDate > currentRoutineDate);
+
+  if (filteredCbItems.length === 0) {
     listEl.innerHTML = `<div style="color:var(--gray); font-size:1.25rem;">📌 本日聯絡簿尚無項目（切換至教師模式可直接新增）</div>`;
   } else {
-    cbItems.forEach((item, idx) => {
+    filteredCbItems.forEach((item, idx) => {
       const isExam = item.subject === "考試/測驗" || item.subject === "一般提醒";
       const row = document.createElement('div');
       row.className = `cb-item-row ${isExam ? 'exam-row' : ''}`;
@@ -1445,7 +1455,7 @@ function addContactBookItem() {
   if (!isExam) {
     db.homeworks.push({
       id: linkedHwId,
-      date: nextSchool,                 // 應繳日為下一上學日
+      date: nextSchool,                 // 應繳日保證為下一上學日
       assignedDate: currentRoutineDate, // 派發日為當日
       subject: subj,
       title,
@@ -1579,8 +1589,8 @@ function manualAddDutyMakeup() {
   }
 }
 
-// ==================== 🍱 午餐抬餐：自動排號 ＋ 拖曳補抬 ====================
-let draggedLunchItem = null; // { type: 'card'|'queue', idx: number, stuId: string }
+// ==================== 🍱 午餐抬餐 ====================
+let draggedLunchItem = null;
 
 function buildLunchListForDate(dateStr, save = true) {
   const dr = db.dailyRoutines[dateStr] || ensureDailyRoutineObj(dateStr);
@@ -1588,7 +1598,6 @@ function buildLunchListForDate(dateStr, save = true) {
   const list = [];
   const used = new Set();
 
-  // 1. 待補名單優先排入
   (cfg.makeupQueue || []).forEach(m => {
     if (list.length < 8 && !used.has(m.id)) {
       list.push({ id: m.id, status: "pending", isMakeup: true, postRole: LUNCH_DUTY_ROLES[list.length] });
@@ -1596,7 +1605,6 @@ function buildLunchListForDate(dateStr, save = true) {
     }
   });
 
-  // 2. 照輪值指針自動排滿 8 人
   let ptr = cfg.nextPointer || 0;
   let guard = 0;
   while (list.length < 8 && guard < 42) {
@@ -1627,7 +1635,6 @@ function renderLunchSection(dr) {
     card.className = `duty-person-card ${item.status === 'done' ? 'status-done' : (item.status === 'leave' ? 'status-leave' : '')}`;
     card.draggable = isTeacherMode;
     
-    // 拖曳事件
     card.ondragstart = (e) => onLunchCardDragStart(e, idx, item.id);
     card.ondragover = (e) => onLunchCardDragOver(e);
     card.ondragleave = (e) => onLunchCardDragLeave(e);
@@ -1656,7 +1663,6 @@ function renderLunchSection(dr) {
     grid.appendChild(card);
   });
 
-  // 待補抬清單
   const qContainer = document.getElementById('makeupQueueContainer');
   qContainer.innerHTML = "";
   const queue = db.routineConfig.lunchConfig.makeupQueue || [];
@@ -1676,7 +1682,6 @@ function renderLunchSection(dr) {
   }
 }
 
-// 抬餐拖拉處理
 function onLunchCardDragStart(e, idx, stuId) {
   if (!isTeacherMode) return;
   draggedLunchItem = { type: 'card', idx, stuId };
@@ -1702,15 +1707,12 @@ function onLunchCardDrop(e, targetIdx) {
   e.currentTarget.classList.remove('drag-over-lunch');
 
   const dr = ensureDailyRoutineObj(currentRoutineDate);
-  const targetItem = dr.lunchList[targetIdx];
 
   if (draggedLunchItem.type === 'queue') {
-    // 從待補名單拖到抬餐卡片：遞補該卡片
     const qIdx = draggedLunchItem.idx;
     const stuId = draggedLunchItem.stuId;
     db.routineConfig.lunchConfig.makeupQueue.splice(qIdx, 1);
     
-    // 原卡片如果是正常輪值，可視需要放回或替換
     dr.lunchList[targetIdx] = {
       id: stuId,
       status: "pending",
@@ -1719,7 +1721,6 @@ function onLunchCardDrop(e, targetIdx) {
     };
     addLog("班務", `導師拖拉補抬學生 ${stuId} 遞補進 ${LUNCH_DUTY_ROLES[targetIdx]}`);
   } else if (draggedLunchItem.type === 'card') {
-    // 兩張卡片互換崗位
     const srcIdx = draggedLunchItem.idx;
     if (srcIdx !== targetIdx) {
       const temp = dr.lunchList[srcIdx];
@@ -1727,7 +1728,7 @@ function onLunchCardDrop(e, targetIdx) {
       dr.lunchList[targetIdx] = temp;
       dr.lunchList[srcIdx].postRole = LUNCH_DUTY_ROLES[srcIdx];
       dr.lunchList[targetIdx].postRole = LUNCH_DUTY_ROLES[targetIdx];
-      addLog("班務", `導師互換抬餐人員崗位：${dr.lunchList[srcIdx].id}號 ⇄ ${dr.lunchList[targetIdx].id}號`);
+      addLog("班務", `導師互換抬餐崗位：${dr.lunchList[srcIdx].id}號 ⇄ ${dr.lunchList[targetIdx].id}號`);
     }
   }
   draggedLunchItem = null;
@@ -1753,10 +1754,8 @@ function onMakeupBoxDrop(e) {
   const removedStu = dr.lunchList[srcIdx];
   if (!removedStu) return;
 
-  // 加入待補抬
   db.routineConfig.lunchConfig.makeupQueue.push({ id: removedStu.id, missedDate: currentRoutineDate.slice(5) });
   
-  // 順延遞補一位新號碼
   let ptr = db.routineConfig.lunchConfig.nextPointer || 0;
   const used = new Set(dr.lunchList.map(x => x.id));
   let subStu = null;
@@ -1846,7 +1845,7 @@ function removeMakeupQueueItem(idx) {
   saveDB(); renderRoutinePage();
 }
 
-// ==================== 🧹 內外掃區：人員拖曳調動 ====================
+// ==================== 🧹 內外掃區 ====================
 let draggedCleanMember = null;
 
 function onCleanMemberDragStart(e, stuId, fromZoneId) {
@@ -1996,9 +1995,20 @@ function addCleaningZoneItem() {
   saveDB(); openCleaningModal();
 }
 
-// ==================== 1. 作業方格登記 (應繳交) ====================
+// ==================== 1. 作業登記表 (包含聯絡簿每日檢核 ＆ 顏色標籤) ====================
+function getSubjectTheme(subj) {
+  if (subj.includes("聯絡簿")) return { headerClass: "cb-header", borderClass: "cb-border" };
+  if (subj.includes("國語")) return { headerClass: "chi-header", borderClass: "chi-border" };
+  if (subj.includes("數學")) return { headerClass: "math-header", borderClass: "math-border" };
+  if (subj.includes("社會")) return { headerClass: "soc-header", borderClass: "soc-border" };
+  if (subj.includes("作文")) return { headerClass: "essay-header", borderClass: "essay-border" };
+  if (subj.includes("考卷") || subj.includes("訂正") || subj.includes("簽名")) return { headerClass: "quiz-header", borderClass: "quiz-border" };
+  if (subj.includes("綜合")) return { headerClass: "comp-header", borderClass: "comp-border" };
+  return { headerClass: "comp-header", borderClass: "comp-border" };
+}
+
 function onHwDateChange(v) {
-  currentHwDate = normalizeToSchoolDay(v);
+  currentHwDate = v;
   renderHomeworkBoard();
 }
 function shiftSchoolDay(dir) {
@@ -2059,75 +2069,137 @@ function addHomeworkColumn() {
 function renderHomeworkBoard() {
   document.getElementById('hwDateInput').value = currentHwDate;
   renderWeekdayBar();
-  const prevSchool = getPrevSchoolDay(currentHwDate);
   document.getElementById('boardDateLabel').textContent = `📅 應繳交日：${currentHwDate}`;
 
   const wrapper = document.getElementById('hwColumnsWrapper');
   const chalkList = document.getElementById('chalkBoardList');
+  const banner = document.getElementById('hwHolidayBanner');
+  const area = document.getElementById('hwMainSplitArea');
   wrapper.innerHTML = "";
   chalkList.innerHTML = "";
 
-  const dayHws = (db.homeworks || []).filter(h => h.date === currentHwDate);
+  // 1. 放假判定：如果是休假日或週末，無需繳交作業
+  const isSchool = isSchoolDay(currentHwDate);
+  const hReason = getHolidayReason(currentHwDate);
+  const dObj = new Date(currentHwDate + "T00:00:00");
+  const isWeekend = (dObj.getDay() === 0 || dObj.getDay() === 6);
 
-  if (dayHws.length === 0) {
-    wrapper.innerHTML = `<div style="padding:20px; font-size:1.2rem; color:var(--gray); font-weight:bold;">✅ 今日無待繳交作業項目</div>`;
+  if (!isSchool) {
+    banner.style.display = "block";
+    banner.innerHTML = `🏖️ 【${currentHwDate}】為${hReason ? '放假日：' + hReason : (isWeekend ? '週末非上學日' : '休假日')}，學生無需到校，免繳交聯絡簿與作業。`;
+    area.style.display = "none";
+    return;
   } else {
-    dayHws.forEach(hw => {
-      const missing = db.students.filter(s => !hw.submissions[s.id]);
-      const isFromPrevSchoolDay = (hw.assignedDate === prevSchool);
-
-      const col = document.createElement('div');
-      col.className = "hw-item-col";
-      const boxes = db.students.map(s => {
-        const sub = Boolean(hw.submissions[s.id]);
-        return `
-          <div class="seat-box ${sub ? 'submitted' : 'unsubmitted'}" onclick="handleHwGridClick('${hw.id}', '${s.id}')">
-            <span class="s-num">${sub ? '✓ ' + s.id : s.id}</span>
-            <span class="s-name">${s.name}</span>
-          </div>
-        `;
-      }).join('');
-
-      col.innerHTML = `
-        <div class="hw-item-header">
-          <div class="hw-item-meta">
-            <span>📅 ${hw.date.slice(5)} 應繳</span>
-            <span>【${hw.subject}】</span>
-            ${isTeacherMode ? `<span style="cursor:pointer; color:#fca5a5;" onclick="deleteHwColumn('${hw.id}')">🗑️</span>` : ''}
-          </div>
-          <div class="hw-item-title">${hw.title}</div>
-          <div class="hw-item-pages">${hw.pages}</div>
-          <div style="font-size:0.75rem; color:#fde047; margin-top:3px;">
-            ${isFromPrevSchoolDay ? `📍 前一上學日 (${prevSchool.slice(5)}) 派發・今日應繳` : `(派發日: ${hw.assignedDate.slice(5)})`}
-          </div>
-        </div>
-        <div class="seat-boxes-grid">${boxes}</div>
-      `;
-      wrapper.appendChild(col);
-
-      // 黑板缺交清單
-      const chalkRow = document.createElement('div');
-      chalkRow.className = "chalk-row";
-      const chips = missing.length === 0 ? `<span style="color:var(--chalk-green);">🎉 全班收齊！</span>` : missing.map(s => `
-        <span class="chalk-num-chip" onclick="handleHwGridClick('${hw.id}', '${s.id}')">${s.id} ${s.name}</span>
-      `).join('');
-
-      chalkRow.innerHTML = `
-        <div class="chalk-row-title">
-          <div>
-            ${isFromPrevSchoolDay ? `<span style="font-size:0.85rem; color:#ffd166; display:block;">📍 前一上學日派發・今日應繳作業：</span>` : ''}
-            <span>📌 【${hw.subject}】${hw.title} (${hw.pages})</span>
-          </div>
-          <span style="font-size:0.9rem; color:${missing.length === 0 ? '#74c69d' : '#ff8fa3'};">${missing.length === 0 ? '全齊' : `缺 ${missing.length} 人`}</span>
-        </div>
-        <div class="chalk-numbers-wrap">${chips}</div>
-      `;
-      chalkList.appendChild(chalkRow);
-    });
+    banner.style.display = "none";
+    area.style.display = "grid";
   }
 
-  // 跨日未補交
-  const overdueHws = (db.homeworks || []).filter(h => h.date < currentHwDate);
+  const prevSchool = getPrevSchoolDay(currentHwDate);
+  const dr = ensureDailyRoutineObj(currentHwDate);
+
+  // 2. 聯絡簿專用獨立檢核欄位 (永遠列於第一欄)
+  const cbCol = document.createElement('div');
+  cbCol.className = "hw-item-col";
+  const missingCbStus = db.students.filter(s => !dr.contactBookSubmissions[s.id]);
+  const cbBoxes = db.students.map(s => {
+    const sub = Boolean(dr.contactBookSubmissions[s.id]);
+    return `
+      <div class="seat-box ${sub ? 'submitted' : 'unsubmitted'}" onclick="handleCbCheckClick('${s.id}')">
+        <span class="s-num">${sub ? '✓ ' + s.id : s.id}</span>
+        <span class="s-name">${s.name}</span>
+      </div>
+    `;
+  }).join('');
+
+  cbCol.innerHTML = `
+    <div class="hw-item-header cb-header">
+      <div class="hw-item-meta">
+        <span>📅 ${currentHwDate.slice(5)} 每日檢核</span>
+        <span>【聯絡簿】</span>
+        <span style="font-size:0.85rem;">已繳 ${21 - missingCbStus.length}/21</span>
+      </div>
+      <div class="hw-item-title">📒 聯絡簿簽名</div>
+      <div class="hw-item-pages">家長簽名／札記檢查</div>
+      <div style="font-size:0.75rem; color:#d1fae5; margin-top:3px;">(每日到校專屬檢核)</div>
+    </div>
+    <div class="seat-boxes-grid">${cbBoxes}</div>
+  `;
+  wrapper.appendChild(cbCol);
+
+  // 黑板第一欄：聯絡簿簽名
+  const cbChalkRow = document.createElement('div');
+  cbChalkRow.className = "chalk-row cb-border";
+  const cbChips = missingCbStus.length === 0 ? `<span style="color:var(--chalk-green);">🎉 全班皆已繳交！</span>` : missingCbStus.map(s => `
+    <span class="chalk-num-chip" onclick="handleCbCheckClick('${s.id}')">${s.id} ${s.name}</span>
+  `).join('');
+  cbChalkRow.innerHTML = `
+    <div class="chalk-row-title">
+      <div><span>📌 【聯絡簿】家長簽名檢核</span></div>
+      <span style="font-size:0.9rem; color:${missingCbStus.length === 0 ? '#74c69d' : '#ff8fa3'};">${missingCbStus.length === 0 ? '全齊' : `缺 ${missingCbStus.length} 人`}</span>
+    </div>
+    <div class="chalk-numbers-wrap">${cbChips}</div>
+  `;
+  chalkList.appendChild(cbChalkRow);
+
+  // 3. 各科目學科作業欄位
+  const dayHws = (db.homeworks || []).filter(h => h.date === currentHwDate && !h.isContactBook);
+
+  dayHws.forEach(hw => {
+    const missing = db.students.filter(s => !hw.submissions[s.id]);
+    const theme = getSubjectTheme(hw.subject);
+    const isFromPrevSchoolDay = (hw.assignedDate === prevSchool);
+
+    const col = document.createElement('div');
+    col.className = "hw-item-col";
+    const boxes = db.students.map(s => {
+      const sub = Boolean(hw.submissions[s.id]);
+      return `
+        <div class="seat-box ${sub ? 'submitted' : 'unsubmitted'}" onclick="handleHwGridClick('${hw.id}', '${s.id}')">
+          <span class="s-num">${sub ? '✓ ' + s.id : s.id}</span>
+          <span class="s-name">${s.name}</span>
+        </div>
+      `;
+    }).join('');
+
+    col.innerHTML = `
+      <div class="hw-item-header ${theme.headerClass}">
+        <div class="hw-item-meta">
+          <span>📅 ${hw.date.slice(5)} 應繳</span>
+          <span>【${hw.subject}】</span>
+          ${isTeacherMode ? `<span style="cursor:pointer; color:#fca5a5;" onclick="deleteHwColumn('${hw.id}')">🗑️</span>` : `<span>已交 ${21-missing.length}/21</span>`}
+        </div>
+        <div class="hw-item-title">${hw.title}</div>
+        <div class="hw-item-pages">${hw.pages}</div>
+        <div style="font-size:0.75rem; color:#fde047; margin-top:3px;">
+          ${isFromPrevSchoolDay ? `📍 前一上學日 (${prevSchool.slice(5)}) 派發・今日應繳` : `(派發日: ${hw.assignedDate ? hw.assignedDate.slice(5) : '自訂'})`}
+        </div>
+      </div>
+      <div class="seat-boxes-grid">${boxes}</div>
+    `;
+    wrapper.appendChild(col);
+
+    // 黑板缺交清單
+    const chalkRow = document.createElement('div');
+    chalkRow.className = `chalk-row ${theme.borderClass}`;
+    const chips = missing.length === 0 ? `<span style="color:var(--chalk-green);">🎉 全班收齊！</span>` : missing.map(s => `
+      <span class="chalk-num-chip" onclick="handleHwGridClick('${hw.id}', '${s.id}')">${s.id} ${s.name}</span>
+    `).join('');
+
+    chalkRow.innerHTML = `
+      <div class="chalk-row-title">
+        <div>
+          ${isFromPrevSchoolDay ? `<span style="font-size:0.85rem; color:#ffd166; display:block;">📍 前一上學日派發・今日應繳作業：</span>` : ''}
+          <span>📌 【${hw.subject}】${hw.title} (${hw.pages})</span>
+        </div>
+        <span style="font-size:0.9rem; color:${missing.length === 0 ? '#74c69d' : '#ff8fa3'};">${missing.length === 0 ? '全齊' : `缺 ${missing.length} 人`}</span>
+      </div>
+      <div class="chalk-numbers-wrap">${chips}</div>
+    `;
+    chalkList.appendChild(chalkRow);
+  });
+
+  // 4. 歷史跨日補交作業清單 (不含聯絡簿)
+  const overdueHws = (db.homeworks || []).filter(h => h.date < currentHwDate && !h.isContactBook);
   const overdueSection = document.getElementById('chalkOverdueSection');
   const overdueList = document.getElementById('chalkOverdueList');
   overdueList.innerHTML = "";
@@ -2137,9 +2209,9 @@ function renderHomeworkBoard() {
     const missing = db.students.filter(s => !hw.submissions[s.id]);
     if (missing.length > 0) {
       hasOverdue = true;
+      const theme = getSubjectTheme(hw.subject);
       const row = document.createElement('div');
-      row.className = "chalk-row";
-      row.style.borderLeftColor = "#ff6b6b";
+      row.className = `chalk-row ${theme.borderClass}`;
       row.innerHTML = `
         <div class="chalk-row-title">
           <span>⏳ [${hw.date.slice(5)} 欠交待補] 【${hw.subject}】${hw.title}：</span>
@@ -2151,6 +2223,26 @@ function renderHomeworkBoard() {
     }
   });
   overdueSection.style.display = hasOverdue ? "block" : "none";
+}
+
+function handleCbCheckClick(stuId) {
+  const dr = ensureDailyRoutineObj(currentHwDate);
+  const stu = db.students.find(s => s.id === stuId);
+  if (!stu) return;
+
+  const isSub = Boolean(dr.contactBookSubmissions[stuId]);
+  if (!isSub) {
+    askStudentConfirm(stu, `確認登記繳交【📒 聯絡簿簽名】`, () => {
+      dr.contactBookSubmissions[stuId] = getNowTimeStr();
+      addLog("作業", `${stu.id} ${stu.name} 繳交聯絡簿`);
+      saveDB();
+      renderHomeworkBoard();
+    });
+  } else if (isTeacherMode && confirm(`取消 ${stu.name} 的聯絡簿繳交狀態？`)) {
+    delete dr.contactBookSubmissions[stuId];
+    saveDB();
+    renderHomeworkBoard();
+  }
 }
 
 function handleHwGridClick(hwId, stuId) {
@@ -2189,18 +2281,14 @@ function onSeatDeskDragStart(evt, stuId) {
   evt.dataTransfer.effectAllowed = "move";
   evt.dataTransfer.setData("text/plain", stuId);
 }
-
 function onSeatDeskDragOver(evt) {
   if (!isTeacherMode || !draggedSeatStuId) return;
   evt.preventDefault();
-  evt.dataTransfer.dropEffect = "move";
   evt.currentTarget.classList.add("drag-over-desk");
 }
-
 function onSeatDeskDragLeave(evt) {
   evt.currentTarget.classList.remove("drag-over-desk");
 }
-
 function onSeatDeskDrop(evt, targetStuId) {
   if (!isTeacherMode || !draggedSeatStuId) return;
   evt.preventDefault();
@@ -2482,20 +2570,50 @@ function addRewardItem() {
   openShopModal();
 }
 
-// ==================== 4. 輪盤抽籤 ====================
+// ==================== 4. 🎲 輪盤抽籤 (機率顯示 ＋ 機率大小影響圓餅圖) ====================
 let drawCandidates = new Set();
 let isDrawing = false;
 let currentWheelRotation = 0;
-const WHEEL_COLORS = ["#2563eb", "#16a34a", "#d97706", "#dc2626", "#7c3aed", "#0891b2", "#be185d", "#059669"];
+const WHEEL_COLORS = ["#2563eb", "#16a34a", "#d97706", "#dc2626", "#7c3aed", "#0891b2", "#be185d", "#4f46e5", "#059669", "#ea580c"];
 
 function getDrawList() {
   if (drawCandidates.size > 0) return Array.from(drawCandidates).sort();
   return db.students.map(s => s.id);
 }
 
+function getTodayDrawCount(stuId) {
+  const today = normalizeToSchoolDay();
+  if (!db.drawHistory || !db.drawHistory[today]) return 0;
+  return db.drawHistory[today][stuId] || 0;
+}
+
+function getStudentDrawWeight(stuId) {
+  const reduceEl = document.getElementById('reduceRepeatProb');
+  const shouldReduce = !reduceEl || reduceEl.checked;
+  if (!shouldReduce) return 100;
+
+  const cnt = getTodayDrawCount(stuId);
+  if (cnt === 0) return 100;
+  if (cnt === 1) return 15;
+  if (cnt === 2) return 4;
+  return 1;
+}
+
+function resetTodayDrawHistory() {
+  const today = normalizeToSchoolDay();
+  if (!confirm(`確定要重置今日（${today}）的被抽中紀錄，恢復全班 100% 相同機率？`)) return;
+  if (!db.drawHistory) db.drawHistory = {};
+  db.drawHistory[today] = {};
+  addLog("抽籤", "重設當日抽籤權重");
+  renderDrawSeating();
+}
+
 function renderDrawSeating() {
   const grid = document.getElementById('drawSeatingGrid');
   grid.innerHTML = "";
+  const list = getDrawList();
+  const totalWeight = list.reduce((sum, id) => sum + getStudentDrawWeight(id), 0);
+
   getSeatingLayout().forEach(col => {
     const colBox = document.createElement('div');
     colBox.className = "column-box";
@@ -2504,6 +2622,10 @@ function renderDrawSeating() {
       const stu = db.students.find(s => s.id === id);
       if (!stu) return;
       const isCand = drawCandidates.has(id);
+      const drawnCnt = getTodayDrawCount(id);
+      const weight = getStudentDrawWeight(id);
+      const probPercent = totalWeight > 0 && list.includes(id) ? ((weight / totalWeight) * 100).toFixed(1) : "0.0";
+
       const desk = document.createElement('div');
       desk.className = `seat-desk ${isCand ? 'candidate' : ''}`;
       desk.id = `draw-desk-${id}`;
@@ -2511,7 +2633,15 @@ function renderDrawSeating() {
         if (drawCandidates.has(id)) drawCandidates.delete(id); else drawCandidates.add(id);
         renderDrawSeating();
       };
-      desk.innerHTML = `<div class="seat-desk-top"><span class="seat-desk-num">${id}</span></div><div class="seat-desk-name">${stu.name}</div>`;
+      desk.innerHTML = `
+        <div class="seat-desk-top">
+          <span class="seat-desk-num">${id}</span>
+          <span style="font-size:0.8rem; font-weight:900; color:${drawnCnt > 0 ? '#dc2626' : '#16a34a'};">
+            ${drawnCnt > 0 ? `抽${drawnCnt}次(${probPercent}%)` : `${probPercent}%`}
+          </span>
+        </div>
+        <div class="seat-desk-name">${stu.name}</div>
+      `;
       colBox.appendChild(desk);
     });
     grid.appendChild(colBox);
@@ -2519,38 +2649,69 @@ function renderDrawSeating() {
   drawRoulette(currentWheelRotation);
 }
 
+// 💡 圓餅圖大小受機率大小實體影響！
 function drawRoulette(rotDeg) {
   const canvas = document.getElementById('rouletteCanvas');
   const ctx = canvas.getContext('2d');
-  const cx = canvas.width / 2, cy = canvas.height / 2, r = cx - 12;
+  const cx = canvas.width / 2, cy = canvas.height / 2, r = cx - 14;
   const list = getDrawList();
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   if (!list.length) return;
 
-  const slice = (Math.PI * 2) / list.length;
+  const totalWeight = list.reduce((sum, id) => sum + getStudentDrawWeight(id), 0);
   const rad = (rotDeg * Math.PI) / 180;
+  let currentAngle = -Math.PI / 2 + rad;
 
   list.forEach((id, i) => {
     const s = db.students.find(x => x.id === id) || { name: "" };
-    const start = -Math.PI / 2 + i * slice + rad;
-    const end = start + slice;
+    const weight = getStudentDrawWeight(id);
+    const sliceAngle = (2 * Math.PI) * (weight / totalWeight);
+    const endAngle = currentAngle + sliceAngle;
+    const drawnCnt = getTodayDrawCount(id);
+    const probPercent = ((weight / totalWeight) * 100).toFixed(1);
+
     ctx.beginPath();
     ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, r, start, end);
-    ctx.fillStyle = WHEEL_COLORS[i % WHEEL_COLORS.length];
+    ctx.arc(cx, cy, r, currentAngle, endAngle);
+    ctx.closePath();
+    ctx.fillStyle = drawnCnt > 0 ? "#64748b" : WHEEL_COLORS[i % WHEEL_COLORS.length];
     ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#ffffff";
     ctx.stroke();
 
+    // 繪製文字與機率標籤
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.rotate(start + slice / 2);
+    ctx.rotate(currentAngle + sliceAngle / 2);
     ctx.textAlign = "right";
     ctx.fillStyle = "#fff";
-    ctx.font = "bold 15px sans-serif";
-    ctx.fillText(`${id} ${s.name}`, r - 15, 5);
+    ctx.font = list.length > 14 ? "bold 13px sans-serif" : "bold 16px sans-serif";
+    const label = `${id} ${s.name} (${probPercent}%)`;
+    ctx.fillText(label, r - 16, 5);
     ctx.restore();
+
+    currentAngle = endAngle;
   });
+
+  // 外圈描邊
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+  ctx.lineWidth = 6;
+  ctx.strokeStyle = "#1e293b";
+  ctx.stroke();
+}
+
+function pickWeightedWinner(list) {
+  const weights = list.map(id => getStudentDrawWeight(id));
+  const total = weights.reduce((a, b) => a + b, 0);
+  let rand = Math.random() * total;
+  for (let i = 0; i < list.length; i++) {
+    rand -= weights[i];
+    if (rand <= 0) return list[i];
+  }
+  return list[list.length - 1];
 }
 
 function startDraw() {
@@ -2561,11 +2722,26 @@ function startDraw() {
   isDrawing = true;
   document.getElementById('startDrawBtn').disabled = true;
   const laps = parseInt(document.getElementById('drawLaps').value, 10) || 5;
-  const winnerId = list[Math.floor(Math.random() * list.length)];
-  const winnerIdx = list.indexOf(winnerId);
-  const sliceDeg = 360 / list.length;
-  const targetDeg = (360 - (winnerIdx * sliceDeg + sliceDeg / 2) + 360) % 360;
+  const winnerId = pickWeightedWinner(list);
 
+  // 計算指針停在獲獎者扇區中心之旋轉角度
+  const totalWeight = list.reduce((sum, id) => sum + getStudentDrawWeight(id), 0);
+  let accumAngleDeg = 0;
+  let winnerCenterAngleDeg = 0;
+
+  for (let i = 0; i < list.length; i++) {
+    const id = list[i];
+    const weight = getStudentDrawWeight(id);
+    const sliceDeg = 360 * (weight / totalWeight);
+    if (id === winnerId) {
+      winnerCenterAngleDeg = accumAngleDeg + sliceDeg / 2;
+      break;
+    }
+    accumAngleDeg += sliceDeg;
+  }
+
+  // 指針在上方 (-90deg)，需將 winnerCenterAngleDeg 轉至 0deg 位置
+  const targetDeg = (360 - winnerCenterAngleDeg + 360) % 360;
   const currentMod = currentWheelRotation % 360;
   let delta = targetDeg - currentMod;
   if (delta <= 0) delta += 360;
@@ -2573,12 +2749,12 @@ function startDraw() {
 
   const startRot = currentWheelRotation;
   const startTime = performance.now();
-  const dur = 4000;
+  const dur = 4200;
 
   function anim(now) {
     const el = now - startTime;
     const progress = Math.min(1, el / dur);
-    const ease = 1 - Math.pow(1 - progress, 3);
+    const ease = 1 - Math.pow(1 - progress, 3.5);
     currentWheelRotation = startRot + totalSpin * ease;
     drawRoulette(currentWheelRotation);
 
@@ -2587,6 +2763,13 @@ function startDraw() {
     } else {
       isDrawing = false;
       document.getElementById('startDrawBtn').disabled = false;
+      
+      // 記錄抽中次數調降重複率
+      const today = normalizeToSchoolDay();
+      if (!db.drawHistory) db.drawHistory = {};
+      if (!db.drawHistory[today]) db.drawHistory[today] = {};
+      db.drawHistory[today][winnerId] = (db.drawHistory[today][winnerId] || 0) + 1;
+
       const winnerStu = db.students.find(s => s.id === winnerId);
       document.getElementById('drawWinnerNameDisplay').textContent = `${winnerId} ${winnerStu ? winnerStu.name : ''}`;
       document.getElementById('drawWinnerAddPointBtn').onclick = () => {
@@ -2595,6 +2778,8 @@ function startDraw() {
         openStudentPointModal(winnerStu);
       };
       document.getElementById('drawWinnerModal').classList.add('active');
+      addLog("抽籤", `輪盤抽中：${winnerId} ${winnerStu ? winnerStu.name : ''}`);
+      renderDrawSeating();
     }
   }
   requestAnimationFrame(anim);
@@ -2698,7 +2883,7 @@ function batchCheckIn() {
   saveDB(); renderAttendance();
 }
 
-// ==================== 6. 國定假日管理與密碼遮蔽 ====================
+// ==================== 6. 國定假日與密碼遮蔽 ====================
 function openHolidayModal() {
   renderHolidayList();
   document.getElementById('holidayModal').classList.add('active');
@@ -2713,6 +2898,7 @@ function addHolidayEntry() {
     saveDB();
     renderHolidayList();
     renderRoutinePage();
+    renderHomeworkBoard();
   }
 }
 function removeHolidayEntry(idx) {
@@ -2720,6 +2906,7 @@ function removeHolidayEntry(idx) {
   saveDB();
   renderHolidayList();
   renderRoutinePage();
+  renderHomeworkBoard();
 }
 function renderHolidayList() {
   const c = document.getElementById('holidayListContainer');
@@ -2788,7 +2975,7 @@ function exportFullWorkbookXLS() {
   if (typeof XLSX === 'undefined') { alert("Excel 模組載入中，請稍候再試"); return; }
   const wb = XLSX.utils.book_new();
 
-  // 1. 全班總分與榮譽榜
+  // 1. 全班總分表
   const tRows = [["座號", "姓名", "🎯 可用總積分", "🎁 已兌換點數", "國語累計", "數學累計", "社會累計", "作文累計", "綜合累計", "班級常規累計"]];
   db.students.forEach(s => {
     const sp = s.subjectPoints || {};
@@ -2829,9 +3016,9 @@ function exportFullWorkbookXLS() {
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(subjRows), subj + "加分表");
   });
 
-  // 9. 作業繳交紀錄表
+  // 9. 作業繳交紀錄表 (含聯絡簿每日檢核)
   const hws = [...db.homeworks].sort((a,b) => (a.date+a.id).localeCompare(b.date+b.id));
-  const hwHead = ["座號", "姓名", ...hws.map(h => `派發:${h.assignedDate.slice(5)}→應繳:${h.date.slice(5)}\n【${h.subject}】${h.title}\n(${h.pages})`)];
+  const hwHead = ["座號", "姓名", ...hws.map(h => `派發:${h.assignedDate ? h.assignedDate.slice(5) : ''}→應繳:${h.date.slice(5)}\n【${h.subject}】${h.title}\n(${h.pages})`)];
   const hwRows = [hwHead];
   db.students.forEach(s => {
     hwRows.push([s.id, s.name, ...hws.map(h => h.submissions[s.id] ? "✓ (" + String(h.submissions[s.id]).slice(0,5) + ")" : "未交")]);
@@ -2914,7 +3101,6 @@ function switchRoutineStage(st) {
 }
 
 function toggleNapBoardTheme() { document.getElementById('napUnifiedBoard').classList.toggle('light-theme'); }
-
 function triggerManualFlipPreview() { updateFlipClockDisplay(true); }
 
 let lastFlipHour = "", lastFlipMin = "";
