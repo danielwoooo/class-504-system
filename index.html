@@ -35,8 +35,7 @@
   header {
     background: var(--dark); color: white; padding: 6px 14px;
     display: flex; justify-content: space-between; align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 20; flex-wrap: wrap; gap: 6px;
-    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 20; flex-wrap: wrap; gap: 6px; flex-shrink: 0;
   }
   .brand { display: flex; align-items: center; gap: 10px; }
   .class-badge { background: var(--primary); color: white; font-weight: 900; font-size: 1.25rem; padding: 3px 10px; border-radius: 8px; }
@@ -67,14 +66,9 @@
   .cloud-status.synced { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
   .cloud-status.syncing { background: #fef3c7; color: #b45309; border: 1.5px solid #fde047; }
   .cloud-status.error { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; animation: pulseError 1.5s infinite; }
-  @keyframes pulseError {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.03); }
-  }
+  @keyframes pulseError { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
-  .mode-btn {
-    padding: 6px 11px; font-size: 0.9rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;
-  }
+  .mode-btn { padding: 6px 11px; font-size: 0.9rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; }
   .mode-student { background: var(--warning); color: white; }
   .mode-teacher { background: var(--danger); color: white; box-shadow: 0 0 12px rgba(220,38,38,0.7); }
 
@@ -83,10 +77,7 @@
   body.is-teacher .teacher-only-flex { display: flex !important; }
   body.is-teacher .teacher-only-block { display: block !important; }
 
-  main {
-    flex: 1; overflow: hidden; padding: 8px 14px; display: flex; flex-direction: column; min-height: 0;
-  }
-
+  main { flex: 1; overflow: hidden; padding: 8px 14px; display: flex; flex-direction: column; min-height: 0; }
   .page { display: none; flex: 1; min-height: 0; flex-direction: column; gap: 8px; overflow: hidden; }
   .page.active { display: flex; }
 
@@ -95,7 +86,7 @@
     display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05); flex-shrink: 0;
   }
-  .weekday-bar { display: flex; gap: 5px; align-items: center; }
+  .weekday-bar { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
   .day-pill {
     padding: 5px 10px; border-radius: 8px; font-weight: 900; font-size: 0.9rem;
     border: 2px solid #cbd5e1; background: #f8fafc; cursor: pointer; color: var(--dark);
@@ -116,9 +107,7 @@
   .form-control { padding: 5px 9px; font-size: 0.95rem; border: 2px solid #cbd5e1; border-radius: 8px; font-weight: bold; user-select: text; }
 
   /* ==================== ☀️ 每日班務看板 ==================== */
-  .routine-jump-bar {
-    display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
-  }
+  .routine-jump-bar { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
   .jump-pill {
     padding: 6px 13px; border-radius: 20px; font-weight: 900; font-size: 0.95rem;
     border: 2px solid #cbd5e1; background: #f8fafc; cursor: pointer; transition: 0.15s;
@@ -130,14 +119,11 @@
     box-shadow: 0 2px 8px rgba(37,99,235,0.4);
   }
 
-  .routine-stage-viewport {
-    flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column;
-  }
+  .routine-stage-viewport { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
   .routine-stage-block {
     display: none; flex: 1; min-height: 0; overflow: hidden;
     background: white; border-radius: 16px; padding: 12px 18px;
-    box-shadow: 0 6px 16px rgba(15,23,42,0.08);
-    border-left: 10px solid var(--primary);
+    box-shadow: 0 6px 16px rgba(15,23,42,0.08); border-left: 10px solid var(--primary);
     flex-direction: column; gap: 10px;
   }
   .routine-stage-block.active-stage { display: flex; }
@@ -151,15 +137,9 @@
     display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
     padding-bottom: 6px; border-bottom: 2px solid rgba(0,0,0,0.08); flex-shrink: 0;
   }
-  .stage-title {
-    font-size: 1.48rem; font-weight: 900; display: flex; align-items: center; gap: 10px;
-  }
-  .stage-time-badge {
-    font-size: 0.98rem; font-weight: 900; padding: 4px 14px; border-radius: 20px;
-    background: var(--dark); color: #ffd166;
-  }
+  .stage-title { font-size: 1.48rem; font-weight: 900; display: flex; align-items: center; gap: 10px; }
+  .stage-time-badge { font-size: 0.98rem; font-weight: 900; padding: 4px 14px; border-radius: 20px; background: var(--dark); color: #ffd166; }
 
-  /* 值日生橫條列 */
   .compact-duty-bar {
     background: #fffdf5; border: 2.5px solid #fbbf24; border-radius: 12px;
     padding: 6px 14px; display: flex; justify-content: space-between; align-items: center;
@@ -172,10 +152,7 @@
   .compact-duty-pill.status-done { background: #dcfce7; border-color: #16a34a; }
   .compact-duty-pill.status-leave { background: #fee2e2; border-color: #ef4444; opacity: 0.85; }
 
-  /* 早自習與聯絡簿雙欄 */
-  .morning-main-split {
-    display: grid; grid-template-columns: 1fr 1.15fr; gap: 16px; flex: 1; min-height: 0; overflow: hidden;
-  }
+  .morning-main-split { display: grid; grid-template-columns: 1fr 1.15fr; gap: 16px; flex: 1; min-height: 0; overflow: hidden; }
   .sub-panel {
     background: rgba(255,255,255,0.97); border: 2.5px solid #cbd5e1; border-radius: 16px;
     padding: 12px 16px; display: flex; flex-direction: column; gap: 8px;
@@ -196,7 +173,6 @@
     font-size: 1.4rem; font-weight: 900; line-height: 1.55; resize: none; user-select: text; background: #fffef7;
   }
 
-  /* 聯絡簿快派 */
   .cb-add-bar {
     display: none; background: #ccfbf1; border: 2px solid #14b8a6; border-radius: 10px;
     padding: 6px 10px; gap: 6px; align-items: center; flex-wrap: wrap; flex-shrink: 0;
@@ -208,10 +184,8 @@
   .cb-item-row.exam-row { border-left-color: #dc2626; background: #fff1f2; }
   .cb-item-row.note-row { border-left-color: #d97706; background: #fffbeb; }
 
-  /* 內外掃區排版 */
-  .outdoor-two-groups-split {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1; min-height: 0; overflow: hidden;
-  }
+  /* 內外掃區排版與拖曳高亮 */
+  .outdoor-two-groups-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1; min-height: 0; overflow: hidden; }
   .clean-group-column {
     display: flex; flex-direction: column; gap: 6px; min-height: 0; overflow: hidden;
     background: #f8fafc; border: 2.5px solid #cbd5e1; border-radius: 14px; padding: 8px 10px;
@@ -221,14 +195,8 @@
     padding: 6px 14px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;
     flex-shrink: 0;
   }
-  .outdoor-cards-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr);
-    gap: 8px; flex: 1; min-height: 0;
-  }
-  .indoor-cards-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr);
-    gap: 10px; flex: 1; min-height: 0;
-  }
+  .outdoor-cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); gap: 8px; flex: 1; min-height: 0; }
+  .indoor-cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 10px; flex: 1; min-height: 0; }
   .clean-zone-card {
     background: #ffffff; border: 2.5px solid #cbd5e1; border-radius: 12px; padding: 8px 12px;
     display: flex; flex-direction: column; justify-content: space-between; gap: 4px;
@@ -237,57 +205,48 @@
   }
   .clean-zone-card:hover { border-color: var(--primary); transform: translateY(-1px); }
   .clean-zone-card.checked { background: #dcfce7; border-color: #16a34a; }
-  .clean-zone-card.drag-over-zone {
-    border: 3px dashed #f59e0b !important; background: #fffbeb !important; transform: scale(1.01);
-  }
+  .clean-zone-card.drag-over-zone { border: 3px dashed #f59e0b !important; background: #fffbeb !important; transform: scale(1.02); }
   .clean-zone-header-title { font-size: 1.22rem; font-weight: 900; color: #0f172a; line-height: 1.2; }
   .clean-member-chip {
     background: #dbeafe; border: 2px solid #2563eb; color: #1e3a8a; border-radius: 8px;
-    padding: 3px 9px; font-size: 1.18rem; font-weight: 900; display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px; font-size: 1.15rem; font-weight: 900; display: inline-flex; align-items: center; gap: 4px;
     transition: 0.12s;
   }
   body.is-teacher .clean-member-chip { cursor: grab; }
   body.is-teacher .clean-member-chip:active { cursor: grabbing; transform: scale(0.95); }
-  .clean-zone-card.checked .clean-member-chip { background: #ffffff; border-color: #16a34a; color: #14532d; }
   .clean-desc-text {
-    font-size: 1rem; font-weight: 900; color: #334155; line-height: 1.3;
-    background: #f1f5f9; padding: 5px 8px; border-radius: 8px;
+    font-size: 0.95rem; font-weight: 900; color: #334155; line-height: 1.3;
+    background: #f1f5f9; padding: 4px 8px; border-radius: 8px;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0;
   }
 
-  /* 午餐抬餐 */
-  .lunch-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr);
-    gap: 12px; flex: 1; min-height: 0;
-  }
+  /* 午餐抬餐 8 人網格與拖曳 */
+  .lunch-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 12px; flex: 1; min-height: 0; }
   .duty-person-card {
-    background: #f8fafc; border: 3px solid #cbd5e1; border-radius: 14px; padding: 14px 16px;
+    background: #f8fafc; border: 3px solid #cbd5e1; border-radius: 14px; padding: 12px 14px;
     display: flex; justify-content: space-between; align-items: center; gap: 8px;
     cursor: pointer; transition: 0.15s; min-height: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.04);
   }
+  .duty-person-card:hover { border-color: var(--primary); }
   .duty-person-card.status-done { background: #dcfce7; border-color: #16a34a; }
   .duty-person-card.status-leave { background: #fee2e2; border-color: #ef4444; opacity: 0.85; }
-  .badge-makeup { background: #7c3aed; color: white; font-size: 0.92rem; padding: 3px 8px; border-radius: 6px; font-weight: 900; }
-  .badge-sub { background: #0284c7; color: white; font-size: 0.92rem; padding: 3px 8px; border-radius: 6px; font-weight: 900; }
+  .duty-person-card.drag-over-lunch { border: 3px dashed #dc2626 !important; background: #fff1f2 !important; transform: scale(1.03); }
+  body.is-teacher .duty-person-card { cursor: grab; }
+  body.is-teacher .duty-person-card:active { cursor: grabbing; }
+  .makeup-queue-box.drag-over-makeup { border: 3px dashed #7c3aed !important; background: #f3e8ff !important; }
 
   /* 午休時鐘與常規 */
   .nap-unified-board {
     flex: 1; min-height: 0; overflow: hidden;
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 55%, #172554 100%);
-    color: #f8fafc; border-radius: 20px; padding: 24px 30px;
-    border: 4px solid #334155;
+    color: #f8fafc; border-radius: 20px; padding: 24px 30px; border: 4px solid #334155;
     box-shadow: inset 0 0 40px rgba(0,0,0,0.55), 0 10px 25px rgba(15,23,42,0.25);
     display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; align-items: center;
-    transition: all 0.35s ease;
   }
-  .nap-unified-board.light-theme {
-    background: linear-gradient(135deg, #1e293b 0%, #312e81 100%);
-    border-color: #6366f1;
-  }
+  .nap-unified-board.light-theme { background: linear-gradient(135deg, #1e293b 0%, #312e81 100%); border-color: #6366f1; }
   .nap-clock-zone {
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
-    padding-right: 24px; border-right: 2px dashed rgba(255,255,255,0.2); height: 100%;
-    cursor: pointer;
+    padding-right: 24px; border-right: 2px dashed rgba(255,255,255,0.2); height: 100%; cursor: pointer;
   }
   .nap-reminder-zone {
     display: flex; flex-direction: column; justify-content: center; height: 100%; min-height: 0;
@@ -298,35 +257,17 @@
     display: flex; justify-content: space-between; align-items: center;
     border-bottom: 2px solid rgba(253, 224, 71, 0.35); padding-bottom: 10px; flex-shrink: 0;
   }
-  .flip-clock-wrapper {
-    display: flex; align-items: center; justify-content: center; gap: 14px;
-  }
-  .flip-colon {
-    font-size: 4.8rem; font-weight: 900; color: #cbd5e1; line-height: 1;
-    animation: blinkColon 1s infinite; padding-bottom: 16px;
-  }
-  @keyframes blinkColon {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.25; }
-  }
-  .flip-unit-box {
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-  }
+  .flip-clock-wrapper { display: flex; align-items: center; justify-content: center; gap: 14px; }
+  .flip-colon { font-size: 4.8rem; font-weight: 900; color: #cbd5e1; line-height: 1; padding-bottom: 16px; animation: blinkColon 1s infinite; }
+  @keyframes blinkColon { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+  .flip-unit-box { display: flex; flex-direction: column; align-items: center; gap: 8px; }
   .flip-card {
     position: relative; width: 160px; height: 192px; border-radius: 18px;
     background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-    border: 3px solid #64748b;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.65);
-    display: flex; align-items: center; justify-content: center;
+    border: 3px solid #64748b; display: flex; align-items: center; justify-content: center;
     perspective: 600px; overflow: hidden;
   }
-  .flip-card.seconds-card {
-    width: 98px; height: 120px; border-radius: 14px;
-  }
-  .flip-card::before {
-    content: ""; position: absolute; top: 50%; left: 0; right: 0; height: 3px;
-    background: rgba(0,0,0,0.85); z-index: 10; transform: translateY(-50%);
-  }
+  .flip-card.seconds-card { width: 98px; height: 120px; border-radius: 14px; }
   .flip-card-num {
     font-family: "Arial Black", "Impact", "Segoe UI", sans-serif;
     font-size: 7.2rem; font-weight: 900; color: #ffffff; line-height: 1;
@@ -334,10 +275,10 @@
   .flip-card.seconds-card .flip-card-num { font-size: 3.8rem; color: #38bdf8; }
   .flip-card.do-flip { animation: mechanicalFlip 0.65s cubic-bezier(0.35, 0.1, 0.25, 1); }
   @keyframes mechanicalFlip {
-    0% { transform: rotateX(0deg); filter: brightness(1); }
-    45% { transform: rotateX(-90deg) scale(0.96); filter: brightness(0.5); border-color: #fbbf24; }
-    55% { transform: rotateX(70deg) scale(1.02); filter: brightness(1.3); border-color: #fbbf24; }
-    100% { transform: rotateX(0deg); filter: brightness(1); }
+    0% { transform: rotateX(0deg); }
+    45% { transform: rotateX(-90deg) scale(0.96); border-color: #fbbf24; }
+    55% { transform: rotateX(70deg) scale(1.02); border-color: #fbbf24; }
+    100% { transform: rotateX(0deg); }
   }
 
   /* 作業方格與黑板看板 */
@@ -359,6 +300,9 @@
     border-radius: 8px; padding: 7px 4px; text-align: center; cursor: pointer; transition: 0.12s;
     display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid #cbd5e1; background: white; min-height: 52px;
   }
+  .seat-box:active { transform: scale(0.93); }
+  .seat-box .s-num { font-size: 1.2rem; font-weight: 900; line-height: 1; }
+  .seat-box .s-name { font-size: 0.92rem; font-weight: bold; margin-top: 2px; }
   .seat-box.unsubmitted { background: #fff1f2; border-color: #fca5a5; color: #be123c; }
   .seat-box.submitted { background: var(--success-light); border-color: var(--success); color: var(--success); }
 
@@ -375,7 +319,7 @@
     background: rgba(255, 107, 107, 0.25); border: 2px solid var(--chalk-red); color: #fff; font-weight: 900; font-size: 1.1rem; padding: 3px 10px; border-radius: 6px; cursor: pointer; transition: 0.12s;
   }
 
-  /* 教室座位表排版與拖拉樣式 */
+  /* 座位表與拖拉樣式 */
   .seating-layout-card {
     background: white; border-radius: 14px; padding: 12px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06); flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden;
@@ -391,9 +335,7 @@
     display: flex; flex-direction: column; gap: 8px; background: #f8fafc;
     padding: 8px; border-radius: 12px; border: 2px solid #e2e8f0; transition: 0.15s;
   }
-  .column-box.drag-over-col {
-    border: 2px dashed var(--primary) !important; background: #eff6ff !important;
-  }
+  .column-box.drag-over-col { border: 2px dashed var(--primary) !important; background: #eff6ff !important; }
   .column-header {
     text-align: center; font-weight: 900; font-size: 1.08rem; color: #1e293b;
     padding-bottom: 6px; border-bottom: 2px solid #cbd5e1;
@@ -402,15 +344,12 @@
   .seat-desk {
     background: white; border: 2.5px solid #cbd5e1; border-radius: 10px;
     padding: 7px 8px; text-align: center; cursor: pointer; transition: 0.15s;
-    display: flex; flex-direction: column; justify-content: space-between; flex: 1; min-height: 68px;
-    position: relative;
+    display: flex; flex-direction: column; justify-content: space-between; flex: 1; min-height: 68px; position: relative;
   }
   .seat-desk:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(37,99,235,0.15); }
   body.is-teacher #seatingGrid .seat-desk { cursor: grab; }
   body.is-teacher #seatingGrid .seat-desk:active { cursor: grabbing; transform: scale(0.96); }
-  .seat-desk.drag-over-desk {
-    border: 3px dashed #f59e0b !important; background: #fffbeb !important; transform: scale(1.05);
-  }
+  .seat-desk.drag-over-desk { border: 3px dashed #f59e0b !important; background: #fffbeb !important; transform: scale(1.05); }
   .seat-desk.checked-in { background: #f0fdf4; border-color: #16a34a; }
   .seat-desk.checked-out { background: #eff6ff; border-color: #2563eb; }
   .seat-desk.leave { background: #fffbeb; border-color: #d97706; }
@@ -419,7 +358,7 @@
   .seat-desk-name { font-size: 1.25rem; font-weight: 900; margin: 2px 0; color: #0f172a; }
   .seat-desk-pts { font-size: 0.95rem; font-weight: 900; color: var(--primary); }
 
-  /* 抽籤輪盤 */
+  /* 輪盤抽籤 */
   .draw-split-layout { display: grid; grid-template-columns: 1.35fr 1fr; gap: 14px; flex: 1; min-height: 0; }
   .wheel-panel {
     background: white; border-radius: 14px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
@@ -462,7 +401,7 @@
   .rank-item.top-2 { background: #f1f5f9; border: 2px solid #94a3b8; }
   .rank-item.top-3 { background: #ffedd5; border: 2px solid #f97316; }
 
-  /* 模態視窗通用 */
+  /* 模態視窗 */
   .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.68); display: none; justify-content: center; align-items: center; z-index: 100; padding: 18px; }
   .modal-overlay.active { display: flex; }
   .modal { background: white; border-radius: 18px; width: 100%; max-width: 640px; padding: 22px; box-shadow: 0 25px 30px -5px rgba(0,0,0,0.3); max-height: 92vh; overflow-y: auto; }
@@ -493,7 +432,7 @@
     <button class="tab-btn teacher-only" id="tabBtn-logs" onclick="switchTab('logs', event)">🛡️ 設定與紀錄備份</button>
   </div>
   <div class="admin-controls">
-    <button class="btn btn-success" style="padding: 5px 10px; font-size: 0.84rem;" onclick="exportFullWorkbookXLS()" title="匯出 Excel 試算表">📥 匯出完整 Excel(.xls)</button>
+    <button class="btn btn-success" style="padding: 5px 10px; font-size: 0.84rem;" onclick="exportFullWorkbookXLS()" title="下載完整 Excel 試算表">📥 匯出完整 Excel(.xls)</button>
     <button class="btn btn-outline" style="padding: 5px 10px; font-size: 0.84rem;" onclick="manualSync()">🔄 雙向同步</button>
     <span class="cloud-status synced" id="cloudStatusBadge" onclick="onCloudBadgeClick()" title="點擊比對雲端狀態">☁️ 雲端連線中</span>
     <button id="modeBtn" class="mode-btn mode-student" onclick="toggleTeacherMode()">🔒 學生互動模式</button>
@@ -586,7 +525,6 @@
               <button class="btn btn-primary" style="padding:5px 10px; font-size:0.88rem;" onclick="addContactBookItem()">➕ 寫入今日聯絡簿</button>
             </div>
 
-            <!-- 當日聯絡簿作業列表 -->
             <div id="routineHwList" style="display:flex; flex-direction:column; gap:8px; font-size:1.45rem; font-weight:900; color:#0f172a; flex:1; overflow-y:auto;"></div>
 
             <div class="swap-on-teacher" style="border-top:2.5px dashed #5eead4; padding-top:8px; display:flex; flex-direction:column; min-height:95px; flex-shrink:0;">
@@ -598,39 +536,53 @@
         </div>
       </div>
 
-      <!-- 區塊 2：外掃區 -->
+      <!-- 區塊 2：外掃區 (可拖曳調動人員) -->
       <div class="routine-stage-block stage-outdoor" id="stage-outdoor">
         <div class="stage-header">
-          <div class="stage-title" style="color:#0f766e;"><span>2️⃣ 🌳 上午外掃區 (全12組滿版)</span></div>
+          <div class="stage-title" style="color:#0f766e;">
+            <span>2️⃣ 🌳 上午外掃區 (全12組滿版・支援拖拉調動)</span>
+          </div>
           <div style="display:flex; gap:6px; align-items:center;">
             <span class="stage-time-badge">外掃 07:50 ~ 08:10</span>
             <button class="btn btn-success" onclick="checkCleaningZonesByType('outdoor')">⚡ 外掃全區完成</button>
             <button class="btn btn-outline teacher-only" onclick="openCleaningModal()">✏️ 編輯分配</button>
+            <button class="btn btn-outline teacher-only" onclick="resetCleaningZonesToDefault()">🔄 還原預設</button>
             <button class="btn btn-primary" onclick="switchRoutineStage('stage-lunch')">下一時段：午餐 ▶</button>
           </div>
         </div>
         <div class="outdoor-two-groups-split" id="outdoorCleaningContainer"></div>
       </div>
 
-      <!-- 區塊 3：午餐抬餐 -->
+      <!-- 區塊 3：午餐抬餐 (自動崗位排號 ＋ 支援拖曳補抬) -->
       <div class="routine-stage-block stage-lunch" id="stage-lunch">
         <div class="stage-header">
-          <div class="stage-title" style="color:#dc2626;"><span>3️⃣ 🍱 午餐抬餐輪值 (8人輪流)</span></div>
+          <div class="stage-title" style="color:#dc2626;">
+            <span>3️⃣ 🍱 午餐抬餐輪值 (8人崗位輪值・支援拖曳補抬)</span>
+          </div>
           <div style="display:flex; gap:8px; align-items:center;">
             <span class="stage-time-badge">午餐 11:55 ~ 12:35</span>
             <button class="btn btn-success" onclick="confirmAllLunchDuty()">⚡ 8人全員完成</button>
-            <button class="btn btn-primary teacher-only" onclick="generateTodayLunchList(true)">🔄 重新排定</button>
+            <button class="btn btn-primary teacher-only" onclick="generateTodayLunchList(true)">🔄 重新排定8人</button>
             <button class="btn btn-primary" onclick="switchRoutineStage('stage-nap')">下一時段：午休 ▶</button>
           </div>
         </div>
+
         <div style="display:flex; justify-content:space-between; align-items:center; background:#ffe4e6; padding:8px 16px; border-radius:12px; font-size:1.2rem; font-weight:900; color:#9f1239; flex-shrink:0;">
           <span id="lunchPointerInfo">目前輪值進度：計算中</span>
-          <button class="btn btn-outline teacher-only" style="padding:4px 10px;" onclick="adjustLunchPointer()">⚙️ 調整起始號</button>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <span class="teacher-only" style="font-size:0.95rem; color:#be123c;">🖐️ 導師提示：可將卡片或待補名單按住拖曳互相遞補</span>
+            <button class="btn btn-outline teacher-only" style="padding:4px 10px;" onclick="adjustLunchPointer()">⚙️ 調整起始號</button>
+          </div>
         </div>
+
         <div class="lunch-grid" id="lunchDutyGrid"></div>
-        <div style="background:#faf5ff; border:2.5px dashed #c084fc; border-radius:12px; padding:10px 16px; flex-shrink:0;">
-          <strong style="color:#6b21a8; font-size:1.15rem;">📌 待補抬累計名單：</strong>
-          <div id="makeupQueueContainer" style="display:inline-flex; flex-wrap:wrap; gap:8px; margin-left:10px;"></div>
+
+        <div class="makeup-queue-box" id="makeupQueueBox" ondragover="onMakeupBoxDragOver(event)" ondragleave="onMakeupBoxDragLeave(event)" ondrop="onMakeupBoxDrop(event)" style="background:#faf5ff; border:2.5px dashed #c084fc; border-radius:12px; padding:10px 16px; flex-shrink:0; transition:0.15s;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong style="color:#6b21a8; font-size:1.15rem;">📌 午餐待補抬累計名單（可將名單學生拖曳至上方卡片直接遞補）：</strong>
+            <button class="btn btn-outline teacher-only" style="padding:4px 10px; font-size:0.88rem;" onclick="manualAddMakeupStudent()">➕ 手動加入補抬</button>
+          </div>
+          <div id="makeupQueueContainer" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
         </div>
       </div>
 
@@ -641,11 +593,12 @@
           <div style="display:flex; gap:8px; align-items:center;">
             <span class="stage-time-badge">午休 12:40 ~ 13:10</span>
             <button class="btn btn-outline" onclick="toggleNapBoardTheme()">🎨 切換主題顏色</button>
+            <button class="btn btn-outline teacher-only" onclick="saveDefaultNapNotes()">📌 存為午休預設</button>
             <button class="btn btn-primary" onclick="switchRoutineStage('stage-indoor')">下一時段：內掃 ▶</button>
           </div>
         </div>
         <div class="nap-unified-board" id="napUnifiedBoard">
-          <div class="nap-clock-zone">
+          <div class="nap-clock-zone" onclick="triggerManualFlipPreview()">
             <div style="font-size:1.25rem; font-weight:900; color:#fde047;" id="napTimeStatusBanner">😴 午休靜息時段：12:40 ~ 13:10</div>
             <div class="flip-clock-wrapper">
               <div class="flip-unit-box">
@@ -675,7 +628,7 @@
       <!-- 區塊 5：內掃區 -->
       <div class="routine-stage-block stage-indoor" id="stage-indoor">
         <div class="stage-header">
-          <div class="stage-title" style="color:#15803d;"><span>5️⃣ 🏠 下午全內掃工作分配</span></div>
+          <div class="stage-title" style="color:#15803d;"><span>5️⃣ 🏠 下午全內掃工作分配 (支援拖曳調動)</span></div>
           <div style="display:flex; gap:8px; align-items:center;">
             <span class="stage-time-badge">下午內掃 15:35 ~ 15:50</span>
             <button class="btn btn-success" onclick="checkCleaningZonesByType('indoor')">⚡ 內掃全區檢查完成</button>
@@ -898,7 +851,7 @@
       <div style="display:flex; gap:8px; flex-wrap:wrap;">
         <button class="btn btn-warning" onclick="openHolidayModal()">📅 國定假日與臨時放假管理</button>
         <button class="btn btn-outline" onclick="openChangePinModal()">🔑 修改教師密碼</button>
-        <button class="btn btn-success" onclick="exportFullWorkbookXLS()">📥 下載 Excel(.xls)</button>
+        <button class="btn btn-success" onclick="exportFullWorkbookXLS()">📥 下載完整多工作表試算表 (.xls)</button>
         <button class="btn btn-primary" onclick="exportData()">💾 備份系統檔(.json)</button>
         <label class="btn btn-outline" style="margin:0;">📂 匯入備份 <input type="file" accept=".json" style="display:none;" onchange="importData(event)"></label>
       </div>
@@ -921,7 +874,7 @@
 
 <!-- ==================== 彈出視窗模態 (Modals) ==================== -->
 
-<!-- 1. 教師密碼登入 (遮蔽防偷看) -->
+<!-- 1. 教師密碼登入 (全遮蔽) -->
 <div class="modal-overlay" id="authModal">
   <div class="modal" style="max-width:380px; text-align:center;">
     <h2 style="margin:0 0 10px 0;">🔒 教師模式密碼驗證</h2>
@@ -934,7 +887,7 @@
   </div>
 </div>
 
-<!-- 2. 修改教師密碼 (遮蔽防偷看) -->
+<!-- 2. 修改教師密碼 (全遮蔽) -->
 <div class="modal-overlay" id="changePinModal">
   <div class="modal" style="max-width:380px;">
     <div class="modal-header">
@@ -1071,7 +1024,6 @@
 </div>
 
 <script>
-// 雲端 GAS 部署網址（保留您的最新綁定設定）
 const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbwsCD2KsBVv5RuokVwwve2J0BfjY9IwvcWpcRV2DkAV_pczoUhDA3zaNEd9LNGFQCWglg/exec";
 const STORAGE_KEY = "CLASS_504_MASTER_DATABASE";
 const ALL_SUBJECTS = ["國語", "數學", "社會", "作文", "綜合", "班級常規"];
@@ -1117,6 +1069,11 @@ const DEFAULT_CLEANING_ZONES = [
   { id: "in_7", type: "indoor", group: "🏠 下午全內掃", title: "7. 垃圾資源回收整理 (2人)", members: ["09", "10"], desc: "教室垃圾倒棄與分類打包" }
 ];
 
+const LUNCH_DUTY_ROLES = [
+  "🍱 抬餐 1 號 (主食)", "🍱 抬餐 2 號 (主菜)", "🍱 抬餐 3 號 (副菜1)", "🍱 抬餐 4 號 (副菜2)",
+  "🍱 抬餐 5 號 (熱湯品)", "🍱 抬餐 6 號 (點心水果)", "🍱 抬餐 7 號 (餐具配品)", "🍱 抬餐 8 號 (推車清潔)"
+];
+
 let isTeacherMode = false;
 let currentAttStage = 'in';
 let activeStudentId = null;
@@ -1131,7 +1088,7 @@ function formatDateObj(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
-// 智慧國定假日與上課日排程推算引擎
+// 智慧國定假日與上課日排程推算
 function isHoliday(dateStr) {
   if (!db || !db.holidays) return false;
   return db.holidays.some(h => h.date === dateStr);
@@ -1146,8 +1103,8 @@ function getHolidayReason(dateStr) {
 function isSchoolDay(dateStr) {
   const d = new Date(dateStr + "T00:00:00");
   const day = d.getDay();
-  if (day === 0 || day === 6) return false; // 週末自動略過
-  if (isHoliday(dateStr)) return false;     // 自訂假日自動略過
+  if (day === 0 || day === 6) return false;
+  if (isHoliday(dateStr)) return false;
   return true;
 }
 
@@ -1192,13 +1149,13 @@ function getPrevSchoolDay(dateStr) {
 function getNowTimeStr() { return new Date().toTimeString().split(' ')[0]; }
 function getFullTimestamp() { return `${formatDateObj(new Date())} ${getNowTimeStr()}`; }
 
-// 快取防呆讀取
+// 讀取本地快取
 let rawCache = localStorage.getItem(STORAGE_KEY);
 let db = null;
 try {
   if (rawCache) db = JSON.parse(rawCache);
 } catch (e) {
-  console.warn("本機快取格式錯誤，重新初始化", e);
+  console.warn("快取讀取錯誤，自動重設", e);
 }
 
 if (!db) {
@@ -1239,17 +1196,23 @@ let currentHwDate = currentRoutineDate;
 let currentPointDate = currentRoutineDate;
 let currentAttDate = currentRoutineDate;
 
+// 💡 關鍵修復：保證所有先前上傳的作業全面校正歸屬到「前一上學日」派發
 function sanitizeAndTrimDB(targetDB) {
   if (!targetDB) return;
   if (!targetDB.holidays || !Array.isArray(targetDB.holidays)) targetDB.holidays = [];
   if (!targetDB.logs) targetDB.logs = [];
   if (targetDB.logs.length > MAX_LOGS_COUNT) targetDB.logs = targetDB.logs.slice(0, MAX_LOGS_COUNT);
+  
   if (!targetDB.homeworks) targetDB.homeworks = [];
   targetDB.homeworks.forEach(h => {
     if (!h.date) h.date = currentRoutineDate;
-    if (!h.assignedDate) h.assignedDate = getPrevSchoolDay(h.date);
+    // 💡 關鍵：若原本沒有派發日，或被誤設成等於應繳日，一律校正為前一上學日派發！
+    if (!h.assignedDate || h.assignedDate === h.date) {
+      h.assignedDate = getPrevSchoolDay(h.date);
+    }
     if (!h.submissions) h.submissions = {};
   });
+
   if (!targetDB.dailyRoutines) targetDB.dailyRoutines = {};
   if (!targetDB.seatingLayout || targetDB.seatingLayout.length !== 5) {
     targetDB.seatingLayout = JSON.parse(JSON.stringify(DEFAULT_SEATING_LAYOUT));
@@ -1263,6 +1226,12 @@ function sanitizeAndTrimDB(targetDB) {
       cleaningZones: JSON.parse(JSON.stringify(DEFAULT_CLEANING_ZONES))
     };
   }
+  if (!targetDB.routineConfig.dutyStudentConfig) targetDB.routineConfig.dutyStudentConfig = { nextPointer: 0, makeupQueue: [] };
+  if (!targetDB.routineConfig.lunchConfig) targetDB.routineConfig.lunchConfig = { nextPointer: 0, makeupQueue: [] };
+  if (!targetDB.routineConfig.cleaningZones || !targetDB.routineConfig.cleaningZones.length) {
+    targetDB.routineConfig.cleaningZones = JSON.parse(JSON.stringify(DEFAULT_CLEANING_ZONES));
+  }
+
   if (!targetDB.students) targetDB.students = INITIAL_STUDENTS;
   targetDB.students.forEach(s => {
     s.totalPoints = Number(s.totalPoints) || 0;
@@ -1392,7 +1361,6 @@ function renderRoutinePage() {
   const nextSchool = getNextSchoolDay(currentRoutineDate);
   document.getElementById('nextSchoolDayHint').textContent = `（派發之作業將排入下一上學日 ${nextSchool.slice(5)} 待繳）`;
 
-  // 假日提示
   const hBadge = document.getElementById('holidayNoticeBadge');
   const hReason = getHolidayReason(currentRoutineDate);
   const dObj = new Date(currentRoutineDate + "T00:00:00");
@@ -1419,7 +1387,7 @@ function renderRoutinePage() {
   const hIn = document.getElementById('routineHwNotesInput');
   if (document.activeElement !== hIn) hIn.value = dr.hwNotes || "";
 
-  // 渲染【當天】聯絡簿作業（依派發日 assignedDate === currentRoutineDate 嚴格顯示）
+  // 渲染當日聯絡簿作業（嚴格依派發日 assignedDate === currentRoutineDate 顯示）
   const listEl = document.getElementById('routineHwList');
   listEl.innerHTML = "";
 
@@ -1538,7 +1506,13 @@ function saveDefaultMorningNotes() {
   saveDB(); alert("已存為預設早自習任務！");
 }
 
-// 值日生邏輯
+function saveDefaultNapNotes() {
+  const dr = ensureDailyRoutineObj(currentRoutineDate);
+  db.routineConfig.defaultNapNotes = dr.napNotes;
+  saveDB(); alert("已存為預設午休注意事項！");
+}
+
+// 值日生輪值
 function buildDutyStudentListForDate(dateStr, save = true) {
   const dr = db.dailyRoutines[dateStr] || ensureDailyRoutineObj(dateStr);
   const cfg = db.routineConfig.dutyStudentConfig;
@@ -1605,53 +1579,250 @@ function manualAddDutyMakeup() {
   }
 }
 
-// 抬餐與掃區
+// ==================== 🍱 午餐抬餐：自動排號 ＋ 拖曳補抬 ====================
+let draggedLunchItem = null; // { type: 'card'|'queue', idx: number, stuId: string }
+
+function buildLunchListForDate(dateStr, save = true) {
+  const dr = db.dailyRoutines[dateStr] || ensureDailyRoutineObj(dateStr);
+  const cfg = db.routineConfig.lunchConfig;
+  const list = [];
+  const used = new Set();
+
+  // 1. 待補名單優先排入
+  (cfg.makeupQueue || []).forEach(m => {
+    if (list.length < 8 && !used.has(m.id)) {
+      list.push({ id: m.id, status: "pending", isMakeup: true, postRole: LUNCH_DUTY_ROLES[list.length] });
+      used.add(m.id);
+    }
+  });
+
+  // 2. 照輪值指針自動排滿 8 人
+  let ptr = cfg.nextPointer || 0;
+  let guard = 0;
+  while (list.length < 8 && guard < 42) {
+    const stu = db.students[ptr % db.students.length];
+    ptr = (ptr + 1) % db.students.length;
+    guard++;
+    if (stu && !used.has(stu.id)) {
+      list.push({ id: stu.id, status: "pending", isMakeup: false, postRole: LUNCH_DUTY_ROLES[list.length] });
+      used.add(stu.id);
+    }
+  }
+
+  cfg.nextPointer = ptr;
+  dr.lunchList = list;
+  if (save) saveDB();
+}
+
 function renderLunchSection(dr) {
+  const nextId = String((db.routineConfig.lunchConfig.nextPointer || 0) + 1).padStart(2, '0');
+  const nextStu = db.students.find(s => s.id === nextId);
+  document.getElementById('lunchPointerInfo').textContent = `🔄 下次輪值起始：${nextId}號 ${nextStu ? nextStu.name : ''}`;
+
   const grid = document.getElementById('lunchDutyGrid');
   grid.innerHTML = "";
   (dr.lunchList || []).forEach((item, idx) => {
     const stu = db.students.find(s => s.id === item.id) || { id: item.id, name: "" };
     const card = document.createElement('div');
     card.className = `duty-person-card ${item.status === 'done' ? 'status-done' : (item.status === 'leave' ? 'status-leave' : '')}`;
+    card.draggable = isTeacherMode;
+    
+    // 拖曳事件
+    card.ondragstart = (e) => onLunchCardDragStart(e, idx, item.id);
+    card.ondragover = (e) => onLunchCardDragOver(e);
+    card.ondragleave = (e) => onLunchCardDragLeave(e);
+    card.ondrop = (e) => onLunchCardDrop(e, idx);
+
     card.onclick = () => {
       item.status = item.status === 'done' ? 'pending' : 'done';
       saveDB(); renderRoutinePage();
     };
+
+    const roleName = item.postRole || LUNCH_DUTY_ROLES[idx] || `抬餐 ${idx+1} 號`;
     card.innerHTML = `
       <div>
-        <span class="seat-desk-num" style="font-size:1.1rem;">${stu.id}</span>
-        <strong style="font-size:1.5rem; margin-left:6px;">${stu.name}</strong>
-        ${item.isMakeup ? '<span class="badge-makeup">補抬</span>' : ''}
+        <div style="font-size:0.92rem; font-weight:900; color:#9f1239; margin-bottom:2px;">${roleName}</div>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span class="seat-desk-num" style="font-size:1.15rem;">${isTeacherMode ? '⠿ ' : ''}${stu.id}</span>
+          <strong style="font-size:1.6rem; color:#0f172a;">${stu.name}</strong>
+          ${item.isMakeup ? '<span class="badge-makeup">🔄補抬</span>' : ''}
+        </div>
+        <div style="font-weight:900; font-size:1rem; margin-top:4px;">${item.status === 'done' ? '✅ 已完成' : (item.status === 'leave' ? '😷 請假(已列待補)' : '⏳ 待完成')}</div>
       </div>
-      <div style="font-weight:900;">${item.status === 'done' ? '✅ 已抬餐' : (item.status === 'leave' ? '😷 請假' : '⏳ 待完成')}</div>
+      <div>
+        ${item.status !== 'leave' ? `<button class="btn btn-outline" style="padding:4px 8px; font-size:0.85rem; border-color:#fca5a5; color:#dc2626;" onclick="event.stopPropagation(); markLunchPersonLeave(${idx})">請假</button>` : ''}
+      </div>
     `;
     grid.appendChild(card);
   });
-}
-function buildLunchListForDate(dateStr, save = true) {
-  const dr = db.dailyRoutines[dateStr] || ensureDailyRoutineObj(dateStr);
-  const cfg = db.routineConfig.lunchConfig;
-  const list = [];
-  (cfg.makeupQueue || []).forEach(m => {
-    if (list.length < 8) list.push({ id: m.id, status: "pending", isMakeup: true });
-  });
-  let ptr = cfg.nextPointer || 0;
-  while (list.length < 8) {
-    const stu = db.students[ptr % db.students.length];
-    ptr = (ptr + 1) % db.students.length;
-    if (!list.some(x => x.id === stu.id)) list.push({ id: stu.id, status: "pending", isMakeup: false });
+
+  // 待補抬清單
+  const qContainer = document.getElementById('makeupQueueContainer');
+  qContainer.innerHTML = "";
+  const queue = db.routineConfig.lunchConfig.makeupQueue || [];
+  if (queue.length === 0) {
+    qContainer.innerHTML = `<span style="color:#16a34a; font-weight:900; font-size:1.1rem;">🎉 目前無人欠抬餐！</span>`;
+  } else {
+    queue.forEach((m, idx) => {
+      const stu = db.students.find(s => s.id === m.id) || { id: m.id, name: "" };
+      const chip = document.createElement('span');
+      chip.className = "clean-member-chip";
+      chip.style.cssText = "background:#f3e8ff; border:2px solid #9333ea; color:#581c87; padding:4px 10px;";
+      chip.draggable = isTeacherMode;
+      chip.ondragstart = (e) => onLunchQueueDragStart(e, idx, m.id);
+      chip.innerHTML = `${isTeacherMode ? '⠿ ' : ''}${stu.id} ${stu.name} <small>(${m.missedDate || '待補'})</small> ${isTeacherMode ? `<b style="cursor:pointer; color:#dc2626; margin-left:4px;" onclick="removeMakeupQueueItem(${idx})">×</b>` : ''}`;
+      qContainer.appendChild(chip);
+    });
   }
-  cfg.nextPointer = ptr;
-  dr.lunchList = list;
-  if (save) saveDB();
 }
+
+// 抬餐拖拉處理
+function onLunchCardDragStart(e, idx, stuId) {
+  if (!isTeacherMode) return;
+  draggedLunchItem = { type: 'card', idx, stuId };
+  e.dataTransfer.setData("text/plain", JSON.stringify(draggedLunchItem));
+}
+function onLunchQueueDragStart(e, idx, stuId) {
+  if (!isTeacherMode) return;
+  draggedLunchItem = { type: 'queue', idx, stuId };
+  e.dataTransfer.setData("text/plain", JSON.stringify(draggedLunchItem));
+}
+function onLunchCardDragOver(e) {
+  if (!isTeacherMode || !draggedLunchItem) return;
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over-lunch');
+}
+function onLunchCardDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over-lunch');
+}
+function onLunchCardDrop(e, targetIdx) {
+  if (!isTeacherMode || !draggedLunchItem) return;
+  e.preventDefault();
+  e.stopPropagation();
+  e.currentTarget.classList.remove('drag-over-lunch');
+
+  const dr = ensureDailyRoutineObj(currentRoutineDate);
+  const targetItem = dr.lunchList[targetIdx];
+
+  if (draggedLunchItem.type === 'queue') {
+    // 從待補名單拖到抬餐卡片：遞補該卡片
+    const qIdx = draggedLunchItem.idx;
+    const stuId = draggedLunchItem.stuId;
+    db.routineConfig.lunchConfig.makeupQueue.splice(qIdx, 1);
+    
+    // 原卡片如果是正常輪值，可視需要放回或替換
+    dr.lunchList[targetIdx] = {
+      id: stuId,
+      status: "pending",
+      isMakeup: true,
+      postRole: LUNCH_DUTY_ROLES[targetIdx]
+    };
+    addLog("班務", `導師拖拉補抬學生 ${stuId} 遞補進 ${LUNCH_DUTY_ROLES[targetIdx]}`);
+  } else if (draggedLunchItem.type === 'card') {
+    // 兩張卡片互換崗位
+    const srcIdx = draggedLunchItem.idx;
+    if (srcIdx !== targetIdx) {
+      const temp = dr.lunchList[srcIdx];
+      dr.lunchList[srcIdx] = dr.lunchList[targetIdx];
+      dr.lunchList[targetIdx] = temp;
+      dr.lunchList[srcIdx].postRole = LUNCH_DUTY_ROLES[srcIdx];
+      dr.lunchList[targetIdx].postRole = LUNCH_DUTY_ROLES[targetIdx];
+      addLog("班務", `導師互換抬餐人員崗位：${dr.lunchList[srcIdx].id}號 ⇄ ${dr.lunchList[targetIdx].id}號`);
+    }
+  }
+  draggedLunchItem = null;
+  saveDB();
+  renderRoutinePage();
+}
+
+function onMakeupBoxDragOver(e) {
+  if (!isTeacherMode || !draggedLunchItem || draggedLunchItem.type !== 'card') return;
+  e.preventDefault();
+  document.getElementById('makeupQueueBox').classList.add('drag-over-makeup');
+}
+function onMakeupBoxDragLeave(e) {
+  document.getElementById('makeupQueueBox').classList.remove('drag-over-makeup');
+}
+function onMakeupBoxDrop(e) {
+  if (!isTeacherMode || !draggedLunchItem || draggedLunchItem.type !== 'card') return;
+  e.preventDefault();
+  document.getElementById('makeupQueueBox').classList.remove('drag-over-makeup');
+
+  const dr = ensureDailyRoutineObj(currentRoutineDate);
+  const srcIdx = draggedLunchItem.idx;
+  const removedStu = dr.lunchList[srcIdx];
+  if (!removedStu) return;
+
+  // 加入待補抬
+  db.routineConfig.lunchConfig.makeupQueue.push({ id: removedStu.id, missedDate: currentRoutineDate.slice(5) });
+  
+  // 順延遞補一位新號碼
+  let ptr = db.routineConfig.lunchConfig.nextPointer || 0;
+  const used = new Set(dr.lunchList.map(x => x.id));
+  let subStu = null;
+  for (let i = 0; i < db.students.length; i++) {
+    const cand = db.students[(ptr + i) % db.students.length];
+    if (cand && !used.has(cand.id)) {
+      subStu = cand;
+      db.routineConfig.lunchConfig.nextPointer = (ptr + i + 1) % db.students.length;
+      break;
+    }
+  }
+  dr.lunchList[srcIdx] = {
+    id: subStu ? subStu.id : "01",
+    status: "pending",
+    isMakeup: false,
+    postRole: LUNCH_DUTY_ROLES[srcIdx]
+  };
+  addLog("班務", `導師將 ${removedStu.id} 移入待補名單，自動遞補 ${dr.lunchList[srcIdx].id}`);
+  draggedLunchItem = null;
+  saveDB();
+  renderRoutinePage();
+}
+
+function markLunchPersonLeave(idx) {
+  const dr = ensureDailyRoutineObj(currentRoutineDate);
+  const item = dr.lunchList[idx];
+  if (!item || item.status === "leave") return;
+  const stu = db.students.find(s => s.id === item.id);
+  if (!stu) return;
+
+  if (!confirm(`確定登記【${stu.id} ${stu.name}】今日請假？\n系統將自動列入待補抬名單，並自動遞補下一號同學！`)) return;
+
+  item.status = "leave";
+  db.routineConfig.lunchConfig.makeupQueue.push({ id: stu.id, missedDate: currentRoutineDate.slice(5) });
+
+  let ptr = db.routineConfig.lunchConfig.nextPointer || 0;
+  const used = new Set(dr.lunchList.map(x => x.id));
+  let subStu = null;
+  for (let i = 0; i < db.students.length; i++) {
+    const cand = db.students[(ptr + i) % db.students.length];
+    if (cand && !used.has(cand.id)) {
+      subStu = cand;
+      db.routineConfig.lunchConfig.nextPointer = (ptr + i + 1) % db.students.length;
+      break;
+    }
+  }
+  if (subStu) {
+    dr.lunchList.push({
+      id: subStu.id,
+      status: "pending",
+      isMakeup: false,
+      postRole: `遞補 (${stu.name})`
+    });
+  }
+  addLog("班務", `[${currentRoutineDate}] ${stu.id} ${stu.name} 抬餐請假列入待補`);
+  saveDB();
+  renderRoutinePage();
+}
+
 function confirmAllLunchDuty() {
   const dr = ensureDailyRoutineObj(currentRoutineDate);
   (dr.lunchList || []).forEach(l => { if (l.status !== 'leave') l.status = 'done'; });
   saveDB(); renderRoutinePage();
 }
 function generateTodayLunchList(c) {
-  if (c && !confirm("重新排定今日8人？")) return;
+  if (c && !confirm("確定重排今日8位抬餐名單？")) return;
   buildLunchListForDate(currentRoutineDate, true);
   renderRoutinePage();
 }
@@ -1662,8 +1833,63 @@ function adjustLunchPointer() {
     saveDB(); renderRoutinePage();
   }
 }
+function manualAddMakeupStudent() {
+  const p = prompt("請輸入要加入待補抬的座號 (01~21):", "01");
+  if (p) {
+    const id = String(parseInt(p, 10)).padStart(2, '0');
+    db.routineConfig.lunchConfig.makeupQueue.push({ id, missedDate: "教師指定" });
+    saveDB(); renderRoutinePage();
+  }
+}
+function removeMakeupQueueItem(idx) {
+  db.routineConfig.lunchConfig.makeupQueue.splice(idx, 1);
+  saveDB(); renderRoutinePage();
+}
 
-// 掃區
+// ==================== 🧹 內外掃區：人員拖曳調動 ====================
+let draggedCleanMember = null;
+
+function onCleanMemberDragStart(e, stuId, fromZoneId) {
+  if (!isTeacherMode) { e.preventDefault(); return; }
+  e.stopPropagation();
+  draggedCleanMember = { stuId, fromZoneId };
+  e.dataTransfer.setData("text/plain", JSON.stringify(draggedCleanMember));
+}
+
+function onCleanZoneDragOver(e) {
+  if (!isTeacherMode || !draggedCleanMember) return;
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over-zone');
+}
+function onCleanZoneDragLeave(e) {
+  if (e.currentTarget.contains(e.relatedTarget)) return;
+  e.currentTarget.classList.remove('drag-over-zone');
+}
+
+function onCleanZoneDrop(e, targetZoneId) {
+  if (!isTeacherMode || !draggedCleanMember) return;
+  e.preventDefault();
+  e.stopPropagation();
+  e.currentTarget.classList.remove('drag-over-zone');
+
+  const { stuId, fromZoneId } = draggedCleanMember;
+  draggedCleanMember = null;
+  if (fromZoneId === targetZoneId) return;
+
+  const zones = db.routineConfig.cleaningZones;
+  const fromZone = zones.find(z => z.id === fromZoneId);
+  const toZone = zones.find(z => z.id === targetZoneId);
+  if (!fromZone || !toZone) return;
+
+  fromZone.members = (fromZone.members || []).filter(id => id !== stuId);
+  if (!toZone.members) toZone.members = [];
+  if (!toZone.members.includes(stuId)) toZone.members.push(stuId);
+
+  addLog("班務", `導師拖拉調動掃區：${stuId}號 從【${fromZone.title}】➔【${toZone.title}】`);
+  saveDB();
+  renderRoutinePage();
+}
+
 function renderOutdoorCleaningSection(dr) {
   const c = document.getElementById('outdoorCleaningContainer');
   c.innerHTML = "";
@@ -1685,6 +1911,7 @@ function renderOutdoorCleaningSection(dr) {
     c.appendChild(col);
   });
 }
+
 function renderIndoorCleaningSection(dr) {
   const c = document.getElementById('indoorCleaningContainer');
   c.innerHTML = "";
@@ -1692,6 +1919,7 @@ function renderIndoorCleaningSection(dr) {
     c.appendChild(createCleanZoneCard(z, dr));
   });
 }
+
 function createCleanZoneCard(z, dr) {
   const checked = dr.cleaningChecks && dr.cleaningChecks[z.id];
   const card = document.createElement('div');
@@ -1701,27 +1929,71 @@ function createCleanZoneCard(z, dr) {
     dr.cleaningChecks[z.id] = !dr.cleaningChecks[z.id];
     saveDB(); renderRoutinePage();
   };
+  card.ondragover = onCleanZoneDragOver;
+  card.ondragleave = onCleanZoneDragLeave;
+  card.ondrop = (e) => onCleanZoneDrop(e, z.id);
+
   const mHtml = (z.members || []).map(id => {
     const s = db.students.find(x => x.id === id);
-    return `<span class="clean-member-chip">${id} ${s ? s.name : ''}</span>`;
+    return `<span class="clean-member-chip" ${isTeacherMode ? 'draggable="true"' : ''} ondragstart="onCleanMemberDragStart(event, '${id}', '${z.id}')" onclick="event.stopPropagation();">${isTeacherMode ? '⠿ ' : ''}${id} ${s ? s.name : ''}</span>`;
   }).join('');
+
   card.innerHTML = `
     <div>
       <div style="display:flex; justify-content:space-between; font-weight:900;">
         <span class="clean-zone-header-title">${z.title}</span>
         <span>${checked ? '✅ 完成' : '⬜ 待檢'}</span>
       </div>
-      <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:4px;">${mHtml}</div>
+      <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:4px;">${mHtml || '<span style="color:var(--gray); font-size:0.9rem;">(可拖入學生)</span>'}</div>
     </div>
     ${z.desc ? `<div class="clean-desc-text">📌 ${z.desc}</div>` : ''}
   `;
   return card;
 }
+
 function checkCleaningZonesByType(t) {
   const dr = ensureDailyRoutineObj(currentRoutineDate);
   if (!dr.cleaningChecks) dr.cleaningChecks = {};
   db.routineConfig.cleaningZones.filter(z => z.type === t).forEach(z => dr.cleaningChecks[z.id] = true);
   saveDB(); renderRoutinePage();
+}
+
+function resetCleaningZonesToDefault() {
+  if (!isTeacherMode || !confirm("確定還原為預設 19 組打掃分配？")) return;
+  db.routineConfig.cleaningZones = JSON.parse(JSON.stringify(DEFAULT_CLEANING_ZONES));
+  saveDB(); renderRoutinePage();
+}
+
+function openCleaningModal() {
+  if (!isTeacherMode) return;
+  const c = document.getElementById('cleaningModalList');
+  c.innerHTML = "";
+  db.routineConfig.cleaningZones.forEach((z, idx) => {
+    const row = document.createElement('div');
+    row.style.cssText = "display:flex; gap:6px; align-items:center; background:#f8fafc; padding:8px; border-radius:8px; border:1px solid #cbd5e1; flex-wrap:wrap;";
+    row.innerHTML = `
+      <select class="form-control" onchange="db.routineConfig.cleaningZones[${idx}].type=this.value; saveDB();">
+        <option value="outdoor" ${z.type==='outdoor'?'selected':''}>🌳 上午外掃</option>
+        <option value="indoor" ${z.type==='indoor'?'selected':''}>🏠 下午內掃</option>
+      </select>
+      <input type="text" class="form-control" style="width:120px;" value="${z.group||''}" placeholder="分區" onchange="db.routineConfig.cleaningZones[${idx}].group=this.value; saveDB();">
+      <input type="text" class="form-control" style="width:160px;" value="${z.title}" placeholder="組別名稱" onchange="db.routineConfig.cleaningZones[${idx}].title=this.value; saveDB();">
+      <input type="text" class="form-control" style="width:120px;" value="${(z.members||[]).join(', ')}" placeholder="座號(01,02)" onchange="updateCleaningZoneMembers(${idx}, this.value)">
+      <input type="text" class="form-control" style="flex:1; min-width:160px;" value="${z.desc||''}" placeholder="工作細項" onchange="db.routineConfig.cleaningZones[${idx}].desc=this.value; saveDB();">
+      <button class="btn btn-danger" onclick="db.routineConfig.cleaningZones.splice(${idx},1); saveDB(); openCleaningModal();">🗑️</button>
+    `;
+    c.appendChild(row);
+  });
+  document.getElementById('cleaningModal').classList.add('active');
+}
+function updateCleaningZoneMembers(idx, val) {
+  const arr = val.split(/[,，\s]+/).map(s=>s.trim()).filter(Boolean).map(s=>String(parseInt(s,10)).padStart(2,'0')).filter(s=>s!=='NaN');
+  db.routineConfig.cleaningZones[idx].members = arr;
+  saveDB();
+}
+function addCleaningZoneItem() {
+  db.routineConfig.cleaningZones.push({ id: "cz_" + Date.now(), type: "outdoor", group: "外掃區", title: "新打掃組", members: [], desc: "" });
+  saveDB(); openCleaningModal();
 }
 
 // ==================== 1. 作業方格登記 (應繳交) ====================
@@ -1833,7 +2105,7 @@ function renderHomeworkBoard() {
       `;
       wrapper.appendChild(col);
 
-      // 黑板未交名單
+      // 黑板缺交清單
       const chalkRow = document.createElement('div');
       chalkRow.className = "chalk-row";
       const chips = missing.length === 0 ? `<span style="color:var(--chalk-green);">🎉 全班收齊！</span>` : missing.map(s => `
@@ -1893,7 +2165,7 @@ function handleHwGridClick(hwId, stuId) {
       addLog("作業", `${stu.id} ${stu.name} 繳交【${hw.title}】`);
       renderHomeworkBoard();
     });
-  } else if (isTeacherMode && confirm(`取消 ${stu.name} 的繳交？`)) {
+  } else if (isTeacherMode && confirm(`取消 ${stu.name} 的繳交狀態？`)) {
     delete hw.submissions[stuId];
     saveDB();
     renderHomeworkBoard();
@@ -1963,7 +2235,6 @@ function onSeatDeskDrop(evt, targetStuId) {
 function onSeatColDragOver(evt) {
   if (!isTeacherMode || !draggedSeatStuId) return;
   evt.preventDefault();
-  evt.dataTransfer.dropEffect = "move";
   evt.currentTarget.classList.add("drag-over-col");
 }
 function onSeatColDragLeave(evt) {
@@ -2017,8 +2288,8 @@ function renderPointsAndLeaderboard() {
   layout.forEach((col, cIdx) => {
     const colBox = document.createElement('div');
     colBox.className = "column-box";
-    colBox.ondragover = (e) => onSeatColDragOver(e);
-    colBox.ondragleave = (e) => onSeatColDragLeave(e);
+    colBox.ondragover = onSeatColDragOver;
+    colBox.ondragleave = onSeatColDragLeave;
     colBox.ondrop = (e) => onSeatColDrop(e, cIdx);
 
     let h = `<div class="column-header"><span>${col.colName}</span></div>`;
@@ -2048,7 +2319,6 @@ function renderPointsAndLeaderboard() {
     grid.appendChild(colBox);
   });
 
-  // 6 科加分表
   const tbody = document.getElementById('subjScoreTableBody');
   tbody.innerHTML = "";
   db.students.forEach(s => {
@@ -2073,7 +2343,6 @@ function renderPointsAndLeaderboard() {
     tbody.appendChild(tr);
   });
 
-  // 榮譽排行榜
   const rList = document.getElementById('leaderboardList');
   rList.innerHTML = "";
   const sorted = [...db.students].sort((a, b) => {
@@ -2469,7 +2738,6 @@ function renderHolidayList() {
   });
 }
 
-// 密碼遮蔽驗證
 function toggleTeacherMode() {
   if (isTeacherMode) {
     isTeacherMode = false;
@@ -2515,7 +2783,99 @@ function saveNewPin() {
   closeModal('changePinModal');
 }
 
-// ==================== 7. 系統紀錄、全螢幕與 Excel 匯出 ====================
+// ==================== 7. 下載雲端完整 12 工作表 Excel (.xls) ====================
+function exportFullWorkbookXLS() {
+  if (typeof XLSX === 'undefined') { alert("Excel 模組載入中，請稍候再試"); return; }
+  const wb = XLSX.utils.book_new();
+
+  // 1. 全班總分與榮譽榜
+  const tRows = [["座號", "姓名", "🎯 可用總積分", "🎁 已兌換點數", "國語累計", "數學累計", "社會累計", "作文累計", "綜合累計", "班級常規累計"]];
+  db.students.forEach(s => {
+    const sp = s.subjectPoints || {};
+    tRows.push([s.id, s.name, s.totalPoints, s.redeemedPoints||0, sp["國語"]||0, sp["數學"]||0, sp["社會"]||0, sp["作文"]||0, sp["綜合"]||0, sp["班級常規"]||0]);
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(tRows), "全班總分表");
+
+  // 2. 教室座位表
+  const layout = getSeatingLayout();
+  const stMap = {};
+  db.students.forEach(s => stMap[s.id] = `${s.id} ${s.name}`);
+  const seatRows = [["", "", "【 講 台 ／ 黑 板 面 向 全 班 】", "", ""], layout.map(c => c.colName)];
+  let maxR = 0;
+  layout.forEach(c => { if(c.ids.length > maxR) maxR = c.ids.length; });
+  for(let r=0; r<maxR; r++) {
+    const rData = [];
+    for(let c=0; c<layout.length; c++) {
+      rData.push(layout[c].ids[r] ? stMap[layout[c].ids[r]] : "");
+    }
+    seatRows.push(rData);
+  }
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(seatRows), "教室座位表");
+
+  // 3~8. 各科每日加分表
+  const dateSet = {};
+  db.students.forEach(s => Object.keys(s.dailySubjectPoints || {}).forEach(d => dateSet[d]=true));
+  const allSubjDates = Object.keys(dateSet).sort();
+  ALL_SUBJECTS.forEach(subj => {
+    const subjRows = [["座號", "姓名", "累計總分", ...allSubjDates]];
+    db.students.forEach(s => {
+      const row = [s.id, s.name, (s.subjectPoints && s.subjectPoints[subj]) || 0];
+      allSubjDates.forEach(d => {
+        let pts = (s.dailySubjectPoints[d] && s.dailySubjectPoints[d][subj]) ? s.dailySubjectPoints[d][subj] : 0;
+        row.push(pts > 0 ? "+" + pts : (pts === 0 ? "" : pts));
+      });
+      subjRows.push(row);
+    });
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(subjRows), subj + "加分表");
+  });
+
+  // 9. 作業繳交紀錄表
+  const hws = [...db.homeworks].sort((a,b) => (a.date+a.id).localeCompare(b.date+b.id));
+  const hwHead = ["座號", "姓名", ...hws.map(h => `派發:${h.assignedDate.slice(5)}→應繳:${h.date.slice(5)}\n【${h.subject}】${h.title}\n(${h.pages})`)];
+  const hwRows = [hwHead];
+  db.students.forEach(s => {
+    hwRows.push([s.id, s.name, ...hws.map(h => h.submissions[s.id] ? "✓ (" + String(h.submissions[s.id]).slice(0,5) + ")" : "未交")]);
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(hwRows), "作業繳交紀錄表");
+
+  // 10. 出缺席與請假紀錄
+  const attDates = Object.keys(db.attendance || {}).sort();
+  const attHead = ["座號", "姓名", ...attDates];
+  const attRows = [attHead];
+  db.students.forEach(s => {
+    const row = [s.id, s.name];
+    attDates.forEach(d => {
+      const rec = db.attendance[d] ? db.attendance[d][s.id] : null;
+      if (!rec || (!rec.inTime && !rec.outTime && rec.status !== 'leave')) row.push("未打卡");
+      else if (rec.status === 'leave') row.push("😷請假");
+      else row.push(`入:${String(rec.inTime).slice(0,5)} / 出:${String(rec.outTime).slice(0,5)}`);
+    });
+    attRows.push(row);
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(attRows), "出缺席紀錄表");
+
+  // 11. 每日班務與抬餐打掃表
+  const routineDates = Object.keys(db.dailyRoutines || {}).sort().reverse();
+  const rtRows = [
+    ["【每日班務總覽】日期", "早自習注意事項", "當日聯絡簿抄寫項目", "今日值日生", "外掃檢查", "午餐抬餐", "午休常規", "內掃檢查"]
+  ];
+  routineDates.forEach(d => {
+    const dr = db.dailyRoutines[d] || {};
+    const cbItems = (dr.contactBookItems || []).map(x => `【${x.subject}】${x.title}(${x.pages})`).join("；");
+    const dutyStr = (dr.dutyList || []).map(x => `${x.id}${x.status==='done'?'✓':(x.status==='leave'?'(假)':'')}`).join("、");
+    const lunchStr = (dr.lunchList || []).map(x => `${x.id}${x.status==='done'?'✓':(x.status==='leave'?'(假)':'')}`).join("、");
+    rtRows.push([d, dr.morningNotes||"", cbItems + (dr.hwNotes?"\n補充:"+dr.hwNotes:""), dutyStr, "已檢查", lunchStr, dr.napNotes||"", "已檢查"]);
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rtRows), "每日班務與打掃表");
+
+  // 12. 系統完整稽核紀錄
+  const logRows = [["時間戳章", "類別", "操作身分", "詳細內容"]];
+  db.logs.forEach(l => logRows.push([l.time, l.category, l.actor, l.detail]));
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(logRows), "系統完整稽核日誌");
+
+  XLSX.writeFile(wb, `504班級經營完整總報表_${currentRoutineDate}.xlsx`);
+}
+
 function renderLogs() {
   const filter = document.getElementById('logFilter').value;
   const tbody = document.getElementById('logTableBody');
@@ -2523,27 +2883,6 @@ function renderLogs() {
   (filter === 'ALL' ? db.logs : db.logs.filter(l => l.category === filter)).forEach(l => {
     tbody.innerHTML += `<tr><td style="padding:8px 12px; font-family:monospace;">${l.time}</td><td style="padding:8px 12px;"><b>${l.category}</b></td><td style="padding:8px 12px;">${l.actor}</td><td style="padding:8px 12px;">${l.detail}</td></tr>`;
   });
-}
-
-function exportFullWorkbookXLS() {
-  if (typeof XLSX === 'undefined') { alert("Excel 模組載入中，請稍候再試"); return; }
-  const wb = XLSX.utils.book_new();
-
-  // 1. 總分表
-  const tRows = [["座號", "姓名", "🎯 總積分", ...ALL_SUBJECTS]];
-  db.students.forEach(s => tRows.push([s.id, s.name, s.totalPoints, ...ALL_SUBJECTS.map(sub => s.subjectPoints[sub] || 0)]));
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(tRows), "全班總分表");
-
-  // 2. 作業繳交紀錄
-  const hws = [...db.homeworks].sort((a,b) => a.date.localeCompare(b.date));
-  const hwHead = ["座號", "姓名", ...hws.map(h => `${h.date}\n【${h.subject}】${h.title}`)];
-  const hwRows = [hwHead];
-  db.students.forEach(s => {
-    hwRows.push([s.id, s.name, ...hws.map(h => h.submissions[s.id] ? "✓" : "未交")]);
-  });
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(hwRows), "作業紀錄表");
-
-  XLSX.writeFile(wb, `504班級經營完整報表_${currentRoutineDate}.xlsx`);
 }
 
 function exportData() {
@@ -2566,9 +2905,7 @@ function importData(e) {
   reader.readAsText(f);
 }
 
-function toggleBoardFullscreen() {
-  document.body.classList.toggle('board-fullscreen');
-}
+function toggleBoardFullscreen() { document.body.classList.toggle('board-fullscreen'); }
 
 function switchRoutineStage(st) {
   currentActiveRoutineStage = st;
@@ -2576,24 +2913,46 @@ function switchRoutineStage(st) {
   document.querySelectorAll('#routineStageTabs .jump-pill').forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-stage') === st));
 }
 
-function toggleNapBoardTheme() {
-  document.getElementById('napUnifiedBoard').classList.toggle('light-theme');
-}
+function toggleNapBoardTheme() { document.getElementById('napUnifiedBoard').classList.toggle('light-theme'); }
 
-function updateFlipClock() {
+function triggerManualFlipPreview() { updateFlipClockDisplay(true); }
+
+let lastFlipHour = "", lastFlipMin = "";
+function updateFlipClockDisplay(force = false) {
   const now = new Date();
   const hh = String(now.getHours()).padStart(2, '0');
   const mm = String(now.getMinutes()).padStart(2, '0');
   const ss = String(now.getSeconds()).padStart(2, '0');
-  document.getElementById('liveClock').textContent = getFullTimestamp();
-  const hEl = document.getElementById('flipNumHour');
-  const mEl = document.getElementById('flipNumMin');
-  const sEl = document.getElementById('flipNumSec');
-  if (hEl) hEl.textContent = hh;
-  if (mEl) mEl.textContent = mm;
-  if (sEl) sEl.textContent = ss;
+
+  const hCard = document.getElementById('flipCardHour');
+  const mCard = document.getElementById('flipCardMin');
+  const hNum = document.getElementById('flipNumHour');
+  const mNum = document.getElementById('flipNumMin');
+  const sNum = document.getElementById('flipNumSec');
+
+  if (hh !== lastFlipHour || force) {
+    lastFlipHour = hh;
+    hCard.classList.remove('do-flip');
+    void hCard.offsetWidth;
+    hCard.classList.add('do-flip');
+    setTimeout(() => { if (hNum) hNum.textContent = hh; }, 260);
+  }
+  if (mm !== lastFlipMin || force) {
+    lastFlipMin = mm;
+    mCard.classList.remove('do-flip');
+    void mCard.offsetWidth;
+    mCard.classList.add('do-flip');
+    setTimeout(() => { if (mNum) mNum.textContent = mm; }, 260);
+  }
+  if (sNum) sNum.textContent = ss;
 }
-setInterval(updateFlipClock, 1000);
+
+setInterval(() => {
+  document.getElementById('liveClock').textContent = getFullTimestamp();
+  updateFlipClockDisplay(false);
+}, 1000);
+document.getElementById('liveClock').textContent = getFullTimestamp();
+updateFlipClockDisplay(true);
 
 function askStudentConfirm(stu, desc, cb) {
   if (isTeacherMode) { cb(); return; }
