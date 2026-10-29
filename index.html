@@ -28,7 +28,7 @@
   * { box-sizing: border-box; font-family: "Microsoft JhengHei", "PingFang TC", sans-serif; user-select: none; }
   body { margin: 0; background: var(--bg); color: var(--dark); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-  /* 全螢幕看板模式 */
+  /* 🖥️ 全螢幕看板模式 */
   body.board-fullscreen header { display: none !important; }
   body.board-fullscreen main { padding: 6px 10px; }
 
@@ -105,7 +105,7 @@
   .btn-outline.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
   .form-control { padding: 5px 9px; font-size: 0.95rem; border: 2px solid #cbd5e1; border-radius: 8px; font-weight: bold; user-select: text; }
 
-  /* ==================== 班務看板 ==================== */
+  /* ==================== ☀️ 每日班務看板 ==================== */
   .routine-jump-bar { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
   .jump-pill {
     padding: 6px 13px; border-radius: 20px; font-weight: 900; font-size: 0.95rem;
@@ -156,12 +156,14 @@
     border-bottom: 2.5px dashed #cbd5e1; padding-bottom: 6px; flex-shrink: 0; flex-wrap: wrap; gap: 6px;
   }
 
-  .routine-note-display { font-size: 1.65rem; font-weight: 900; line-height: 1.7; white-space: pre-wrap; color: #0f172a; padding: 4px; flex: 1; overflow-y: auto; }
-  body.is-teacher .swap-on-teacher .routine-note-display { display: none !important; }
-  .routine-textarea {
-    width: 100%; flex: 1; min-height: 60px; border: 2.5px solid #94a3b8; border-radius: 10px; padding: 10px;
-    font-size: 1.4rem; font-weight: 900; line-height: 1.55; resize: none; user-select: text; background: #fffef7;
+  /* 💡 乾淨單一編輯大框（早自習與午休專用） */
+  .routine-single-editor {
+    width: 100%; flex: 1; min-height: 180px; border-radius: 12px; padding: 12px 14px;
+    font-size: 1.55rem; font-weight: 900; line-height: 1.7; resize: none; user-select: text;
+    background: #fffef7; border: 2.5px solid #cbd5e1; color: #0f172a; outline: none; transition: 0.2s;
   }
+  .routine-single-editor:focus { border-color: var(--primary); background: #ffffff; }
+  .routine-single-editor.readonly-view { background: transparent; border: none; padding: 4px; cursor: default; }
 
   .cb-add-bar {
     display: none; background: #ccfbf1; border: 2px solid #14b8a6; border-radius: 10px;
@@ -206,10 +208,10 @@
     background: #f1f5f9; padding: 4px 8px; border-radius: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0;
   }
 
-  /* 午餐抬餐 8 人網格 */
+  /* 🍱 午餐抬餐（只看人員不分抬什麼） */
   .lunch-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 12px; flex: 1; min-height: 0; }
   .duty-person-card {
-    background: #f8fafc; border: 3px solid #cbd5e1; border-radius: 14px; padding: 12px 14px;
+    background: #f8fafc; border: 3px solid #cbd5e1; border-radius: 14px; padding: 14px 16px;
     display: flex; justify-content: space-between; align-items: center; gap: 8px;
     cursor: pointer; transition: 0.15s; min-height: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.04);
   }
@@ -220,7 +222,7 @@
   body.is-teacher .duty-person-card { cursor: grab; }
   .makeup-queue-box.drag-over-makeup { border: 3px dashed #7c3aed !important; background: #f3e8ff !important; }
 
-  /* 午休時鐘 */
+  /* 😴 午休時鐘與一格直接編輯提醒 */
   .nap-unified-board {
     flex: 1; min-height: 0; overflow: hidden;
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 55%, #172554 100%);
@@ -238,6 +240,13 @@
     font-size: 1.65rem; font-weight: 900; color: #fde047;
     display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(253, 224, 71, 0.35); padding-bottom: 10px; flex-shrink: 0;
   }
+  .nap-unified-board .routine-single-editor {
+    background: rgba(15, 23, 42, 0.65); color: #ffffff; border: 2px solid #818cf8; font-size: 1.65rem;
+  }
+  .nap-unified-board .routine-single-editor.readonly-view {
+    background: transparent; border: none; color: #ffffff; text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+
   .flip-clock-wrapper { display: flex; align-items: center; justify-content: center; gap: 14px; }
   .flip-colon { font-size: 4.8rem; font-weight: 900; color: #cbd5e1; line-height: 1; padding-bottom: 16px; animation: blinkColon 1s infinite; }
   @keyframes blinkColon { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
@@ -286,6 +295,8 @@
   .seat-box .s-name { font-size: 0.92rem; font-weight: bold; margin-top: 2px; }
   .seat-box.unsubmitted { background: #fff1f2; border-color: #fca5a5; color: #be123c; }
   .seat-box.submitted { background: var(--success-light); border-color: var(--success); color: var(--success); }
+  /* 😷 請假依然算缺交，但以黃色清楚標記提醒 */
+  .seat-box.unsubmitted.is-leave { background: #fffbeb !important; border-color: #f59e0b !important; color: #b45309 !important; }
 
   .blackboard-panel {
     background: var(--board-bg); border: 9px solid var(--board-border); border-radius: 16px;
@@ -306,6 +317,9 @@
   .chalk-numbers-wrap { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .chalk-num-chip {
     background: rgba(255, 107, 107, 0.25); border: 2px solid var(--chalk-red); color: #fff; font-weight: 900; font-size: 1.1rem; padding: 3px 10px; border-radius: 6px; cursor: pointer; transition: 0.12s;
+  }
+  .chalk-num-chip.is-leave {
+    background: rgba(245, 158, 11, 0.3) !important; border-color: #f59e0b !important; color: #fde047 !important;
   }
 
   /* 座位表與換位 */
@@ -470,13 +484,13 @@
         </div>
 
         <div class="morning-main-split">
-          <div class="sub-panel swap-on-teacher">
+          <!-- 💡 左欄：直接一格編輯早自習提醒 -->
+          <div class="sub-panel">
             <div class="sub-panel-title" style="color:#b45309;">
               <span>📢 早自習晨間任務與常規提醒</span>
-              <span class="teacher-only" style="font-size:0.9rem; color:#d97706;">✏️ 打字即時自動存檔</span>
+              <span class="teacher-only" style="font-size:0.9rem; color:#d97706;">✏️ 直接點擊打字即時存檔</span>
             </div>
-            <div id="morningNotesDisplay" class="routine-note-display"></div>
-            <textarea id="morningNotesInput" class="routine-textarea teacher-only-block" placeholder="輸入早自習任務..." oninput="updateDailyRoutineNoteLive('morningNotes', this.value)"></textarea>
+            <textarea id="morningNotesInput" class="routine-single-editor" placeholder="輸入早自習任務與注意事項..." oninput="updateDailyRoutineNoteLive('morningNotes', this.value)"></textarea>
           </div>
 
           <div class="sub-panel" style="border-color:#5eead4; background:#f0fdfa;">
@@ -501,12 +515,12 @@
               <button class="btn btn-primary" style="padding:5px 10px; font-size:0.88rem;" onclick="addContactBookItem()">➕ 寫入今日聯絡簿</button>
             </div>
 
+            <!-- 當日聯絡簿作業列表 -->
             <div id="routineHwList" style="display:flex; flex-direction:column; gap:8px; font-size:1.45rem; font-weight:900; color:#0f172a; flex:1; overflow-y:auto;"></div>
 
             <div class="swap-on-teacher" style="border-top:2.5px dashed #5eead4; padding-top:8px; display:flex; flex-direction:column; min-height:95px; flex-shrink:0;">
               <div style="font-size:1.1rem; color:#0f766e; font-weight:900; margin-bottom:4px;">📌 聯絡簿補充事項：</div>
-              <div id="routineHwNotesDisplay" class="routine-note-display" style="font-size:1.35rem;"></div>
-              <textarea id="routineHwNotesInput" class="routine-textarea teacher-only-block" style="min-height:60px; font-size:1.2rem;" placeholder="補充備註 (例: 明穿體育服、帶美勞用具)..." oninput="updateDailyRoutineNoteLive('hwNotes', this.value)"></textarea>
+              <textarea id="routineHwNotesInput" class="routine-textarea" style="min-height:60px; font-size:1.2rem;" placeholder="補充備註 (例: 明穿體育服、帶美勞用具)..." oninput="updateDailyRoutineNoteLive('hwNotes', this.value)"></textarea>
             </div>
           </div>
         </div>
@@ -529,11 +543,11 @@
         <div class="outdoor-two-groups-split" id="outdoorCleaningContainer"></div>
       </div>
 
-      <!-- 區塊 3：午餐抬餐 (自動崗位排號 ＋ 支援拖曳補抬) -->
+      <!-- 區塊 3：午餐抬餐（只看人員不分抬什麼・支援拖拉互換與待補名單遞補） -->
       <div class="routine-stage-block stage-lunch" id="stage-lunch">
         <div class="stage-header">
           <div class="stage-title" style="color:#dc2626;">
-            <span>3️⃣ 🍱 午餐抬餐輪值 (8人崗位輪值・支援拖曳補抬)</span>
+            <span>3️⃣ 🍱 午餐抬餐輪值 (8人純人員輪流・支援拖曳遞補)</span>
           </div>
           <div style="display:flex; gap:8px; align-items:center;">
             <span class="stage-time-badge">午餐 11:55 ~ 12:35</span>
@@ -562,7 +576,7 @@
         </div>
       </div>
 
-      <!-- 區塊 4：午休時鐘 -->
+      <!-- 區塊 4：午休時鐘 ＆ 一格直接編輯提醒 -->
       <div class="routine-stage-block stage-nap" id="stage-nap">
         <div class="stage-header">
           <div class="stage-title" style="color:#4338ca;"><span>4️⃣ 😴 午休靜息翻頁時鐘 ＆ 秩序常規</span></div>
@@ -593,10 +607,13 @@
               </div>
             </div>
           </div>
-          <div class="nap-reminder-zone swap-on-teacher">
-            <div class="nap-reminder-header"><span>🤫 午休常規提醒</span></div>
-            <div id="napNotesDisplay" class="routine-note-display"></div>
-            <textarea id="napNotesInput" class="routine-textarea teacher-only-block" oninput="updateDailyRoutineNoteLive('napNotes', this.value)"></textarea>
+          <!-- 💡 右欄：直接一格編輯午休提醒（徹底告別重疊雙格！） -->
+          <div class="nap-reminder-zone">
+            <div class="nap-reminder-header">
+              <span>🤫 午休常規提醒</span>
+              <span class="teacher-only" style="font-size:0.9rem; color:#fde047;">✏️ 直接點擊打字即時存檔</span>
+            </div>
+            <textarea id="napNotesInput" class="routine-single-editor" placeholder="輸入午休常規注意事項..." oninput="updateDailyRoutineNoteLive('napNotes', this.value)"></textarea>
           </div>
         </div>
       </div>
@@ -660,7 +677,7 @@
       <div class="hw-checklist-panel">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding-bottom:6px; border-bottom:2px solid #f1f5f9;">
           <strong style="font-size:1.1rem;">📝 504班 當日應繳交作業方格表</strong>
-          <span style="font-size:0.85rem; color:var(--gray); font-weight:bold;">🟥 紅格＝未交 ｜ 🟩 綠格＝已交</span>
+          <span style="font-size:0.85rem; color:var(--gray); font-weight:bold;">🟥 紅格＝未交 ｜ 🟩 綠格＝已交 ｜ 🟨 黃格＝請假缺交</span>
         </div>
         <div class="hw-columns-wrapper" id="hwColumnsWrapper"></div>
       </div>
@@ -809,7 +826,7 @@
       <button class="btn btn-primary teacher-only" onclick="batchCheckIn()">⚡ 一鍵全班打卡</button>
     </div>
     <div class="seating-layout-card">
-      <div class="podium-bar">講 台 / 黑 板 面 向 全 班（請假模式下點擊學生課桌即可登記請假）</div>
+      <div class="podium-bar">講 台 / 黑 板 面 向 全 班（請假模式下點擊學生課桌即可登記請假，自動全系統連動）</div>
       <div class="seating-grid" id="attSeatingGrid"></div>
     </div>
   </section>
@@ -1049,11 +1066,6 @@ const DEFAULT_CLEANING_ZONES = [
   { id: "in_7", type: "indoor", group: "🏠 下午全內掃", title: "7. 垃圾資源回收整理 (2人)", members: ["09", "10"], desc: "教室垃圾倒棄與分類打包" }
 ];
 
-const LUNCH_DUTY_ROLES = [
-  "🍱 抬餐 1 號 (主食)", "🍱 抬餐 2 號 (主菜)", "🍱 抬餐 3 號 (副菜1)", "🍱 抬餐 4 號 (副菜2)",
-  "🍱 抬餐 5 號 (熱湯品)", "🍱 抬餐 6 號 (點心水果)", "🍱 抬餐 7 號 (餐具配品)", "🍱 抬餐 8 號 (推車清潔)"
-];
-
 let isTeacherMode = false;
 let currentAttStage = 'in';
 let activeStudentId = null;
@@ -1176,14 +1188,14 @@ let currentHwDate = currentRoutineDate;
 let currentPointDate = currentRoutineDate;
 let currentAttDate = currentRoutineDate;
 
-// 💡 關鍵修復：保證所有先前作業與聯絡簿依上學日正確歸位！
+// 💡 關鍵修復：作業與聯絡簿依上學日正確歸位
 function sanitizeAndTrimDB(targetDB) {
   if (!targetDB) return;
   if (!targetDB.holidays || !Array.isArray(targetDB.holidays)) targetDB.holidays = [];
   if (!targetDB.logs) targetDB.logs = [];
   if (targetDB.logs.length > MAX_LOGS_COUNT) targetDB.logs = targetDB.logs.slice(0, MAX_LOGS_COUNT);
 
-  // 1. 作業關聯修復：若作業應繳日 date 與 assignedDate 相同或派發日在後，一律校正派發日為前一上學日
+  // 1. 作業關聯修復
   if (!targetDB.homeworks) targetDB.homeworks = [];
   targetDB.homeworks.forEach(h => {
     if (!h.date) h.date = currentRoutineDate;
@@ -1193,7 +1205,7 @@ function sanitizeAndTrimDB(targetDB) {
     if (!h.submissions) h.submissions = {};
   });
 
-  // 2. 聯絡簿項目修復：若聯絡簿內有「應繳日 <= 當天」的項目，代表是前一天抄寫的，自動歸位至前一上學日！
+  // 2. 聯絡簿項目修復
   if (!targetDB.dailyRoutines) targetDB.dailyRoutines = {};
   Object.keys(targetDB.dailyRoutines).forEach(d => {
     const dr = targetDB.dailyRoutines[d];
@@ -1202,7 +1214,6 @@ function sanitizeAndTrimDB(targetDB) {
     const keepItems = [];
     dr.contactBookItems.forEach(item => {
       if (item.dueDate && item.dueDate <= d) {
-        // 這項作業其實是前一上學日派發的！移動至前一上學日
         const correctAssignDate = getPrevSchoolDay(item.dueDate);
         item.assignedDate = correctAssignDate;
         if (!targetDB.dailyRoutines[correctAssignDate]) {
@@ -1332,6 +1343,52 @@ function addLog(category, detail) {
   saveDB();
 }
 
+// 💡 核心全局請假判斷
+function isStudentOnLeave(stuId, dateStr) {
+  return db.attendance && db.attendance[dateStr] && db.attendance[dateStr][stuId] && db.attendance[dateStr][stuId].status === 'leave';
+}
+
+// 💡 全系統連動設定請假
+function setStudentLeaveStatus(stuId, dateStr, isLeave) {
+  if (!db.attendance[dateStr]) db.attendance[dateStr] = {};
+  if (!db.attendance[dateStr][stuId]) db.attendance[dateStr][stuId] = { inTime: null, outTime: null, status: 'uncheck' };
+  db.attendance[dateStr][stuId].status = isLeave ? 'leave' : 'uncheck';
+  if (isLeave) {
+    db.attendance[dateStr][stuId].inTime = null;
+    db.attendance[dateStr][stuId].outTime = null;
+  }
+
+  // 同步連動值日生請假
+  const dr = db.dailyRoutines[dateStr];
+  if (dr && dr.dutyList) {
+    dr.dutyList.forEach(item => {
+      if (item.id === stuId) {
+        item.status = isLeave ? 'leave' : 'pending';
+        if (isLeave && !db.routineConfig.dutyStudentConfig.makeupQueue.some(m => m.id === stuId)) {
+          db.routineConfig.dutyStudentConfig.makeupQueue.push({ id: stuId, missedDate: dateStr.slice(5) });
+        }
+      }
+    });
+  }
+
+  // 同步連動抬餐請假
+  if (dr && dr.lunchList) {
+    dr.lunchList.forEach(item => {
+      if (item.id === stuId) {
+        item.status = isLeave ? 'leave' : 'pending';
+        if (isLeave && !db.routineConfig.lunchConfig.makeupQueue.some(m => m.id === stuId)) {
+          db.routineConfig.lunchConfig.makeupQueue.push({ id: stuId, missedDate: dateStr.slice(5) });
+        }
+      }
+    });
+  }
+
+  const stu = db.students.find(s => s.id === stuId);
+  addLog("出缺席", `${stuId} ${stu ? stu.name : ''} [${dateStr}] ${isLeave ? '登記請假(全系統連動套用)' : '取消請假'}`);
+  saveDB();
+  renderAll();
+}
+
 // ==================== 0. 班務與當日聯絡簿 ====================
 function ensureDailyRoutineObj(dateStr) {
   if (!db.dailyRoutines[dateStr]) {
@@ -1340,7 +1397,7 @@ function ensureDailyRoutineObj(dateStr) {
       napNotes: db.routineConfig.defaultNapNotes || "",
       hwNotes: "",
       contactBookItems: [],
-      contactBookSubmissions: {}, // 每日聯絡簿繳交狀態
+      contactBookSubmissions: {},
       dutyList: [],
       lunchList: [],
       cleaningChecks: {}
@@ -1382,19 +1439,23 @@ function renderRoutinePage() {
     hBadge.style.display = "none";
   }
 
-  document.getElementById('morningNotesDisplay').textContent = dr.morningNotes || "（尚無早自習任務）";
+  // 💡 早自習提醒：單一框直接編輯
   const mIn = document.getElementById('morningNotesInput');
-  if (document.activeElement !== mIn) mIn.value = dr.morningNotes || "";
+  mIn.value = dr.morningNotes || "";
+  mIn.readOnly = !isTeacherMode;
+  mIn.classList.toggle('readonly-view', !isTeacherMode);
 
-  document.getElementById('napNotesDisplay').textContent = dr.napNotes || "（尚無午休注意事項）";
+  // 💡 午休提醒：單一框直接編輯
   const nIn = document.getElementById('napNotesInput');
-  if (document.activeElement !== nIn) nIn.value = dr.napNotes || "";
+  nIn.value = dr.napNotes || "";
+  nIn.readOnly = !isTeacherMode;
+  nIn.classList.toggle('readonly-view', !isTeacherMode);
 
-  document.getElementById('routineHwNotesDisplay').textContent = dr.hwNotes || "（無補充提醒）";
   const hIn = document.getElementById('routineHwNotesInput');
-  if (document.activeElement !== hIn) hIn.value = dr.hwNotes || "";
+  hIn.value = dr.hwNotes || "";
+  hIn.readOnly = !isTeacherMode;
 
-  // 渲染當日聯絡簿作業（嚴格只顯示 assignedDate === currentRoutineDate 且 dueDate > currentRoutineDate）
+  // 渲染當日聯絡簿抄寫項目
   const listEl = document.getElementById('routineHwList');
   listEl.innerHTML = "";
 
@@ -1411,7 +1472,6 @@ function renderRoutinePage() {
     });
   });
 
-  // 再次過濾：絕對不允許 dueDate <= currentRoutineDate 的昨天作業留在今天聯絡簿
   const filteredCbItems = cbItems.filter(it => !it.dueDate || it.dueDate > currentRoutineDate);
 
   if (filteredCbItems.length === 0) {
@@ -1455,8 +1515,8 @@ function addContactBookItem() {
   if (!isExam) {
     db.homeworks.push({
       id: linkedHwId,
-      date: nextSchool,                 // 應繳日保證為下一上學日
-      assignedDate: currentRoutineDate, // 派發日為當日
+      date: nextSchool,
+      assignedDate: currentRoutineDate,
       subject: subj,
       title,
       pages,
@@ -1504,9 +1564,6 @@ function shiftRoutineDay(dir) {
 function updateDailyRoutineNoteLive(k, val) {
   const dr = ensureDailyRoutineObj(currentRoutineDate);
   dr[k] = val;
-  if (k === 'morningNotes') document.getElementById('morningNotesDisplay').textContent = val;
-  if (k === 'hwNotes') document.getElementById('routineHwNotesDisplay').textContent = val;
-  if (k === 'napNotes') document.getElementById('napNotesDisplay').textContent = val;
   saveDB();
 }
 
@@ -1589,7 +1646,7 @@ function manualAddDutyMakeup() {
   }
 }
 
-// ==================== 🍱 午餐抬餐 ====================
+// ==================== 🍱 午餐抬餐（只看人員不分抬什麼） ====================
 let draggedLunchItem = null;
 
 function buildLunchListForDate(dateStr, save = true) {
@@ -1600,7 +1657,7 @@ function buildLunchListForDate(dateStr, save = true) {
 
   (cfg.makeupQueue || []).forEach(m => {
     if (list.length < 8 && !used.has(m.id)) {
-      list.push({ id: m.id, status: "pending", isMakeup: true, postRole: LUNCH_DUTY_ROLES[list.length] });
+      list.push({ id: m.id, status: "pending", isMakeup: true });
       used.add(m.id);
     }
   });
@@ -1612,7 +1669,7 @@ function buildLunchListForDate(dateStr, save = true) {
     ptr = (ptr + 1) % db.students.length;
     guard++;
     if (stu && !used.has(stu.id)) {
-      list.push({ id: stu.id, status: "pending", isMakeup: false, postRole: LUNCH_DUTY_ROLES[list.length] });
+      list.push({ id: stu.id, status: "pending", isMakeup: false });
       used.add(stu.id);
     }
   }
@@ -1645,10 +1702,10 @@ function renderLunchSection(dr) {
       saveDB(); renderRoutinePage();
     };
 
-    const roleName = item.postRole || LUNCH_DUTY_ROLES[idx] || `抬餐 ${idx+1} 號`;
+    // 💡 只看人員不分抬什麼：單純標註抬餐人員順位
     card.innerHTML = `
       <div>
-        <div style="font-size:0.92rem; font-weight:900; color:#9f1239; margin-bottom:2px;">${roleName}</div>
+        <div style="font-size:0.95rem; font-weight:900; color:#9f1239; margin-bottom:2px;">🍱 抬餐人員 ${idx + 1}</div>
         <div style="display:flex; align-items:center; gap:6px;">
           <span class="seat-desk-num" style="font-size:1.15rem;">${isTeacherMode ? '⠿ ' : ''}${stu.id}</span>
           <strong style="font-size:1.6rem; color:#0f172a;">${stu.name}</strong>
@@ -1716,19 +1773,16 @@ function onLunchCardDrop(e, targetIdx) {
     dr.lunchList[targetIdx] = {
       id: stuId,
       status: "pending",
-      isMakeup: true,
-      postRole: LUNCH_DUTY_ROLES[targetIdx]
+      isMakeup: true
     };
-    addLog("班務", `導師拖拉補抬學生 ${stuId} 遞補進 ${LUNCH_DUTY_ROLES[targetIdx]}`);
+    addLog("班務", `導師拖拉補抬學生 ${stuId} 遞補進抬餐人員 ${targetIdx + 1}`);
   } else if (draggedLunchItem.type === 'card') {
     const srcIdx = draggedLunchItem.idx;
     if (srcIdx !== targetIdx) {
       const temp = dr.lunchList[srcIdx];
       dr.lunchList[srcIdx] = dr.lunchList[targetIdx];
       dr.lunchList[targetIdx] = temp;
-      dr.lunchList[srcIdx].postRole = LUNCH_DUTY_ROLES[srcIdx];
-      dr.lunchList[targetIdx].postRole = LUNCH_DUTY_ROLES[targetIdx];
-      addLog("班務", `導師互換抬餐崗位：${dr.lunchList[srcIdx].id}號 ⇄ ${dr.lunchList[targetIdx].id}號`);
+      addLog("班務", `導師互換抬餐人員：${dr.lunchList[srcIdx].id}號 ⇄ ${dr.lunchList[targetIdx].id}號`);
     }
   }
   draggedLunchItem = null;
@@ -1770,8 +1824,7 @@ function onMakeupBoxDrop(e) {
   dr.lunchList[srcIdx] = {
     id: subStu ? subStu.id : "01",
     status: "pending",
-    isMakeup: false,
-    postRole: LUNCH_DUTY_ROLES[srcIdx]
+    isMakeup: false
   };
   addLog("班務", `導師將 ${removedStu.id} 移入待補名單，自動遞補 ${dr.lunchList[srcIdx].id}`);
   draggedLunchItem = null;
@@ -1786,33 +1839,8 @@ function markLunchPersonLeave(idx) {
   const stu = db.students.find(s => s.id === item.id);
   if (!stu) return;
 
-  if (!confirm(`確定登記【${stu.id} ${stu.name}】今日請假？\n系統將自動列入待補抬名單，並自動遞補下一號同學！`)) return;
-
-  item.status = "leave";
-  db.routineConfig.lunchConfig.makeupQueue.push({ id: stu.id, missedDate: currentRoutineDate.slice(5) });
-
-  let ptr = db.routineConfig.lunchConfig.nextPointer || 0;
-  const used = new Set(dr.lunchList.map(x => x.id));
-  let subStu = null;
-  for (let i = 0; i < db.students.length; i++) {
-    const cand = db.students[(ptr + i) % db.students.length];
-    if (cand && !used.has(cand.id)) {
-      subStu = cand;
-      db.routineConfig.lunchConfig.nextPointer = (ptr + i + 1) % db.students.length;
-      break;
-    }
-  }
-  if (subStu) {
-    dr.lunchList.push({
-      id: subStu.id,
-      status: "pending",
-      isMakeup: false,
-      postRole: `遞補 (${stu.name})`
-    });
-  }
-  addLog("班務", `[${currentRoutineDate}] ${stu.id} ${stu.name} 抬餐請假列入待補`);
-  saveDB();
-  renderRoutinePage();
+  if (!confirm(`確定登記【${stu.id} ${stu.name}】今日請假？\n系統將自動列入待補抬名單，並連動全系統請假！`)) return;
+  setStudentLeaveStatus(stu.id, currentRoutineDate, true);
 }
 
 function confirmAllLunchDuty() {
@@ -1995,7 +2023,7 @@ function addCleaningZoneItem() {
   saveDB(); openCleaningModal();
 }
 
-// ==================== 1. 作業登記表 (包含聯絡簿每日檢核 ＆ 顏色標籤) ====================
+// ==================== 1. 作業登記表 ====================
 function getSubjectTheme(subj) {
   if (subj.includes("聯絡簿")) return { headerClass: "cb-header", borderClass: "cb-border" };
   if (subj.includes("國語")) return { headerClass: "chi-header", borderClass: "chi-border" };
@@ -2078,7 +2106,6 @@ function renderHomeworkBoard() {
   wrapper.innerHTML = "";
   chalkList.innerHTML = "";
 
-  // 1. 放假判定：如果是休假日或週末，無需繳交作業
   const isSchool = isSchoolDay(currentHwDate);
   const hReason = getHolidayReason(currentHwDate);
   const dObj = new Date(currentHwDate + "T00:00:00");
@@ -2097,16 +2124,18 @@ function renderHomeworkBoard() {
   const prevSchool = getPrevSchoolDay(currentHwDate);
   const dr = ensureDailyRoutineObj(currentHwDate);
 
-  // 2. 聯絡簿專用獨立檢核欄位 (永遠列於第一欄)
+  // 1. 聯絡簿專用每日檢核欄位
   const cbCol = document.createElement('div');
   cbCol.className = "hw-item-col";
   const missingCbStus = db.students.filter(s => !dr.contactBookSubmissions[s.id]);
   const cbBoxes = db.students.map(s => {
     const sub = Boolean(dr.contactBookSubmissions[s.id]);
+    const isLeave = isStudentOnLeave(s.id, currentHwDate);
     return `
-      <div class="seat-box ${sub ? 'submitted' : 'unsubmitted'}" onclick="handleCbCheckClick('${s.id}')">
-        <span class="s-num">${sub ? '✓ ' + s.id : s.id}</span>
+      <div class="seat-box ${sub ? 'submitted' : 'unsubmitted'} ${!sub && isLeave ? 'is-leave' : ''}" onclick="handleCbCheckClick('${s.id}')">
+        <span class="s-num">${sub ? '✓ ' + s.id : (isLeave ? '😷 ' + s.id : s.id)}</span>
         <span class="s-name">${s.name}</span>
+        ${!sub && isLeave ? '<span style="font-size:0.75rem; font-weight:900;">(請假)</span>' : ''}
       </div>
     `;
   }).join('');
@@ -2126,12 +2155,13 @@ function renderHomeworkBoard() {
   `;
   wrapper.appendChild(cbCol);
 
-  // 黑板第一欄：聯絡簿簽名
+  // 黑板第一欄：聯絡簿簽名（請假依然計入缺交，但醒目標示）
   const cbChalkRow = document.createElement('div');
   cbChalkRow.className = "chalk-row cb-border";
-  const cbChips = missingCbStus.length === 0 ? `<span style="color:var(--chalk-green);">🎉 全班皆已繳交！</span>` : missingCbStus.map(s => `
-    <span class="chalk-num-chip" onclick="handleCbCheckClick('${s.id}')">${s.id} ${s.name}</span>
-  `).join('');
+  const cbChips = missingCbStus.length === 0 ? `<span style="color:var(--chalk-green);">🎉 全班皆已繳交！</span>` : missingCbStus.map(s => {
+    const isLeave = isStudentOnLeave(s.id, currentHwDate);
+    return `<span class="chalk-num-chip ${isLeave ? 'is-leave' : ''}" onclick="handleCbCheckClick('${s.id}')">${s.id} ${s.name}${isLeave ? '(假)' : ''}</span>`;
+  }).join('');
   cbChalkRow.innerHTML = `
     <div class="chalk-row-title">
       <div><span>📌 【聯絡簿】家長簽名檢核</span></div>
@@ -2141,7 +2171,7 @@ function renderHomeworkBoard() {
   `;
   chalkList.appendChild(cbChalkRow);
 
-  // 3. 各科目學科作業欄位
+  // 2. 各科目學科作業欄位（依應繳日篩選）
   const dayHws = (db.homeworks || []).filter(h => h.date === currentHwDate && !h.isContactBook);
 
   dayHws.forEach(hw => {
@@ -2153,10 +2183,12 @@ function renderHomeworkBoard() {
     col.className = "hw-item-col";
     const boxes = db.students.map(s => {
       const sub = Boolean(hw.submissions[s.id]);
+      const isLeave = isStudentOnLeave(s.id, currentHwDate);
       return `
-        <div class="seat-box ${sub ? 'submitted' : 'unsubmitted'}" onclick="handleHwGridClick('${hw.id}', '${s.id}')">
-          <span class="s-num">${sub ? '✓ ' + s.id : s.id}</span>
+        <div class="seat-box ${sub ? 'submitted' : 'unsubmitted'} ${!sub && isLeave ? 'is-leave' : ''}" onclick="handleHwGridClick('${hw.id}', '${s.id}')">
+          <span class="s-num">${sub ? '✓ ' + s.id : (isLeave ? '😷 ' + s.id : s.id)}</span>
           <span class="s-name">${s.name}</span>
+          ${!sub && isLeave ? '<span style="font-size:0.75rem; font-weight:900;">(請假)</span>' : ''}
         </div>
       `;
     }).join('');
@@ -2181,9 +2213,10 @@ function renderHomeworkBoard() {
     // 黑板缺交清單
     const chalkRow = document.createElement('div');
     chalkRow.className = `chalk-row ${theme.borderClass}`;
-    const chips = missing.length === 0 ? `<span style="color:var(--chalk-green);">🎉 全班收齊！</span>` : missing.map(s => `
-      <span class="chalk-num-chip" onclick="handleHwGridClick('${hw.id}', '${s.id}')">${s.id} ${s.name}</span>
-    `).join('');
+    const chips = missing.length === 0 ? `<span style="color:var(--chalk-green);">🎉 全班收齊！</span>` : missing.map(s => {
+      const isLeave = isStudentOnLeave(s.id, currentHwDate);
+      return `<span class="chalk-num-chip ${isLeave ? 'is-leave' : ''}" onclick="handleHwGridClick('${hw.id}', '${s.id}')">${s.id} ${s.name}${isLeave ? '(假)' : ''}</span>`;
+    }).join('');
 
     chalkRow.innerHTML = `
       <div class="chalk-row-title">
@@ -2198,7 +2231,7 @@ function renderHomeworkBoard() {
     chalkList.appendChild(chalkRow);
   });
 
-  // 4. 歷史跨日補交作業清單 (不含聯絡簿)
+  // 3. 歷史跨日補交作業清單
   const overdueHws = (db.homeworks || []).filter(h => h.date < currentHwDate && !h.isContactBook);
   const overdueSection = document.getElementById('chalkOverdueSection');
   const overdueList = document.getElementById('chalkOverdueList');
@@ -2570,7 +2603,7 @@ function addRewardItem() {
   openShopModal();
 }
 
-// ==================== 4. 🎲 輪盤抽籤 (機率顯示 ＋ 機率大小影響圓餅圖) ====================
+// ==================== 4. 🎲 輪盤抽籤 ====================
 let drawCandidates = new Set();
 let isDrawing = false;
 let currentWheelRotation = 0;
@@ -2649,7 +2682,6 @@ function renderDrawSeating() {
   drawRoulette(currentWheelRotation);
 }
 
-// 💡 圓餅圖大小受機率大小實體影響！
 function drawRoulette(rotDeg) {
   const canvas = document.getElementById('rouletteCanvas');
   const ctx = canvas.getContext('2d');
@@ -2681,7 +2713,6 @@ function drawRoulette(rotDeg) {
     ctx.strokeStyle = "#ffffff";
     ctx.stroke();
 
-    // 繪製文字與機率標籤
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(currentAngle + sliceAngle / 2);
@@ -2695,7 +2726,6 @@ function drawRoulette(rotDeg) {
     currentAngle = endAngle;
   });
 
-  // 外圈描邊
   ctx.beginPath();
   ctx.arc(cx, cy, r, 0, 2 * Math.PI);
   ctx.lineWidth = 6;
@@ -2724,7 +2754,6 @@ function startDraw() {
   const laps = parseInt(document.getElementById('drawLaps').value, 10) || 5;
   const winnerId = pickWeightedWinner(list);
 
-  // 計算指針停在獲獎者扇區中心之旋轉角度
   const totalWeight = list.reduce((sum, id) => sum + getStudentDrawWeight(id), 0);
   let accumAngleDeg = 0;
   let winnerCenterAngleDeg = 0;
@@ -2740,7 +2769,6 @@ function startDraw() {
     accumAngleDeg += sliceDeg;
   }
 
-  // 指針在上方 (-90deg)，需將 winnerCenterAngleDeg 轉至 0deg 位置
   const targetDeg = (360 - winnerCenterAngleDeg + 360) % 360;
   const currentMod = currentWheelRotation % 360;
   let delta = targetDeg - currentMod;
@@ -2764,7 +2792,6 @@ function startDraw() {
       isDrawing = false;
       document.getElementById('startDrawBtn').disabled = false;
       
-      // 記錄抽中次數調降重複率
       const today = normalizeToSchoolDay();
       if (!db.drawHistory) db.drawHistory = {};
       if (!db.drawHistory[today]) db.drawHistory[today] = {};
@@ -2852,10 +2879,11 @@ function handleAttClick(id) {
 
   if (currentAttStage === 'leave') {
     if (!isTeacherMode) return;
-    rec.status = rec.status === 'leave' ? 'uncheck' : 'leave';
-    saveDB(); renderAttendance(); return;
+    const nextLeave = rec.status !== 'leave';
+    setStudentLeaveStatus(id, currentAttDate, nextLeave);
+    return;
   }
-  if (rec.status === 'leave') { alert("該生已登記請假！"); return; }
+  if (rec.status === 'leave') { alert("該生已登記請假！如需打卡請由教師模式解除請假。"); return; }
 
   const checked = currentAttStage === 'in' ? rec.inTime : rec.outTime;
   if (!checked) {
@@ -3016,7 +3044,7 @@ function exportFullWorkbookXLS() {
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(subjRows), subj + "加分表");
   });
 
-  // 9. 作業繳交紀錄表 (含聯絡簿每日檢核)
+  // 9. 作業繳交紀錄表
   const hws = [...db.homeworks].sort((a, b) => (a.date + a.id).localeCompare(b.date + b.id));
   const hwHead = ["座號", "姓名"];
   hws.forEach(h => {
@@ -3024,7 +3052,6 @@ function exportFullWorkbookXLS() {
     const title = h.title || "未命名";
     const pages = h.pages && h.pages !== "全" ? ` (${h.pages})` : "";
     const dueTag = h.date ? ` [${h.date.slice(5)}繳]` : "";
-    // 把【科目】品項放最前面，日期簡化標註在後方
     hwHead.push(`【${subj}】${title}${pages}${dueTag}`);
   });
   const hwRows = [hwHead];
